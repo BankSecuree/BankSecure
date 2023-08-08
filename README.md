@@ -1,5 +1,6 @@
-<h1> BankSecure </h1>
+<h1> BankSecure 💻</h1>
 
+## Bem-vindo👋
 
 <p> Com prazer apresentamos o BankSecure, um projeto com foco de desenvolvimento a monitorar o uso de servidores de caixas eletrônicos</p>
 
