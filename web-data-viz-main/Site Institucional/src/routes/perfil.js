@@ -1,19 +1,17 @@
 var express = require("express");
 var router = express.Router();
+const perfilController = require("../controllers/perfilController");
+const upload = require('../config/configUpload'); // ARQUIVO COM A COFIGURAÇÃO DO UPLOAD
 
-var perfilController = require("../controllers/perfilController");
-
-router.get("/", function (req, res) {
-    perfilController.testar(req, res);
+router.get("/:idUsuario", function (req, res) {
+    perfilController.exibirPerfil(req, res);
 });
 
-// upload.single('foto') vai buscar no json alguma propriedade chamada foto 
-router.post('/cadastro', upload.single('foto'), (req, res) => {
-    perfilController.salvar(req, res);
+// upload.single('imgNova') vai buscar no json alguma propriedade chamada imgNova 
+router.post("/alterarImagem/:idUsuario", upload.single('imgNova'), (req, res) => {
+    perfilController.alterarImagem(req, res);
 });
 
-router.get('/:id', upload.single('foto'), (req, res) => {
-    perfilController.buscarperfilPeloId(req, res);
-});
+
 
 module.exports = router;

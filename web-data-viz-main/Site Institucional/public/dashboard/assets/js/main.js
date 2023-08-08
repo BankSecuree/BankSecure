@@ -1,10 +1,10 @@
-/**
-* Template Name: NiceAdmin
-* Updated: Jul 27 2023 with Bootstrap v5.3.1
-* Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
+function exibirFotoNome() {
+  let foto = document.getElementById("foto-usuario");
+  foto.setAttribute("src", sessionStorage.FOTO_USUARIO);
+  let nome = document.getElementById("nome-usuario");
+  nome.innerHTML = sessionStorage.NOME_USUARIO;
+}
+
 (function() {
   "use strict";
 
