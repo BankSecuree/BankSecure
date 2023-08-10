@@ -48,7 +48,9 @@ FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
 
 INSERT INTO login(emailFunc,senhaFunc) VALUES 
 	("bruno@gmail.com", "123321");
-
+SELECT * FROM login;
+    
+DROP USER 'user_bankSecure'@'localhost';
 CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'urubu100';
 GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';
 FLUSH PRIVILEGES;
