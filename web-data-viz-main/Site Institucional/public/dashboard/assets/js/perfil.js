@@ -1,29 +1,46 @@
 function exibirPerfil() {
+    var scrFoto = "assets/img/usuario/profile.png"
+    if (sessionStorage.FOTO_USUARIO != "null") {
+        scrFoto = sessionStorage.FOTO_USUARIO;
+    }
     let fotoPerfil = document.getElementById("foto-perfil");
-    fotoPerfil.setAttribute("src", sessionStorage.FOTO_USUARIO);
+    fotoPerfil.setAttribute("src", `${scrFoto}`);
     let nomePerfil = document.getElementById("nome-perfil");
     nomePerfil.innerHTML = sessionStorage.NOME_USUARIO;
     // let cargoPerfil = document.getElementById("cargo-perfil");
     // cargoPerfil.innerHTML = sessionStorage.CARGO_USUARIO;
 
-    let nomeEditar = document.getElementById("nome-editar");
-    nomeEditar.innerHTML = sessionStorage.NOME_USUARIO;
-    let cpfEditar = document.getElementById("cpf-editar");
-    cpfEditar.innerHTML = sessionStorage.CPF_USUARIO;
-    // let telefoneEditar = document.getElementById("telefone-editar");
-    // telefoneEditar.innerHTML = sessionStorage.TELEFONE_USUARIO;
-    let emailEditar = document.getElementById("email-editar");
-    emailEditar.innerHTML = sessionStorage.EMAIL_USUARIO;
-
-    let empresaEditar = document.getElementById("empresa-editar");
-    empresaEditar.innerHTML = sessionStorage.EMPRESA_USUARIO;
-    let cnpjEditar = document.getElementById("cnpj-editar");
-    cnpjEditar.innerHTML = sessionStorage.CNPJ_USUARIO;
-    // let cargoEditar = document.getElementById("cargo-editar");
-    // cargoEditar.innerHTML = sessionStorage.CARGO_USUARIO;
+    let nomeGeral = document.getElementById("nome-geral");
+    nomeGeral.innerHTML = sessionStorage.NOME_USUARIO;
+    let cpfGeral = document.getElementById("cpf-geral");
+    cpfGeral.innerHTML = sessionStorage.CPF_USUARIO;
+    // let telefoneGeral = document.getElementById("telefone-geral");
+    // telefoneGeral.innerHTML = sessionStorage.TELEFONE_USUARIO;
+    let emailGeral = document.getElementById("email-geral");
+    emailGeral.innerHTML = sessionStorage.EMAIL_USUARIO;
+    // let empresaGeral = document.getElementById("empresa-geral");
+    // empresaGeral.innerHTML = sessionStorage.EMPRESA_USUARIO;
+    // let cnpjGeral = document.getElementById("cnpj-geral");
+    // cnpjGeral.innerHTML = sessionStorage.CNPJ_USUARIO;
+    // let cargoGeral = document.getElementById("cargo-geral");
+    // cargoGeral.innerHTML = sessionStorage.CARGO_USUARIO;
 
     let fotoEditar = document.getElementById("foto-editar");
-    fotoEditar.setAttribute("src", sessionStorage.FOTO_USUARIO);
+    fotoEditar.setAttribute("src", `${scrFoto}`);
+    let nomeEditar = document.getElementById("nome-editar");
+    nomeEditar.value = sessionStorage.NOME_USUARIO;
+    let cpfEditar = document.getElementById("cpf-editar");
+    cpfEditar.value = sessionStorage.CPF_USUARIO;
+    // let telefoneEditar = document.getElementById("telefone-editar");
+    // telefoneEditar.value = sessionStorage.TELEFONE_USUARIO;
+    let emailEditar = document.getElementById("email-editar");
+    emailEditar.value = sessionStorage.EMAIL_USUARIO;
+    // let empresaEditar = document.getElementById("empresa-editar");
+    // empresaEditar.value = sessionStorage.EMPRESA_USUARIO;
+    // let cnpjEditar = document.getElementById("cnpj-editar");
+    // cnpjEditar.value = sessionStorage.CNPJ_USUARIO;
+    // let cargoEditar = document.getElementById("cargo-editar");
+    // cargoEditar.value = sessionStorage.CARGO_USUARIO;
 }
 
 

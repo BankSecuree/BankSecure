@@ -1,6 +1,10 @@
 function exibirInfos() {
-  let foto = document.getElementById("foto-usuario");
-  // foto.setAttribute("src", sessionStorage.FOTO_USUARIO);
+  var scrFoto = "assets/img/usuario/profile.png"
+  if (sessionStorage.FOTO_USUARIO != "null") {
+    scrFoto = sessionStorage.FOTO_USUARIO;
+  }
+  let fotoPerfil = document.getElementById("foto-usuario");
+  fotoPerfil.setAttribute("src", `${scrFoto}`);
   let nome = document.getElementById("nome-usuario");
   nome.innerHTML = sessionStorage.NOME_USUARIO;
 }
