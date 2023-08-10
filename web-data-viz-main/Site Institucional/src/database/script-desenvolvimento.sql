@@ -1,7 +1,6 @@
 /* Comandos para mysql - banco local - ambiente de desenvolvimento */
-/* drop database bankSecure; */
+DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
-
 USE bankSecure;
 
 CREATE TABLE empresa(
@@ -16,6 +15,7 @@ CREATE TABLE usuario (
 	senha VARCHAR(16),
 	nome VARCHAR(50),
     cpf CHAR(14),
+    telefone CHAR(14),
     gerente INT,
 	foto VARCHAR(255),
     fkEmpresa INT,
