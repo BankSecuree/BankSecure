@@ -10,22 +10,16 @@ nomeEmpresa VARCHAR (50),
 cnpj CHAR (14)
 );
 
-CREATE TABLE login(
-idLogin INT PRIMARY KEY AUTO_INCREMENT,
-emailFunc VARCHAR(50),
-senhaFunc VARCHAR(50)
-);
-
 CREATE TABLE usuario (
-	id INT PRIMARY KEY AUTO_INCREMENT,
+	idUsuario INT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(50),
+	senha VARCHAR(16),
 	nome VARCHAR(50),
-    cpfFunc CHAR(14),
+    cpf CHAR(14),
     gerente INT,
 	foto VARCHAR(255),
     fkEmpresa INT,
-    fkLogin INT,
-    FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa),
-    FOREIGN KEY (fkLogin) REFERENCES login(idLogin)
+    FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
 );
 
 CREATE TABLE maquina(
@@ -46,10 +40,6 @@ fkEmpresa INT,
 FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
 );
 
-INSERT INTO login(emailFunc,senhaFunc) VALUES 
-	("bruno@gmail.com", "123321");
-SELECT * FROM login;
-    
 DROP USER 'user_bankSecure'@'localhost';
 CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'urubu100';
 GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';

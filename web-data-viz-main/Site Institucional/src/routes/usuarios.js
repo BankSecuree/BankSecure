@@ -20,8 +20,4 @@ router.post("/autenticar", function (req, res) {
     usuarioController.entrar(req, res);
 });
 
-router.post("/guardarInfos", function (req, res) {
-    usuarioController.guardarInfos(req, res);
-});
-
 module.exports = router;

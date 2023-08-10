@@ -17,7 +17,6 @@
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
   <!-- Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
@@ -325,8 +324,8 @@
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
               <img alt="Profile" class="rounded-circle" id="foto-perfil">
-              <h2>Kevin Anderson</h2>
-              <h3>Web Designer</h3>
+              <h2 id="nome-perfil"></h2>
+              <h3 id="cardo-perfil"></h3>
               <div class="social-links mt-2">
                 <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
                 <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
@@ -364,37 +363,37 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">Nome Completo</div>
-                    <div class="col-lg-9 col-md-8">Kevin Anderson</div>
+                    <div class="col-lg-9 col-md-8" id="nome-editar"></div>
                   </div>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Empresa</div>
-                    <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Cargo</div>
-                    <div class="col-lg-9 col-md-8">Web Designer</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Cidade</div>
-                    <div class="col-lg-9 col-md-8">USA</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Endereço</div>
-                    <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
+                    <div class="col-lg-3 col-md-4 label">CPF</div>
+                    <div class="col-lg-9 col-md-8" id="cpf-editar"></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Telefone</div>
-                    <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
+                    <div class="col-lg-9 col-md-8" id="telefone-editar"></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+                    <div class="col-lg-9 col-md-8" id="email-editar"></div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Empresa</div>
+                    <div class="col-lg-9 col-md-8" id="empresa-editar"></div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">CNPJ</div>
+                    <div class="col-lg-9 col-md-8" id="cnpj-editar"></div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Cargo</div>
+                    <div class="col-lg-9 col-md-8" id="cargo-editar"></div>
                   </div>
 
                 </div>
@@ -548,10 +547,7 @@
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="assets/vendor/echarts/echarts.min.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/perfil.js"></script>
 </body>
@@ -559,6 +555,6 @@
 </html>
 
 <script>
-  var idUsuario = sessionStorage.ID_USUARIO;
-  exibirPerfil(idUsuario)
+  exibirInfos();
+  exibirPerfil();
 </script>

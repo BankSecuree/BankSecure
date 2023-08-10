@@ -51,13 +51,15 @@ function entrar() {
                     console.log(json);
                     console.log(JSON.stringify(json));
                     
-                    sessionStorage.ID_FUNCIONARIO = json.idFuncionario;
-                    sessionStorage.NOME_FUNCIONARIO = json.nome;
-                    sessionStorage.CARGO_FUNCIONARIO = json.cargo;
-                    sessionStorage.EMAIL_FUNCIONARIO = json.email;
-                    sessionStorage.FK_SUPERIOR = json.fkSuperior;
-                    sessionStorage.FK_FILIAIS = json.filiais;
-
+                    sessionStorage.ID_USUARIO = json.idUsuario;
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.SENHA_USUARIO = json.senha;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.CPF_USUARIO = json.cpf;
+                    sessionStorage.TELEFONE_USUARIO = json.telefone;
+                    sessionStorage.FOTO_USUARIO = json.foto;
+                    
+                   
                     setTimeout(function () {
                         window.location = "./dashboard/index.html";
                     }, 2000); 
