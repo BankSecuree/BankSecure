@@ -1,17 +1,17 @@
 /* Comandos para mysql - banco local - ambiente de desenvolvimento */
-
+drop database bankSecure;
 CREATE DATABASE bankSecure;
 
 USE bankSecure;
 
 
-CREATE TABLE Empresa(
+CREATE TABLE empresa(
 idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
 nomeEmpresa VARCHAR (50),
 cnpj CHAR (14)
 );
 
-CREATE TABLE Login(
+CREATE TABLE login(
 idLogin INT PRIMARY KEY AUTO_INCREMENT,
 emailFunc VARCHAR(50),
 senhaFunc VARCHAR(50)
@@ -30,12 +30,12 @@ CREATE TABLE usuario (
 );
 
 CREATE TABLE maquina(
-idMaquina INT PRIMARY KEY AUTO_INCREMENT,
-MaquinaCpu INT,
-MaquinaDemoria INT,
-MaquinaDisco INT, 
-fkEmpresa INT,
-FOREIGN KEY (fkEmpresa) REFERENCES empresa(fkEmpresa)
+	idMaquina INT PRIMARY KEY AUTO_INCREMENT,
+	MaquinaCpu INT,
+	MaquinaDemoria INT,
+	MaquinaDisco INT, 
+	fkEmpresa INT,
+	FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
 );
 CREATE TABLE registros(
 dataHora DATETIME PRIMARY KEY,
