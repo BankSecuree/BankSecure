@@ -4,12 +4,12 @@ function exibirInfos() {
 
   } else {
 
-    var scrFoto = "assets/img/usuario/profile.png"
-    if (sessionStorage.FOTO_USUARIO != "null") {
+    var scrFoto = "profile.png"
+    if (sessionStorage.FOTO_USUARIO != "null" && sessionStorage.FOTO_USUARIO != "undefined") {
       scrFoto = sessionStorage.FOTO_USUARIO;
     }
     let fotoPerfil = document.getElementById("foto-usuario");
-    fotoPerfil.setAttribute("src", `${scrFoto}`);
+    fotoPerfil.setAttribute("src", `assets/img/usuario/${scrFoto}`);
     let nome = document.getElementById("nome-usuario");
     nome.innerHTML = sessionStorage.NOME_USUARIO;
   }

@@ -2,13 +2,13 @@ const multer = require('multer');
 
 // Diretório onde os arquivos serão salvos
 // ATENÇÃO: É necessário manter o diretório 'public' para poder utilizar no front-end
-const diretorio = 'public/dashboard/assets/usuarios';
+const diretorio = '../../web-data-viz-main/Site Institucional/public/dashboard/assets/img/usuario';
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, diretorio) 
+    cb(null, diretorio)
   },
-  
+
   filename: (req, file, cb) => {
     const extensaoArquivo = file.originalname.split('.')[1];
 
@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
       .toString('hex');
 
 
-    cb(null, `${novoNomeArquivo}.${extensaoArquivo}`)
+    cb(null, `${novoNomeArquivo}.${extensaoArquivo}`);
   }
 });
 

@@ -1,10 +1,10 @@
 function exibirPerfil() {
-    var scrFoto = "assets/img/usuario/profile.png"
-    if (sessionStorage.FOTO_USUARIO != "null") {
+    var scrFoto = "profile.png"
+    if (sessionStorage.FOTO_USUARIO != "null" && sessionStorage.FOTO_USUARIO != "undefined") {
         scrFoto = sessionStorage.FOTO_USUARIO;
     }
     let fotoPerfil = document.getElementById("foto-perfil");
-    fotoPerfil.setAttribute("src", `${scrFoto}`);
+    fotoPerfil.setAttribute("src", `assets/img/usuario/${scrFoto}`);
     let nomePerfil = document.getElementById("nome-perfil");
     nomePerfil.innerHTML = sessionStorage.NOME_USUARIO;
     // let cargoPerfil = document.getElementById("cargo-perfil");
@@ -43,17 +43,18 @@ function exibirPerfil() {
     // cargoEditar.value = sessionStorage.CARGO_USUARIO;
 }
 
-
-function novaImagem(idUsuario) {
+function novaImagem() {
     const formData = new FormData();
     formData.append('imgNova', imgNova.files[0])
 
-    fetch(`/perfil/alterarImagem/${idUsuario}`, {
+    fetch(`/perfil/alterarImagem/${sessionStorage.ID_USUARIO}`, {
         method: "POST",
         body: formData
     })
         .then(res => {
-            exibirPerfil(idUsuario);
+            
+            exibirInfos();
+            exibirPerfil();
         })
         .catch(err => {
             console.log(err);
