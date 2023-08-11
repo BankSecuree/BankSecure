@@ -1,20 +1,28 @@
 function exibirInfos() {
-  var scrFoto = "assets/img/usuario/profile.png"
-  if (sessionStorage.FOTO_USUARIO != "null") {
-    scrFoto = sessionStorage.FOTO_USUARIO;
+  if (sessionStorage.ID_USUARIO == undefined) {
+    window.location = "../index.html";
+
+  } else {
+
+    var scrFoto = "assets/img/usuario/profile.png"
+    if (sessionStorage.FOTO_USUARIO != "null") {
+      scrFoto = sessionStorage.FOTO_USUARIO;
+    }
+    let fotoPerfil = document.getElementById("foto-usuario");
+    fotoPerfil.setAttribute("src", `${scrFoto}`);
+    let nome = document.getElementById("nome-usuario");
+    nome.innerHTML = sessionStorage.NOME_USUARIO;
   }
-  let fotoPerfil = document.getElementById("foto-usuario");
-  fotoPerfil.setAttribute("src", `${scrFoto}`);
-  let nome = document.getElementById("nome-usuario");
-  nome.innerHTML = sessionStorage.NOME_USUARIO;
 }
 
 function confirmarSair() {
-  sessionStorage.clear;
-  location.reload = "../index.html";
+  sessionStorage.clear();
+  setTimeout(function () {
+    window.location = "../index.html";
+  }, 2000);
 }
 
-(function() {
+(function () {
   "use strict";
 
   /**
@@ -51,7 +59,7 @@ function confirmarSair() {
    * Sidebar toggle
    */
   if (select('.toggle-sidebar-btn')) {
-    on('click', '.toggle-sidebar-btn', function(e) {
+    on('click', '.toggle-sidebar-btn', function (e) {
       select('body').classList.toggle('toggle-sidebar')
     })
   }
@@ -60,7 +68,7 @@ function confirmarSair() {
    * Search bar toggle
    */
   if (select('.search-bar-toggle')) {
-    on('click', '.search-bar-toggle', function(e) {
+    on('click', '.search-bar-toggle', function (e) {
       select('.search-bar').classList.toggle('search-bar-show')
     })
   }
@@ -121,7 +129,7 @@ function confirmarSair() {
    * Initiate tooltips
    */
   var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-  var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl)
   })
 
@@ -151,31 +159,31 @@ function confirmarSair() {
           }],
           ["bold", "italic", "underline", "strike"],
           [{
-              color: []
-            },
-            {
-              background: []
-            }
+            color: []
+          },
+          {
+            background: []
+          }
           ],
           [{
-              script: "super"
-            },
-            {
-              script: "sub"
-            }
+            script: "super"
+          },
+          {
+            script: "sub"
+          }
           ],
           [{
-              list: "ordered"
-            },
-            {
-              list: "bullet"
-            },
-            {
-              indent: "-1"
-            },
-            {
-              indent: "+1"
-            }
+            list: "ordered"
+          },
+          {
+            list: "bullet"
+          },
+          {
+            indent: "-1"
+          },
+          {
+            indent: "+1"
+          }
           ],
           ["direction", {
             align: []
@@ -195,8 +203,8 @@ function confirmarSair() {
   var needsValidation = document.querySelectorAll('.needs-validation')
 
   Array.prototype.slice.call(needsValidation)
-    .forEach(function(form) {
-      form.addEventListener('submit', function(event) {
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
         if (!form.checkValidity()) {
           event.preventDefault()
           event.stopPropagation()
@@ -207,25 +215,25 @@ function confirmarSair() {
     })
 
   /**
-   * Initiate Datatables
-   */
-  const datatables = select('.datatable', true)
-  datatables.forEach(datatable => {
-    new simpleDatatables.DataTable(datatable);
-  })
+  //  * Initiate Datatables
+  //  */
+  // const datatables = select('.datatable', true)
+  // datatables.forEach(datatable => {
+  //   new simpleDatatables.DataTable(datatable);
+  // })
 
-  /**
-   * Autoresize echart charts
-   */
-  const mainContainer = select('#main');
-  if (mainContainer) {
-    setTimeout(() => {
-      new ResizeObserver(function() {
-        select('.echart', true).forEach(getEchart => {
-          echarts.getInstanceByDom(getEchart).resize();
-        })
-      }).observe(mainContainer);
-    }, 200);
-  }
+  // /**
+  //  * Autoresize echart charts
+  //  */
+  // const mainContainer = select('#main');
+  // if (mainContainer) {
+  //   setTimeout(() => {
+  //     new ResizeObserver(function() {
+  //       select('.echart', true).forEach(getEchart => {
+  //         echarts.getInstanceByDom(getEchart).resize();
+  //       })
+  //     }).observe(mainContainer);
+  //   }, 200);
+  // }
 
 })();
