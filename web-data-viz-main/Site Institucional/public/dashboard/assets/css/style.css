@@ -1,21 +1,31 @@
+/**
+* Template Name: NiceAdmin
+* Updated: Jul 27 2023 with Bootstrap v5.3.1
+* Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+* Author: BootstrapMade.com
+* License: https://bootstrapmade.com/license/
+*/
+
+/*--------------------------------------------------------------
+# General
+--------------------------------------------------------------*/
 :root {
   scroll-behavior: smooth;
 }
 
 body {
   font-family: "Open Sans", sans-serif;
-  background-image: url(../img/fundo-city.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: #f6f9ff;
+  color: #444444;
 }
 
 a {
-  color: #1E94CB;
+  color: #4154f1;
   text-decoration: none;
 }
 
 a:hover {
-  color: #06b19a;
+  color: #717ff5;
   text-decoration: none;
 }
 
@@ -26,40 +36,6 @@ h4,
 h5,
 h6 {
   font-family: "Nunito", sans-serif;
-}
-
-.form-control, .input-group-text{
-  background-color: transparent;
-  border: 2px solid #69D1C5;
-  border-radius: 0%;
-  color: white;
-}
-
-.form-label{
-  color: white;
-}
-
-.text-small{
-  color: white;
-  text-align: center;
-}
-
-.form-check-label, .small{
-  color: white;
-}
-
-.btn-primary {
-  background-color: transparent;
-  color: #ffffff;
-  border-color: #E8F0FF;
-  border: 5%;
-}
-
-.btn-primary:hover {
-  background-color: #E8F0FF;
-  color: #1E94CB;
-  border-color: #1e2532;
-  font-weight: bold;
 }
 
 /*--------------------------------------------------------------
@@ -246,7 +222,6 @@ h6 {
   border: none;
   border-radius: 5px;
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-  background-color: #171627f5;
 }
 
 .card-header,
@@ -254,19 +229,19 @@ h6 {
   border-color: #ebeef4;
   background-color: #fff;
   color: #798eb3;
-  padding: 5px;
+  padding: 15px;
 }
 
 .card-title {
-  padding: 5px 0 15px 0;
+  padding: 20px 0 15px 0;
   font-size: 18px;
   font-weight: 500;
-  color: white;
+  color: #012970;
   font-family: "Poppins", sans-serif;
 }
 
 .card-title span {
-  color: white;
+  color: #899bbd;
   font-size: 14px;
   font-weight: 400;
 }
@@ -851,7 +826,7 @@ h6 {
 }
 
 .dashboard .revenue-card .card-icon {
-  color: #16e9a6;
+  color: #2eca6a;
   background: #e0f8e9;
 }
 
@@ -1086,28 +1061,105 @@ h6 {
   color: #6980aa;
 }
 
-.faq .info-box {
+/*--------------------------------------------------------------
+# Contact
+--------------------------------------------------------------*/
+.contact .info-box {
   padding: 28px 30px;
 }
 
-.faq .info-box i {
+.contact .info-box i {
   font-size: 38px;
   line-height: 0;
   color: #4154f1;
 }
 
-.faq .info-box h3 {
+.contact .info-box h3 {
   font-size: 20px;
   color: #012970;
   font-weight: 700;
   margin: 20px 0 10px 0;
 }
 
-.faq .info-box p {
+.contact .info-box p {
   padding: 0;
   line-height: 24px;
   font-size: 14px;
   margin-bottom: 0;
+}
+
+.contact .php-email-form .error-message {
+  display: none;
+  color: #fff;
+  background: #ed3c0d;
+  text-align: left;
+  padding: 15px;
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+.contact .php-email-form .sent-message {
+  display: none;
+  color: #fff;
+  background: #18d26e;
+  text-align: center;
+  padding: 15px;
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+.contact .php-email-form .loading {
+  display: none;
+  background: #fff;
+  text-align: center;
+  padding: 15px;
+  margin-bottom: 24px;
+}
+
+.contact .php-email-form .loading:before {
+  content: "";
+  display: inline-block;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  margin: 0 10px -6px 0;
+  border: 3px solid #18d26e;
+  border-top-color: #eee;
+  animation: animate-loading 1s linear infinite;
+}
+
+.contact .php-email-form input,
+.contact .php-email-form textarea {
+  border-radius: 0;
+  box-shadow: none;
+  font-size: 14px;
+  border-radius: 0;
+}
+
+.contact .php-email-form input:focus,
+.contact .php-email-form textarea:focus {
+  border-color: #4154f1;
+}
+
+.contact .php-email-form input {
+  padding: 10px 15px;
+}
+
+.contact .php-email-form textarea {
+  padding: 12px 15px;
+}
+
+.contact .php-email-form button[type=submit] {
+  background: #4154f1;
+  border: 0;
+  padding: 10px 30px;
+  color: #fff;
+  transition: 0.4s;
+  border-radius: 4px;
+}
+
+.contact .php-email-form button[type=submit]:hover {
+  background: #5969f3;
 }
 
 @keyframes animate-loading {
