@@ -26,7 +26,7 @@ function exibirPerfil() {
     // cargoGeral.innerHTML = sessionStorage.CARGO_USUARIO;
 
     let fotoEditar = document.getElementById("foto-editar");
-    fotoEditar.setAttribute("src", `${scrFoto}`);
+    fotoEditar.setAttribute("src", `assets/img/usuario/${scrFoto}`);
     let nomeEditar = document.getElementById("nome-editar");
     nomeEditar.value = sessionStorage.NOME_USUARIO;
     let cpfEditar = document.getElementById("cpf-editar");
