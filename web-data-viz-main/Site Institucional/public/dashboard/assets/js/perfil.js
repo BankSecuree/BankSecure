@@ -14,16 +14,18 @@ function exibirPerfil() {
     nomeGeral.innerHTML = sessionStorage.NOME_USUARIO;
     let cpfGeral = document.getElementById("cpf-geral");
     cpfGeral.innerHTML = sessionStorage.CPF_USUARIO;
-    // let telefoneGeral = document.getElementById("telefone-geral");
-    // telefoneGeral.innerHTML = sessionStorage.TELEFONE_USUARIO;
+    let dataNascimentoGeral = document.getElementById("dataNascimento-geral");
+    dataNascimentoGeral.innerHTML = sessionStorage.DATA_NASCIMENTO_USUARIO;
+    let telefoneGeral = document.getElementById("telefone-geral");
+    telefoneGeral.innerHTML = sessionStorage.TELEFONE_USUARIO;
     let emailGeral = document.getElementById("email-geral");
     emailGeral.innerHTML = sessionStorage.EMAIL_USUARIO;
-    // let empresaGeral = document.getElementById("empresa-geral");
-    // empresaGeral.innerHTML = sessionStorage.EMPRESA_USUARIO;
-    // let cnpjGeral = document.getElementById("cnpj-geral");
-    // cnpjGeral.innerHTML = sessionStorage.CNPJ_USUARIO;
-    // let cargoGeral = document.getElementById("cargo-geral");
-    // cargoGeral.innerHTML = sessionStorage.CARGO_USUARIO;
+    let empresaGeral = document.getElementById("empresa-geral");
+    empresaGeral.innerHTML = sessionStorage.EMPRESA_USUARIO;
+    let cnpjGeral = document.getElementById("cnpj-geral");
+    cnpjGeral.innerHTML = sessionStorage.CNPJ_USUARIO;
+    let cargoGeral = document.getElementById("cargo-geral");
+    cargoGeral.innerHTML = sessionStorage.CARGO_USUARIO;
 
     let fotoEditar = document.getElementById("foto-editar");
     fotoEditar.setAttribute("src", `assets/img/usuario/${scrFoto}`);
@@ -31,16 +33,18 @@ function exibirPerfil() {
     nomeEditar.value = sessionStorage.NOME_USUARIO;
     let cpfEditar = document.getElementById("cpf-editar");
     cpfEditar.value = sessionStorage.CPF_USUARIO;
-    // let telefoneEditar = document.getElementById("telefone-editar");
-    // telefoneEditar.value = sessionStorage.TELEFONE_USUARIO;
+    let dataNascimentoEditar = document.getElementById("dataNascimento-editar");
+    dataNascimentoEditar.innerHTML = sessionStorage.DATA_NASCIMENTO_USUARIO;
+    let telefoneEditar = document.getElementById("telefone-editar");
+    telefoneEditar.value = sessionStorage.TELEFONE_USUARIO;
     let emailEditar = document.getElementById("email-editar");
     emailEditar.value = sessionStorage.EMAIL_USUARIO;
-    // let empresaEditar = document.getElementById("empresa-editar");
-    // empresaEditar.value = sessionStorage.EMPRESA_USUARIO;
-    // let cnpjEditar = document.getElementById("cnpj-editar");
-    // cnpjEditar.value = sessionStorage.CNPJ_USUARIO;
-    // let cargoEditar = document.getElementById("cargo-editar");
-    // cargoEditar.value = sessionStorage.CARGO_USUARIO;
+    let empresaEditar = document.getElementById("empresa-editar");
+    empresaEditar.value = sessionStorage.EMPRESA_USUARIO;
+    let cnpjEditar = document.getElementById("cnpj-editar");
+    cnpjEditar.value = sessionStorage.CNPJ_USUARIO;
+    let cargoEditar = document.getElementById("cargo-editar");
+    cargoEditar.value = sessionStorage.CARGO_USUARIO;
 }
 
 function novaImagem() {

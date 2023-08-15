@@ -11,7 +11,7 @@ function exibirTabelaUsuarios() {
                 throw "Nenhum resultado encontrado!!";
             }
             resposta.json().then(function (resposta) {
-                console.log("Dados recebidos: ", JSON.stringify(resposta));
+                // console.log("Dados recebidos: ", JSON.stringify(resposta));
                 var lista = document.getElementById("tabela-usuarios");
                 for (let i = 0; i < resposta.length; i++) {
                     var publicacao = resposta[i];
@@ -26,7 +26,9 @@ function exibirTabelaUsuarios() {
                     var tdFuncionarios = document.createElement("td");
                     tdFuncionarios.innerHTML = publicacao.funcionarios;
                     var tdInicio = document.createElement("td");
-                    tdInicio.innerHTML = publicacao.dataInicio;
+                    var dataInicio = new Date(publicacao.dataInicio)
+                    dataInicio = `${dataInicio.getDate().toString().padStart(2, '0')}/${(dataInicio.getMonth() + 1).toString().padStart(2, '0')}/${dataInicio.getFullYear().toString()}`
+                    tdInicio.innerHTML = dataInicio;
                     var tdButton = document.createElement("td");
                     tdButton.innerHTML = `<a onclick="excluirUsuario(${publicacao.idUsuario})" class="btn btn-danger btn-sm" title="Remove my profile image"><i
                     class="bi bi-trash"></i></a>`;
@@ -51,4 +53,8 @@ function exibirTabelaUsuarios() {
         console.error(resposta);
         // finalizarAguardar();
     });
+}
+
+function excluirUsuario(idUsuario) {
+    console.log( `Excluindo usuário ${idUsuario} funcionando `)
 }
