@@ -593,7 +593,9 @@ h6 {
 .header-nav .profile .dropdown-item:hover {
   background-color: #f6f9ff;
 }
-
+#empresa-cadastrar, #cnpj-cadastrar, #agencia-cadastrar, #cargo-cadastrar{
+  width: 140%;
+}
 /*--------------------------------------------------------------
 # Sidebar
 --------------------------------------------------------------*/
@@ -757,6 +759,9 @@ h6 {
   background-color: #4154f1;
 }
 
+#btnNav{
+  cursor: pointer;
+}
 /*--------------------------------------------------------------
 # Dashboard
 --------------------------------------------------------------*/
@@ -956,6 +961,14 @@ h6 {
 .dashboard .top-selling img {
   border-radius: 5px;
   max-width: 60px;
+}
+
+#budgetChart{
+  min-height: 400px;
+}
+
+#trafficChart{
+  min-height: 400px;
 }
 
 /*--------------------------------------------------------------
@@ -1170,6 +1183,10 @@ h6 {
   100% {
     transform: rotate(360deg);
   }
+}
+
+#foto-usuario{
+  padding-right: 5px;
 }
 
 /*--------------------------------------------------------------
