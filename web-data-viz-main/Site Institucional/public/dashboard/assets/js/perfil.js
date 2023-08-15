@@ -56,11 +56,32 @@ function novaImagem() {
         body: formData
     })
         .then(res => {
-            
-            exibirInfos();
-            exibirPerfil();
+            atualizarFoto()
         })
         .catch(err => {
             console.log(err);
         })
+}
+
+function atualizarFoto() {
+
+    fetch(`/perfil/atualizarFoto/${sessionStorage.ID_USUARIO}`).then(function (resposta) {
+        if (resposta.ok) {
+            resposta.json().then(json => {
+                console.log(JSON.stringify(json));
+                
+                sessionStorage.FOTO_USUARIO = json[0].foto;
+               
+                setTimeout(function () {
+                    location.reload();
+                }, 2000); 
+
+            });
+        } else {
+            throw ('Houve um erro na API!');
+        }
+    }).catch(function (resposta) {
+        console.error(resposta);
+        // finalizarAguardar();
+    });
 }
