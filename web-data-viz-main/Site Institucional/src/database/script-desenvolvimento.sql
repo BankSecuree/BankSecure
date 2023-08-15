@@ -46,11 +46,12 @@ select * from usuario;
 DELIMITER //
 CREATE PROCEDURE cadastrar_usuario(IN 
 	us_nome VARCHAR(50), us_cpf CHAR(14), us_telefone CHAR(14), us_dataNascimento DATE,
-    em_nomeEmpresa VARCHAR (50), em_cnpj CHAR(18)
+    em_nomeEmpresa VARCHAR (50), em_cnpj CHAR(18),
+    us_email VARCHAR(50), us_senha VARCHAR(16)
 )
 BEGIN
-	INSERT INTO usuario (nome, cpf, telefone, dataNascimento) 
-		VALUES (us_nome, us_cpf, us_telefone, us_dataNascimento);
+	INSERT INTO usuario (nome, cpf, telefone, dataNascimento, email, senha) 
+		VALUES (us_nome, us_cpf, us_telefone, us_dataNascimento, us_email, us_senha);
 	INSERT INTO empresa (nomeEmpresa, cnpj) 
 		VALUES (em_nomeEmpresa, em_cnpj);
 END//
