@@ -10,9 +10,7 @@
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
   <!-- Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
   <!-- CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -298,7 +296,7 @@
           <span>Cadastrar</span>
         </a>
       </li>
-
+ 
       <!-- Sair Nav -->
       <li class="nav-item">
         <a class="nav-link collapsed" onclick="confirmarSair()" style="cursor: pointer;">
@@ -312,15 +310,15 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Profile</h1>
+      <h1>Usuários</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Users</li>
-          <li class="breadcrumb-item active">Profile</li>
+          <li class="breadcrumb-item">Conta</li>
+          <li class="breadcrumb-item active">Usuários</li>
         </ol>
       </nav>
-    </div><!-- End Page Title -->
+    </div>
 
     <section class="section profile">
       <div class="row">
@@ -329,9 +327,9 @@
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-              <h2>Kevin Anderson</h2>
-              <h3>Web Designer</h3>
+              <img alt="Profile" class="rounded-circle" id="foto-perfil">
+              <h2 id="nome-perfil"></h2>
+              <h3 id="cardo-perfil"></h3>
               <div class="social-links mt-2">
                 <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
                 <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
@@ -369,37 +367,37 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">Nome Completo</div>
-                    <div class="col-lg-9 col-md-8">Kevin Anderson</div>
+                    <div class="col-lg-9 col-md-8" id="nome-geral"></div>
                   </div>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Empresa</div>
-                    <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Cargo</div>
-                    <div class="col-lg-9 col-md-8">Web Designer</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Cidade</div>
-                    <div class="col-lg-9 col-md-8">USA</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Endereço</div>
-                    <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
+                    <div class="col-lg-3 col-md-4 label">CPF</div>
+                    <div class="col-lg-9 col-md-8" id="cpf-geral"></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Telefone</div>
-                    <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
+                    <div class="col-lg-9 col-md-8" id="telefone-geral"></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+                    <div class="col-lg-9 col-md-8" id="email-geral"></div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Empresa</div>
+                    <div class="col-lg-9 col-md-8" id="empresa-geral"></div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">CNPJ</div>
+                    <div class="col-lg-9 col-md-8" id="cnpj-geral"></div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Cargo</div>
+                    <div class="col-lg-9 col-md-8" id="cargo-geral"></div>
                   </div>
 
                 </div>
@@ -411,11 +409,12 @@
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Imagem de Perfil</label>
                       <div class="col-md-8 col-lg-9">
-                        <img src="assets/img/profile-img.jpg" alt="Profile">
+                        <img id="foto-editar">
+                        <input type="file" id="imgNova">
                         <div class="pt-2">
-                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i
+                          <a onclick="novaImagem()" class="btn btn-primary btn-sm" title="Upload new profile image"><i
                               class="bi bi-upload"></i></a>
-                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i
+                          <a onclick="excluirImagem(idUsuario)" class="btn btn-danger btn-sm" title="Remove my profile image"><i
                               class="bi bi-trash"></i></a>
                         </div>
                       </div>
@@ -424,58 +423,56 @@
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Nome Completo</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName" value="Kevin Anderson">
+                        <input name="fullName" type="text" class="form-control" id="nome-editar">
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="cpf" class="col-md-4 col-lg-3 col-form-label">CPF</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="cpf" type="text" class="form-control" id="cpf-editar">
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label class="col-md-4 col-lg-3 col-form-label">Telefone</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input type="text" class="form-control" id="telefone-editar">
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label class="col-md-4 col-lg-3 col-form-label">Email</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input type="email" class="form-control" id="email-editar">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">Empresa</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="company"
-                          value="Lueilwitz, Wisoky and Leuschke">
+                        <input name="company" type="text" class="form-control" id="empresa-editar">
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Cargo</label>
+                      <label class="col-md-4 col-lg-3 col-form-label">CNPJ</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" id="Job" value="Web Designer">
+                        <input type="text" class="form-control" id="cnpj-editar">
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="Country" class="col-md-4 col-lg-3 col-form-label">Cidade</label>
+                      <label class="col-md-4 col-lg-3 col-form-label">Cargo</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" id="Country" value="USA">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">Endereço</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control" id="Address"
-                          value="A108 Adam Street, New York, NY 535022">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Telefone</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="Phone" value="(436) 486-3538 x29071">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="Email" value="k.anderson@example.com">
+                        <input type="text" class="form-control" id="cargo-editar">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Perfil do Instagram</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="instagram" type="text" class="form-control" id="Instagram"
+                        <input name="instagram" type="text" class="form-control" id="instagram-editar"
                           value="https://instagram.com/#">
                       </div>
                     </div>
@@ -483,7 +480,7 @@
                     <div class="row mb-3">
                       <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Perfil do Linkedin</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="linkedin" type="text" class="form-control" id="Linkedin"
+                        <input name="linkedin" type="text" class="form-control" id="linkedin-editar"
                           value="https://linkedin.com/#">
                       </div>
                     </div>
@@ -541,7 +538,7 @@
       </div>
     </section>
 
-  </main><!-- End #main -->
+  </main>
 
   <!-- Footer -->
   <footer id="footer" class="footer">
@@ -553,10 +550,13 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 </body>
+
 </html>
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
 <script src="assets/js/main.js"></script>
+<script src="assets/js/perfil.js"></script>
+
 <script>
   exibirInfos();
+  exibirPerfil();
 </script>
