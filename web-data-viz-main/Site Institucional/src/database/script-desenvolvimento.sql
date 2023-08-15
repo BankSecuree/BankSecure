@@ -20,6 +20,7 @@ CREATE TABLE usuario (
     gerente INT,
 	foto VARCHAR(255),
     fkEmpresa INT,
+    dataInicio DATE,
     FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
 );
 
