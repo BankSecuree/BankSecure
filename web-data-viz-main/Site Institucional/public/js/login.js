@@ -58,6 +58,7 @@ function entrar() {
                     sessionStorage.CPF_USUARIO = json.cpf;
                     sessionStorage.TELEFONE_USUARIO = json.telefone;
                     sessionStorage.FOTO_USUARIO = json.foto;
+                    sessionStorage.GERENTE_USUARIO = json.gerente;
                     
                    
                     setTimeout(function () {
