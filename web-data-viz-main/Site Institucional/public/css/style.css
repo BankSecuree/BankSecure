@@ -680,10 +680,15 @@ section {
   padding: 0 100px 60px 100px;
 }
 
-.why-us .accordion-list ul {
+.why-us .accordion-list .solucao-list {
   padding: 0;
   list-style: none;
 }
+
+.why-us .beneficios-list{
+  list-style: none;
+}
+
 
 .why-us .accordion-list li+li {
   margin-top: 15px;
@@ -691,10 +696,13 @@ section {
 
 .why-us .accordion-list li {
   padding: 20px;
-  background: #fff;
   border-radius: 4px;
+  background-color: #f3f5fa;
 }
 
+.why-us .beneficios-list li{
+  background-color: #ffffff;
+}
 .why-us .accordion-list a {
   display: block;
   position: relative;
