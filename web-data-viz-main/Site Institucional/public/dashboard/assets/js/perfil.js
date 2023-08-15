@@ -39,10 +39,6 @@ function exibirPerfil() {
     telefoneEditar.value = sessionStorage.TELEFONE_USUARIO;
     let emailEditar = document.getElementById("email-editar");
     emailEditar.value = sessionStorage.EMAIL_USUARIO;
-    let empresaEditar = document.getElementById("empresa-editar");
-    empresaEditar.value = sessionStorage.NOME_EMPRESA;
-    let cnpjEditar = document.getElementById("cnpj-editar");
-    cnpjEditar.value = sessionStorage.CNPJ_EMPRESA;
     let cargoEditar = document.getElementById("cargo-editar");
     cargoEditar.value = sessionStorage.CARGO_USUARIO;
 }
@@ -64,17 +60,16 @@ function novaImagem() {
 }
 
 function atualizarFoto() {
-
     fetch(`/perfil/atualizarFoto/${sessionStorage.ID_USUARIO}`).then(function (resposta) {
         if (resposta.ok) {
             resposta.json().then(json => {
                 console.log(JSON.stringify(json));
-                
+
                 sessionStorage.FOTO_USUARIO = json[0].foto;
-               
+
                 setTimeout(function () {
                     location.reload();
-                }, 2000); 
+                }, 2000);
 
             });
         } else {
@@ -84,4 +79,28 @@ function atualizarFoto() {
         console.error(resposta);
         // finalizarAguardar();
     });
+}
+
+function atualizarDados() {
+    let nomeVar = (document.getElementById("nome-editar")).value;
+    let cpfVar = (document.getElementById("cpf-editar")).value;
+    let dataNascimentoVar = (document.getElementById("dataNascimento-editar")).value ;
+    let telefoneVar = (document.getElementById("telefone-editar")).value;
+    let emailVar = (document.getElementById("email-editar")).value;
+    let cargoVar = (document.getElementById("cargo-editar")).value;
+    fetch(`/perfil/alterarDados/${sessionStorage.ID_USUARIO}`, {
+        method: "POST",
+        body: JSON.stringify({
+            nome: nomeVar,
+            cpf: cpfVar,
+            dataNascimento: dataNascimentoVar,
+            telefone: telefoneVar,
+            email: emailVar,
+            cargo:cargoVar
+        })
+    }).then(res => {
+        alert("ok")
+    }).catch(err => {
+            console.log(err);
+        });
 }

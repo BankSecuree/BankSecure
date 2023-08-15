@@ -30,8 +30,25 @@ function atualizarFoto(idUsuario) {
     return database.executar(instrucao);
 }
 
+function atualizarDados(nome,cpf,dataNascimento,telefone,email,cargo,idUsuario) {
+    console.log("ACESSEI O PERFIL  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function alterarImagem():", nome, cpf, dataNascimento, telefone, email, cargo, idUsuario);
+    var instrucao = `
+    UPDATE usuario SET 
+        nome = '${nome}' AND 
+        cpf = '${cpf}' AND
+        dataNascimento = '${dataNascimento}' AND 
+        telefone = '${telefone}' AND  
+        email = '${email}' AND 
+        cargo = '${cargo}' AND 
+            WHERE idUsuario = ${idUsuario};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
     exibirPerfil,
     alterarImagem,
-    atualizarFoto
+    atualizarFoto,
+    atualizarDados
 };

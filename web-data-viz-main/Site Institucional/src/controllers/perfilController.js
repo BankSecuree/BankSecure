@@ -45,6 +45,23 @@ function atualizarFoto(req, res) {
   });
 }
 
+function atualizarFoto(req, res) {
+  var nome = req.file.nome;
+  var cpf = req.file.cpf;
+  var dataNascimento = req.file.dataNascimento;
+  var telefone = req.file.telefone;
+  var email = req.file.email;
+  var cargo = req.file.cargo;
+  var idUsuario = req.params.idUsuario;
+
+  perfilModel.atualizarDados(nome,cpf,dataNascimento,telefone,email,cargo,idUsuario)
+  .then(resultado => {
+      res.status(201).send("Dados atualizados com sucesso!");
+      res.json(resultado);
+    }).catch(err => {
+      res.status(500).send(err);
+    });
+}
 module.exports = {
   exibirPerfil,
   alterarImagem,

@@ -16,4 +16,8 @@ router.get("/atualizarFoto/:idUsuario", function (req, res) {
     perfilController.atualizarFoto(req, res);
 });
 
+router.post("/atualizarDados/:idUsuario", function (req, res)  {
+    perfilController.atualizarDados(req, res);
+});
+
 module.exports = router;
