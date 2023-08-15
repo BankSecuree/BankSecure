@@ -593,7 +593,9 @@ h6 {
 .header-nav .profile .dropdown-item:hover {
   background-color: #f6f9ff;
 }
-
+#empresa-cadastrar, #cnpj-cadastrar, #agencia-cadastrar, #cargo-cadastrar{
+  width: 140%;
+}
 /*--------------------------------------------------------------
 # Sidebar
 --------------------------------------------------------------*/
