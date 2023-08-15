@@ -204,7 +204,7 @@
 
           <!-- Foto e Nome -->
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img id="foto-usuario" class="rounded-circle" style="padding-right: 5px;">
+            <img id="foto-usuario" class="rounded-circle">
             <span class="d-none d-md-block" id="nome-usuario"></span>
           </a>
           
@@ -302,7 +302,7 @@
 
       <!-- Sair Nav -->
       <li class="nav-item">
-        <a class="nav-link collapsed" onclick="confirmarSair()" style="cursor: pointer;">
+        <a class="nav-link collapsed" id="btnNav" onclick="confirmarSair()">
           <i class="bi bi-box-arrow-right"></i>
           <span>Sair</span>
         </a>
@@ -712,7 +712,7 @@
             <div class="card-body pb-0">
               <h5 class="card-title">Budget Report <span>| This Month</span></h5>
 
-              <div id="budgetChart" style="min-height: 400px;" class="echart"></div>
+              <div id="budgetChart" class="echart"></div>
 
             </div>
           </div><!-- End Budget Report -->
@@ -735,7 +735,7 @@
             <div class="card-body pb-0">
               <h5 class="card-title">Website Traffic <span>| Today</span></h5>
 
-              <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
+              <div id="trafficChart" class="echart"></div>
 
             </div>
           </div><!-- End Website Traffic -->

@@ -32,7 +32,7 @@ function entrar() {
         console.log("FORM LOGIN: ", emailVar);
         console.log("FORM SENHA: ", senhaVar);
 
-        fetch("/usuarios/autenticar", {
+        fetch("/usuario/autenticar", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -58,6 +58,7 @@ function entrar() {
                     sessionStorage.CPF_USUARIO = json.cpf;
                     sessionStorage.TELEFONE_USUARIO = json.telefone;
                     sessionStorage.FOTO_USUARIO = json.foto;
+                    sessionStorage.GERENTE_USUARIO = json.gerente;
                     
                    
                     setTimeout(function () {
