@@ -27,6 +27,9 @@ function exibirTabelaUsuarios() {
                     tdFuncionarios.innerHTML = publicacao.funcionarios;
                     var tdInicio = document.createElement("td");
                     tdInicio.innerHTML = publicacao.dataInicio;
+                    var tdButton = document.createElement("td");
+                    tdButton.innerHTML = `<a onclick="excluirUsuario(${publicacao.idUsuario})" class="btn btn-danger btn-sm" title="Remove my profile image"><i
+                    class="bi bi-trash"></i></a>`;
                     var tr = document.createElement("tr");
                     var tbody = document.createElement("tbody");
 
@@ -35,6 +38,7 @@ function exibirTabelaUsuarios() {
                     tr.appendChild(tdEmpresa);
                     tr.appendChild(tdFuncionarios);
                     tr.appendChild(tdInicio);
+                    tr.appendChild(tdButton);
                     tbody.appendChild(tr);
                     lista.appendChild(tbody);
 
