@@ -4,7 +4,7 @@
 
 body {
   font-family: "Open Sans", sans-serif;
-  background-image: url(../assets/img/fundo-city.jpg);
+  /* background-image: url(../assets/img/fundo-city.jpg); */
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -36,22 +36,26 @@ h6 {
 }
 
 .form-label{
-  color: white;
+  color: black;
+  font-weight: bold;
 }
 
 .text-small{
-  color: white;
+  color: black;
   text-align: center;
 }
 
 .form-check-label, .small{
-  color: white;
+  color: black;
 }
-
+#acceptTerms{
+  border-color: black;
+}
 .btn-primary {
   background-color: transparent;
-  color: #ffffff;
-  border-color: #E8F0FF;
+  color: black;
+  /* border-color: #E8F0FF; */
+  border-color: #1e2532;
   border: 5%;
 }
 
@@ -82,8 +86,8 @@ h6 {
   margin-bottom: 30px;
   border: none;
   border-radius: 5px;
-  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-  background-color: #171627f5;
+  box-shadow: 10px 60px 60px 60px rgba(1, 41, 112, 0.1);
+  background-color: #fff;
 }
 
 .card-header,
@@ -97,13 +101,13 @@ h6 {
 .card-title {
   padding: 5px 0 15px 0;
   font-size: 18px;
-  font-weight: 500;
-  color: white;
+  font-weight: 500; 
+  color: black;
   font-family: "Poppins", sans-serif;
 }
 
 .card-title span {
-  color: white;
+  color: black;
   font-size: 14px;
   font-weight: 400;
 }

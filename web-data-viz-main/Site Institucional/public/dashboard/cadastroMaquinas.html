@@ -12,10 +12,10 @@
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
   <!-- CSS Files -->
-  <link href="dashboard/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
  
   <!-- Main CSS File -->
-  <link href="css/cadastro.css" rel="stylesheet">
+  <link href="../css/cadastro.css" rel="stylesheet">
 </head>
 
 <body>
@@ -31,8 +31,8 @@
               <div class="card mb-3">
 
                 <div class="d-flex justify-content-center py-4">
-                  <a href="index.html" class="logo d-flex align-items-center w-auto">
-                    <img class="logo-top-form" src="assets/img/logo_letreiro.png">
+                  <a href="../index.html" class="logo d-flex align-items-center w-auto">
+                    <img class="logo-top-form" src="../assets/img/logo_letreiro.png">
                   </a>
                 </div>
 
@@ -46,28 +46,27 @@
                   <form class="row g-3 needs-validation" novalidate>
                     <div class="col-12">
                       <label for="yourName" class="form-label">CPU</label>
-                      <input type="text" name="name" class="form-control" id="yourName" required>
+                      <input type="text" name="name" class="form-control" id="yourName" required placeholder="Ex:i7, Ryzen7">
                       <div class="invalid-feedback">Por favor, insira uma unidade válida</div>
                     </div>
 
                     <div class="col-12">
                       <label for="yourEmail" class="form-label">Disco</label>
-                      <input type="email" name="email" class="form-control" id="yourEmail" required>
+                      <input type="email" name="email" class="form-control" id="yourEmail" required placeholder="Ex:500Gb, 1Tb">
                       <div class="invalid-feedback">Por favor, insira uma unidade válida</div>
                     </div>
 
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Memória</label>
                       <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text" name="username" class="form-control" id="yourUsername" required>
+                        <input type="text" name="username" class="form-control" id="yourUsername" required placeholder="Ex:8Gb,16Gb">
                         <div class="invalid-feedback">Por favor, insira uma unidade válida</div>
                       </div>
                     </div>
 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Temperatura limite</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" required>
+                      <input type="password" name="password" class="form-control" id="yourPassword" required placeholder="Ex:100°C">
                       <div class="invalid-feedback">Por favor, insira um limite válido</div>
                     </div>
 
@@ -101,13 +100,13 @@
 
 </html>
 <!-- Vendor JS Files -->
-<script src="dashboard/assets/vendor/apexcharts/apexcharts.min.js"></script>
-<script src="dashboard/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="dashboard/assets/vendor/chart.js/chart.umd.js"></script>
-<script src="dashboard/assets/vendor/echarts/echarts.min.js"></script>
-<script src="dashboard/assets/vendor/quill/quill.min.js"></script>
-<script src="dashboard/assets/vendor/simple-datatables/simple-datatables.js"></script>
-<script src="dashboard/assets/vendor/tinymce/tinymce.min.js"></script>
-<script src="dashboard/assets/vendor/php-email-form/validate.js"></script>
+<script src="../dashboard/assets/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="../dashboard/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../dashboard/assets/vendor/chart.js/chart.umd.js"></script>
+<script src="../dashboard/assets/vendor/echarts/echarts.min.js"></script>
+<script src="../dashboard/assets/vendor/quill/quill.min.js"></script>
+<script src="../dashboard/assets/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="../dashboard/assets/vendor/tinymce/tinymce.min.js"></script>
+<script src="../dashboard/assets/vendor/php-email-form/validate.js"></script>
 <!-- Template Main JS File -->
-<script src="assets/js/main.js"></script>
+<script src="../assets/js/main.js"></script>
