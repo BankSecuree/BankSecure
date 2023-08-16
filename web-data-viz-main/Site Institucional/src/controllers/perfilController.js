@@ -45,19 +45,18 @@ function atualizarFoto(req, res) {
   });
 }
 
-function atualizarFoto(req, res) {
-  var nome = req.file.nome;
-  var cpf = req.file.cpf;
-  var dataNascimento = req.file.dataNascimento;
-  var telefone = req.file.telefone;
-  var email = req.file.email;
-  var cargo = req.file.cargo;
+function atualizarDados(req, res) {
+  var nome = req.body.nomeServer;
+  var cpf = req.body.cpfServer;
+  var dataNascimento = req.body.dataNascimentoServer;
+  var telefone = req.body.telefoneServer;
+  var email = req.body.emailServer;
+  var cargo = req.body.cargoServer;
   var idUsuario = req.params.idUsuario;
 
   perfilModel.atualizarDados(nome,cpf,dataNascimento,telefone,email,cargo,idUsuario)
   .then(resultado => {
       res.status(201).send("Dados atualizados com sucesso!");
-      res.json(resultado);
     }).catch(err => {
       res.status(500).send(err);
     });
@@ -65,5 +64,6 @@ function atualizarFoto(req, res) {
 module.exports = {
   exibirPerfil,
   alterarImagem,
-  atualizarFoto
+  atualizarFoto,
+  atualizarDados
 }

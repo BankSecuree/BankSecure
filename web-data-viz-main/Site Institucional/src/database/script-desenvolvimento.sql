@@ -45,7 +45,7 @@ FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
 
 DELIMITER //
 CREATE PROCEDURE cadastrar_usuario(IN 
-	us_nome VARCHAR(50), us_cpf CHAR(14), us_telefone CHAR(14), us_dataNascimento DATE,
+	us_nome VARCHAR(50), us_cpf CHAR(14), us_telefone CHAR(15), us_dataNascimento DATE,
     em_nomeEmpresa VARCHAR (50), em_cnpj CHAR(18),
     us_email VARCHAR(50), us_senha VARCHAR(16)
 )

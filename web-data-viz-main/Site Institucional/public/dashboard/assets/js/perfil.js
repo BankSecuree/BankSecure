@@ -85,22 +85,48 @@ function atualizarDados() {
     let nomeVar = (document.getElementById("nome-editar")).value;
     let cpfVar = (document.getElementById("cpf-editar")).value;
     let dataNascimentoVar = (document.getElementById("dataNascimento-editar")).value ;
+    dataNascimentoVar = new Date(dataNascimentoVar);
+    dataNascimentoVar = `${dataNascimentoVar.getFullYear().toString()}-${(dataNascimentoVar.getMonth() + 1).toString().padStart(2, '0')}-}${dataNascimentoVar.getDate().toString().padStart(2, '0')}`
     let telefoneVar = (document.getElementById("telefone-editar")).value;
     let emailVar = (document.getElementById("email-editar")).value;
     let cargoVar = (document.getElementById("cargo-editar")).value;
-    fetch(`/perfil/alterarDados/${sessionStorage.ID_USUARIO}`, {
+    console.log(nomeVar)
+    fetch(`/perfil/atualizarDados/${sessionStorage.ID_USUARIO}`, {
         method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
         body: JSON.stringify({
-            nome: nomeVar,
-            cpf: cpfVar,
-            dataNascimento: dataNascimentoVar,
-            telefone: telefoneVar,
-            email: emailVar,
-            cargo:cargoVar
+            nomeServer: nomeVar,
+            cpfServer: cpfVar,
+            dataNascimentoServer: dataNascimentoVar,
+            telefoneServer: telefoneVar,
+            emailServer: emailVar,
+            cargoServer: cargoVar
         })
-    }).then(res => {
-        alert("ok")
-    }).catch(err => {
-            console.log(err);
-        });
+    }).then(function (resposta) {
+        if (resposta.ok) {
+            cardMsgPerfil.style.display = "block"
+            cardMsgPerfil.style.border = "2px solid greenyellow"
+            cardMsgPerfil.style.color = "greenyellow"
+            mensagem_erroLogin.innerHTML = "✅Entrando! Aguarde...✅";
+        } else {
+            cardMsgPerfil.style.display = "block"
+            cardMsgPerfil.style.border = "2px solid red"
+            cardMsgPerfil.style.color = "red"
+            mensagem_erroLogin.innerHTML = "❌Conta não cadastrada❌";
+        
+            console.log("Houve um erro ao tentar atualizar os dados!");
+
+            resposta.text().then(texto => {
+                console.error(texto);
+                // finalizarAguardar(texto);
+            });
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
+    })
+
+    return false;
 }
