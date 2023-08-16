@@ -1,6 +1,6 @@
 function exibirInfos() {
   if (sessionStorage.ID_USUARIO == undefined) {
-    window.location = "../index.html";
+    window.location = "../login.html";
   } else {
     var scrFoto = "profile.png"
     if (sessionStorage.FOTO_USUARIO != "null" && sessionStorage.FOTO_USUARIO != "undefined") {
