@@ -90,7 +90,6 @@ function atualizarDados() {
     let telefoneVar = (document.getElementById("telefone-editar")).value;
     let emailVar = (document.getElementById("email-editar")).value;
     let cargoVar = (document.getElementById("cargo-editar")).value;
-    console.log(nomeVar)
     fetch(`/perfil/atualizarDados/${sessionStorage.ID_USUARIO}`, {
         method: "POST",
         headers: {
@@ -106,15 +105,15 @@ function atualizarDados() {
         })
     }).then(function (resposta) {
         if (resposta.ok) {
-            cardMsgPerfil.style.display = "block"
-            cardMsgPerfil.style.border = "2px solid greenyellow"
-            cardMsgPerfil.style.color = "greenyellow"
-            mensagem_erroLogin.innerHTML = "✅Entrando! Aguarde...✅";
+            cardMsg.style.display = "block"
+            cardMsg.style.border = "2px solid greenyellow"
+            cardMsg.style.color = "greenyellow"
+            cardMsg.innerHTML = "✅Dados atualizados! Atualizando...✅";
         } else {
-            cardMsgPerfil.style.display = "block"
-            cardMsgPerfil.style.border = "2px solid red"
-            cardMsgPerfil.style.color = "red"
-            mensagem_erroLogin.innerHTML = "❌Conta não cadastrada❌";
+            cardMsg.style.display = "block"
+            cardMsg.style.border = "2px solid red"
+            cardMsg.style.color = "red"
+            cardMsg.innerHTML = "❌Erro ao atualizar os dados! Tente novamente...";
         
             console.log("Houve um erro ao tentar atualizar os dados!");
 
