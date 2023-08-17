@@ -1,12 +1,18 @@
+-- Active: 1692279316574@@127.0.0.1@3306@bankSecure
 /* Comandos para mysql - banco local - ambiente de desenvolvimento */
 DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
 USE bankSecure;
 
-CREATE TABLE empresa(
-idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
-nomeEmpresa VARCHAR (50),
-cnpj CHAR (18)
+CREATE TABLE agencia(
+idAgencia INT PRIMARY KEY AUTO_INCREMENT,
+razaoSocial VARCHAR(50),
+nomeFantasia VARCHAR (100),
+CNPJ CHAR (18),
+logradouro VARCHAR(150),
+numero INT,
+CEP CHAR(8),
+telefone VARCHAR(11)
 );
 
 CREATE TABLE usuario (
@@ -57,7 +63,7 @@ BEGIN
 END//
 DELIMITER ;
 
-DROP USER 'user_bankSecure'@'localhost';
+DROP USER IF EXISTS 'user_bankSecure'@'localhost';
 CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'urubu100';
 GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';
 GRANT EXECUTE ON PROCEDURE cadastrar_usuario to 'user_bankSecure'@'localhost';
