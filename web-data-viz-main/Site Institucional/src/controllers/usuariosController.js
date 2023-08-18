@@ -27,6 +27,9 @@ function cadastrarEmpresaGerente(req, res) {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> a385b61d2c3de89b9ea7141c464c317de9eceae2
+=======
 >>>>>>> a385b61d2c3de89b9ea7141c464c317de9eceae2
 =======
 >>>>>>> a385b61d2c3de89b9ea7141c464c317de9eceae2
