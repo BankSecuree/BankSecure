@@ -24,7 +24,7 @@ function cadastrarEmpresaGerente(req, res) {
 
 
 
-  usuarioModel.cadastrarEmpresaGerente(nome, email, senha)
+  usuariosModel.cadastrarEmpresaGerente(nome, email, senha)
     .then(
       function (resultado) {
         res.json(resultado);
