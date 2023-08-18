@@ -67,6 +67,11 @@ BEGIN
 END//
 DELIMITER ;
 
+
+-- CHAMAR PROCEDURE
+
+--CALL cadastrar_usuario ("bruno","");
+
 DROP USER IF EXISTS 'user_bankSecure'@'localhost';
 CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'urubu100';
 GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';

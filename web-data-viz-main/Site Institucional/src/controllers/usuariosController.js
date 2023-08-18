@@ -22,6 +22,14 @@ function cadastrarEmpresaGerente(req, res) {
   var email = req.body.emailServer;
   var senha = req.body.senhaServer;
 
+<<<<<<< HEAD
+=======
+
+
+<<<<<<< HEAD
+>>>>>>> a385b61d2c3de89b9ea7141c464c317de9eceae2
+=======
+>>>>>>> a385b61d2c3de89b9ea7141c464c317de9eceae2
   usuariosModel.cadastrarEmpresaGerente(nome, email, senha)
     .then(
       function (resultado) {
