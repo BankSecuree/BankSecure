@@ -1,11 +1,11 @@
--- Active: 1692279316574@@127.0.0.1@3306@bankSecure
+-- Active: 1692322487627@@127.0.0.1@3306@bankSecure
 /* Comandos para mysql - banco local - ambiente de desenvolvimento */
 DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
 USE bankSecure;
 
-CREATE TABLE agencia(
-idAgencia INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE empresa(
+idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
 razaoSocial VARCHAR(50),
 nomeFantasia VARCHAR (100),
 CNPJ CHAR (18),
