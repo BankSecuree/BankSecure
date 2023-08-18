@@ -55,8 +55,11 @@ function exibirTabelaUsuarios() {
     });
 }
 
-function cadastrarEmpresaGerente()
 
 function excluirUsuario(idUsuario) {
     console.log( `Excluindo usuário ${idUsuario} funcionando `)
+}
+
+function cadastrarEmpresaGerente(){
+
 }

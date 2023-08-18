@@ -22,9 +22,7 @@ function cadastrarEmpresaGerente(req, res) {
   var email = req.body.emailServer;
   var senha = req.body.senhaServer;
 
-
-
-  usuarioModel.cadastrarEmpresaGerente(nome, email, senha)
+  usuariosModel.cadastrarEmpresaGerente(nome, email, senha)
     .then(
       function (resultado) {
         res.json(resultado);
