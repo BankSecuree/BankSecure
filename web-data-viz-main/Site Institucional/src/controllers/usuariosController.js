@@ -16,7 +16,7 @@ function exibirTabelaUsuarios(req, res) {
   });
 }
 
-function cadastrar(req, res) {
+function cadastrarEmpresaGerente(req, res) {
 
   var nome = req.body.nomeServer;
   var email = req.body.emailServer;

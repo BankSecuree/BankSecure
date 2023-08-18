@@ -15,7 +15,6 @@ function cadastrarEmpresaGerente() {
     var instrucao = `
     INSERT INTO () VALUES ('${nome}', '${email}', '${senha}');
     `;
-    `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
 }
