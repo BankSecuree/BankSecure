@@ -113,7 +113,7 @@ function cadastrarEmpresaGerente() {
 
             alert("Cadastro realizado com sucesso!");
             
-            window.location = "cadastroEmpresa.html";
+            window.location = "conta_usuarios.html";
             
 
             // limparFormulario();

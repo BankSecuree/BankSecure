@@ -81,10 +81,10 @@ CREATE PROCEDURE cadastrar_empresaGerente(IN
 	us_nome VARCHAR(50),
     us_cpf CHAR(14),
     us_telefone CHAR(15),
-    us_dataNascimento DATE,
-    us_gerente INT,
-	us_foto VARCHAR(255),
-    us_fkEmpresa INT
+    us_dataNascimento DATE
+    -- us_gerente INT,
+	-- us_foto VARCHAR(255),
+    -- us_fkEmpresa INT
 )
 BEGIN
 	INSERT INTO empresa (razaoSocial, nomeFantasia, CNPJ, logradouro, numero, CEP, telefone) 
@@ -106,3 +106,4 @@ FLUSH PRIVILEGES;
 
 INSERT INTO empresa (razaoSocial, nomeFantasia, CNPJ) VALUES ('Bank Secure', 'Bank Secure', 123456789098765432);
 INSERT INTO usuario (email, senha, nome) VALUES ('banksecure@contato.com', '12345', 'Admin Bank Secure');
+
