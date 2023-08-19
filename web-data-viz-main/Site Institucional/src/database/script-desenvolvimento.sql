@@ -67,10 +67,36 @@ BEGIN
 END//
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE cadastrar_empresaGerente(IN 
+	emp_razaoSocial VARCHAR(50),
+	emp_nomeFantasia VARCHAR(100),
+	emp_CNPJ CHAR(18),
+	emp_logradouro VARCHAR(150),
+	emp_numero INT,
+	emp_CEP CHAR(8),
+	emp_telefone VARCHAR(11),
+	us_email VARCHAR(50),
+	us_senha VARCHAR(16),
+	us_nome VARCHAR(50),
+    us_cpf CHAR(14),
+    us_telefone CHAR(15),
+    us_dataNascimento DATE,
+    us_gerente INT,
+	us_foto VARCHAR(255),
+    us_fkEmpresa INT
+)
+BEGIN
+	INSERT INTO empresa (razaoSocial, nomeFantasia, CNPJ, logradouro, numero, CEP, telefone) 
+		VALUES (emp_razaoSocial, emp_nomeFantasia, emp_CNPJ, emp_logradouro, emp_numero, emp_CEP, emp_telefone);
+	INSERT INTO usuario (email, senha, nome, cpf, telefone, dataNascimento) 
+		VALUES (us_email, us_senha, us_nome, us_cpf, us_telefone, us_dataNascimento);
+END//
+DELIMITER ;
 
 -- CHAMAR PROCEDURE
 
---CALL cadastrar_usuario ("bruno","");
+-- CALL cadastrar_usuario ("bruno","");
 
 DROP USER IF EXISTS 'user_bankSecure'@'localhost';
 CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'urubu100';

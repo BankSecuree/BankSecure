@@ -8,7 +8,7 @@ router.get("/exibirTabelaUsuarios/:gerente", function (req, res) {
 });
 
 router.post("/cadastrarEmpresaGerente", function (req, res) {
-    usuarioController.cadastrarEmpresaGerente(req, res);
+    usuariosController.cadastrarEmpresaGerente(req, res);
 })
 
 module.exports = router;

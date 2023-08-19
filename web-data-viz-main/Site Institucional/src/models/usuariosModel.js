@@ -10,10 +10,10 @@ function exibirTabelaUsuarios(gerente) {
     return database.executar(instrucao);
 }
 
-function cadastrarEmpresaGerente() {
+function cadastrarEmpresaGerente(cnpj, razaoSocial, nomeFantasia, logradouro, numLogradouro, cep, telefone, nomeCompleto, cpf, celular, nascimento, email, senha) {
     console.log("ACESSEI O USUARIOS  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function exibirTabelaUsuarios()");
     var instrucao = `
-    INSERT INTO () VALUES ('${nome}', '${email}', '${senha}');
+    CALL cadastrar_empresaGerente ('${razaoSocial}', '${nomeFantasia}', '${cnpj}', '${logradouro}', ${numLogradouro}, '${cep}', '${telefone}', '${email}', '${senha}', '${nomeCompleto}', '${cpf}', '${celular}', '${nascimento}');
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);

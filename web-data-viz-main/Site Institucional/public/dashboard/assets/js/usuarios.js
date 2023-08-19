@@ -60,6 +60,72 @@ function excluirUsuario(idUsuario) {
     console.log( `Excluindo usuário ${idUsuario} funcionando `)
 }
 
-function cadastrarEmpresaGerente(){
+function cadastrarEmpresaGerente() {
 
+    var cnpjVar = iptCNPJ.value;
+    var razaoSocialVar = iptRazaoSocial.value;
+    var nomeFantasiaVar = iptNomeFantasia.value;
+    var logradouroVar = iptLogradouro.value;
+    var numLogradouroVar = iptNumLogradouro.value;
+    var cepVar = iptCEP.value;
+    var telefoneVar = iptTelefone.value;
+    var nomeCompletoVar = iptNomeCompleto.value;
+    var cpfVar = iptCPF.value;
+    var celularVar = iptCelular.value;
+    var nascimentoVar = iptNascimento.value;
+    var emailVar = iptEmail.value;
+    var senhaVar = iptSenha.value;
+    // var Var = ipt.value;
+    // var Var = ipt.value;
+  
+
+    // Enviando o valor da nova input
+    fetch("/usuarios/cadastrarEmpresaGerente", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            // crie um atributo que recebe o valor recuperado aqui
+            // Agora vá para o arquivo routes/usuario.js
+
+            cnpjServer: cnpjVar,
+            razaoSocialServer: razaoSocialVar,
+            nomeFantasiaServer: nomeFantasiaVar,
+            logradouroServer: logradouroVar,
+            numLogradouroServer: numLogradouroVar,
+            cepServer: cepVar,
+            telefoneServer: telefoneVar,
+            nomeCompletoServer: nomeCompletoVar,
+            cpfServer: cpfVar,
+            celularServer: celularVar,
+            nascimentoServer: nascimentoVar,
+            emailServer: emailVar,
+            senhaServer: senhaVar
+
+        })
+    }).then(function (resposta) {
+
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+            // cardErro.style.display = "block";
+
+            alert("Cadastro realizado com sucesso!");
+            
+            window.location = "cadastroEmpresa.html";
+            
+
+            // limparFormulario();
+            // finalizarAguardar();
+        } else {
+            throw ("Houve um erro ao tentar realizar o cadastro!");
+        }
+    }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+        // finalizarAguardar();
+    });
+
+    return false;
 }
+
