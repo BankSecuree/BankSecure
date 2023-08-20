@@ -104,6 +104,6 @@ GRANT EXECUTE ON PROCEDURE cadastrar_usuario to 'user_bankSecure'@'localhost';
 FLUSH PRIVILEGES;
 
 INSERT INTO empresa (razaoSocial, nomeFantasia, CNPJ) VALUES ('Bank Secure', 'Bank Secure', 123456789098765432);
-INSERT INTO usuario (email, senha, nome) VALUES ('banksecure@contato.com', '12345', 'Admin Bank Secure');
+INSERT INTO usuario (email, senha, nome, fkEmpresa) VALUES ('banksecure@contato.com', '12345', 'Admin Bank Secure', 123456789098765432);
 
 
