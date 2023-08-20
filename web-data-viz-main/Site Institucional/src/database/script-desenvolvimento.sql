@@ -5,10 +5,10 @@ CREATE DATABASE bankSecure;
 USE bankSecure;
 
 CREATE TABLE empresa(
-idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
+CNPJ CHAR (18) PRIMARY KEY,
+-- idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
 razaoSocial VARCHAR(50),
 nomeFantasia VARCHAR (100),
-CNPJ CHAR (18),
 logradouro VARCHAR(150),
 numero INT,
 CEP CHAR(8),
@@ -26,9 +26,9 @@ CREATE TABLE usuario (
     cargo VARCHAR(50),
     gerente INT,
 	foto VARCHAR(255),
-    fkEmpresa INT,
+    fkEmpresa CHAR(18),
     dataInicio DATE,
-    FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa),
+    FOREIGN KEY (fkEmpresa) REFERENCES empresa(CNPJ),
     FOREIGN KEY (gerente) REFERENCES usuario(idUsuario)
 );
 
@@ -40,8 +40,8 @@ CREATE TABLE maquina(
 	MaquinaCpu INT,
 	MaquinaDemoria INT,
 	MaquinaDisco INT, 
-	fkEmpresa INT,
-	FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
+	fkEmpresa CHAR(18),
+	FOREIGN KEY (fkEmpresa) REFERENCES empresa(CNPJ)
 );
 CREATE TABLE registros(
 dataHora DATETIME PRIMARY KEY,
@@ -49,8 +49,8 @@ usoMemoria INT,
 usoDisco INT,
 usoCPU INT,
 tempCPU VARCHAR(10),
-fkEmpresa INT,
-FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
+fkEmpresa CHAR(18),
+FOREIGN KEY (fkEmpresa) REFERENCES empresa(CNPJ)
 );
 
 DELIMITER //
@@ -69,9 +69,9 @@ DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE cadastrar_empresaGerente(IN 
+    emp_CNPJ CHAR(18),
 	emp_razaoSocial VARCHAR(50),
 	emp_nomeFantasia VARCHAR(100),
-	emp_CNPJ CHAR(18),
 	emp_logradouro VARCHAR(150),
 	emp_numero INT,
 	emp_CEP CHAR(8),
@@ -84,13 +84,12 @@ CREATE PROCEDURE cadastrar_empresaGerente(IN
     us_dataNascimento DATE
     -- us_gerente INT,
 	-- us_foto VARCHAR(255),
-    -- us_fkEmpresa INT
 )
 BEGIN
-	INSERT INTO empresa (razaoSocial, nomeFantasia, CNPJ, logradouro, numero, CEP, telefone) 
-		VALUES (emp_razaoSocial, emp_nomeFantasia, emp_CNPJ, emp_logradouro, emp_numero, emp_CEP, emp_telefone);
-	INSERT INTO usuario (email, senha, nome, cpf, telefone, dataNascimento) 
-		VALUES (us_email, us_senha, us_nome, us_cpf, us_telefone, us_dataNascimento);
+	INSERT INTO empresa (CNPJ, razaoSocial, nomeFantasia, logradouro, numero, CEP, telefone) 
+		VALUES (emp_CNPJ, emp_razaoSocial, emp_nomeFantasia, emp_logradouro, emp_numero, emp_CEP, emp_telefone);
+	INSERT INTO usuario (email, senha, nome, cpf, telefone, dataNascimento, fkEmpresa) 
+		VALUES (us_email, us_senha, us_nome, us_cpf, us_telefone, us_dataNascimento, emp_CNPJ);
 END//
 DELIMITER ;
 
@@ -106,4 +105,5 @@ FLUSH PRIVILEGES;
 
 INSERT INTO empresa (razaoSocial, nomeFantasia, CNPJ) VALUES ('Bank Secure', 'Bank Secure', 123456789098765432);
 INSERT INTO usuario (email, senha, nome) VALUES ('banksecure@contato.com', '12345', 'Admin Bank Secure');
+
 
