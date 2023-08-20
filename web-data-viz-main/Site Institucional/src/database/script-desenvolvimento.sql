@@ -5,7 +5,7 @@ CREATE DATABASE bankSecure;
 USE bankSecure;
 
 CREATE TABLE empresa(
-CNPJ CHAR (18) PRIMARY KEY,
+CNPJ CHAR (14) PRIMARY KEY,
 -- idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
 razaoSocial VARCHAR(50),
 nomeFantasia VARCHAR (100),
@@ -20,13 +20,13 @@ CREATE TABLE usuario (
     email VARCHAR(50),
 	senha VARCHAR(16),
 	nome VARCHAR(50),
-    cpf CHAR(14),
-    telefone CHAR(15),
+    cpf CHAR(11),
+    telefone CHAR(11),
     dataNascimento DATE,
     cargo VARCHAR(50),
     gerente INT,
 	foto VARCHAR(255),
-    fkEmpresa CHAR(18),
+    fkEmpresa CHAR(14),
     dataInicio DATE,
     FOREIGN KEY (fkEmpresa) REFERENCES empresa(CNPJ),
     FOREIGN KEY (gerente) REFERENCES usuario(idUsuario)
@@ -40,7 +40,7 @@ CREATE TABLE maquina(
 	MaquinaCpu INT,
 	MaquinaDemoria INT,
 	MaquinaDisco INT, 
-	fkEmpresa CHAR(18),
+	fkEmpresa CHAR(14),
 	FOREIGN KEY (fkEmpresa) REFERENCES empresa(CNPJ)
 );
 CREATE TABLE registros(
@@ -49,14 +49,14 @@ usoMemoria INT,
 usoDisco INT,
 usoCPU INT,
 tempCPU VARCHAR(10),
-fkEmpresa CHAR(18),
+fkEmpresa CHAR(14),
 FOREIGN KEY (fkEmpresa) REFERENCES empresa(CNPJ)
 );
 
 DELIMITER //
 CREATE PROCEDURE cadastrar_usuario(IN 
-	us_nome VARCHAR(50), us_cpf CHAR(14), us_telefone CHAR(15), us_dataNascimento DATE,
-    em_nomeEmpresa VARCHAR (50), em_cnpj CHAR(18),
+	us_nome VARCHAR(50), us_cpf CHAR(11), us_telefone CHAR(15), us_dataNascimento DATE,
+    em_nomeEmpresa VARCHAR (50), em_cnpj CHAR(14),
     us_email VARCHAR(50), us_senha VARCHAR(16)
 )
 BEGIN
@@ -69,7 +69,7 @@ DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE cadastrar_empresaGerente(IN 
-    emp_CNPJ CHAR(18),
+    emp_CNPJ CHAR(14),
 	emp_razaoSocial VARCHAR(50),
 	emp_nomeFantasia VARCHAR(100),
 	emp_logradouro VARCHAR(150),
@@ -79,8 +79,8 @@ CREATE PROCEDURE cadastrar_empresaGerente(IN
 	us_email VARCHAR(50),
 	us_senha VARCHAR(16),
 	us_nome VARCHAR(50),
-    us_cpf CHAR(14),
-    us_telefone CHAR(15),
+    us_cpf CHAR(11),
+    us_telefone VARCHAR(11),
     us_dataNascimento DATE
     -- us_gerente INT,
 	-- us_foto VARCHAR(255),
@@ -103,7 +103,7 @@ GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';
 GRANT EXECUTE ON PROCEDURE cadastrar_usuario to 'user_bankSecure'@'localhost';
 FLUSH PRIVILEGES;
 
-INSERT INTO empresa (razaoSocial, nomeFantasia, CNPJ) VALUES ('Bank Secure', 'Bank Secure', 123456789098765432);
-INSERT INTO usuario (email, senha, nome, fkEmpresa) VALUES ('banksecure@contato.com', '12345', 'Admin Bank Secure', 123456789098765432);
+INSERT INTO empresa (razaoSocial, nomeFantasia, CNPJ) VALUES ('Bank Secure', 'Bank Secure', 12345678901234);
+INSERT INTO usuario (email, senha, nome, fkEmpresa) VALUES ('banksecure@contato.com', '12345', 'Admin Bank Secure', 12345678901234);
 
 
