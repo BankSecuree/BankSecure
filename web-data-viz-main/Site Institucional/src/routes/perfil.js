@@ -20,4 +20,8 @@ router.post("/atualizarDados/:idUsuario", function (req, res)  {
     perfilController.atualizarDados(req, res);
 });
 
+router.post("/atualizarSenha/:idUsuario", function (req, res)  {
+    perfilController.atualizarSenha(req, res);
+});
+
 module.exports = router;

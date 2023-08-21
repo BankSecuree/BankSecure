@@ -61,9 +61,22 @@ function atualizarDados(req, res) {
       res.status(500).send(err);
     });
 }
+
+function atualizarSenha(req, res) {
+  var senhaNova = req.body.senhaNova;
+  var idUsuario = req.params.idUsuario;
+
+  perfilModel.atualizarSenha(senhaNova,idUsuario)
+  .then(resultado => {
+      res.status(201).send("Dados atualizados com sucesso!");
+    }).catch(err => {
+      res.status(500).send(err);
+    });
+}
 module.exports = {
   exibirPerfil,
   alterarImagem,
   atualizarFoto,
-  atualizarDados
+  atualizarDados,
+  atualizarSenha
 }

@@ -63,16 +63,22 @@ function atualizarFoto() {
     fetch(`/perfil/atualizarFoto/${sessionStorage.ID_USUARIO}`).then(function (resposta) {
         if (resposta.ok) {
             resposta.json().then(json => {
-                console.log(JSON.stringify(json));
-
+                // console.log(JSON.stringify(json));
                 sessionStorage.FOTO_USUARIO = json[0].foto;
-
+                cardMsg.style.display = "block"
+                cardMsg.style.border = "2px solid greenyellow"
+                cardMsg.style.color = "greenyellow"
+                cardMsg.innerHTML = "✅Foto Atualizada! Atualizando...✅";
                 setTimeout(function () {
                     location.reload();
                 }, 2000);
 
             });
         } else {
+            cardMsg.style.display = "block"
+            cardMsg.style.border = "2px solid red"
+            cardMsg.style.color = "red"
+            cardMsg.innerHTML = "❌Erro ao atualizar a foto! Tente novamente...";
             throw ('Houve um erro na API!');
         }
     }).catch(function (resposta) {
@@ -84,7 +90,7 @@ function atualizarFoto() {
 function atualizarDados() {
     let nomeVar = (document.getElementById("nome-editar")).value;
     let cpfVar = (document.getElementById("cpf-editar")).value;
-    let dataNascimentoVar = (document.getElementById("dataNascimento-editar")).value ;
+    let dataNascimentoVar = (document.getElementById("dataNascimento-editar")).value;
     dataNascimentoVar = new Date(dataNascimentoVar);
     dataNascimentoVar = `${dataNascimentoVar.getFullYear().toString()}-${(dataNascimentoVar.getMonth() + 1).toString().padStart(2, '0')}-}${dataNascimentoVar.getDate().toString().padStart(2, '0')}`
     let telefoneVar = (document.getElementById("telefone-editar")).value;
@@ -108,13 +114,13 @@ function atualizarDados() {
             cardMsg.style.display = "block"
             cardMsg.style.border = "2px solid greenyellow"
             cardMsg.style.color = "greenyellow"
-            cardMsg.innerHTML = "✅Dados atualizados! Atualizando...✅";
+            cardMsg.innerHTML = "✅Dados alterada! Atualizando...✅";
         } else {
             cardMsg.style.display = "block"
             cardMsg.style.border = "2px solid red"
             cardMsg.style.color = "red"
-            cardMsg.innerHTML = "❌Erro ao atualizar os dados! Tente novamente...";
-        
+            cardMsg.innerHTML = "❌Erro ao alterar os dados! Tente novamente...";
+
             console.log("Houve um erro ao tentar atualizar os dados!");
 
             resposta.text().then(texto => {
@@ -128,4 +134,47 @@ function atualizarDados() {
     })
 
     return false;
+}
+
+
+function atualizarSenha() {
+    let senhaAtual = document.getElementById("ipt_senha_atual");
+    let senhaNova = document.getElementById("ipt_senha_nova");
+    let senhaNovaConfirma = document.getElementById("ipt_senha_nova_c");
+    if (senhaAtual != sessionStorage.SENHA_USUARIO) {
+        alert("Senha incorreta!")
+    } else if (senhaNova != senhaNovaConfirma) {
+        alert("Senhas diferentes!")
+    } else {
+        fetch(`/perfil/atualizarSenha/${sessionStorage.ID_USUARIO}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                senhaNova: senhaNova,
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                // console.log(JSON.stringify(json));
+                // sessionStorage.SENHA_USUARIO = ;
+                cardMsg.style.display = "block"
+                cardMsg.style.border = "2px solid greenyellow"
+                cardMsg.style.color = "greenyellow"
+                cardMsg.innerHTML = "✅Senha alterada! Atualizando...✅";
+                setTimeout(function () {
+                    location.reload();
+                }, 2000);
+            } else {
+                cardMsg.style.display = "block"
+                cardMsg.style.border = "2px solid red"
+                cardMsg.style.color = "red"
+                cardMsg.innerHTML = "❌Erro ao alterar a foto! Tente novamente...";
+                throw ('Houve um erro na API!');
+            }
+        }).catch(function (resposta) {
+            console.error(resposta);
+            // finalizarAguardar();
+        });
+    }
 }
