@@ -31,7 +31,7 @@ function atualizarFoto(idUsuario) {
 }
 
 function atualizarDados(nome,cpf,dataNascimento,telefone,email,cargo,idUsuario) {
-    console.log("ACESSEI O PERFIL  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function alterarImagem():", nome, cpf, dataNascimento, telefone, email, cargo, idUsuario);
+    console.log("ACESSEI O PERFIL  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function atualizarDados():", nome, cpf, dataNascimento, telefone, email, cargo, idUsuario);
     var instrucao = `
     UPDATE usuario SET 
         nome = '${nome}', 
@@ -47,7 +47,7 @@ function atualizarDados(nome,cpf,dataNascimento,telefone,email,cargo,idUsuario) 
 }
 
 function atualizarSenha(senhaNova,idUsuario) {
-    console.log("ACESSEI O PERFIL  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function alterarImagem():", nome, cpf, dataNascimento, telefone, email, cargo, idUsuario);
+    console.log("ACESSEI O PERFIL  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function atualizarSenha():", nome, cpf, dataNascimento, telefone, email, cargo, idUsuario);
     var instrucao = `
     UPDATE usuario SET 
         senha = '${senhaNova}', 

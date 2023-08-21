@@ -90,9 +90,7 @@ function atualizarFoto() {
 function atualizarDados() {
     let nomeVar = (document.getElementById("nome-editar")).value;
     let cpfVar = (document.getElementById("cpf-editar")).value;
-    let dataNascimentoVar = (document.getElementById("dataNascimento-editar")).value;
-    dataNascimentoVar = new Date(dataNascimentoVar);
-    dataNascimentoVar = `${dataNascimentoVar.getFullYear().toString()}-${(dataNascimentoVar.getMonth() + 1).toString().padStart(2, '0')}-}${dataNascimentoVar.getDate().toString().padStart(2, '0')}`
+    let dataNascimentoVar = ((document.getElementById("dataNascimento-editar")).value).split("/").reverse().join("-");
     let telefoneVar = (document.getElementById("telefone-editar")).value;
     let emailVar = (document.getElementById("email-editar")).value;
     let cargoVar = (document.getElementById("cargo-editar")).value;
@@ -152,7 +150,7 @@ function atualizarSenha() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                senhaNova: senhaNova,
+                senhaNova: senhaNova
             })
         }).then(function (resposta) {
             if (resposta.ok) {
