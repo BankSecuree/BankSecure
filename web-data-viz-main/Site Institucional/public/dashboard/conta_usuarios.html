@@ -481,8 +481,8 @@
             </div>
           </div>
         </div>
-        <div class="text-center">
-          <button type="submit" class="btn btn-primary" onclick="cadastrarEmpresaGerente()">Cadastrar</button>
+        <div class="text-center" id="campo-botao">
+          <button type="submit" class="btn btn-primary" id="botao-cadastrar">Cadastrar</button>
         </div>
     </section>
 
@@ -506,6 +506,19 @@
 <script src="assets/js/usuarios.js"></script>
 
 <script>
+validarBotao()
+  function validarBotao() {
+    var botao = document.getElementById("botao-cadastrar");
+    var func = "";
+    if (sessionStorage.ID_USUARIO == 1) {
+      func = "cadastrarEmpresaGerente()";
+    } else {
+      func = "cadastrarFuncionario()"
+    }
+    botao.setAttribute("onclick", `${func}`);
+  }
+
+
   exibirInfos();
   exibirTabelaUsuarios();
 
