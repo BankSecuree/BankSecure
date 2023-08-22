@@ -8,7 +8,6 @@ CREATE TABLE empresa(
 CNPJ CHAR (14) PRIMARY KEY,
 -- idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
 razaoSocial VARCHAR(50),
-nomeFantasia VARCHAR (100),
 logradouro VARCHAR(150),
 numero INT,
 CEP CHAR(8),
@@ -32,25 +31,31 @@ CREATE TABLE usuario (
     FOREIGN KEY (fkGerente) REFERENCES usuario(idUsuario)
 );
 
-
-
-
 CREATE TABLE maquina(
 	idMaquina INT PRIMARY KEY AUTO_INCREMENT,
-	MaquinaCpu VARCHAR(45),
-	MaquinaMemoria INT,
-	MaquinaDisco INT, 
-	fkEmpresa CHAR(14),
-	FOREIGN KEY (fkEmpresa) REFERENCES empresa(CNPJ)
+	nome VARCHAR(45), 
+	fkAgencia CHAR(14),
+	FOREIGN KEY (fkAgencia) REFERENCES agencia(idAgencia)
 );
+
 CREATE TABLE registros(
-dataHora DATETIME PRIMARY KEY,
-usoMemoria INT,
-usoDisco INT,
-usoCPU INT,
-tempCPU VARCHAR(10),
-fkEmpresa CHAR(14),
-FOREIGN KEY (fkEmpresa) REFERENCES empresa(CNPJ)
+idRegistro INT PRIMARY KEY AUTO_INCREMENT,
+fkMaquina INT,
+fkComponente INT,
+valor INT,
+dataHora DATETIME,
+FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina)
+);
+
+CREATE TABLE componente (
+	idRegistro INT PRIMARY KEY,
+    nome VARCHAR(45),
+    unidadeMedida VARCHAR(10)
+);
+
+CREATE TABLE maquinaComponente (
+	fkMaquina INT,
+    fkComponente INT,
 );
 
 DELIMITER //
