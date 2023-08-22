@@ -363,38 +363,38 @@
           <div class="row">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Informações da Agência</h5>
+                <h5 class="card-title">Informações da Máquina</h5>
                 <form>
                   <div class="row mb-3">
-                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Apelido</label>
+                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label" id="ipt_cpu">Cpu</label>
                     <div class="col-md-8 col-lg-9">
                       <input type="text" class="form-control" id="iptApelido">
                     </div>
                   </div>
 
                   <div class="row mb-3">
-                    <label for="cpf" class="col-md-4 col-lg-3 col-form-label">CNPJ</label>
+                    <label for="cpf" class="col-md-4 col-lg-3 col-form-label" id="ipt_memoria">Memória</label>
                     <div class="col-md-8 col-lg-9">
                       <input type="text" class="form-control" id="iptCnpj">
                     </div>
                   </div>
 
                   <div class="row mb-3">
-                    <label class="col-md-4 col-lg-3 col-form-label">CEP</label>
+                    <label class="col-md-4 col-lg-3 col-form-label" id="ipt_disco">Disco</label>
                     <div class="col-md-8 col-lg-9">
                       <input type="text" class="form-control" id="iptCep">
                     </div>
                   </div>
                   <div class="row mb-3">
-                    <label class="col-md-4 col-lg-3 col-form-label">Logradouro</label>
+                    <label class="col-md-4 col-lg-3 col-form-label" id="ipt_temperaturaLimite">Temperatura Limite</label>
                     <div class="col-md-8 col-lg-9">
                       <input type="text" class="form-control" id="iptLogradouro">
                     </div>
                   </div>
                   <div class="row mb-3">
-                    <label class="col-md-4 col-lg-3 col-form-label">Número</label>
+                    <label class="col-md-4 col-lg-3 col-form-label">Agênia pertencente</label>
                     <div class="col-md-8 col-lg-9">
-                      <input type="text" class="form-control" id="iptNumero">
+                      <input type="text" class="form-control" id="iptNumero" id="fkEmpresa">
                     </div>
                   </div>
                   
@@ -406,7 +406,7 @@
           </div>
         
         <div class="text-center" id="campo-botao">
-          <button type="submit" class="btn btn-primary" id="botao-cadastrar" onclick="cadastrarAgencia()">Cadastrar</button>
+          <button class="btn btn-primary" id="botao-cadastrar" onclick="cadastrarHardware()">Cadastrar</button>
         </div>
     </section>
 
@@ -427,7 +427,7 @@
 </html>
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/main.js"></script>
-<script src="assets/js/agencias.js"></script>
+<script src="assets/js/hardware.js"></script>
 
 <script>
 

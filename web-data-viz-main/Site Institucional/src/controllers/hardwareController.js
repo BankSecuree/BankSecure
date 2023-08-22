@@ -1,10 +1,12 @@
 var hardwareModel = require("../models/hardwareModel")
+
 function cadastrarHardware(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var cpu = req.body.cpuServer;
     var memoria = req.body.memoriarServer;
     var disco = req.body.discoServer;
     var temperatura = req.body.temperaturaServer;
+    var fkEmpresa = req.body.fkEmpresaServer;
 
     // Faça as validações dos valores
     if (cpu == undefined) {
@@ -18,7 +20,7 @@ function cadastrarHardware(req, res) {
     }else {
         
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        hardwareModel.cadastrarHardware(cpu, memoria, disco, temperatura)
+        hardwareModel.cadastrarHardware(cpu, memoria, disco, temperatura, fkEmpresa)
             .then(
                 function (resultado) {
                     res.json(resultado);
