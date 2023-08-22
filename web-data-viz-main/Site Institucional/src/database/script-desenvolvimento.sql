@@ -34,17 +34,15 @@ CREATE TABLE usuario (
     cpf CHAR(11),
     telefone CHAR(11),
     dataNascimento DATE,
-    gerente INT,
+    fkGerente INT,
 	foto VARCHAR(255),
     fkEmpresa CHAR(14),
     dataInicio DATE,
     FOREIGN KEY (fkEmpresa) REFERENCES empresa(CNPJ),
-    FOREIGN KEY (gerente) REFERENCES usuario(idUsuario)
+    FOREIGN KEY (fkGerente) REFERENCES usuario(idUsuario)
 );
 
-<<<<<<< HEAD
-=======
-CREATE TABLE FuncionarioAgencia(
+CREATE TABLE funcionarioAgencia(
 	fkUsuario INT,
 	fkAgencia CHAR(14),
 	FOREIGN KEY (fkUsuario) REFERENCES usuario (idUsuario), 
@@ -52,12 +50,11 @@ CREATE TABLE FuncionarioAgencia(
     PRIMARY KEY (fkUsuario, fkAgencia)
 );
 
->>>>>>> cbc43265e27f7a8d4f4b7c29b18c0cc42e8dbcc8
 CREATE TABLE maquina(
 	idMaquina INT PRIMARY KEY AUTO_INCREMENT,
 	nome VARCHAR(45), 
 	fkAgencia CHAR(14),
-	FOREIGN KEY (fkAgencia) REFERENCES agencia(idAgencia)
+	FOREIGN KEY (fkAgencia) REFERENCES agencia(CNPJ)
 );
 
 CREATE TABLE registros(
@@ -70,7 +67,7 @@ FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina)
 );
 
 CREATE TABLE componente (
-	idRegistro INT PRIMARY KEY,
+	idComponente INT PRIMARY KEY,
     nome VARCHAR(45),
     unidadeMedida VARCHAR(10)
 );
@@ -78,21 +75,9 @@ CREATE TABLE componente (
 CREATE TABLE maquinaComponente (
 	fkMaquina INT,
     fkComponente INT,
+    FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina),
+    FOREIGN KEY (fkComponente) REFERENCES componente(idComponente)
 );
-
-DELIMITER //
-CREATE PROCEDURE cadastrar_usuario(IN 
-	us_nome VARCHAR(50), us_cpf CHAR(11), us_telefone CHAR(15), us_dataNascimento DATE,
-    em_nomeEmpresa VARCHAR (50), em_cnpj CHAR(14),
-    us_email VARCHAR(50), us_senha VARCHAR(16)
-)
-BEGIN
-	INSERT INTO usuario (nome, cpf, telefone, dataNascimento, email, senha) 
-		VALUES (us_nome, us_cpf, us_telefone, us_dataNascimento, us_email, us_senha);
-	INSERT INTO empresa (nomeEmpresa, cnpj) 
-		VALUES (em_nomeEmpresa, em_cnpj);
-END//
-DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE cadastrar_empresaGerente(IN 
@@ -127,11 +112,17 @@ DELIMITER ;
 DROP USER IF EXISTS 'user_bankSecure'@'localhost';
 CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'Urubu_100';
 GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';
-GRANT EXECUTE ON PROCEDURE cadastrar_usuario to 'user_bankSecure'@'localhost';
+GRANT EXECUTE ON PROCEDURE cadastrar_empresaGerente to 'user_bankSecure'@'localhost';
 FLUSH PRIVILEGES;
 
-INSERT INTO empresa (razaoSocial, nomeFantasia, CNPJ) VALUES ('Bank Secure', 'Bank Secure', 12345678901234);
+-- ADMIN
+INSERT INTO empresa (razaoSocial, CNPJ) VALUES ('Bank Secure', 12345678901234);
 INSERT INTO usuario (email, senha, nome, fkEmpresa) VALUES ('banksecure@contato.com', '12345', 'Admin Bank Secure', 12345678901234);
+-- GERENTES
+INSERT INTO empresa (razaoSocial, CNPJ) VALUES ('Itau', 17192451000170);
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('gerenteitau@contato.com', '12345', 'Fernando Brandão', 17192451000170, 1);
+-- ANALISTAS
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('lider1itau@contato.com', '12345', 'Julia Lima', 17192451000170, 2);
 
 
 

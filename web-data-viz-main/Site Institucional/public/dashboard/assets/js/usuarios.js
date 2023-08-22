@@ -1,6 +1,6 @@
 function exibirTabelaUsuarios() {
 
-    fetch(`/usuarios/exibirTabelaUsuarios/${sessionStorage.GERENTE_USUARIO}`).then(function (resposta) {
+    fetch(`/usuarios/exibirTabelaUsuarios/${sessionStorage.ID_USUARIO}`).then(function (resposta) {
         if (resposta.ok) {
             if (resposta.status == 204) {
                 var lista = document.getElementById("tabela-usuarios");
@@ -58,6 +58,32 @@ function exibirTabelaUsuarios() {
 
 function excluirUsuario(idUsuario) {
     console.log( `Excluindo usuário ${idUsuario} funcionando `)
+}
+
+function obterLogin() {
+    iptLogin.value = iptEmail.value;
+}
+
+function obterDadosCNPJ() {
+    fetch(`https://publica.cnpj.ws/cnpj/${iptCnpj.value}`)
+      .then(data => {
+        return data.json();
+      })
+      .then(post => {
+
+        dadosCNPJ = post;
+        console.log(dadosCNPJ)
+
+        iptRazaoSocial.value = dadosCNPJ.razao_social;;
+        iptLogradouro.value = `${dadosCNPJ.estabelecimento.tipo_logradouro} ${dadosCNPJ.estabelecimento.logradouro}`;
+        iptNumLogradouro.value = dadosCNPJ.estabelecimento.numero;
+        iptCEP.value = dadosCNPJ.estabelecimento.cep;
+
+      })
+      .catch(error => {
+        console.log("CNPJ não localizado na base de dados!")
+      })
+
 }
 
 function cadastrarEmpresaGerente() {

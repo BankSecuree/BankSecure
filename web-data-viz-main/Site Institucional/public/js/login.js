@@ -61,7 +61,7 @@ function entrar() {
                     let dataNascimento = new Date(json.dataNascimento);
                     sessionStorage.DATA_NASCIMENTO_USUARIO = `${dataNascimento.getDate().toString().padStart(2, '0')}/${(dataNascimento.getMonth() + 1).toString().padStart(2, '0')}/${dataNascimento.getFullYear().toString()}`
                     sessionStorage.FOTO_USUARIO = json.foto;
-                    sessionStorage.GERENTE_USUARIO = json.gerente;
+                    sessionStorage.GERENTE_USUARIO = json.fkGerente;
                     sessionStorage.ID_EMPRESA = json.idEmpresa;
                     sessionStorage.NOME_EMPRESA = json.nomeEmpresa;
                     sessionStorage.CNPJ_EMPRESA = json.cnpj;

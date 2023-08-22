@@ -1,9 +1,9 @@
 var usuariosModel = require("../models/usuariosModel");
 
 function exibirTabelaUsuarios(req, res) {
-  var gerente = req.params.gerente;
+  var idUsuario = req.params.idUsuario;
 
-  usuariosModel.exibirTabelaUsuarios(gerente).then(function (resultado) {
+  usuariosModel.exibirTabelaUsuarios(idUsuario).then(function (resultado) {
     if (resultado.length > 0) {
       res.status(200).json(resultado);
     } else {
