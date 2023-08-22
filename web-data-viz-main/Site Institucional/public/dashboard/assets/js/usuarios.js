@@ -11,20 +11,49 @@ function exibirTabelaUsuarios() {
                 throw "Nenhum resultado encontrado!!";
             }
             resposta.json().then(function (resposta) {
-                // console.log("Dados recebidos: ", JSON.stringify(resposta));
                 var lista = document.getElementById("tabela-usuarios");
+                var trColunas = document.createElement("tr");
+                var thead = document.createElement("thead");
+                var thId = document.createElement("th");
+                thId.setAttribute("scope", "row");
+                thId.innerHTML = "#";
+                var thNome = document.createElement("th");
+                thNome.setAttribute("scope", "row");
+                thNome.innerHTML = "Nome";
+                var thEmpresa = document.createElement("th");
+                thEmpresa.setAttribute("scope", "row");
+                thEmpresa.innerHTML = "Empresa";
+                var thDataInicio = document.createElement("th");
+                thDataInicio.setAttribute("scope", "row");
+                thDataInicio.innerHTML = "Data de Início";
+                var thExcluir = document.createElement("th");
+                thExcluir.setAttribute("scope", "row");
+                thExcluir.innerHTML = "Excluir";
+
+                trColunas.appendChild(thId);
+                trColunas.appendChild(thNome);
+                trColunas.appendChild(thEmpresa);
+                if (sessionStorage.GERENTE_USUARIO == "null") {
+                    var thFuncionarios = document.createElement("th");
+                    thFuncionarios.innerHTML = "Funcionários";
+                    trColunas.appendChild(thFuncionarios);
+                }
+                trColunas.appendChild(thDataInicio);
+                trColunas.appendChild(thExcluir);
+                thead.appendChild(trColunas);
+                lista.appendChild(thead);
+
+
                 for (let i = 0; i < resposta.length; i++) {
                     var publicacao = resposta[i];
 
                     var thNumero = document.createElement("th");
-                    thNumero.innerHTML = i+1;
+                    thNumero.innerHTML = i + 1;
                     thNumero.setAttribute("scope", "row");
                     var tdNome = document.createElement("td");
                     tdNome.innerHTML = publicacao.nome;
                     var tdEmpresa = document.createElement("td");
                     tdEmpresa.innerHTML = publicacao.empresa;
-                    var tdFuncionarios = document.createElement("td");
-                    tdFuncionarios.innerHTML = publicacao.funcionarios;
                     var tdInicio = document.createElement("td");
                     var dataInicio = new Date(publicacao.dataInicio)
                     dataInicio = `${dataInicio.getDate().toString().padStart(2, '0')}/${(dataInicio.getMonth() + 1).toString().padStart(2, '0')}/${dataInicio.getFullYear().toString()}`
@@ -38,11 +67,16 @@ function exibirTabelaUsuarios() {
                     tr.appendChild(thNumero);
                     tr.appendChild(tdNome);
                     tr.appendChild(tdEmpresa);
-                    tr.appendChild(tdFuncionarios);
+                    if (sessionStorage.GERENTE_USUARIO == "null") {
+                        var tdFuncionarios = document.createElement("td");
+                        tdFuncionarios.innerHTML = publicacao.funcionarios;
+                        tr.appendChild(tdFuncionarios);
+                    }
                     tr.appendChild(tdInicio);
                     tr.appendChild(tdButton);
                     tbody.appendChild(tr);
                     lista.appendChild(tbody);
+
 
                 }
             });
@@ -57,7 +91,7 @@ function exibirTabelaUsuarios() {
 
 
 function excluirUsuario(idUsuario) {
-    console.log( `Excluindo usuário ${idUsuario} funcionando `)
+    console.log(`Excluindo usuário ${idUsuario} funcionando `)
 }
 
 function obterLogin() {
@@ -66,23 +100,23 @@ function obterLogin() {
 
 function obterDadosCNPJ() {
     fetch(`https://publica.cnpj.ws/cnpj/${iptCnpj.value}`)
-      .then(data => {
-        return data.json();
-      })
-      .then(post => {
+        .then(data => {
+            return data.json();
+        })
+        .then(post => {
 
-        dadosCNPJ = post;
-        console.log(dadosCNPJ)
+            dadosCNPJ = post;
+            console.log(dadosCNPJ)
 
-        iptRazaoSocial.value = dadosCNPJ.razao_social;;
-        iptLogradouro.value = `${dadosCNPJ.estabelecimento.tipo_logradouro} ${dadosCNPJ.estabelecimento.logradouro}`;
-        iptNumLogradouro.value = dadosCNPJ.estabelecimento.numero;
-        iptCEP.value = dadosCNPJ.estabelecimento.cep;
+            iptRazaoSocial.value = dadosCNPJ.razao_social;;
+            iptLogradouro.value = `${dadosCNPJ.estabelecimento.tipo_logradouro} ${dadosCNPJ.estabelecimento.logradouro}`;
+            iptNumLogradouro.value = dadosCNPJ.estabelecimento.numero;
+            iptCEP.value = dadosCNPJ.estabelecimento.cep;
 
-      })
-      .catch(error => {
-        console.log("CNPJ não localizado na base de dados!")
-      })
+        })
+        .catch(error => {
+            console.log("CNPJ não localizado na base de dados!")
+        })
 
 }
 
@@ -103,7 +137,7 @@ function cadastrarEmpresaGerente() {
     var senhaVar = iptSenha.value;
     // var Var = ipt.value;
     // var Var = ipt.value;
-  
+
 
     // Enviando o valor da nova input
     fetch("/usuarios/cadastrarEmpresaGerente", {
@@ -138,9 +172,9 @@ function cadastrarEmpresaGerente() {
             // cardErro.style.display = "block";
 
             alert("Cadastro realizado com sucesso!");
-            
+
             window.location = "conta_usuarios.html";
-            
+
 
             // limparFormulario();
             // finalizarAguardar();
