@@ -1,4 +1,35 @@
 function exibirTabelaUsuarios() {
+    var lista = document.getElementById("tabela-usuarios");
+    var trColunas = document.createElement("tr");
+    var thead = document.createElement("thead");
+    var thId = document.createElement("th");
+    thId.setAttribute("scope", "row");
+    thId.innerHTML = "#";
+    var thNome = document.createElement("th");
+    thNome.setAttribute("scope", "row");
+    thNome.innerHTML = "Nome";
+    var thEmpresa = document.createElement("th");
+    thEmpresa.setAttribute("scope", "row");
+    thEmpresa.innerHTML = "Empresa";
+    var thDataInicio = document.createElement("th");
+    thDataInicio.setAttribute("scope", "row");
+    thDataInicio.innerHTML = "Data de Início";
+    var thExcluir = document.createElement("th");
+    thExcluir.setAttribute("scope", "row");
+    thExcluir.innerHTML = "Excluir";
+
+    trColunas.appendChild(thId);
+    trColunas.appendChild(thNome);
+    trColunas.appendChild(thEmpresa);
+    if (sessionStorage.GERENTE_USUARIO == "null") {
+        var thFuncionarios = document.createElement("th");
+        thFuncionarios.innerHTML = "Funcionários";
+        trColunas.appendChild(thFuncionarios);
+    }
+    trColunas.appendChild(thDataInicio);
+    trColunas.appendChild(thExcluir);
+    thead.appendChild(trColunas);
+    lista.appendChild(thead);
 
     fetch(`/usuarios/exibirTabelaUsuarios/${sessionStorage.ID_USUARIO}`).then(function (resposta) {
         if (resposta.ok) {
@@ -11,40 +42,8 @@ function exibirTabelaUsuarios() {
                 throw "Nenhum resultado encontrado!!";
             }
             resposta.json().then(function (resposta) {
-                var lista = document.getElementById("tabela-usuarios");
-                var trColunas = document.createElement("tr");
-                var thead = document.createElement("thead");
-                var thId = document.createElement("th");
-                thId.setAttribute("scope", "row");
-                thId.innerHTML = "#";
-                var thNome = document.createElement("th");
-                thNome.setAttribute("scope", "row");
-                thNome.innerHTML = "Nome";
-                var thEmpresa = document.createElement("th");
-                thEmpresa.setAttribute("scope", "row");
-                thEmpresa.innerHTML = "Empresa";
-                var thDataInicio = document.createElement("th");
-                thDataInicio.setAttribute("scope", "row");
-                thDataInicio.innerHTML = "Data de Início";
-                var thExcluir = document.createElement("th");
-                thExcluir.setAttribute("scope", "row");
-                thExcluir.innerHTML = "Excluir";
-
-                trColunas.appendChild(thId);
-                trColunas.appendChild(thNome);
-                trColunas.appendChild(thEmpresa);
-                if (sessionStorage.GERENTE_USUARIO == "null") {
-                    var thFuncionarios = document.createElement("th");
-                    thFuncionarios.innerHTML = "Funcionários";
-                    trColunas.appendChild(thFuncionarios);
-                }
-                trColunas.appendChild(thDataInicio);
-                trColunas.appendChild(thExcluir);
-                thead.appendChild(trColunas);
-                lista.appendChild(thead);
-
-
                 for (let i = 0; i < resposta.length; i++) {
+                    var lista = document.getElementById("tabela-usuarios");
                     var publicacao = resposta[i];
 
                     var thNumero = document.createElement("th");
