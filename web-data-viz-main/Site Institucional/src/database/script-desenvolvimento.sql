@@ -24,12 +24,12 @@ CREATE TABLE usuario (
     telefone CHAR(11),
     dataNascimento DATE,
     cargo VARCHAR(50),
-    gerente INT,
+    fkGerente INT,
 	foto VARCHAR(255),
     fkEmpresa CHAR(14),
     dataInicio DATE,
     FOREIGN KEY (fkEmpresa) REFERENCES empresa(CNPJ),
-    FOREIGN KEY (gerente) REFERENCES usuario(idUsuario)
+    FOREIGN KEY (fkGerente) REFERENCES usuario(idUsuario)
 );
 
 
@@ -52,20 +52,6 @@ tempCPU VARCHAR(10),
 fkEmpresa CHAR(14),
 FOREIGN KEY (fkEmpresa) REFERENCES empresa(CNPJ)
 );
-
-DELIMITER //
-CREATE PROCEDURE cadastrar_usuario(IN 
-	us_nome VARCHAR(50), us_cpf CHAR(11), us_telefone CHAR(15), us_dataNascimento DATE,
-    em_nomeEmpresa VARCHAR (50), em_cnpj CHAR(14),
-    us_email VARCHAR(50), us_senha VARCHAR(16)
-)
-BEGIN
-	INSERT INTO usuario (nome, cpf, telefone, dataNascimento, email, senha) 
-		VALUES (us_nome, us_cpf, us_telefone, us_dataNascimento, us_email, us_senha);
-	INSERT INTO empresa (nomeEmpresa, cnpj) 
-		VALUES (em_nomeEmpresa, em_cnpj);
-END//
-DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE cadastrar_empresaGerente(IN 
@@ -93,19 +79,20 @@ BEGIN
 END//
 DELIMITER ;
 
--- CHAMAR PROCEDURE
-
--- CALL cadastrar_usuario ("bruno","");
-
 DROP USER IF EXISTS 'user_bankSecure'@'localhost';
 CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'urubu100';
 GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';
-GRANT EXECUTE ON PROCEDURE cadastrar_usuario to 'user_bankSecure'@'localhost';
+GRANT EXECUTE ON PROCEDURE cadastrar_empresaGerente to 'user_bankSecure'@'localhost';
 FLUSH PRIVILEGES;
 
+-- ADMIN
 INSERT INTO empresa (razaoSocial, nomeFantasia, CNPJ) VALUES ('Bank Secure', 'Bank Secure', 12345678901234);
 INSERT INTO usuario (email, senha, nome, fkEmpresa) VALUES ('banksecure@contato.com', '12345', 'Admin Bank Secure', 12345678901234);
-
+-- GERENTES
+INSERT INTO empresa (razaoSocial, nomeFantasia, CNPJ) VALUES ('Itau', 'Itau', 17192451000170);
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('gerenteitau@contato.com', '12345', 'Fernando Brandão', 17192451000170, 1);
+-- LÍDERES
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('lider1itau@contato.com', '12345', 'Julia Lima', 17192451000170, 2);
 
 
 

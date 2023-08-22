@@ -434,61 +434,21 @@
           <div class="row">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Informações Empresariais</h5>
-                <form>
+                <h5 class="card-title">Associar Agência(s)</h5>
+                <form id="form-agencia">
                   <div class="row mb-3">
                     <div class="col-md-8 col-lg-9">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label" style="width: 100%;">CNPJ</label>
-                      <input name="fullName" type="text" class="form-control" id="iptCNPJ" onfocusout="obterDadosCNPJ()">
+                      <label class="col-md-4 col-lg-3 col-form-label" style="width: 100%;">Agência 1</label>
+                      <input type="text" class="form-control" id="iptCNPJ" onfocusout="obterDadosCNPJ()">
                     </div>
                   </div>
-                  <div class="row mb-3">
-                    <div class="col-md-8 col-lg-9">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label" style="width: 100%;">Nome
-                        Fantasia</label>
-                      <input name="fullName" type="text" class="form-control" id="iptNomeFantasia">
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <div class="col-md-8 col-lg-9">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label" style="width: 100%;">Razão
-                        Social</label>
-                      <input name="fullName" type="text" class="form-control" id="iptRazaoSocial">
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <div class="col-md-8 col-lg-9">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label"
-                        style="width: 100%;">Logradouro</label>
-                      <input name="fullName" type="text" class="form-control" id="iptLogradouro">
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <div class="col-md-8 col-lg-9">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label" style="width: 100%;">Número</label>
-                      <input name="fullName" type="text" class="form-control" id="iptNumLogradouro">
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <div class="col-md-8 col-lg-9">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label" style="width: 100%;">CEP</label>
-                      <input name="fullName" type="text" class="form-control" id="iptCEP">
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <div class="col-md-8 col-lg-9">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label"
-                        style="width: 100%;">Telefone</label>
-                      <input name="fullName" type="text" class="form-control" id="iptTelefone">
-                    </div>
-                  </div>
-
                 </form>
+                <a class="btn btn-primary" id="botao-add-agencia" onclick="addAgencia(localStorage.AGENCIAS_ADD)" >Adicionar Agência</a>
               </div>
-
             </div>
           </div>
         </div>
+
         <div class="text-center" id="campo-botao">
           <button type="submit" class="btn btn-primary" id="botao-cadastrar">Cadastrar</button>
         </div>
@@ -514,6 +474,7 @@
 <script src="assets/js/usuarios.js"></script>
 
 <script>
+localStorage.AGENCIAS_ADD = 1;
 validarBotao()
   function validarBotao() {
     var botao = document.getElementById("botao-cadastrar");

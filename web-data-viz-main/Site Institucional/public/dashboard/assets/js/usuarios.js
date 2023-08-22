@@ -129,3 +129,36 @@ function cadastrarEmpresaGerente() {
     return false;
 }
 
+function addAgencia() {
+    let form = document.getElementById("form-agencia");
+    if (localStorage.AGENCIAS_ADD < 5) {
+        localStorage.AGENCIAS_ADD = Number(localStorage.AGENCIAS_ADD) + 1
+        
+        let divRow = document.createElement("div");
+        divRow.className = "row mb-3";
+        let divCol = document.createElement("div");
+        divCol.className = "col-md-8 col-lg-9";
+        let label = document.createElement("label");
+        label.className = "col-md-4 col-lg-3 col-form-label";
+        label.style.width = "100%";
+        label.innerHTML = `Agência ${localStorage.AGENCIAS_ADD}`;
+        let input = document.createElement("input");
+        input.className = "form-control";
+        
+        divCol.appendChild(label);
+        divCol.appendChild(input);
+        divRow.appendChild(divCol);
+        form.appendChild(divRow);
+
+        if (localStorage.AGENCIAS_ADD == 5) {
+            let aviso = document.createElement("label");
+            aviso.className = "col-md-4 col-lg-3 col-form-label";
+            aviso.style.width = "100%";
+            aviso.innerHTML = `Número máximo de agências atingido!`;
+            form.appendChild(aviso);
+
+            document.getElementById("botao-add-agencia").style.display = "none";
+
+        }
+    } 
+}
