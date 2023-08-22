@@ -213,7 +213,9 @@
     </nav><!-- End Icons Navigation -->
 
   </header>
-
+  <div id="msg_alertas" class="msg_alertas">
+    <span class="ms" id="mensagemErro"></span>
+  </div>
   <!-- Sidebar -->
   <aside id="sidebar" class="sidebar">
 
@@ -360,53 +362,53 @@
       </div>
 
       <div class="row">
-          <div class="row">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Informações da Agência</h5>
-                <form>
-                  <div class="row mb-3">
-                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Apelido</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input type="text" class="form-control" id="iptApelido">
-                    </div>
+        <div class="row">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Informações da Agência</h5>
+              <form>
+                <div class="row mb-3">
+                  <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Apelido</label>
+                  <div class="col-md-8 col-lg-9">
+                    <input type="text" class="form-control" id="iptApelido" onkeyup="validacao()">
                   </div>
+                </div>
 
-                  <div class="row mb-3">
-                    <label for="cpf" class="col-md-4 col-lg-3 col-form-label">CNPJ</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input type="text" class="form-control" id="iptCnpj">
-                    </div>
+                <div class="row mb-3">
+                  <label for="cpf" class="col-md-4 col-lg-3 col-form-label">CNPJ</label>
+                  <div class="col-md-8 col-lg-9">
+                    <input type="text" class="form-control" id="iptCnpj">
                   </div>
+                </div>
 
-                  <div class="row mb-3">
-                    <label class="col-md-4 col-lg-3 col-form-label">CEP</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input type="text" class="form-control" id="iptCep">
-                    </div>
+                <div class="row mb-3">
+                  <label class="col-md-4 col-lg-3 col-form-label">CEP</label>
+                  <div class="col-md-8 col-lg-9">
+                    <input type="text" class="form-control" id="iptCep">
                   </div>
-                  <div class="row mb-3">
-                    <label class="col-md-4 col-lg-3 col-form-label">Logradouro</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input type="text" class="form-control" id="iptLogradouro">
-                    </div>
+                </div>
+                <div class="row mb-3">
+                  <label class="col-md-4 col-lg-3 col-form-label">Logradouro</label>
+                  <div class="col-md-8 col-lg-9">
+                    <input type="text" class="form-control" id="iptLogradouro">
                   </div>
-                  <div class="row mb-3">
-                    <label class="col-md-4 col-lg-3 col-form-label">Número</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input type="text" class="form-control" id="iptNumero">
-                    </div>
+                </div>
+                <div class="row mb-3">
+                  <label class="col-md-4 col-lg-3 col-form-label">Número</label>
+                  <div class="col-md-8 col-lg-9">
+                    <input type="text" class="form-control" id="iptNumero">
                   </div>
-                  
+                </div>
 
-                </form>
-              </div>
-
+              </form>
             </div>
+
           </div>
-        
+        </div>
+
         <div class="text-center" id="campo-botao">
-          <button type="submit" class="btn btn-primary" id="botao-cadastrar" onclick="cadastrarAgencia()">Cadastrar</button>
+          <button type="submit" class="btn btn-primary" id="botao-cadastrar"
+            onclick="cadastrarAgencia()">Cadastrar</button>
         </div>
     </section>
 
@@ -430,6 +432,4 @@
 <script src="assets/js/agencias.js"></script>
 
 <script>
-
-
 </script>

@@ -17,7 +17,7 @@ function exibirTabelaAgencias() {
                     var publicacao = resposta[i];
 
                     var thNumero = document.createElement("th");
-                    thNumero.innerHTML = i+1;
+                    thNumero.innerHTML = i + 1;
                     thNumero.setAttribute("scope", "row");
                     var tdNome = document.createElement("td");
                     tdNome.innerHTML = publicacao.nome;
@@ -55,6 +55,30 @@ function exibirTabelaAgencias() {
     });
 }
 
+function validacao() {
+    var apelido = iptApelido.value;
+    
+
+}
+
+function validar() {
+
+    var ipt_apelido = iptApelido.value;
+    var cnpj = iptCnpj.value;
+    var cep = iptCep;
+    var logradouro = iptLogradouro.value
+    var nomero = iptNumero.value
+
+    if (ipt_apelido == "") {
+        msg_alertas.style.display = "block"
+        Erro = document.getElementById("mensagemErro")
+        Erro.classList.add("alerta")
+        mensagemErro.innerHTML = `O Apelido não pode ser vazio`
+    }
+
+
+}
+
 function cadastrarAgencia() {
-    alertI("OK")   
+    validar();
 }  
