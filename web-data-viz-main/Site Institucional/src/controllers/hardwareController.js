@@ -8,13 +8,13 @@ function cadastrarHardware(req, res) {
 
     // Faça as validações dos valores
     if (cpu == undefined) {
-        res.status(400).send("Seu nome está undefined!");
+        res.status(400).send("Sua cpu está undefined!");
     } else if (memoria == undefined) {
-        res.status(400).send("Seu email está undefined!");
+        res.status(400).send("Sua memória está undefined!");
     } else if (disco == undefined) {
-        res.status(400).send("Sua senha está undefined!");
+        res.status(400).send("Seu disco está undefined!");
     }else if (temperatura == undefined) {
-        res.status(400).send("Sua senha está undefined!");
+        res.status(400).send("Seu limite de temperatura está undefined!");
     }else {
         
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
