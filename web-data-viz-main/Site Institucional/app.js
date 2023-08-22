@@ -14,6 +14,7 @@ var usuariosRouter = require("./src/routes/usuarios");
 var perfilRouter = require("./src/routes/perfil");
 var avisosRouter = require("./src/routes/avisos");
 var medidasRouter = require("./src/routes/medidas");
+var hardwareRouter = require("./src/routes/hardware")
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -25,8 +26,9 @@ app.use("/", indexRouter);
 app.use("/usuario", usuarioRouter);
 app.use("/usuarios", usuariosRouter);
 app.use("/avisos", avisosRouter);
-app.use("/medidas", medidasRouter)
-app.use("/perfil", perfilRouter)
+app.use("/medidas", medidasRouter);
+app.use("/perfil", perfilRouter);
+app.use("/hardware", hardwareRouter);
 
 app.listen(PORTA, function () {
     console.log(`Servidor do seu site já está rodando! Acesse o caminho a seguir para visualizar: http://localhost:${PORTA} \n
