@@ -1,4 +1,4 @@
--- Active: 1692322487627@@127.0.0.1@3306@bankSecure
+-- Active: 1692279316574@@127.0.0.1@3306@bankSecure
 /* Comandos para mysql - banco local - ambiente de desenvolvimento */
 DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
@@ -15,6 +15,18 @@ CEP CHAR(8),
 telefone VARCHAR(11)
 );
 
+CREATE TABLE agencia(
+CNPJ CHAR (14) PRIMARY KEY,
+-- idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
+apelido VARCHAR (45),
+logradouro VARCHAR(150),
+numero INT,
+CEP CHAR(8),
+telefone VARCHAR(11),
+fkEmpresa CHAR(14),
+FOREIGN KEY (fkEmpresa) REFERENCES empresa(CNPJ)
+);
+
 CREATE TABLE usuario (
 	idUsuario INT PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(50),
@@ -23,7 +35,6 @@ CREATE TABLE usuario (
     cpf CHAR(11),
     telefone CHAR(11),
     dataNascimento DATE,
-    cargo VARCHAR(50),
     gerente INT,
 	foto VARCHAR(255),
     fkEmpresa CHAR(14),
@@ -32,8 +43,13 @@ CREATE TABLE usuario (
     FOREIGN KEY (gerente) REFERENCES usuario(idUsuario)
 );
 
-
-
+CREATE TABLE FuncionarioAgencia(
+	fkUsuario INT,
+	fkAgencia CHAR(14),
+	FOREIGN KEY (fkUsuario) REFERENCES usuario (idUsuario), 
+	FOREIGN KEY (fkAgencia) REFERENCES agencia (CNPJ),
+    PRIMARY KEY (fkUsuario, fkAgencia)
+);
 
 CREATE TABLE maquina(
 	idMaquina INT PRIMARY KEY AUTO_INCREMENT,
@@ -98,7 +114,7 @@ DELIMITER ;
 -- CALL cadastrar_usuario ("bruno","");
 
 DROP USER IF EXISTS 'user_bankSecure'@'localhost';
-CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'urubu100';
+CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'Urubu_100';
 GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';
 GRANT EXECUTE ON PROCEDURE cadastrar_usuario to 'user_bankSecure'@'localhost';
 FLUSH PRIVILEGES;
