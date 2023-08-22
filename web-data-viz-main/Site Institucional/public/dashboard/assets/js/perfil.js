@@ -113,6 +113,9 @@ function atualizarDados() {
             cardMsg.style.border = "2px solid greenyellow"
             cardMsg.style.color = "greenyellow"
             cardMsg.innerHTML = "✅Dados alterados! Atualizando...✅";
+            setTimeout(function () {
+                location.reload();
+            }, 3000);
         } else {
             cardMsg.style.display = "block"
             cardMsg.style.border = "2px solid red"
@@ -164,6 +167,9 @@ function atualizarSenha() {
                 cardMsg.style.color = "greenyellow"
                 cardMsg.innerHTML = "✅Senha alterada! Atualizando...✅";
                 console.log("CArregando")
+                setTimeout(function () {
+                    location.reload();
+                }, 3000);
             } else {
                 console.log(resposta);
                 cardMsg.style.display = "block"
@@ -171,6 +177,7 @@ function atualizarSenha() {
                 cardMsg.style.color = "red"
                 cardMsg.innerHTML = "❌Erro ao alterar a senha! Tente novamente...";
                 throw ('Houve um erro na API!');
+                
             }
         }).catch(function (resposta) {
             console.error(resposta);
