@@ -112,7 +112,7 @@ function atualizarDados() {
             cardMsg.style.display = "block"
             cardMsg.style.border = "2px solid greenyellow"
             cardMsg.style.color = "greenyellow"
-            cardMsg.innerHTML = "✅Dados alterados! Atualizando...✅";
+            cardMsg.innerHTML = "✅Dados alterada! Atualizando...✅";
         } else {
             cardMsg.style.display = "block"
             cardMsg.style.border = "2px solid red"
@@ -153,10 +153,9 @@ function atualizarSenha() {
             body: JSON.stringify({
                 senhaNovaServer: senhaNovaServer
             })
-
         })
         .then(function (resposta) {
-            if (resposta.ok) {
+        if (resposta.ok) {
                 // console.log(JSON.stringify(json));
                 sessionStorage.SENHA_USUARIO = senhaNovaServer;
                 cardMsg.style.display = "block"

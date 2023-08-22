@@ -65,8 +65,58 @@ h6 {
   font-weight: bolder;
   border-radius: 10px;
   z-index: 10000;
-  
 }
+
+.msg_alertas {
+  padding: 10px 20px;
+  border-radius: 1vh;
+  position: fixed;
+  display: none;
+  top: 55px;
+  right: 10px;
+  z-index: 10000;
+}
+
+.ms {
+  width: 100%;
+  margin: auto;
+  padding: 0.9em;
+  float: left;
+  display: block;
+  margin-bottom: 10px;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-weight: 100;
+  font-size: 16px;
+}
+
+.erro {
+  background-color: #FFCACA;
+  border: 2px #a60202 solid;
+  color: #a60202;
+  border-radius: 5px;
+}
+
+.ok {
+  background-color: #A6FFBC;
+  border: 2px #00bd00 solid;
+  color: #00bd00;
+  border-radius: 5px;
+}
+
+.alerta {
+  background-color: #FFFBBF;
+  border: 2px #2b2b2b solid;
+  color: #2b2b2b;
+  border-radius: 5px;
+}
+
+.info {
+  background-color: #B3E7FF;
+  border: 2px #018ace solid;
+  color: #018ace;
+  border-radius: 5px;
+}
+
 /*--------------------------------------------------------------
 # Page Title
 --------------------------------------------------------------*/
@@ -607,9 +657,14 @@ h6 {
 .header-nav .profile .dropdown-item:hover {
   background-color: #f6f9ff;
 }
-#empresa-cadastrar, #cnpj-cadastrar, #agencia-cadastrar, #cargo-cadastrar{
+
+#empresa-cadastrar,
+#cnpj-cadastrar,
+#agencia-cadastrar,
+#cargo-cadastrar {
   width: 140%;
 }
+
 /*--------------------------------------------------------------
 # Sidebar
 --------------------------------------------------------------*/
@@ -773,9 +828,10 @@ h6 {
   background-color: #4154f1;
 }
 
-#btnNav{
+#btnNav {
   cursor: pointer;
 }
+
 /*--------------------------------------------------------------
 # Dashboard
 --------------------------------------------------------------*/
@@ -977,11 +1033,11 @@ h6 {
   max-width: 60px;
 }
 
-#budgetChart{
+#budgetChart {
   min-height: 400px;
 }
 
-#trafficChart{
+#trafficChart {
   min-height: 400px;
 }
 
@@ -1201,7 +1257,7 @@ h6 {
   }
 }
 
-#foto-usuario{
+#foto-usuario {
   padding-right: 5px;
 }
 

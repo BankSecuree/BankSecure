@@ -431,11 +431,25 @@
                   <div class="row mb-3">
                     <div class="col-md-8 col-lg-9">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label" style="width: 100%;">CNPJ</label>
+<<<<<<< HEAD
                       <input name="fullName" type="text" class="form-control" id="iptCnpj" onfocusout="obterDadosCNPJ()">
+=======
+                      <input name="fullName" type="text" class="form-control" id="iptCNPJ" onfocusout="obterDadosCNPJ()">
+>>>>>>> cbc43265e27f7a8d4f4b7c29b18c0cc42e8dbcc8
                     </div>
                   </div>
                   <div class="row mb-3">
                     <div class="col-md-8 col-lg-9">
+<<<<<<< HEAD
+=======
+                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label" style="width: 100%;">Nome
+                        Fantasia</label>
+                      <input name="fullName" type="text" class="form-control" id="iptNomeFantasia">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-8 col-lg-9">
+>>>>>>> cbc43265e27f7a8d4f4b7c29b18c0cc42e8dbcc8
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label" style="width: 100%;">Razão
                         Social</label>
                       <input name="fullName" type="text" class="form-control" id="iptRazaoSocial">
@@ -443,12 +457,15 @@
                   </div>
                   <div class="row mb-3">
                     <div class="col-md-8 col-lg-9">
+<<<<<<< HEAD
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label" style="width: 100%;">CEP</label>
                       <input name="fullName" type="text" class="form-control" id="iptCEP">
                     </div>
                   </div>
                   <div class="row mb-3">
                     <div class="col-md-8 col-lg-9">
+=======
+>>>>>>> cbc43265e27f7a8d4f4b7c29b18c0cc42e8dbcc8
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label"
                         style="width: 100%;">Logradouro</label>
                       <input name="fullName" type="text" class="form-control" id="iptLogradouro">
@@ -462,6 +479,15 @@
                   </div>
                   <div class="row mb-3">
                     <div class="col-md-8 col-lg-9">
+<<<<<<< HEAD
+=======
+                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label" style="width: 100%;">CEP</label>
+                      <input name="fullName" type="text" class="form-control" id="iptCEP">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-8 col-lg-9">
+>>>>>>> cbc43265e27f7a8d4f4b7c29b18c0cc42e8dbcc8
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label"
                         style="width: 100%;">Telefone</label>
                       <input name="fullName" type="text" class="form-control" id="iptTelefone">
@@ -474,8 +500,13 @@
             </div>
           </div>
         </div>
+<<<<<<< HEAD
         <div class="text-center">
           <button type="submit" class="btn btn-primary" onclick="cadastrarEmpresaGerente()">Cadastrar</button>
+=======
+        <div class="text-center" id="campo-botao">
+          <button type="submit" class="btn btn-primary" id="botao-cadastrar">Cadastrar</button>
+>>>>>>> cbc43265e27f7a8d4f4b7c29b18c0cc42e8dbcc8
         </div>
     </section>
 
@@ -499,6 +530,22 @@
 <script src="assets/js/usuarios.js"></script>
 
 <script>
+<<<<<<< HEAD
+=======
+validarBotao()
+  function validarBotao() {
+    var botao = document.getElementById("botao-cadastrar");
+    var func = "";
+    if (sessionStorage.ID_USUARIO == 1) {
+      func = "cadastrarEmpresaGerente()";
+    } else {
+      func = "cadastrarFuncionario()"
+    }
+    botao.setAttribute("onclick", `${func}`);
+  }
+
+
+>>>>>>> cbc43265e27f7a8d4f4b7c29b18c0cc42e8dbcc8
   exibirInfos();
   exibirTabelaUsuarios();
 
