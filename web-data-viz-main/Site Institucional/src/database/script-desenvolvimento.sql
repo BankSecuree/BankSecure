@@ -111,7 +111,7 @@ DELIMITER ;
 -- CALL cadastrar_usuario ("bruno","");
 
 DROP USER IF EXISTS 'user_bankSecure'@'localhost';
-CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'Urubu_100';
+CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'urubu100';
 GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';
 GRANT EXECUTE ON PROCEDURE cadastrar_empresaGerente to 'user_bankSecure'@'localhost';
 FLUSH PRIVILEGES;
@@ -121,9 +121,9 @@ INSERT INTO empresa (razaoSocial, cnpjEmpresa, idEmpresa) VALUES ('Bank Secure',
 INSERT INTO usuario (email, senha, nome, fkEmpresa) VALUES ('banksecure@contato.com', '12345', 'Admin Bank Secure', 1);
 -- GERENTES
 INSERT INTO empresa (razaoSocial, cnpjEmpresa) VALUES ('Itau', 17192451000170);
-INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('gerenteitau@contato.com', '12345', 'Fernando Brandão', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 12345678901234), 1);
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('gerenteitau@contato.com', '12345', 'Fernando Brandão', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 1);
 -- ANALISTAS
-INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('lider1itau@contato.com', '12345', 'Julia Lima', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 12345678901234), 2);
+-- INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('lider1itau@contato.com', '12345', 'Julia Lima', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 12345678901234), 2);
 
 
 
