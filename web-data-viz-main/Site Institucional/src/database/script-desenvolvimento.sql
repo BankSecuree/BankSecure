@@ -37,8 +37,8 @@ CREATE TABLE usuario (
 
 CREATE TABLE maquina(
 	idMaquina INT PRIMARY KEY AUTO_INCREMENT,
-	MaquinaCpu INT,
-	MaquinaDemoria INT,
+	MaquinaCpu VARCHAR(45),
+	MaquinaMemoria INT,
 	MaquinaDisco INT, 
 	fkEmpresa CHAR(14),
 	FOREIGN KEY (fkEmpresa) REFERENCES empresa(CNPJ)

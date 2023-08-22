@@ -1,0 +1,40 @@
+var hardwareModel = require("../models/hardwareModel")
+function cadastrarHardware(req, res) {
+    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
+    var cpu = req.body.cpuServer;
+    var memoria = req.body.memoriarServer;
+    var disco = req.body.discoServer;
+    var temperatura = req.body.temperaturaServer;
+
+    // Faça as validações dos valores
+    if (cpu == undefined) {
+        res.status(400).send("Seu nome está undefined!");
+    } else if (memoria == undefined) {
+        res.status(400).send("Seu email está undefined!");
+    } else if (disco == undefined) {
+        res.status(400).send("Sua senha está undefined!");
+    }else if (temperatura == undefined) {
+        res.status(400).send("Sua senha está undefined!");
+    }else {
+        
+        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+        hardwareModel.cadastrarHardware(cpu, memoria, disco, temperatura)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o cadastro! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+module.exports = {
+    cadastrarHardware
+}
