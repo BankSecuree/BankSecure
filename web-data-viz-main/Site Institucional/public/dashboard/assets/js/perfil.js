@@ -136,38 +136,38 @@ function atualizarDados() {
 
 
 function atualizarSenha() {
-    let senhaAtual = document.getElementById("ipt_senha_atual");
-    let senhaNova = document.getElementById("ipt_senha_nova");
-    let senhaNovaConfirma = document.getElementById("ipt_senha_nova_c");
+    var idUsuario = sessionStorage.ID_USUARIO;
+    let senhaAtual = (document.getElementById("ipt_senha_atual")).value;
+    let senhaNovaServer = (document.getElementById("ipt_senha_nova")).value;
+    let senhaNovaConfirma = (document.getElementById("ipt_senha_nova_c")).value;
     if (senhaAtual != sessionStorage.SENHA_USUARIO) {
-        alert("Senha incorreta!")
-    } else if (senhaNova != senhaNovaConfirma) {
-        alert("Senhas diferentes!")
+        alert("Senha atual incorreta!")
+    } else if (senhaNovaServer != senhaNovaConfirma) {
+        alert("Senhas diferentes!") 
     } else {
-        fetch(`/perfil/atualizarSenha/${sessionStorage.ID_USUARIO}`, {
+         fetch(`/perfil/atualizarSenha/${idUsuario}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                senhaNova: senhaNova
+                senhaNovaServer: senhaNovaServer
             })
-        }).then(function (resposta) {
-            if (resposta.ok) {
+        })
+        .then(function (resposta) {
+        if (resposta.ok) {
                 // console.log(JSON.stringify(json));
-                // sessionStorage.SENHA_USUARIO = ;
+                sessionStorage.SENHA_USUARIO = senhaNovaServer;
                 cardMsg.style.display = "block"
                 cardMsg.style.border = "2px solid greenyellow"
                 cardMsg.style.color = "greenyellow"
                 cardMsg.innerHTML = "✅Senha alterada! Atualizando...✅";
-                setTimeout(function () {
-                    location.reload();
-                }, 2000);
             } else {
+                console.log(resposta);
                 cardMsg.style.display = "block"
                 cardMsg.style.border = "2px solid red"
                 cardMsg.style.color = "red"
-                cardMsg.innerHTML = "❌Erro ao alterar a foto! Tente novamente...";
+                cardMsg.innerHTML = "❌Erro ao alterar a senha! Tente novamente...";
                 throw ('Houve um erro na API!');
             }
         }).catch(function (resposta) {
@@ -176,3 +176,4 @@ function atualizarSenha() {
         });
     }
 }
+

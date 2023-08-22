@@ -526,12 +526,13 @@
     return obj;
   }
 
+  /*
   /**
    * --------------------------------------------------------------------------
    * Bootstrap dom/manipulator.js
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    * --------------------------------------------------------------------------
-   */
+   /*
 
   function normalizeData(value) {
     if (value === 'true') {
@@ -582,6 +583,7 @@
       return normalizeData(element.getAttribute(`data-bs-${normalizeDataKey(key)}`));
     }
   };
+  */
 
   /**
    * --------------------------------------------------------------------------
