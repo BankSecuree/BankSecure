@@ -162,6 +162,7 @@ function atualizarSenha() {
                 cardMsg.style.border = "2px solid greenyellow"
                 cardMsg.style.color = "greenyellow"
                 cardMsg.innerHTML = "✅Senha alterada! Atualizando...✅";
+                console.log("CArregando")
             } else {
                 console.log(resposta);
                 cardMsg.style.display = "block"
