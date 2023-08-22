@@ -55,12 +55,6 @@ function exibirTabelaAgencias() {
     });
 }
 
-function validacao() {
-    var apelido = iptApelido.value;
-    
-
-}
-
 function validar() {
 
     var ipt_apelido = iptApelido.value;
