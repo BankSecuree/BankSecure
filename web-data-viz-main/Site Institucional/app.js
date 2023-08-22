@@ -14,7 +14,7 @@ var usuariosRouter = require("./src/routes/usuarios");
 var perfilRouter = require("./src/routes/perfil");
 var avisosRouter = require("./src/routes/avisos");
 var medidasRouter = require("./src/routes/medidas");
-var hardwareRouter = require("./src/routes/hardware")
+var hardwareRouter = require("./src/routes/hardware");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

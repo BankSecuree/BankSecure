@@ -1,10 +1,10 @@
 function cadastrarHardware() {
-
     var cpuVar = ipt_cpu.value;
     var memoriaVar = ipt_memoria.value;
     var discoVar = ipt_disco.value;
     var temperaturaVar = ipt_temperaturaLimite.value;
-  
+    var fkEmpresaVar = sessionStorage.CNPJ_EMPRESA
+    
     fetch("/hardware/cadastrarHardware", {
         method: "POST",
         headers: {
@@ -14,12 +14,13 @@ function cadastrarHardware() {
             cpuServer: cpuVar,
             memoriaServer: memoriaVar,
             discoServer: discoVar,
-            temperaturaServer: temperaturaVar
+            temperaturaServer: temperaturaVar,
+            fkEmpresaServer: fkEmpresaVar
         })
     }).then(function (resposta) {
-
+        
         console.log("resposta: ", resposta);
-
+        
         if (resposta.ok) {
 
             alert("Cadastro da máquina realizado com sucesso!");
