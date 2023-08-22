@@ -5,25 +5,25 @@ CREATE DATABASE bankSecure;
 USE bankSecure;
 
 CREATE TABLE empresa(
-CNPJ CHAR (14) PRIMARY KEY,
--- idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
-razaoSocial VARCHAR(50),
+idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
+cnpjEmpresa CHAR (14),
+razaoSocial VARCHAR(45),
+cep CHAR(8),
 logradouro VARCHAR(150),
 numero INT,
-CEP CHAR(8),
 telefone VARCHAR(11)
 );
 
 CREATE TABLE agencia(
-CNPJ CHAR (14) PRIMARY KEY,
--- idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
+idAgencia INT PRIMARY KEY AUTO_INCREMENT,
+cnpjAgencia CHAR (14),
 apelido VARCHAR (45),
 logradouro VARCHAR(150),
 numero INT,
 CEP CHAR(8),
 telefone VARCHAR(11),
-fkEmpresa CHAR(14),
-FOREIGN KEY (fkEmpresa) REFERENCES empresa(CNPJ)
+fkEmpresa INT,
+FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
 );
 
 CREATE TABLE usuario (
@@ -34,27 +34,27 @@ CREATE TABLE usuario (
     cpf CHAR(11),
     telefone CHAR(11),
     dataNascimento DATE,
-    fkGerente INT,
 	foto VARCHAR(255),
-    fkEmpresa CHAR(14),
     dataInicio DATE,
-    FOREIGN KEY (fkEmpresa) REFERENCES empresa(CNPJ),
+    fkGerente INT,
+    fkEmpresa INT,
+    FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa),
     FOREIGN KEY (fkGerente) REFERENCES usuario(idUsuario)
 );
 
 CREATE TABLE funcionarioAgencia(
 	fkUsuario INT,
-	fkAgencia CHAR(14),
+	fkAgencia INT,
 	FOREIGN KEY (fkUsuario) REFERENCES usuario (idUsuario), 
-	FOREIGN KEY (fkAgencia) REFERENCES agencia (CNPJ),
+	FOREIGN KEY (fkAgencia) REFERENCES agencia (idAgencia),
     PRIMARY KEY (fkUsuario, fkAgencia)
 );
 
 CREATE TABLE maquina(
 	idMaquina INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(45), 
-	fkAgencia CHAR(14),
-	FOREIGN KEY (fkAgencia) REFERENCES agencia(CNPJ)
+	fkAgencia INT,
+    nome VARCHAR(45), 
+	FOREIGN KEY (fkAgencia) REFERENCES agencia(idAgencia)
 );
 
 CREATE TABLE registros(
@@ -76,7 +76,8 @@ CREATE TABLE maquinaComponente (
 	fkMaquina INT,
     fkComponente INT,
     FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina),
-    FOREIGN KEY (fkComponente) REFERENCES componente(idComponente)
+    FOREIGN KEY (fkComponente) REFERENCES componente(idComponente),
+    PRIMARY KEY (fkMaquina, fkComponente)
 );
 
 DELIMITER //
@@ -116,13 +117,13 @@ GRANT EXECUTE ON PROCEDURE cadastrar_empresaGerente to 'user_bankSecure'@'localh
 FLUSH PRIVILEGES;
 
 -- ADMIN
-INSERT INTO empresa (razaoSocial, CNPJ) VALUES ('Bank Secure', 12345678901234);
-INSERT INTO usuario (email, senha, nome, fkEmpresa) VALUES ('banksecure@contato.com', '12345', 'Admin Bank Secure', 12345678901234);
+INSERT INTO empresa (razaoSocial, cnpjEmpresa, idEmpresa) VALUES ('Bank Secure', 12345678901234, 1);
+INSERT INTO usuario (email, senha, nome, fkEmpresa) VALUES ('banksecure@contato.com', '12345', 'Admin Bank Secure', 1);
 -- GERENTES
-INSERT INTO empresa (razaoSocial, CNPJ) VALUES ('Itau', 17192451000170);
-INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('gerenteitau@contato.com', '12345', 'Fernando Brandão', 17192451000170, 1);
+INSERT INTO empresa (razaoSocial, cnpjEmpresa) VALUES ('Itau', 17192451000170);
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('gerenteitau@contato.com', '12345', 'Fernando Brandão', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 12345678901234), 1);
 -- ANALISTAS
-INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('lider1itau@contato.com', '12345', 'Julia Lima', 17192451000170, 2);
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('lider1itau@contato.com', '12345', 'Julia Lima', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 12345678901234), 2);
 
 
 
