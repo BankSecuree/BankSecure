@@ -111,5 +111,52 @@ function validar() {
 }
 
 function cadastrarAgencia() {
-    validar();
+    var agenciaApelidoVar = iptApelido.value;
+    var agenciaCNPJVar = iptCnpj.value;
+    var agenciaCEPVar = iptCep.value;
+    var agenciaLogradouroVar = iptLogradouro.value;
+    var agenciaNumeroVar = iptNumero.value;
+    var agenciaTelefoneVar = iptTelefone.value;
+
+    // Enviando o valor da nova input
+    fetch("/usuarios/cadastrarAgencia", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            // crie um atributo que recebe o valor recuperado aqui
+            // Agora vá para o arquivo routes/usuario.js
+            agenciaApelidoServer: agenciaApelidoVar,
+            agenciaCnpjServer: agenciaCNPJVar,   
+            agenciaCepServer: agenciaCEPVar,
+            agenciaLogradouroServer: agenciaLogradouroVar,
+            agenciaNumeroServer: agenciaNumeroVar,
+            agenciaTelefoneServer: agenciaTelefoneVar,
+
+        })
+    }).then(function (resposta) {
+
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+            // cardErro.style.display = "block";
+
+            alert("Cadastro realizado com sucesso!");
+            
+            window.location = "conta_usuarios.html";
+            
+
+            // limparFormulario();
+            // finalizarAguardar();
+        } else {
+            throw ("Houve um erro ao tentar realizar o cadastro!");
+        }
+    }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+        // finalizarAguardar();
+    });
+
+    return false;
+
 }  

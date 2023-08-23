@@ -80,8 +80,25 @@ CREATE TABLE maquinaComponente (
     PRIMARY KEY (fkMaquina, fkComponente)
 );
 
+-- PROCEDURE PARA CADASTRAR AGENCIAS
 DELIMITER //
-CREATE PROCEDURE cadastrar_empresaGerente(IN 
+CREATE PROCEDURE cadastrarAgencia(IN 
+    agencia_apelido VARCHAR(45),
+    agencia_CNPJ CHAR(14),
+	agencia_logradouro VARCHAR(150),
+	agencia_numero INT,
+	agencia_CEP CHAR(8),
+	agencia_telefone VARCHAR(11)
+)
+BEGIN
+	INSERT INTO agencia (CNPJ, apelido, logradouro, numero, CEP, telefone) 
+		VALUES (agencia_apelido, agencia_CNPJ, agencia_logradouro, agencia_numero, agencia_CEP, agencia_telefone);
+END//
+DELIMITER ;
+
+-- CHAMAR PROCEDURE
+DELIMITER //
+CREATE PROCEDURE cadastrarAgencia(IN 
     emp_CNPJ CHAR(14),
 	emp_razaoSocial VARCHAR(50),
 	emp_nomeFantasia VARCHAR(100),
@@ -106,8 +123,6 @@ BEGIN
 END//
 DELIMITER ;
 
--- CHAMAR PROCEDURE
-
 -- CALL cadastrar_usuario ("bruno","");
 
 DROP USER IF EXISTS 'user_bankSecure'@'localhost';
@@ -124,7 +139,3 @@ INSERT INTO empresa (razaoSocial, cnpjEmpresa) VALUES ('Itau', 17192451000170);
 INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('gerenteitau@contato.com', '12345', 'Fernando Brandão', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 1);
 -- ANALISTAS
 INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('lider1itau@contato.com', '12345', 'Julia Lima', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 12345678901234), 2);
-
-
-
-
