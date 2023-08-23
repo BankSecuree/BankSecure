@@ -106,7 +106,7 @@ END//
 DELIMITER ;
 
 DROP USER IF EXISTS 'user_bankSecure'@'localhost';
-CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'Urubu_100';
+CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'urubu100';
 GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';
 GRANT EXECUTE ON PROCEDURE cadastrar_empresaGerente to 'user_bankSecure'@'localhost';
 FLUSH PRIVILEGES;
