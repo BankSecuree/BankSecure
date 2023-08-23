@@ -1,4 +1,4 @@
--- Active: 1692279316574@@127.0.0.1@3306@bankSecure
+-- Active: 1692322487627@@127.0.0.1@3306@bankSecure
 /* Comandos para mysql - banco local - ambiente de desenvolvimento */
 DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
@@ -82,6 +82,7 @@ CREATE TABLE maquinaComponente (
 
 -- PROCEDURE PARA CADASTRAR AGENCIAS
 DELIMITER //
+<<<<<<< HEAD
 CREATE PROCEDURE cadastrarAgencia(IN 
     agencia_apelido VARCHAR(45),
     agencia_CNPJ CHAR(14),
@@ -100,8 +101,11 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE cadastrarAgencia(IN 
     emp_CNPJ CHAR(14),
+=======
+CREATE PROCEDURE cadastrar_empresaGerente(IN 
+    emp_cnpjEmpresa CHAR(14),
+>>>>>>> 9ac6d1cba34fe2b6f43d8af445715be0b3db789c
 	emp_razaoSocial VARCHAR(50),
-	emp_nomeFantasia VARCHAR(100),
 	emp_logradouro VARCHAR(150),
 	emp_numero INT,
 	emp_CEP CHAR(8),
@@ -116,15 +120,18 @@ CREATE PROCEDURE cadastrarAgencia(IN
 	-- us_foto VARCHAR(255),
 )
 BEGIN
-	INSERT INTO empresa (CNPJ, razaoSocial, nomeFantasia, logradouro, numero, CEP, telefone) 
-		VALUES (emp_CNPJ, emp_razaoSocial, emp_nomeFantasia, emp_logradouro, emp_numero, emp_CEP, emp_telefone);
+	INSERT INTO empresa (cnpjEmpresa, razaoSocial, logradouro, numero, CEP, telefone) 
+		VALUES (emp_cnpjEmpresa, emp_razaoSocial, emp_logradouro, emp_numero, emp_CEP, emp_telefone);
 	INSERT INTO usuario (email, senha, nome, cpf, telefone, dataNascimento, fkEmpresa) 
-		VALUES (us_email, us_senha, us_nome, us_cpf, us_telefone, us_dataNascimento, emp_CNPJ);
+		VALUES (us_email, us_senha, us_nome, us_cpf, us_telefone, us_dataNascimento, (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = emp_cnpjEmpresa));
 END//
 DELIMITER ;
 
+<<<<<<< HEAD
 -- CALL cadastrar_usuario ("bruno","");
 
+=======
+>>>>>>> 9ac6d1cba34fe2b6f43d8af445715be0b3db789c
 DROP USER IF EXISTS 'user_bankSecure'@'localhost';
 CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'urubu100';
 GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';
@@ -138,4 +145,13 @@ INSERT INTO usuario (email, senha, nome, fkEmpresa) VALUES ('banksecure@contato.
 INSERT INTO empresa (razaoSocial, cnpjEmpresa) VALUES ('Itau', 17192451000170);
 INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('gerenteitau@contato.com', '12345', 'Fernando Brandão', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 1);
 -- ANALISTAS
+<<<<<<< HEAD
 INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('lider1itau@contato.com', '12345', 'Julia Lima', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 12345678901234), 2);
+=======
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('lider1itau@contato.com', '12345', 'Julia Lima', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 12345678901234), 2);
+
+SELECT * FROM usuario;
+SELECT * FROM empresa;
+
+
+>>>>>>> 9ac6d1cba34fe2b6f43d8af445715be0b3db789c

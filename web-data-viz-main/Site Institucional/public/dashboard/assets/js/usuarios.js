@@ -121,9 +121,8 @@ function obterDadosCNPJ() {
 
 function cadastrarEmpresaGerente() {
 
-    var cnpjVar = iptCNPJ.value;
+    var cnpjVar = iptCnpj.value;
     var razaoSocialVar = iptRazaoSocial.value;
-    var nomeFantasiaVar = iptNomeFantasia.value;
     var logradouroVar = iptLogradouro.value;
     var numLogradouroVar = iptNumLogradouro.value;
     var cepVar = iptCEP.value;
@@ -150,7 +149,6 @@ function cadastrarEmpresaGerente() {
 
             cnpjServer: cnpjVar,
             razaoSocialServer: razaoSocialVar,
-            nomeFantasiaServer: nomeFantasiaVar,
             logradouroServer: logradouroVar,
             numLogradouroServer: numLogradouroVar,
             cepServer: cepVar,

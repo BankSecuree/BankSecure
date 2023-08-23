@@ -356,33 +356,38 @@
                 <div class="row mb-3">
                   <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Apelido</label>
                   <div class="col-md-8 col-lg-9">
-                    <input type="text" class="form-control" id="iptApelido">
+                    <input type="text" class="form-control" id="iptApelido" placeholder="Ex: Pedro Silva" 
+                    onkeyup="eliminarNumeros('iptApelido')">
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="cpf" class="col-md-4 col-lg-3 col-form-label">CNPJ</label>
                   <div class="col-md-8 col-lg-9">
-                    <input type="text" class="form-control" id="iptCnpj">
+                    <input type="text" class="form-control" id="iptCnpj" placeholder="Ex: 1101015121321" maxlength="18"
+                    onkeyup="eliminarLetras('iptCnpj'), mascaraCnpj()">
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label class="col-md-4 col-lg-3 col-form-label">CEP</label>
                   <div class="col-md-8 col-lg-9">
-                    <input type="text" class="form-control" id="iptCep">
+                    <input type="text" class="form-control" id="iptCep" placeholder="Ex: 09967172" maxlength="9" 
+                    onkeyup="eliminarLetras('iptCep'), mascaraCep()">
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label class="col-md-4 col-lg-3 col-form-label">Logradouro</label>
                   <div class="col-md-8 col-lg-9">
-                    <input type="text" class="form-control" id="iptLogradouro">
+                    <input type="text" class="form-control" id="iptLogradouro" placeholder="Ex: Rua Haddock Lobo" 
+                    onkeyup="eliminarNumeros('iptLogradouro')">
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label class="col-md-4 col-lg-3 col-form-label">Número</label>
                   <div class="col-md-8 col-lg-9">
-                    <input type="text" class="form-control" id="iptNumero">
+                    <input type="text" class="form-control" id="iptNumero" placeholder="Ex: 123" 
+                    onkeyup="eliminarLetras('iptNumero')">
                   </div>
                 </div>
                 <div class="row mb-3">
