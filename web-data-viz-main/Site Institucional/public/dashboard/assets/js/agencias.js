@@ -59,9 +59,10 @@ function validar() {
 
     var ipt_apelido = iptApelido.value;
     var cnpj = iptCnpj.value;
-    var cep = iptCep;
+    var cep = iptCep.value;
     var logradouro = iptLogradouro.value
-    var nomero = iptNumero.value
+    var numero = iptNumero.value
+
 
     if (ipt_apelido == "") {
         msg_alertas.style.display = "block"
@@ -69,10 +70,123 @@ function validar() {
         Erro.classList.add("alerta")
         mensagemErro.innerHTML = `O Apelido não pode ser vazio`
     }
+    else if (cnpj == "") {
+        msg_alertas.style.display = "block"
+        Erro = document.getElementById("mensagemErro")
+        Erro.classList.add("alerta")
+        mensagemErro.innerHTML = `O CNPJ não pode ser vazio`
+    }
+    else if (cep == "") {
+        msg_alertas.style.display = "block"
+        Erro = document.getElementById("mensagemErro")
+        Erro.classList.add("alerta")
+        mensagemErro.innerHTML = `O CEP não pode ser vazio`
+    }
+    else if (logradouro == "") {
+        msg_alertas.style.display = "block"
+        Erro = document.getElementById("mensagemErro")
+        Erro.classList.add("alerta")
+        mensagemErro.innerHTML = `O Logradouro não pode ser vazio`
+    }
+    else if (numero == "") {
+        msg_alertas.style.display = "block"
+        Erro = document.getElementById("mensagemErro")
+        Erro.classList.add("alerta")
+        mensagemErro.innerHTML = `O Número não pode ser vazio`
+    }
 
+    if (isNaN(numero)) {
+        msg_alertas.style.display = "block"
+        Erro = document.getElementById("mensagemErro")
+        Erro.classList.add("erro")
+        mensagemErro.innerHTML = `O número não pode ter letras`
+        
+    }
+}
+
+function eliminarNumeros(id) {
+    const input = document.getElementById(id)
+    var listaLetras = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    // console.log(input)
+    // console.log(ultima_letra)
+    for (var i = 0; i <= 9; i++) {
+        if (input.value[input.value.length - 1] == Number(listaLetras[i]) && input.value[input.value.length - 1] != ' ') {
+            msg_alertas.style.display = "block"
+            Erro = document.getElementById("mensagemErro")
+            Erro.classList.add("erro")
+            mensagemErro.innerHTML = `Este campo não pode ter Números`
+            input.value = ''
+            setTimeout(desaparecerCard, 5000);
+        }
+    }
+    for (var letra = 0; letra <= input.value.length - 1; letra++) {
+        if (isNaN(input.value[letra]) == false && input.value[letra] != ' ') {
+            msg_alertas.style.display = "block"
+            Erro = document.getElementById("mensagemErro")
+            Erro.classList.add("erro")
+            mensagemErro.innerHTML = `Este campo não pode ter Números`
+            input.value = ''
+            setTimeout(desaparecerCard, 5000);
+        }
+    }
+}
+
+function eliminarLetras(id) {
+    const input = document.getElementById(id)
+    var listaLetras = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@;,?|{}[]~^'
+    // console.log(input)
+    // console.log(ultima_letra)
+    for (var i = 0; i <= 62; i++) {
+        if (input.value[input.value.length - 1] == listaLetras[i]) {
+            msg_alertas.style.display = "block"
+            Erro = document.getElementById("mensagemErro")
+            Erro.classList.add("erro")
+            mensagemErro.innerHTML = `Este campo não pode ter Letras`
+            input.value = ''
+            setTimeout(desaparecerCard, 5000);
+        }
+        for (var letra = 0; letra <= input.value.length - 1; letra++) {
+            if (input.value[letra] == listaLetras[i]) {
+                msg_alertas.style.display = "block"
+                Erro = document.getElementById("mensagemErro")
+                Erro.classList.add("erro")
+                mensagemErro.innerHTML = `Este campo não pode ter Letras`
+                input.value = ''
+                setTimeout(desaparecerCard, 5000);
+            }
+        }
+    }
 
 }
 
+function mascaraCnpj() {
+    var tamanhoCnpj = iptCnpj.value.length
+
+    if (tamanhoCnpj == 2) {
+        iptCnpj.value += '.'
+    } if (tamanhoCnpj == 6) {
+        iptCnpj.value += '.'
+    } if (tamanhoCnpj == 10) {
+        iptCnpj.value += '/'
+    } if (tamanhoCnpj == 15) {
+        iptCnpj.value += '-'
+    }
+}
+function mascaraCep() {
+    var tamanhoCep = iptCep.value.length
+
+    if (tamanhoCep == 5) {
+        iptCep.value += '-'
+    }
+}
+
+function desaparecerCard() {
+    msg_alertas.style.display = "none"
+}
+
+
 function cadastrarAgencia() {
     validar();
+
+    setTimeout(desaparecerCard, 4000);
 }  
