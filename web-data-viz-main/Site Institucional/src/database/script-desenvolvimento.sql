@@ -1,4 +1,4 @@
--- Active: 1692279316574@@127.0.0.1@3306@bankSecure
+-- Active: 1692322487627@@127.0.0.1@3306@bankSecure
 /* Comandos para mysql - banco local - ambiente de desenvolvimento */
 DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
@@ -82,9 +82,8 @@ CREATE TABLE maquinaComponente (
 
 DELIMITER //
 CREATE PROCEDURE cadastrar_empresaGerente(IN 
-    emp_CNPJ CHAR(14),
+    emp_cnpjEmpresa CHAR(14),
 	emp_razaoSocial VARCHAR(50),
-	emp_nomeFantasia VARCHAR(100),
 	emp_logradouro VARCHAR(150),
 	emp_numero INT,
 	emp_CEP CHAR(8),
@@ -99,19 +98,15 @@ CREATE PROCEDURE cadastrar_empresaGerente(IN
 	-- us_foto VARCHAR(255),
 )
 BEGIN
-	INSERT INTO empresa (CNPJ, razaoSocial, nomeFantasia, logradouro, numero, CEP, telefone) 
-		VALUES (emp_CNPJ, emp_razaoSocial, emp_nomeFantasia, emp_logradouro, emp_numero, emp_CEP, emp_telefone);
+	INSERT INTO empresa (cnpjEmpresa, razaoSocial, logradouro, numero, CEP, telefone) 
+		VALUES (emp_cnpjEmpresa, emp_razaoSocial, emp_logradouro, emp_numero, emp_CEP, emp_telefone);
 	INSERT INTO usuario (email, senha, nome, cpf, telefone, dataNascimento, fkEmpresa) 
-		VALUES (us_email, us_senha, us_nome, us_cpf, us_telefone, us_dataNascimento, emp_CNPJ);
+		VALUES (us_email, us_senha, us_nome, us_cpf, us_telefone, us_dataNascimento, (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = emp_cnpjEmpresa));
 END//
 DELIMITER ;
 
--- CHAMAR PROCEDURE
-
--- CALL cadastrar_usuario ("bruno","");
-
 DROP USER IF EXISTS 'user_bankSecure'@'localhost';
-CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'urubu100';
+CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'Urubu_100';
 GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';
 GRANT EXECUTE ON PROCEDURE cadastrar_empresaGerente to 'user_bankSecure'@'localhost';
 FLUSH PRIVILEGES;
@@ -125,6 +120,7 @@ INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('gerentei
 -- ANALISTAS
 INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('lider1itau@contato.com', '12345', 'Julia Lima', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 12345678901234), 2);
 
-
+SELECT * FROM usuario;
+SELECT * FROM empresa;
 
 
