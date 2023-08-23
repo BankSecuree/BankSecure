@@ -36,6 +36,7 @@ CREATE TABLE usuario (
     dataNascimento DATE,
 	foto VARCHAR(255),
     dataInicio DATE,
+    cargo VARCHAR(25),
     fkGerente INT,
     fkEmpresa INT,
     FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa),
@@ -130,7 +131,7 @@ FLUSH PRIVILEGES;
 
 -- ADMIN
 INSERT INTO empresa (razaoSocial, cnpjEmpresa, idEmpresa) VALUES ('Bank Secure', 12345678901234, 1);
-INSERT INTO usuario (email, senha, nome, fkEmpresa) VALUES ('banksecure@contato.com', '12345', 'Admin Bank Secure', 1);
+INSERT INTO usuario (email, senha, nome, fkEmpresa, cargo) VALUES ('banksecure@contato.com', '12345', 'Admin Bank Secure', 1, 'Admin');
 -- GERENTES
 INSERT INTO empresa (razaoSocial, cnpjEmpresa) VALUES ('Itau', 17192451000170);
 INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('gerenteitau@contato.com', '12345', 'Fernando Brandão', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 1);
