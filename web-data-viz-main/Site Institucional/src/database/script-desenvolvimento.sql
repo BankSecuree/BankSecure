@@ -98,12 +98,8 @@ DELIMITER ;
 
 -- CHAMAR PROCEDURE
 DELIMITER //
-CREATE PROCEDURE cadastrarAgencia(IN 
-    emp_CNPJ CHAR(14),
-=======
 CREATE PROCEDURE cadastrar_empresaGerente(IN 
     emp_cnpjEmpresa CHAR(14),
->>>>>>> 9ac6d1cba34fe2b6f43d8af445715be0b3db789c
 	emp_razaoSocial VARCHAR(50),
 	emp_logradouro VARCHAR(150),
 	emp_numero INT,
@@ -126,11 +122,6 @@ BEGIN
 END//
 DELIMITER ;
 
-<<<<<<< HEAD
--- CALL cadastrar_usuario ("bruno","");
-
-=======
->>>>>>> 9ac6d1cba34fe2b6f43d8af445715be0b3db789c
 DROP USER IF EXISTS 'user_bankSecure'@'localhost';
 CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'urubu100';
 GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';
@@ -144,13 +135,4 @@ INSERT INTO usuario (email, senha, nome, fkEmpresa) VALUES ('banksecure@contato.
 INSERT INTO empresa (razaoSocial, cnpjEmpresa) VALUES ('Itau', 17192451000170);
 INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('gerenteitau@contato.com', '12345', 'Fernando Brandão', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 1);
 -- ANALISTAS
-<<<<<<< HEAD
 INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('lider1itau@contato.com', '12345', 'Julia Lima', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 12345678901234), 2);
-=======
-INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('lider1itau@contato.com', '12345', 'Julia Lima', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 12345678901234), 2);
-
-SELECT * FROM usuario;
-SELECT * FROM empresa;
-
-
->>>>>>> 9ac6d1cba34fe2b6f43d8af445715be0b3db789c
