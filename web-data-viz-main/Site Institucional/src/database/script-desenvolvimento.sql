@@ -82,7 +82,6 @@ CREATE TABLE maquinaComponente (
 
 -- PROCEDURE PARA CADASTRAR AGENCIAS
 DELIMITER //
-<<<<<<< HEAD
 CREATE PROCEDURE cadastrarAgencia(IN 
     agencia_apelido VARCHAR(45),
     agencia_CNPJ CHAR(14),

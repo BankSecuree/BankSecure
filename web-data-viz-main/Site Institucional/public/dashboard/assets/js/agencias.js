@@ -223,7 +223,6 @@ function desaparecerCard() {
 
 
 function cadastrarAgencia() {
-<<<<<<< HEAD
     var agenciaApelidoVar = iptApelido.value;
     var agenciaCNPJVar = iptCnpj.value;
     var agenciaCEPVar = iptCep.value;
@@ -272,9 +271,4 @@ function cadastrarAgencia() {
 
     return false;
 
-=======
-    validar();
-
-    setTimeout(desaparecerCard, 4000);
->>>>>>> 9ac6d1cba34fe2b6f43d8af445715be0b3db789c
 }  
