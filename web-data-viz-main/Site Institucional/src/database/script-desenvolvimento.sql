@@ -72,11 +72,17 @@ dataHora DATETIME,
 FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina)
 );
 
+
 CREATE TABLE componente (
-	idComponente INT PRIMARY KEY,
+	idComponente INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45),
     unidadeMedida VARCHAR(10)
 );
+
+INSERT INTO componente (nome, unidadeMedida) VALUES
+('CPU', 'GHZ'),
+('Memória', 'GB'),
+('Disco', 'KB');
 
 CREATE TABLE maquinaComponente (
 	fkMaquina INT,
@@ -152,9 +158,12 @@ INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefone, fk
 -- MAQUINA
 INSERT INTO maquina (nome, fkAgencia) VALUES ('HPP00', 1);
 INSERT INTO maquina (nome, fkAgencia) VALUES ('FYUT-231', 1);
-
+INSERT INTO maquina (nome, fkAgencia) VALUES ('TWE-981', 1);
 
 -- SERVIDOR
 INSERT INTO servidor (nome, fkMaquina) VALUES
-('Servidor 1', 1),
+('Servidor 1', 1);
 
+-- MAQUINA COMPONENTE
+INSERT INTO maquinaComponente (fkMaquina, fkComponente) VALUES (1, 1), (2, 2);
+INSERT INTO maquinaComponente (fkMaquina, fkComponente) VALUES (3,3);
