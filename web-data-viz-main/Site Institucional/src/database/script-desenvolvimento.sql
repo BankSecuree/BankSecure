@@ -152,10 +152,9 @@ INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefone, fk
 -- MAQUINA
 INSERT INTO maquina (nome, fkAgencia) VALUES ('HPP00', 1);
 INSERT INTO maquina (nome, fkAgencia) VALUES ('FYUT-231', 1);
-INSERT INTO maquina (nome, fkAgencia) VALUES ('ESA21', 1);
+
 
 -- SERVIDOR
 INSERT INTO servidor (nome, fkMaquina) VALUES
 ('Servidor 1', 1),
-('Servidor 2', 2),
-('Servidor 3', 3);
+
