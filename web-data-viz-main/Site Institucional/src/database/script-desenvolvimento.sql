@@ -1,5 +1,3 @@
--- Active: 1692322487627@@127.0.0.1@3306@bankSecure
-/* Comandos para mysql - banco local - ambiente de desenvolvimento */
 DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
 USE bankSecure;
@@ -56,6 +54,13 @@ CREATE TABLE maquina(
 	fkAgencia INT,
     nome VARCHAR(45), 
 	FOREIGN KEY (fkAgencia) REFERENCES agencia(idAgencia)
+);
+
+CREATE TABLE servidor(
+	idServidor INT PRIMARY KEY AUTO_INCREMENT,
+	fkMaquina INT,
+    nome VARCHAR(45), 
+	FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina)
 );
 
 CREATE TABLE registros(
@@ -132,8 +137,25 @@ FLUSH PRIVILEGES;
 -- ADMIN
 INSERT INTO empresa (razaoSocial, cnpjEmpresa, idEmpresa) VALUES ('Bank Secure', 12345678901234, 1);
 INSERT INTO usuario (email, senha, nome, fkEmpresa, cargo) VALUES ('banksecure@contato.com', '12345', 'Admin Bank Secure', 1, 'Admin');
+
 -- GERENTES
 INSERT INTO empresa (razaoSocial, cnpjEmpresa) VALUES ('Itau', 17192451000170);
 INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('gerenteitau@bs.com', '12345', 'Fernando Brandão', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 1);
+
 -- ANALISTAS
 INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('analista1itau@bs.com', '12345', 'Julia Lima', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 12345678901234), 2);
+
+-- AGENCIA
+INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefone, fkEmpresa) VALUES
+('60701190031328', 'Agência Itau Rudge Ramos', 'Rua Rudge Ramos', 80, '09772040', '1130034828', 2);
+
+-- MAQUINA
+INSERT INTO maquina (nome, fkAgencia) VALUES ('HPP00', 1);
+INSERT INTO maquina (nome, fkAgencia) VALUES ('FYUT-231', 1);
+INSERT INTO maquina (nome, fkAgencia) VALUES ('ESA21', 1);
+
+-- SERVIDOR
+INSERT INTO servidor (nome, fkMaquina) VALUES
+('Servidor 1', 1),
+('Servidor 2', 2),
+('Servidor 3', 3);
