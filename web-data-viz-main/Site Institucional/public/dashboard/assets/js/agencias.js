@@ -1,3 +1,5 @@
+var temErro = false;
+
 function exibirTabelaAgencias() {
 
     var lista = document.getElementById("tabela-agencias");
@@ -97,39 +99,43 @@ function validar() {
     var ipt_apelido = iptApelido.value;
     var cnpj = iptCnpj.value;
     var cep = iptCep.value;
-    var logradouro = iptLogradouro.value
-    var numero = iptNumero.value
-
+    var logradouro = iptLogradouro.value;
+    var numero = iptNumero.value;
 
     if (ipt_apelido == "") {
         msg_alertas.style.display = "block"
         Erro = document.getElementById("mensagemErro")
         Erro.classList.add("alerta")
         mensagemErro.innerHTML = `O Apelido não pode ser vazio`
+        temErro = true;
     }
     else if (cnpj == "") {
         msg_alertas.style.display = "block"
         Erro = document.getElementById("mensagemErro")
         Erro.classList.add("alerta")
         mensagemErro.innerHTML = `O CNPJ não pode ser vazio`
+        temErro = true;
     }
     else if (cep == "") {
         msg_alertas.style.display = "block"
         Erro = document.getElementById("mensagemErro")
         Erro.classList.add("alerta")
         mensagemErro.innerHTML = `O CEP não pode ser vazio`
+        temErro = true;
     }
     else if (logradouro == "") {
         msg_alertas.style.display = "block"
         Erro = document.getElementById("mensagemErro")
         Erro.classList.add("alerta")
         mensagemErro.innerHTML = `O Logradouro não pode ser vazio`
+        temErro = true;
     }
     else if (numero == "") {
         msg_alertas.style.display = "block"
         Erro = document.getElementById("mensagemErro")
         Erro.classList.add("alerta")
         mensagemErro.innerHTML = `O Número não pode ser vazio`
+        temErro = true;
     }
 
     if (isNaN(numero)) {
@@ -137,15 +143,14 @@ function validar() {
         Erro = document.getElementById("mensagemErro")
         Erro.classList.add("erro")
         mensagemErro.innerHTML = `O número não pode ter letras`
-        
+        temErro = true;
     }
 }
 
 function eliminarNumeros(id) {
     const input = document.getElementById(id)
     var listaLetras = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-    // console.log(input)
-    // console.log(ultima_letra)
+
     for (var i = 0; i <= 9; i++) {
         if (input.value[input.value.length - 1] == Number(listaLetras[i]) && input.value[input.value.length - 1] != ' ') {
             msg_alertas.style.display = "block"
@@ -171,8 +176,7 @@ function eliminarNumeros(id) {
 function eliminarLetras(id) {
     const input = document.getElementById(id)
     var listaLetras = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@;,?|{}[]~^'
-    // console.log(input)
-    // console.log(ultima_letra)
+    
     for (var i = 0; i <= 62; i++) {
         if (input.value[input.value.length - 1] == listaLetras[i]) {
             msg_alertas.style.display = "block"
@@ -223,52 +227,64 @@ function desaparecerCard() {
 
 
 function cadastrarAgencia() {
-    var agenciaApelidoVar = iptApelido.value;
-    var agenciaCNPJVar = iptCnpj.value;
-    var agenciaCEPVar = iptCep.value;
-    var agenciaLogradouroVar = iptLogradouro.value;
-    var agenciaNumeroVar = iptNumero.value;
-    var agenciaTelefoneVar = iptTelefone.value;
+    validar();
+    desaparecerCard();
 
-    // Enviando o valor da nova input
-    fetch("/usuarios/cadastrarAgencia", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            // crie um atributo que recebe o valor recuperado aqui
-            // Agora vá para o arquivo routes/usuario.js
-            agenciaApelidoServer: agenciaApelidoVar,
-            agenciaCnpjServer: agenciaCNPJVar,   
-            agenciaCepServer: agenciaCEPVar,
-            agenciaLogradouroServer: agenciaLogradouroVar,
-            agenciaNumeroServer: agenciaNumeroVar,
-            agenciaTelefoneServer: agenciaTelefoneVar,
+    if (temErro == false) {
+        var agenciaApelidoVar = iptApelido.value;
+        var agenciaCNPJVar = iptCnpj.value;
+        var agenciaCEPVar = iptCep.value;
+        var agenciaLogradouroVar = iptLogradouro.value;
+        var agenciaNumeroVar = iptNumero.value;
+        var agenciaTelefoneVar = iptTelefone.value;
 
-        })
-    }).then(function (resposta) {
+        // Enviando o valor da nova input
+        fetch("/usuarios/cadastrarAgencia", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                agenciaApelidoServer: agenciaApelidoVar,
+                agenciaCnpjServer: agenciaCNPJVar,
+                agenciaCepServer: agenciaCEPVar,
+                agenciaLogradouroServer: agenciaLogradouroVar,
+                agenciaNumeroServer: agenciaNumeroVar,
+                agenciaTelefoneServer: agenciaTelefoneVar,
 
-        console.log("resposta: ", resposta);
+            })
+        }).then(function (resposta) {
 
-        if (resposta.ok) {
-            // cardErro.style.display = "block";
+            console.log("resposta: ", resposta);
 
-            alert("Cadastro realizado com sucesso!");
-            
-            window.location = "conta_usuarios.html";
-            
+            if (resposta.ok) {
+                // cardErro.style.display = "block";
 
-            // limparFormulario();
+                alert("Cadastro realizado com sucesso!");
+
+                window.location = "conta_usuarios.html";
+
+
+                // limparFormulario();
+                // finalizarAguardar();
+            } else {
+                throw ("Houve um erro ao tentar realizar o cadastro!");
+            }
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
             // finalizarAguardar();
-        } else {
-            throw ("Houve um erro ao tentar realizar o cadastro!");
-        }
-    }).catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-        // finalizarAguardar();
-    });
+        });
 
-    return false;
+        return false;
 
+    }
+    else{
+        msg_alertas.style.display += "block"
+        Erro = document.getElementById("mensagemErro")
+        Erro.classList.add("error")
+        mensagemErro.innerHTML += `Corrija seus erros para prosseguir`
+        temErro = true;
+    }
 }  
