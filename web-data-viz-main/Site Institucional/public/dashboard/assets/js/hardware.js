@@ -3,8 +3,8 @@ function cadastrarHardware() {
     var memoriaVar = ipt_memoria.value;
     var discoVar = ipt_disco.value;
     var temperaturaVar = ipt_temperaturaLimite.value;
-    var fkEmpresaVar = sessionStorage.CNPJ_EMPRESA
-    
+            
+
     fetch("/hardware/cadastrarHardware", {
         method: "POST",
         headers: {
@@ -14,8 +14,7 @@ function cadastrarHardware() {
             cpuServer: cpuVar,
             memoriaServer: memoriaVar,
             discoServer: discoVar,
-            temperaturaServer: temperaturaVar,
-            fkEmpresaServer: fkEmpresaVar
+            temperaturaServer: temperaturaVar
         })
     }).then(function (resposta) {
         
@@ -24,13 +23,12 @@ function cadastrarHardware() {
         if (resposta.ok) {
 
             alert("Cadastro da máquina realizado com sucesso!");
-            window.location = "conta_perfil.html";
 
         } else {
             throw ("Houve um erro ao tentar realizar o cadastro!");
-
         }
     }).catch(function (resposta) {
+
         console.log(`#ERRO: ${resposta}`);
     });
 
