@@ -247,11 +247,11 @@ function cadastrarAgencia() {
             body: JSON.stringify({
                 // crie um atributo que recebe o valor recuperado aqui
                 // Agora vá para o arquivo routes/usuario.js
-                agenciaApelidoServer: agenciaApelidoVar,
                 agenciaCnpjServer: agenciaCNPJVar,
-                agenciaCepServer: agenciaCEPVar,
+                agenciaApelidoServer: agenciaApelidoVar,
                 agenciaLogradouroServer: agenciaLogradouroVar,
                 agenciaNumeroServer: agenciaNumeroVar,
+                agenciaCepServer: agenciaCEPVar,
                 agenciaTelefoneServer: agenciaTelefoneVar,
 
             })
