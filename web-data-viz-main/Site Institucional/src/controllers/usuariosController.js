@@ -109,8 +109,62 @@ function cadastrarAgencia(req, res) {
   }
 // }
 
+function cadastrarFuncionario(req, res) {
+  var nomeCompleto = req.body.nomeCompletoServer;
+  var cpf = req.body.cpfServer;
+  var celular = req.body.celularServer;
+  var nascimento = req.body.nascimentoServer;
+  var fkGerente = req.body.fkGerenteServer;
+  var cargo = req.body.cargoServer;
+  var email = req.body.emailServer;
+  var senha = req.body.senhaServer;
+  var dataInicio = req.body.dataInicioServer;
+  var cnpjEmpresa = req.body.cnpjServer;
+  
+  if (nomeCompleto == undefined) {
+    res.status(400).send("Seu nome está undefined!");
+  } else if (celular == undefined) {
+    res.status(400).send("Seu celular está undefined!");
+  } else if (cpf == undefined) {
+    res.status(400).send("Seu cpf está undefined!");
+  } else if (celular == undefined) {
+    res.status(400).send("Seu celular está undefined!");
+  } else if (nascimento == undefined) {
+    res.status(400).send("Seu nascimento está undefined!");
+  } else if (fkGerente == undefined) {
+    res.status(400).send("Seu fkGerente está undefined!");
+  } else if (cargo == undefined) {
+    res.status(400).send("Seu cargo está undefined!");
+  } else if (email == undefined) {
+    res.status(400).send("Seu email está undefined!");
+  } else if (senha == undefined) {
+    res.status(400).send("Sua senha está undefined!");
+  } else if (dataInicio == undefined) {
+    res.status(400).send("Seu dataInicio está undefined!");
+  } else if (cnpjEmpresa == undefined) {
+    res.status(400).send("Seu cnpjEmpresa está undefined!");
+  } else {
+    usuariosModel.cadastrarFuncionario(nomeCompleto, cpf, celular, nascimento, email, senha, cargo, fkGerente, dataInicio, cnpjEmpresa)
+      .then(
+        function (resultado) {
+          res.json(resultado);
+        }
+      ).catch(
+        function (erro) {
+          console.log(erro);
+          console.log(
+            "\nHouve um erro ao realizar o cadastro! Erro: ",
+            erro.sqlMessage
+          );
+          res.status(500).json(erro.sqlMessage);
+        }
+      );
+  }
+}
+
 module.exports = {
   exibirTabelaUsuarios,
   cadastrarEmpresaGerente, 
+  cadastrarFuncionario,
   cadastrarAgencia
 }

@@ -19,10 +19,11 @@ function cadastrarEmpresaGerente(cnpj, razaoSocial, logradouro, numLogradouro, c
     return database.executar(instrucao);
 }
 
-function cadastrarFuncionario(nomeCompleto, cpf, celular, nascimento, email, senha, cargo, fkGerente, dataInicio) {
+function cadastrarFuncionario(nomeCompleto, cpf, celular, nascimento, email, senha, cargo, fkGerente, dataInicio, cnpjEmpresa) {
     console.log("ACESSEI O USUARIOS  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarEmpresaGerente()");
     var instrucao = `
-    CALL cadastrar_empresaGerente ('${cnpj}', '${razaoSocial}', '${logradouro}', ${numLogradouro}, '${cep}', '${telefone}', '${email}', '${senha}', '${nomeCompleto}', '${cpf}', '${celular}', '${nascimento}', '${cargo}', ${fkGerente}, '${dataInicio}');
+    INSERT INTO usuario (email, senha, nome, cpf, telefone, dataNascimento, fkEmpresa,cargo, fkGerente, dataInicio) 
+		VALUES ('${email}', '${senha}', '${nomeCompleto}', '${cpf}', '${celular}', '${nascimento}', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = '${cnpjEmpresa}'), '${cargo}', ${fkGerente}, '${dataInicio}');
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);

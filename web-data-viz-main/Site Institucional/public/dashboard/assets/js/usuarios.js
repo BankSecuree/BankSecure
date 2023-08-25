@@ -186,6 +186,55 @@ function cadastrarEmpresaGerente() {
     return false;
 }
 
+function cadastrarFuncionario() {
+    var nomeCompletoVar = iptNomeCompleto.value;
+    var cpfVar = iptCPF.value;
+    var celularVar = iptCelular.value;
+    var nascimentoVar = iptNascimento.value;
+    var cargoVar = iptCargo.value;
+    var emailVar = iptEmail.value;
+    var senhaVar = iptSenha.value;
+    var dataInicioVar = new Date();
+    dataInicioVar = `${dataInicioVar.getFullYear().toString()}-${(dataInicioVar.getMonth() + 1).toString().padStart(2, '0')}-${dataInicioVar.getDate().toString().padStart(2, '0')}`
+    var cnpjVar = iptCnpj.value;
+    var fkGerenteVar;
+    if (sessionStorage.GERENTE_USUARIO == "null") {
+        fkGerenteVar = 1;
+    } else {
+        fkGerenteVar = sessionStorage.ID_USUARIO;
+    }
+
+    fetch("/usuarios/cadastrarFuncionario", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            nomeCompletoServer: nomeCompletoVar,
+            cpfServer: cpfVar,
+            celularServer: celularVar,
+            nascimentoServer: nascimentoVar,
+            cargoServer: cargoVar,
+            fkGerenteServer: fkGerenteVar,
+            emailServer: emailVar,
+            senhaServer: senhaVar,
+            dataInicioServer: dataInicioVar,
+            cnpjServer: cnpjVar,
+        })
+    }).then(function (resposta) {
+        console.log("resposta: ", resposta);
+        if (resposta.ok) {
+            alert("Cadastro realizado com sucesso!");
+            // window.location = "conta_usuarios.html";
+        } else {
+            throw ("Houve um erro ao tentar realizar o cadastro!");
+        }
+    }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+    });
+    return false;
+}
+
 
 function exibirCadastro() {
     if (sessionStorage.ID_USUARIO != 1) {
