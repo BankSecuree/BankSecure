@@ -2,6 +2,8 @@ DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
 USE bankSecure;
 
+select * from agencia;
+
 CREATE TABLE empresa(
 idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
 cnpjEmpresa CHAR (14),
@@ -104,7 +106,7 @@ CREATE PROCEDURE cadastrarAgencia(IN
 )
 BEGIN
 	INSERT INTO agencia (CNPJ, apelido, logradouro, numero, CEP, telefoneAgencia) 
-		VALUES (agencia_apelido, agencia_CNPJ, agencia_logradouro, agencia_numero, agencia_CEP, agencia_telefone);
+		VALUES (agencia_CNPJ, agencia_apelido, agencia_logradouro, agencia_numero, agencia_CEP, agencia_telefone);
 END//
 DELIMITER ;
 
