@@ -12,6 +12,10 @@ numero INT,
 telefone VARCHAR(14)
 );
 
+select * from agencia;
+
+
+
 CREATE TABLE agencia(
 idAgencia INT PRIMARY KEY AUTO_INCREMENT,
 cnpjAgencia CHAR (14),
@@ -23,6 +27,8 @@ telefone VARCHAR(14),
 fkEmpresa INT,
 FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
 );
+
+select * from agencia;
 
 CREATE TABLE usuario (
 	idUsuario INT PRIMARY KEY AUTO_INCREMENT,
