@@ -72,7 +72,6 @@ dataHora DATETIME,
 FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina)
 );
 
-
 CREATE TABLE componente (
 	idComponente INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45),
@@ -108,8 +107,6 @@ BEGIN
 END//
 DELIMITER ;
 
-select * from agencia;
-
 -- CHAMAR PROCEDURE
 DELIMITER //
 CREATE PROCEDURE cadastrar_empresaGerente(IN 
@@ -137,8 +134,6 @@ BEGIN
 END//
 DELIMITER ;
 
-select * from empresa;
-
 DROP USER IF EXISTS 'user_bankSecure'@'localhost';
 CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'urubu100';
 GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';
@@ -156,7 +151,6 @@ INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('gerentei
 -- ANALISTAS
 INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('analista1itau@bs.com', '12345', 'Julia Lima', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 12345678901234), 2);
 
-
 -- AGENCIA
 INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefone, fkEmpresa) VALUES
 ('60701190031328', 'Agência Itau Rudge Ramos', 'Rua Rudge Ramos', 80, '09772040', '1130034828', 2);
@@ -173,6 +167,3 @@ INSERT INTO servidor (nome, fkMaquina) VALUES
 -- MAQUINA COMPONENTE
 INSERT INTO maquinaComponente (fkMaquina, fkComponente) VALUES (1, 1), (2, 2);
 INSERT INTO maquinaComponente (fkMaquina, fkComponente) VALUES (3,3);
-
-
-select * from agencia;
