@@ -187,7 +187,7 @@ function cadastrarEmpresaGerente() {
 }
 
 
-function exibirCadastroEmpresa() {
+function exibirCadastro() {
     if (sessionStorage.ID_USUARIO != 1) {
         iptCnpj.value = sessionStorage.CNPJ_EMPRESA;
         iptCnpj.setAttribute('disabled','');
@@ -199,5 +199,11 @@ function exibirCadastroEmpresa() {
         iptTelefone.value = sessionStorage.TELEFONE_EMPRESA;
         iptTelefone.setAttribute('disabled','');
 
+    }
+
+    if(sessionStorage.ID_USUARIO == 1) {
+        document.getElementById("botao-cadastrar").setAttribute("onclick", "cadastrarEmpresaGerente()")
+    } else {
+        document.getElementById("botao-cadastrar").setAttribute("onclick", "cadastrarFuncionario()")
     }
 }

@@ -32,7 +32,7 @@ function entrar() {
         console.log("FORM LOGIN: ", emailVar);
         console.log("FORM SENHA: ", senhaVar);
 
-        fetch("/usuario/autenticar", {
+        fetch("/login/entrar", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
