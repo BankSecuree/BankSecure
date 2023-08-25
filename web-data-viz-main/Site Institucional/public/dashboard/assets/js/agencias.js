@@ -1,16 +1,15 @@
 var temErro = false;
 
-function exibirTabelaAgencias() {
-
+function exibirTabelaAgencias() { 
     var lista = document.getElementById("tabela-agencias");
     var trColunas = document.createElement("tr");
     var thead = document.createElement("thead");
     var thId = document.createElement("th");
     thId.setAttribute("scope", "row");
     thId.innerHTML = "#";
-    var thEmpresa = document.createElement("th");
-    thEmpresa.setAttribute("scope", "row");
-    thEmpresa.innerHTML = "Empresa";
+    var thApelido = document.createElement("th");
+    thApelido.setAttribute("scope", "row");
+    thApelido.innerHTML = "Apelido";
     var thCnpj = document.createElement("th");
     thCnpj.setAttribute("scope", "row");
     thCnpj.innerHTML = "CNPJ";
@@ -25,11 +24,11 @@ function exibirTabelaAgencias() {
     thExcluir.innerHTML = "Excluir";
 
     trColunas.appendChild(thId);
-    trColunas.appendChild(thEmpresa);
+    trColunas.appendChild(thApelido);
     trColunas.appendChild(thCnpj);
     trColunas.appendChild(thFuncionarios);
     trColunas.appendChild(thCaixaEletronico);
-    if (sessionStorage.GERENTE_USUARIO == "null") {
+    if (sessionStorage.GERENTE_USUARIO == "1") {
         var thExcluir = document.createElement("th");
         thExcluir.setAttribute("scope", "row");
         thExcluir.innerHTML = "Excluir";
@@ -37,7 +36,7 @@ function exibirTabelaAgencias() {
     }
     thead.appendChild(trColunas);
     lista.appendChild(thead);
-    fetch(`/usuarios/exibirTabelaAgencias/${sessionStorage.ID_USUARIO}`).then(function (resposta) {
+    fetch(`/agencias/exibirTabelaAgencias/${sessionStorage.ID_EMPRESA}`).then(function (resposta) {
         if (resposta.ok) {
             if (resposta.status == 204) {
                 var lista = document.getElementById("tabela-agencias");
@@ -53,36 +52,35 @@ function exibirTabelaAgencias() {
                     var lista = document.getElementById("tabela-agencias");
 
                     var thNumero = document.createElement("th");
-                    thNumero.innerHTML = i + 1;
+                    thNumero.innerHTML = publicacao.idAgencia;
                     thNumero.setAttribute("scope", "row");
-                    var tdNome = document.createElement("td");
-                    tdNome.innerHTML = publicacao.nome;
-                    var tdEmpresa = document.createElement("td");
-                    tdEmpresa.innerHTML = publicacao.empresa;
-                    var tdInicio = document.createElement("td");
-                    var dataInicio = new Date(publicacao.dataInicio)
-                    dataInicio = `${dataInicio.getDate().toString().padStart(2, '0')}/${(dataInicio.getMonth() + 1).toString().padStart(2, '0')}/${dataInicio.getFullYear().toString()}`
-                    tdInicio.innerHTML = dataInicio;
+                    var tdApelido = document.createElement("td");
+                    tdApelido.innerHTML = publicacao.apelido;
+                    var tdCnpj = document.createElement("td");
+                    tdCnpj.innerHTML = publicacao.cnpjAgencia;
+                    
+                    var tdFuncionarios = document.createElement("td");
+                    var tdMaquinas = document.createElement("td");
+                    fetch(`/agencias/exibirQuantidadeFuncionariosAgencia/${publicacao.idAgencia}`).then(function (respostaDois) {respostaDois.json().then(function (respostaDois) {
+                        // console.log(respostaDois)
+                        tdFuncionarios.innerHTML = respostaDois[0].funcionarios
+                        tdMaquinas.innerHTML = respostaDois[0].agencias })
+                    });
                     var tdButton = document.createElement("td");
-                    tdButton.innerHTML = `<a onclick="excluirUsuario(${publicacao.idUsuario})" class="btn btn-danger btn-sm" title="Remove my profile image"><i
+                    tdButton.innerHTML = `<a onclick="excluirAgencia(${publicacao.idAgencia})" class="btn btn-danger btn-sm" title="Remove my profile image"><i
                     class="bi bi-trash"></i></a>`;
                     var tr = document.createElement("tr");
                     var tbody = document.createElement("tbody");
 
+
                     tr.appendChild(thNumero);
-                    tr.appendChild(tdNome);
-                    tr.appendChild(tdEmpresa);
-                    if (sessionStorage.GERENTE_USUARIO == "null") {
-                        var tdFuncionarios = document.createElement("td");
-                        tdFuncionarios.innerHTML = publicacao.funcionarios;
-                        tr.appendChild(tdFuncionarios);
-                    }
-                    tr.appendChild(tdInicio);
+                    tr.appendChild(tdApelido);
+                    tr.appendChild(tdCnpj);
+                    tr.appendChild(tdFuncionarios);
+                    tr.appendChild(tdMaquinas);
                     tr.appendChild(tdButton);
                     tbody.appendChild(tr);
                     lista.appendChild(tbody);
-
-
                 }
             });
         } else {

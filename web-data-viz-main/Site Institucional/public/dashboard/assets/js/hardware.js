@@ -1,5 +1,20 @@
 function validar() {
-    if (cpuVar == "") {
+
+    var nomeMaquinaVar = ipt_nomeMaquina.value;
+    var cpuVar = ipt_cpu.value;
+    var memoriaVar = ipt_memoria.value;
+    var discoVar = ipt_disco.value;
+    var temperaturaVar = ipt_temperaturaLimite.value;
+
+
+    if (nomeMaquinaVar == "") {
+        msg_alertas.style.display = "block"
+        Erro = document.getElementById("mensagemErro")
+        Erro.classList.add("alerta")
+        mensagemErro.innerHTML = `O campo da CPU não pode estar vazia`
+        temErro = true;
+    }
+    else if (cpuVar == "") {
         msg_alertas.style.display = "block"
         Erro = document.getElementById("mensagemErro")
         Erro.classList.add("alerta")
@@ -34,51 +49,51 @@ function desaparecerCard() {
     msg_alertas.style.display = "none"
 }
 
-function cadastrarHardware() {
-    var cpuVar = ipt_cpu.value;
-    var memoriaVar = ipt_memoria.value;
-    var discoVar = ipt_disco.value;
-    var temperaturaVar = ipt_temperaturaLimite.value;
+function cadastrarMaquina(){
+    var nomeMaquinaVar = ipt_nomeMaquina.value;
+    var fkAgenciaVar = ipt_fkAgencia.value;
 
-    validar();
-    desaparecerCard();
+    // validar();
+    // desaparecerCard();
 
-    if (temErro == false) {
-
-        fetch("/hardware/cadastrarHardware", {
+    // if (temErro == false) {
+        
+        fetch("/hardware/cadastrarNomeMaquina", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                cpuServer: cpuVar,
-                memoriaServer: memoriaVar,
-                discoServer: discoVar,
-                temperaturaServer: temperaturaVar
+                nomeMaquinaServer: nomeMaquinaVar,
+                fkAgenciaServer: fkAgenciaVar
             })
-        }).then(function (resposta) {
+        }).then(function(resposta){
 
             console.log("resposta: ", resposta);
 
             if (resposta.ok) {
 
-                alert("Cadastro da máquina realizado com sucesso!");
+                alert("Máquina cadastrada com sucesso")
 
-            } else {
-                throw ("Houve um erro ao tentar realizar o cadastro!");
+            } else{
+
+                throw("Houve um erro ao realizar o cadastro da máquina!")
+
             }
-        }).catch(function (resposta) {
+        }). catch(function(resposta){
 
-            console.log(`#ERRO: ${resposta}`);
+            console.log(`#ERRO: ${resposta}`)
+
         });
 
-        return false;
-    }
-    else{
-        msg_alertas.style.display = "block"
-        Erro = document.getElementById("mensagemErro")
-        Erro.classList.add("error")
-        mensagemErro.innerHTML += `Corrija os campos`
-        temErro = true;
-    }
+        return false
+
+    // }
+    // else{
+    //     msg_alertas.style.display = "block"
+    //     Erro = document.getElementById("mensagemErro")
+    //     Erro.classList.add("error")
+    //     mensagemErro.innerHTML += `Corrija os campos`
+    //     temErro = true;
+    // }
 }
