@@ -37,12 +37,15 @@ function exibirTabelaUsuarios() {
                 throw "Nenhum resultado encontrado!!";
             }
             resposta.json().then(function (resposta) {
-                for (let i = 0; i < resposta.length; i++) {
+                var contId = 0;
+                for (let i = resposta.length-1; i >= 0; i--) {
+                    console.log(i)
+                    console.log(publicacao)
                     var lista = document.getElementById("tabela-usuarios");
                     var publicacao = resposta[i];
 
                     var thNumero = document.createElement("th");
-                    thNumero.innerHTML = i + 1;
+                    thNumero.innerHTML = contId + 1;
                     thNumero.setAttribute("scope", "row");
                     var tdNome = document.createElement("td");
                     tdNome.innerHTML = publicacao.nome;
@@ -66,7 +69,7 @@ function exibirTabelaUsuarios() {
                     tbody.appendChild(tr);
                     lista.appendChild(tbody);
 
-
+                    contId++;
                 }
             });
         } else {
@@ -95,7 +98,7 @@ function obterDadosCNPJ() {
         .then(post => {
 
             dadosCNPJ = post;
-            console.log(dadosCNPJ)
+            // console.log(dadosCNPJ)
 
             iptRazaoSocial.value = dadosCNPJ.razao_social;;
             iptLogradouro.value = `${dadosCNPJ.estabelecimento.tipo_logradouro} ${dadosCNPJ.estabelecimento.logradouro}`;
@@ -224,10 +227,19 @@ function cadastrarFuncionario() {
     }).then(function (resposta) {
         console.log("resposta: ", resposta);
         if (resposta.ok) {
-            alert("Cadastro realizado com sucesso!");
-            // window.location = "conta_usuarios.html";
+            cardMsg.style.display = "block"
+            cardMsg.style.border = "2px solid greenyellow"
+            cardMsg.style.color = "greenyellow"
+            cardMsg.innerHTML = "✅Cadastro realizado! Atualizando...✅";
+            setTimeout(function () {
+                location.reload();
+            }, 2000);
         } else {
-            throw ("Houve um erro ao tentar realizar o cadastro!");
+            cardMsg.style.display = "block"
+            cardMsg.style.border = "2px solid red"
+            cardMsg.style.color = "red"
+            cardMsg.innerHTML = "❌Erro ao realizar o cadastro! Tente novamente...❌";
+            throw ('Houve um erro ao tentar realizar o cadastro');
         }
     }).catch(function (resposta) {
         console.log(`#ERRO: ${resposta}`);
@@ -239,18 +251,16 @@ function cadastrarFuncionario() {
 function exibirCadastro() {
     if (sessionStorage.ID_USUARIO != 1) {
         iptCnpj.value = sessionStorage.CNPJ_EMPRESA;
-        iptCnpj.setAttribute('disabled','');
+        iptCnpj.setAttribute('disabled', '');
         obterDadosCNPJ()
-        iptRazaoSocial.setAttribute('disabled','');
-        iptCEP.setAttribute('disabled','');
-        iptLogradouro.setAttribute('disabled','');
-        iptNumLogradouro.setAttribute('disabled','');
+        iptRazaoSocial.setAttribute('disabled', '');
+        iptCEP.setAttribute('disabled', '');
+        iptLogradouro.setAttribute('disabled', '');
+        iptNumLogradouro.setAttribute('disabled', '');
         iptTelefone.value = sessionStorage.TELEFONE_EMPRESA;
-        iptTelefone.setAttribute('disabled','');
-
+        iptTelefone.setAttribute('disabled', '');
     }
-
-    if(sessionStorage.ID_USUARIO == 1) {
+    if (sessionStorage.ID_USUARIO == 1) {
         document.getElementById("botao-cadastrar").setAttribute("onclick", "cadastrarEmpresaGerente()")
     } else {
         document.getElementById("botao-cadastrar").setAttribute("onclick", "cadastrarFuncionario()")
