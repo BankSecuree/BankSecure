@@ -65,6 +65,7 @@ function entrar() {
                     sessionStorage.ID_EMPRESA = json.idEmpresa;
                     sessionStorage.NOME_EMPRESA = json.razaoSocial;
                     sessionStorage.CNPJ_EMPRESA = json.cnpjEmpresa;
+                    sessionStorage.TELEFONE_EMPRESA = json.telefoneEmpresa;
                     
                    
                     setTimeout(function () {

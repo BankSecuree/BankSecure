@@ -186,3 +186,18 @@ function cadastrarEmpresaGerente() {
     return false;
 }
 
+
+function exibirCadastroEmpresa() {
+    if (sessionStorage.ID_USUARIO != 1) {
+        iptCnpj.value = sessionStorage.CNPJ_EMPRESA;
+        iptCnpj.setAttribute('disabled','');
+        obterDadosCNPJ()
+        iptRazaoSocial.setAttribute('disabled','');
+        iptCEP.setAttribute('disabled','');
+        iptLogradouro.setAttribute('disabled','');
+        iptNumLogradouro.setAttribute('disabled','');
+        iptTelefone.value = sessionStorage.TELEFONE_EMPRESA;
+        iptTelefone.setAttribute('disabled','');
+
+    }
+}
