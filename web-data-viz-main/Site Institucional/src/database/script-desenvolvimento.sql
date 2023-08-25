@@ -9,7 +9,7 @@ razaoSocial VARCHAR(100),
 cep CHAR(8),
 logradouro VARCHAR(150),
 numero INT,
-telefoneEmpresa VARCHAR(14)
+telefone VARCHAR(14)
 );
 
 CREATE TABLE agencia(
@@ -19,7 +19,7 @@ apelido VARCHAR (45),
 logradouro VARCHAR(150),
 numero INT,
 CEP CHAR(8),
-telefoneAgencia VARCHAR(14),
+telefone VARCHAR(14),
 fkEmpresa INT,
 FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
 );
@@ -72,7 +72,6 @@ dataHora DATETIME,
 FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina)
 );
 
-
 CREATE TABLE componente (
 	idComponente INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45),
@@ -97,14 +96,14 @@ DELIMITER //
 CREATE PROCEDURE cadastrarAgencia(IN 
     agencia_apelido VARCHAR(45),
     agencia_CNPJ CHAR(14),
+    agencia_CEP CHAR(8),
 	agencia_logradouro VARCHAR(150),
-	agencia_numero INT,
-	agencia_CEP CHAR(8),
+	agencia_numero VARCHAR(20),
 	agencia_telefone VARCHAR(11)
 )
 BEGIN
-	INSERT INTO agencia (CNPJ, apelido, logradouro, numero, CEP, telefoneAgencia) 
-		VALUES (agencia_CNPJ, agencia_apelido, agencia_logradouro, agencia_numero, agencia_CEP, agencia_telefone);
+	INSERT INTO agencia (apelido, cnpjAgencia, CEP, logradouro, numero, telefone) 
+		VALUES (agencia_apelido, agencia_CNPJ, agencia_cep, agencia_logradouro, agencia_numero, agencia_telefone);
 END//
 DELIMITER ;
 
@@ -128,7 +127,7 @@ CREATE PROCEDURE cadastrar_empresaGerente(IN
     us_dataInicio DATE
 )
 BEGIN
-	INSERT INTO empresa (cnpjEmpresa, razaoSocial, logradouro, numero, CEP, telefoneEmpresa) 
+	INSERT INTO empresa (cnpjEmpresa, razaoSocial, logradouro, numero, CEP, telefone) 
 		VALUES (emp_cnpjEmpresa, emp_razaoSocial, emp_logradouro, emp_numero, emp_CEP, emp_telefone);
 	INSERT INTO usuario (email, senha, nome, cpf, telefone, dataNascimento, fkEmpresa,cargo, fkGerente, dataInicio) 
 		VALUES (us_email, us_senha, us_nome, us_cpf, us_telefone, us_dataNascimento, (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = emp_cnpjEmpresa), us_cargo, us_fkGerente, us_dataInicio);
@@ -139,7 +138,6 @@ DROP USER IF EXISTS 'user_bankSecure'@'localhost';
 CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'urubu100';
 GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';
 GRANT EXECUTE ON PROCEDURE cadastrar_empresaGerente to 'user_bankSecure'@'localhost';
-GRANT EXECUTE ON PROCEDURE cadastrarAgencia to 'user_bankSecure'@'localhost';
 FLUSH PRIVILEGES;
 
 -- ADMIN
@@ -147,14 +145,14 @@ INSERT INTO empresa (razaoSocial, cnpjEmpresa, idEmpresa) VALUES ('Bank Secure',
 INSERT INTO usuario (email, senha, nome, fkEmpresa, cargo) VALUES ('banksecure@contato.com', '12345', 'Admin Bank Secure', 1, 'Admin');
 
 -- GERENTES
-INSERT INTO empresa (razaoSocial, cnpjEmpresa, cep, logradouro, numero, telefoneEmpresa) VALUES ('BANCO ITAUCARD S.A.', 17192451000170, '04344902', 'PRACA ALFREDO EGYDIO DE SOUZA ARANHA 100', 100, '(11) 4004-4828');
-INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente,cpf, telefone, cargo) VALUES ('gerenteitau@bs.com', '12345', 'Fernando Brandão', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 1,12312312300, '(11)90000-1111', 'CTO');
+INSERT INTO empresa (razaoSocial, cnpjEmpresa) VALUES ('Itau', 17192451000170);
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('gerenteitau@bs.com', '12345', 'Fernando Brandão', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 1);
 
 -- ANALISTAS
-INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('analista1itau@bs.com', '12345', 'Julia Lima', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 2);
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('analista1itau@bs.com', '12345', 'Julia Lima', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 12345678901234), 2);
 
 -- AGENCIA
-INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefoneAgencia, fkEmpresa) VALUES
+INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefone, fkEmpresa) VALUES
 ('60701190031328', 'Agência Itau Rudge Ramos', 'Rua Rudge Ramos', 80, '09772040', '1130034828', 2);
 -- FUNCIONARIOAGENCIA
 INSERT INTO funcionarioAgencia VALUES (3,1);
