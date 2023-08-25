@@ -16,7 +16,7 @@ function exibirTabelaUsuarios() {
     thDataInicio.innerHTML = "Data de Início";
     var thExcluir = document.createElement("th");
     thExcluir.setAttribute("scope", "row");
-    thExcluir.innerHTML = "Excluir";
+    thExcluir.innerHTML = "Editar/Excluir";
 
     trColunas.appendChild(thId);
     trColunas.appendChild(thNome);
@@ -56,7 +56,10 @@ function exibirTabelaUsuarios() {
                     dataInicio = `${dataInicio.getDate().toString().padStart(2, '0')}/${(dataInicio.getMonth() + 1).toString().padStart(2, '0')}/${dataInicio.getFullYear().toString()}`
                     tdInicio.innerHTML = dataInicio;
                     var tdButton = document.createElement("td");
-                    tdButton.innerHTML = `<a onclick="excluirUsuario(${publicacao.idUsuario})" class="btn btn-danger btn-sm" title="Remove my profile image"><i
+                    tdButton.innerHTML = `
+                    <a onclick="editarUsuario(${publicacao.idUsuario})" class="btn btn-primary btn-sm" title="Remove my profile image"><i
+                    class="bi bi-person-lines-fill"></i></a>
+                    <a onclick="excluirUsuario(${publicacao.idUsuario})" class="btn btn-danger btn-sm" title="Remove my profile image"><i
                     class="bi bi-trash"></i></a>`;
                     var tr = document.createElement("tr");
                     var tbody = document.createElement("tbody");

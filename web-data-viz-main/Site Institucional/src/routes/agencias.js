@@ -3,7 +3,7 @@ var router = express.Router();
 
 var agenciasController = require("../controllers/agenciasController");
 
-router.get("/exibirTabelaAgencias/:idUsuario", function (req, res) {
+router.get("/exibirTabelaAgencias/:idEmpresa", function (req, res) {
     agenciasController.exibirTabelaAgencias(req, res);
 });
 

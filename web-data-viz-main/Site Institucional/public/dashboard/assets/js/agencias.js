@@ -19,10 +19,6 @@ function exibirTabelaAgencias() {
     var thCaixaEletronico = document.createElement("th");
     thCaixaEletronico.setAttribute("scope", "row");
     thCaixaEletronico.innerHTML = "Caixas Eletrônicos";
-    var thExcluir = document.createElement("th");
-    thExcluir.setAttribute("scope", "row");
-    thExcluir.innerHTML = "Excluir";
-
     trColunas.appendChild(thId);
     trColunas.appendChild(thApelido);
     trColunas.appendChild(thCnpj);
@@ -31,7 +27,7 @@ function exibirTabelaAgencias() {
     if (sessionStorage.GERENTE_USUARIO == "1") {
         var thExcluir = document.createElement("th");
         thExcluir.setAttribute("scope", "row");
-        thExcluir.innerHTML = "Excluir";
+        thExcluir.innerHTML = "Editar/Excluir";
         trColunas.appendChild(thExcluir);
     }
     thead.appendChild(trColunas);
@@ -67,7 +63,9 @@ function exibirTabelaAgencias() {
                         tdMaquinas.innerHTML = respostaDois[0].agencias })
                     });
                     var tdButton = document.createElement("td");
-                    tdButton.innerHTML = `<a onclick="excluirAgencia(${publicacao.idAgencia})" class="btn btn-danger btn-sm" title="Remove my profile image"><i
+                    tdButton.innerHTML = `<a onclick="editarAgencia(${publicacao.idAgencia})" class="btn btn-primary btn-sm" title="Remove my profile image"><i
+                    class="bi bi-pencil-square"></i></a>
+                    <a onclick="excluirAgencia(${publicacao.idAgencia})" class="btn btn-danger btn-sm" title="Remove my profile image"><i
                     class="bi bi-trash"></i></a>`;
                     var tr = document.createElement("tr");
                     var tbody = document.createElement("tbody");
@@ -91,6 +89,16 @@ function exibirTabelaAgencias() {
         // finalizarAguardar();
     });
 }
+
+function editarAgencia(idAgencia) {
+    
+    
+}
+
+function excluirAgencia(idAgencia) {
+    
+}
+
 
 function validar() {
 
