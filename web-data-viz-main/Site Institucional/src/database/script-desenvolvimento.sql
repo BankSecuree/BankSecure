@@ -12,10 +12,6 @@ numero INT,
 telefone VARCHAR(14)
 );
 
-select * from agencia;
-
-
-
 CREATE TABLE agencia(
 idAgencia INT PRIMARY KEY AUTO_INCREMENT,
 cnpjAgencia CHAR (14),
@@ -23,7 +19,7 @@ apelido VARCHAR (45),
 logradouro VARCHAR(150),
 numero INT,
 CEP CHAR(8),
-telefone VARCHAR(14),
+telefoneAgencia VARCHAR(14),
 fkEmpresa INT,
 FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
 );
@@ -78,6 +74,8 @@ dataHora DATETIME,
 FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina)
 );
 
+select * from agencia;
+
 CREATE TABLE componente (
 	idComponente INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45),
@@ -108,7 +106,7 @@ CREATE PROCEDURE cadastrarAgencia(IN
 	agencia_telefone VARCHAR(11)
 )
 BEGIN
-	INSERT INTO agencia (apelido, cnpjAgencia, CEP, logradouro, numero, telefone) 
+	INSERT INTO agencia (apelido, cnpjAgencia, CEP, logradouro, numero, telefoneAgencia) 
 		VALUES (agencia_apelido, agencia_CNPJ, agencia_cep, agencia_logradouro, agencia_numero, agencia_telefone);
 END//
 DELIMITER ;
