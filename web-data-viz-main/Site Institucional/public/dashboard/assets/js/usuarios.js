@@ -21,11 +21,6 @@ function exibirTabelaUsuarios() {
     trColunas.appendChild(thId);
     trColunas.appendChild(thNome);
     trColunas.appendChild(thEmpresa);
-    if (sessionStorage.GERENTE_USUARIO == "null") {
-        var thFuncionarios = document.createElement("th");
-        thFuncionarios.innerHTML = "Funcionários";
-        trColunas.appendChild(thFuncionarios);
-    }
     trColunas.appendChild(thDataInicio);
     trColunas.appendChild(thExcluir);
     thead.appendChild(trColunas);
@@ -66,11 +61,6 @@ function exibirTabelaUsuarios() {
                     tr.appendChild(thNumero);
                     tr.appendChild(tdNome);
                     tr.appendChild(tdEmpresa);
-                    if (sessionStorage.GERENTE_USUARIO == "null") {
-                        var tdFuncionarios = document.createElement("td");
-                        tdFuncionarios.innerHTML = publicacao.funcionarios;
-                        tr.appendChild(tdFuncionarios);
-                    }
                     tr.appendChild(tdInicio);
                     tr.appendChild(tdButton);
                     tbody.appendChild(tr);
@@ -131,10 +121,17 @@ function cadastrarEmpresaGerente() {
     var cpfVar = iptCPF.value;
     var celularVar = iptCelular.value;
     var nascimentoVar = iptNascimento.value;
+    var cargoVar = iptCargo.value;
     var emailVar = iptEmail.value;
     var senhaVar = iptSenha.value;
-    // var Var = ipt.value;
-    // var Var = ipt.value;
+    var dataInicioVar = new Date();
+    dataInicioVar = `${dataInicioVar.getFullYear().toString()}-${(dataInicioVar.getMonth() + 1).toString().padStart(2, '0')}-${dataInicioVar.getDate().toString().padStart(2, '0')}`
+    var fkGerenteVar;
+    if (sessionStorage.GERENTE_USUARIO == "null") {
+        fkGerenteVar = 1;
+    } else {
+        fkGerenteVar = sessionStorage.GERENTE_USUARIO;
+    }
 
 
     // Enviando o valor da nova input
@@ -157,8 +154,11 @@ function cadastrarEmpresaGerente() {
             cpfServer: cpfVar,
             celularServer: celularVar,
             nascimentoServer: nascimentoVar,
+            cargoServer: cargoVar,
+            fkGerenteServer: fkGerenteVar,
             emailServer: emailVar,
-            senhaServer: senhaVar
+            senhaServer: senhaVar,
+            dataInicioServer: dataInicioVar
 
         })
     }).then(function (resposta) {

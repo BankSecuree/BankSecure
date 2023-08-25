@@ -5,11 +5,11 @@ USE bankSecure;
 CREATE TABLE empresa(
 idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
 cnpjEmpresa CHAR (14),
-razaoSocial VARCHAR(45),
+razaoSocial VARCHAR(100),
 cep CHAR(8),
 logradouro VARCHAR(150),
 numero INT,
-telefone VARCHAR(11)
+telefone VARCHAR(14)
 );
 
 CREATE TABLE agencia(
@@ -19,7 +19,7 @@ apelido VARCHAR (45),
 logradouro VARCHAR(150),
 numero INT,
 CEP CHAR(8),
-telefone VARCHAR(11),
+telefone VARCHAR(14),
 fkEmpresa INT,
 FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
 );
@@ -30,7 +30,7 @@ CREATE TABLE usuario (
 	senha VARCHAR(16),
 	nome VARCHAR(50),
     cpf CHAR(11),
-    telefone CHAR(11),
+    telefone CHAR(14),
     dataNascimento DATE,
 	foto VARCHAR(255),
     dataInicio DATE,
@@ -112,25 +112,26 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE cadastrar_empresaGerente(IN 
     emp_cnpjEmpresa CHAR(14),
-	emp_razaoSocial VARCHAR(50),
+	emp_razaoSocial VARCHAR(100),
 	emp_logradouro VARCHAR(150),
 	emp_numero INT,
 	emp_CEP CHAR(8),
-	emp_telefone VARCHAR(11),
+	emp_telefone VARCHAR(14),
 	us_email VARCHAR(50),
 	us_senha VARCHAR(16),
 	us_nome VARCHAR(50),
     us_cpf CHAR(11),
-    us_telefone VARCHAR(11),
-    us_dataNascimento DATE
-    -- us_gerente INT,
-	-- us_foto VARCHAR(255),
+    us_telefone VARCHAR(14),
+    us_dataNascimento DATE,
+    us_cargo VARCHAR(25),
+    us_fkGerente INT,
+    us_dataInicio DATE
 )
 BEGIN
 	INSERT INTO empresa (cnpjEmpresa, razaoSocial, logradouro, numero, CEP, telefone) 
 		VALUES (emp_cnpjEmpresa, emp_razaoSocial, emp_logradouro, emp_numero, emp_CEP, emp_telefone);
-	INSERT INTO usuario (email, senha, nome, cpf, telefone, dataNascimento, fkEmpresa) 
-		VALUES (us_email, us_senha, us_nome, us_cpf, us_telefone, us_dataNascimento, (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = emp_cnpjEmpresa));
+	INSERT INTO usuario (email, senha, nome, cpf, telefone, dataNascimento, fkEmpresa,cargo, fkGerente, dataInicio) 
+		VALUES (us_email, us_senha, us_nome, us_cpf, us_telefone, us_dataNascimento, (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = emp_cnpjEmpresa), us_cargo, us_fkGerente, us_dataInicio);
 END//
 DELIMITER ;
 

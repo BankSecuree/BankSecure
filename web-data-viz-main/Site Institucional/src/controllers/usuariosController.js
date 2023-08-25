@@ -32,8 +32,12 @@ function cadastrarEmpresaGerente(req, res) {
   var cpf = req.body.cpfServer;
   var celular = req.body.celularServer;
   var nascimento = req.body.nascimentoServer;
+  var fkGerente = req.body.fkGerenteServer;
+  var cargo = req.body.cargoServer;
   var email = req.body.emailServer;
   var senha = req.body.senhaServer;
+  var dataInicio = req.body.dataInicioServer;
+  
 
   // Faça as validações dos valores
   // if (nomeEmpresa == undefined) {
@@ -45,7 +49,7 @@ function cadastrarEmpresaGerente(req, res) {
   // } else {
 
     // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-    usuariosModel.cadastrarEmpresaGerente(cnpj, razaoSocial, logradouro, numLogradouro, cep, telefone, nomeCompleto, cpf, celular, nascimento, email, senha)
+    usuariosModel.cadastrarEmpresaGerente(cnpj, razaoSocial, logradouro, numLogradouro, cep, telefone, nomeCompleto, cpf, celular, nascimento, email, senha, cargo, fkGerente, dataInicio)
       .then(
         function (resultado) {
           res.json(resultado);

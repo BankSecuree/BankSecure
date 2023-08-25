@@ -63,8 +63,8 @@ function entrar() {
                     sessionStorage.FOTO_USUARIO = json.foto;
                     sessionStorage.GERENTE_USUARIO = json.fkGerente;
                     sessionStorage.ID_EMPRESA = json.idEmpresa;
-                    sessionStorage.NOME_EMPRESA = json.nomeEmpresa;
-                    sessionStorage.CNPJ_EMPRESA = json.cnpj;
+                    sessionStorage.NOME_EMPRESA = json.razaoSocial;
+                    sessionStorage.CNPJ_EMPRESA = json.cnpjEmpresa;
                     
                    
                     setTimeout(function () {
