@@ -19,6 +19,7 @@ function cadastrarEmpresaGerente(cnpj, razaoSocial, logradouro, numLogradouro, c
     return database.executar(instrucao);
 }
 
+<<<<<<< HEAD
 function cadastrarFuncionario(nomeCompleto, cpf, celular, nascimento, email, senha, cargo, fkGerente, dataInicio) {
     console.log("ACESSEI O USUARIOS  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarEmpresaGerente()");
     var instrucao = `
@@ -30,6 +31,10 @@ function cadastrarFuncionario(nomeCompleto, cpf, celular, nascimento, email, sen
 
 function cadastrarAgencia() {
     console.log("ACESSEI A AGÊNCIA  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function exibirTabelaUsuarios()");
+=======
+function cadastrarAgencia(apelido, cnpj, cep, logradouro, numLogradouro, telefone) {
+    console.log("ACESSEI A AGÊNCIA  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarAgencia()");
+>>>>>>> caff6a723fb52b4109512b552409ab3aa5fc61e0
     var instrucao = `
     CALL cadastrarAgencia ('${apelido}', '${cnpj}', '${cep}', '${logradouro}', '${numLogradouro}', '${telefone}');
     `;

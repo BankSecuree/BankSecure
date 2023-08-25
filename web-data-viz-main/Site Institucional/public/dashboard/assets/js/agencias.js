@@ -270,7 +270,7 @@ function cadastrarAgencia() {
                 // limparFormulario();
                 // finalizarAguardar();
             } else {
-                throw ("Houve um erro ao tentar realizar o cadastro!");
+                alert("Houve um erro ao tentar realizar o cadastro!");
             }
         }).catch(function (resposta) {
             console.log(`#ERRO: ${resposta}`);
