@@ -2,8 +2,6 @@ DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
 USE bankSecure;
 
-select * from agencia;
-
 CREATE TABLE empresa(
 idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
 cnpjEmpresa CHAR (14),
@@ -158,6 +156,8 @@ INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('analista
 -- AGENCIA
 INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefoneAgencia, fkEmpresa) VALUES
 ('60701190031328', 'Agência Itau Rudge Ramos', 'Rua Rudge Ramos', 80, '09772040', '1130034828', 2);
+-- FUNCIONARIOAGENCIA
+INSERT INTO funcionarioAgencia VALUES (3,1);
 
 -- MAQUINA
 INSERT INTO maquina (nome, fkAgencia) VALUES ('HPP00', 1);
