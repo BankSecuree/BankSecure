@@ -270,7 +270,7 @@ function cadastrarAgencia() {
 
                 alert("Cadastro realizado com sucesso!");
 
-                window.location = "conta_usuarios.html";
+                window.location = "conta_agencias.html";
 
 
                 // limparFormulario();

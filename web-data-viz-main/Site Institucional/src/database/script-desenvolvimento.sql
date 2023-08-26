@@ -1,6 +1,7 @@
 DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
 USE bankSecure;
+
 CREATE TABLE empresa(
 idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
 cnpjEmpresa CHAR (14),
@@ -39,6 +40,7 @@ CREATE TABLE usuario (
     FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa),
     FOREIGN KEY (fkGerente) REFERENCES usuario(idUsuario)
 );
+
 CREATE TABLE funcionarioAgencia(
 	fkUsuario INT,
 	fkAgencia INT,
@@ -46,18 +48,21 @@ CREATE TABLE funcionarioAgencia(
 	FOREIGN KEY (fkAgencia) REFERENCES agencia (idAgencia),
     PRIMARY KEY (fkUsuario, fkAgencia)
 );
+
 CREATE TABLE maquina(
 	idMaquina INT PRIMARY KEY AUTO_INCREMENT,
 	fkAgencia INT,
     nome VARCHAR(45), 
 	FOREIGN KEY (fkAgencia) REFERENCES agencia(idAgencia)
 );
+
 CREATE TABLE servidor(
 	idServidor INT PRIMARY KEY AUTO_INCREMENT,
 	fkMaquina INT,
     nome VARCHAR(45), 
 	FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina)
 );
+
 CREATE TABLE registros(
 idRegistro INT PRIMARY KEY AUTO_INCREMENT,
 fkMaquina INT,
@@ -72,10 +77,12 @@ CREATE TABLE componente (
     nome VARCHAR(45),  
     unidadeMedida VARCHAR(10)
 );
+
 INSERT INTO componente (nome, unidadeMedida) VALUES
 ('CPU', 'GHZ'),
 ('Memória', 'GB'),
 ('Disco', 'KB');
+
 CREATE TABLE maquinaComponente (
 	fkMaquina INT,
     fkComponente INT,
@@ -83,6 +90,7 @@ CREATE TABLE maquinaComponente (
     FOREIGN KEY (fkComponente) REFERENCES componente(idComponente),
     PRIMARY KEY (fkMaquina, fkComponente)
 );
+
 -- PROCEDURE PARA CADASTRAR AGENCIAS
 DELIMITER //
 CREATE PROCEDURE cadastrarAgencia(IN 
