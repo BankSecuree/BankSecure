@@ -8,7 +8,7 @@ import requests
 import json
 import mysql.connector
  
-conexao = mysql.connector.connect(user='user_bankSecure', password='urubu100', host='localhost', database='bankSecure', auth_plugin='mysql_native_password')
+conexao = mysql.connector.connect(user='bs_itau', password='itau100', host='localhost', database='bankSecure')
 
 cursor = conexao.cursor()
 
@@ -79,7 +79,7 @@ def pegar_dados():
             User          => {user}
             Descrição  => {"Sua memória RAM ultrapassou:"} {ram_percent}%  
             """}
-             chatItau = "https://hooks.slack.com/services/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"
+             chatItau = ""
 
              postMsg = requests.post(chatItau, data=json.dumps(mensagem))
              exibiu = True

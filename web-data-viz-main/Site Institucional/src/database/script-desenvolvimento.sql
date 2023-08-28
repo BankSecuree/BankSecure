@@ -145,11 +145,17 @@ END//
 DELIMITER ;
 DROP USER IF EXISTS 'user_bankSecure'@'localhost';
 CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'urubu100';
-ALTER USER 'user_bankSecure'@'localhost' IDENTIFIED WITH mysql_native_password BY 'urubu100';
 GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';
 GRANT EXECUTE ON PROCEDURE cadastrar_empresaGerente to 'user_bankSecure'@'localhost';
 GRANT EXECUTE ON PROCEDURE cadastrarAgencia to 'user_bankSecure'@'localhost';
 FLUSH PRIVILEGES;
+
+-- CONTA ITAU
+DROP USER IF EXISTS 'bs_itau'@'localhost';
+CREATE USER 'bs_itau'@'localhost' IDENTIFIED BY 'itau100';
+GRANT INSERT, SELECT ON bankSecure.registrosAPI TO 'bs_itau'@'localhost';
+FLUSH PRIVILEGES;
+
 
 -- ADMIN
 INSERT INTO empresa (razaoSocial, cnpjEmpresa, idEmpresa) VALUES ('Bank Secure', 12345678901234, 1);
