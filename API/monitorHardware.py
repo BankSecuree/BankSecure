@@ -4,7 +4,10 @@ from tkinter import *
 from datetime import datetime
 import os
 import mysql.connector
-
+import requests 
+import json
+import mysql.connector
+ 
 conexao = mysql.connector.connect(user='user_bankSecure', password='urubu100', host='localhost', database='bankSecure', auth_plugin='mysql_native_password')
 
 cursor = conexao.cursor()
@@ -16,7 +19,8 @@ else:
 
 def pegar_dados():
   
-  
+    exibiu = False
+
     while True:
     
      data = datetime.now()
@@ -24,25 +28,26 @@ def pegar_dados():
 
      user = [user[0] for user in psutil.users()]
      user = user[0]
-     processador = "não sei"
+     processador = ""
      qtd_core = psutil.cpu_count(logical=False)
 
      cpu_porcent = psutil.cpu_percent(interval=1)
      cpu_speed = psutil.cpu_freq().current / 1000
      cpu_speed_max = psutil.cpu_freq().max / 1000
 
-
+    
+     so = psutil.disk_partitions
     # DIRETÓRIO PARA WINDOWS
 
-    #  disc_total = psutil.disk_usage('C:\\').total / 1000000000
-    #  disc_used = psutil.disk_usage('C:\\').used / 1000000000
-    #  disc_percent = psutil.disk_usage('C:\\').percent
+     disc_total = psutil.disk_usage('C:\\').total / 1000000000
+     disc_used = psutil.disk_usage('C:\\').used / 1000000000
+     disc_percent = psutil.disk_usage('C:\\').percent
 
     # DIRETÓRIO PARA LINUX
 
-     disc_total = psutil.disk_usage('/bin').total / 1000000000
-     disc_used = psutil.disk_usage('/bin').used / 1000000000
-     disc_percent = psutil.disk_usage('/bin').percent
+    #  disc_total = psutil.disk_usage('/bin').total / 1000000000
+    #  disc_used = psutil.disk_usage('/bin').used / 1000000000
+    #  disc_percent = psutil.disk_usage('/bin').percent
 
      ram_total = (psutil.virtual_memory().total) / 1000000000
      ram_used = (psutil.virtual_memory().used) / 1000000000
@@ -54,9 +59,8 @@ def pegar_dados():
     | Bank Secure Monitor Report               {data:10s}     
     |_________________________________________________________________|
                                                                  
-                      USER ==> {user:20s}                                                               
-    HARDWARE   ==> {processador:17s}                                
-COREs      ==> {qtd_core:16.0f}                                 
+      USER  ==> {user:20s}                                                               
+      COREs ==> {qtd_core:16.0f}                                 
     |_________________________________________________________________|
     |                                                                  |
     | #          ==>     PORCENT     |      SPEED     |   MAX SPEED    |
@@ -69,6 +73,22 @@ COREs      ==> {qtd_core:16.0f}
     |__________________________________________________________________|
    
     """
+    # Alerta Slack
+     if (exibiu == False):
+         if (ram_percent > 83):
+             mensagem = {"text": f"""
+            🚨ALERTA🚨
+
+            Protocolo  => 837021
+            Data          => {data}
+            User          => {user}
+            Descrição  => {"Sua memória RAM ultrapassou:"} {ram_percent}%  
+            """}
+             chatItau = "https://hooks.slack.com/services/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"
+
+             postMsg = requests.post(chatItau, data=json.dumps(mensagem))
+             exibiu = True
+
      print(data)
      cursor.execute("INSERT INTO registrosAPI (cpu, memoria, disco, dataHora) VALUES (%s, %s, %s, %s)",
     (cpu_porcent, ram_percent, disc_percent, data))
@@ -77,6 +97,7 @@ COREs      ==> {qtd_core:16.0f}
      texto_cotacao['text'] = msgOpen
      janela.update()
     #  time.sleep(3)
+
      
 # cria a janela
 janela = Tk()

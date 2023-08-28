@@ -2,18 +2,18 @@ import requests
 import json
 import mysql.connector
 
-mydb = mysql.connector.connect(
-  host="localhost",
-  user="user_bankSecure",
-  password="urubu100",
-  database="bankSecure"
-)
+# mydb = mysql.connector.connect(
+#   host="localhost",
+#   user="user_bankSecure",
+#   password="urubu100",
+#   database="bankSecure"
+# )
 
-mycursor = mydb.cursor()
-mycursor.execute("SELECT * FROM registros")
-myresult = mycursor.fetchone()
+# mycursor = mydb.cursor()
+# mycursor.execute("SELECT * FROM registros")
+# myresult = mycursor.fetchone()
 
-print(myresult)
+# print(myresult)
 
 protocolo = ""
 data = ""
@@ -32,7 +32,7 @@ CNPJ         => {cnpj}
 Máquina    => {maquina}
 Descrição  => {descricao}   
 """}
-chatItau = "https://hooks.slack.com/services/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   "
+chatItau = "https://hooks.slack.com/services/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"
 
 postMsg = requests.post(chatItau, data=json.dumps(mensagem))
 print(postMsg.status_code)
