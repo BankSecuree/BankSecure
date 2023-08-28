@@ -32,25 +32,25 @@ def pegar_dados():
      qtd_core = psutil.cpu_count(logical=False)
 
      cpu_porcent = psutil.cpu_percent(interval=1)
-     cpu_speed = psutil.cpu_freq().current / 1000
-     cpu_speed_max = psutil.cpu_freq().max / 1000
+     cpu_speed = psutil.cpu_freq().current / pow(10,3)
+     cpu_speed_max = psutil.cpu_freq().max / pow(10,3)
 
     
      so = psutil.disk_partitions
     # DIRETÓRIO PARA WINDOWS
 
-     disc_total = psutil.disk_usage('C:\\').total / 1000000000
-     disc_used = psutil.disk_usage('C:\\').used / 1000000000
+     disc_total = psutil.disk_usage('C:\\').total / pow(10,9)
+     disc_used = psutil.disk_usage('C:\\').used / pow(10,9)
      disc_percent = psutil.disk_usage('C:\\').percent
 
     # DIRETÓRIO PARA LINUX
 
-    #  disc_total = psutil.disk_usage('/bin').total / 1000000000
-    #  disc_used = psutil.disk_usage('/bin').used / 1000000000
+    #  disc_total = psutil.disk_usage('/bin').total / pow(10,9)
+    #  disc_used = psutil.disk_usage('/bin').used / pow(10,9)
     #  disc_percent = psutil.disk_usage('/bin').percent
 
-     ram_total = (psutil.virtual_memory().total) / 1000000000
-     ram_used = (psutil.virtual_memory().used) / 1000000000
+     ram_total = (psutil.virtual_memory().total) / pow(10,9)
+     ram_used = (psutil.virtual_memory().used) / pow(10,9)
      ram_percent = psutil.virtual_memory().percent
 
      msgOpen = f"""
@@ -79,7 +79,7 @@ def pegar_dados():
             User          => {user}
             Descrição  => {"Sua memória RAM ultrapassou:"} {ram_percent}%  
             """}
-             chatItau = "https://hooks.slack.com/services/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"
+             chatItau = "https://hooks.slack.com/services/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"
 
              postMsg = requests.post(chatItau, data=json.dumps(mensagem))
              exibiu = True
