@@ -7,6 +7,7 @@ import mysql.connector
 import requests 
 import json
 import mysql.connector
+import platform
  
 conexao = mysql.connector.connect(user='bs_itau', password='itau100', host='localhost', database='bankSecure')
 
@@ -28,15 +29,14 @@ def pegar_dados():
 
      user = [user[0] for user in psutil.users()]
      user = user[0]
-     processador = ""
      qtd_core = psutil.cpu_count(logical=False)
 
      cpu_porcent = psutil.cpu_percent(interval=1)
      cpu_speed = psutil.cpu_freq().current / pow(10,3)
      cpu_speed_max = psutil.cpu_freq().max / pow(10,3)
 
-    
-     so = psutil.disk_partitions
+     so = platform.system()
+     processor = platform.processor()
     # DIRETÓRIO PARA WINDOWS
 
      disc_total = psutil.disk_usage('C:\\').total / pow(10,9)
@@ -57,8 +57,10 @@ def pegar_dados():
     
      Bank Secure Monitor Report               {data}     
                                                                  
-                    USER  ==> {user}                                                               
-     COREs ==> {qtd_core}                                 
+     USER  ==> {user}                                                               
+     SO ==> {so}                         
+     COREs ==> {qtd_core}        
+
     
      #          ==>     PORCENT     |      SPEED     |   MAX SPEED    |
      CPU        ==>     {cpu_porcent:.1f}%     |    {cpu_speed:.2f}GHz     |   {cpu_speed_max:.2f}GHz |
@@ -79,14 +81,18 @@ def pegar_dados():
             User          => {user}
             Descrição  => {"Sua memória RAM ultrapassou:"} {ram_percent}%  
             """}
-             chatItau = ""
+             chatItau = "https://hooks.slack.com/services/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"
 
              postMsg = requests.post(chatItau, data=json.dumps(mensagem))
              exibiu = True
 
      print(data)
-     cursor.execute("INSERT INTO registrosAPI (cpu, memoria, disco, dataHora) VALUES (%s, %s, %s, %s)",
-    (cpu_porcent, ram_percent, disc_percent, data))
+
+     comp1 = "Memória"
+     comp2 = "CPU"
+     comp3 = "Disco"
+     cursor.execute(f"CALL inserirDadosMaquina ('{user}', '{comp1}', {ram_percent:.2f}, '{comp2}', {cpu_porcent}, '{comp3}', {disc_percent}, NOW());")
+
     #Gravar os dados na tabela definitiva
      conexao.commit()
      texto_cotacao['text'] = msgOpen

@@ -68,7 +68,7 @@ CREATE TABLE registros(
 idRegistro INT PRIMARY KEY AUTO_INCREMENT,
 fkMaquina INT,
 fkComponente INT,
-valor INT,
+valor DOUBLE,
 dataHora DATETIME,
 FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina)
 );
@@ -89,9 +89,12 @@ CREATE TABLE componente (
 );
 
 INSERT INTO componente (nome, unidadeMedida) VALUES
-('CPU', 'GHZ'),
-('Memória', 'GB'),
-('Disco', 'KB');
+-- ('CPU', 'GHZ'),
+-- ('Memória', 'GB'),
+-- ('Disco', 'KB'),
+('CPU', '%'),
+('Memória', '%'),
+('Disco', '%');
 
 CREATE TABLE maquinaComponente (
 	fkMaquina INT,
@@ -114,6 +117,27 @@ CREATE PROCEDURE cadastrarAgencia(IN
 BEGIN
 	INSERT INTO agencia (apelido, cnpjAgencia, CEP, logradouro, numero, telefoneAgencia) 
 		VALUES (agencia_apelido, agencia_CNPJ, agencia_cep, agencia_logradouro, agencia_numero, agencia_telefone);
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE inserirDadosMaquina(IN 
+    ma_user VARCHAR(45),
+    co1_nome VARCHAR(45),
+    re1_valor DOUBLE,
+    co2_nome VARCHAR(45),
+    re2_valor DOUBLE,
+    co3_nome VARCHAR(45),
+    re3_valor DOUBLE,
+    re_data DATETIME
+)
+BEGIN
+	INSERT INTO registros (fkMaquina, fkComponente, valor, dataHora) VALUES 
+	((SELECT idMaquina FROM maquina WHERE nome = ma_user), (SELECT idComponente FROM componente WHERE nome = co1_nome), re1_valor, re_data);
+    INSERT INTO registros (fkMaquina, fkComponente, valor, dataHora) VALUES 
+	((SELECT idMaquina FROM maquina WHERE nome = ma_user), (SELECT idComponente FROM componente WHERE nome = co2_nome), re2_valor, re_data);
+    INSERT INTO registros (fkMaquina, fkComponente, valor, dataHora) VALUES 
+	((SELECT idMaquina FROM maquina WHERE nome = ma_user), (SELECT idComponente FROM componente WHERE nome = co3_nome), re3_valor, re_data);
 END//
 DELIMITER ;
 
@@ -154,6 +178,7 @@ FLUSH PRIVILEGES;
 DROP USER IF EXISTS 'bs_itau'@'localhost';
 CREATE USER 'bs_itau'@'localhost' IDENTIFIED BY 'itau100';
 GRANT INSERT, SELECT ON bankSecure.registrosAPI TO 'bs_itau'@'localhost';
+GRANT EXECUTE ON PROCEDURE inserirDadosMaquina to 'bs_itau'@'localhost';
 FLUSH PRIVILEGES;
 
 
@@ -175,7 +200,7 @@ INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefoneAgen
 INSERT INTO funcionarioAgencia VALUES (3,1);
 
 -- MAQUINA
-INSERT INTO maquina (nome, fkAgencia) VALUES ('HPP00', 1);
+INSERT INTO maquina (nome, fkAgencia) VALUES ('bruno', 1);
 INSERT INTO maquina (nome, fkAgencia) VALUES ('FYUT-231', 1);
 INSERT INTO maquina (nome, fkAgencia) VALUES ('TWE-981', 1);
 -- SERVIDOR
