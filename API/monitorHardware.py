@@ -54,23 +54,18 @@ def pegar_dados():
      ram_percent = psutil.virtual_memory().percent
 
      msgOpen = f"""
-    __________________________________________________________________
-    |                                                                 |
-    | Bank Secure Monitor Report               {data:10s}     
-    |_________________________________________________________________|
+    
+     Bank Secure Monitor Report               {data}     
                                                                  
-      USER  ==> {user:20s}                                                               
-      COREs ==> {qtd_core:16.0f}                                 
-    |_________________________________________________________________|
-    |                                                                  |
-    | #          ==>     PORCENT     |      SPEED     |   MAX SPEED    |
-    | CPU        ==>     {cpu_porcent:6.1f}%     |    {cpu_speed:3.2f}GHz     |   {cpu_speed_max:6.2f}GHz |
-    |__________________________________________________________________|
-    |                                                                  |
-    | #          ==>     PORCENT     |      TOTAL     |      USED      |
-    | DISC (GB)  ==>     {disc_percent:6.1f}%     |     {disc_total:6.1f}     |    {disc_used:6.1f}       |
-    | RAM  (GB)  ==>     {ram_percent:6.1f}%     |     {ram_total:6.1f}       |    {ram_used:6.1f}        |
-    |__________________________________________________________________|
+                    USER  ==> {user}                                                               
+     COREs ==> {qtd_core}                                 
+    
+     #          ==>     PORCENT     |      SPEED     |   MAX SPEED    |
+     CPU        ==>     {cpu_porcent:.1f}%     |    {cpu_speed:.2f}GHz     |   {cpu_speed_max:.2f}GHz |
+    
+     #          ==>     PORCENT     |      TOTAL     |      USED      |
+     DISC (GB)  ==>     {disc_percent:.1f}%     |     {disc_total:.1f}     |    {disc_used:.1f}       |
+     RAM  (GB)  ==>     {ram_percent:.1f}%     |     {ram_total:.1f}       |    {ram_used:.1f}        |
    
     """
     # Alerta Slack
