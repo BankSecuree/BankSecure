@@ -52,6 +52,10 @@ function desaparecerCard() {
 function cadastrarMaquina(){
     var nomeMaquinaVar = ipt_nomeMaquina.value;
     var fkAgenciaVar = ipt_fkAgencia.value;
+    var cpuVar = ipt_cpu.value;
+    var memoriaVar = ipt_memoria.value;
+    var discoVar = ipt_disco.value;
+    var temperaturaVar = ipt_temperaturaLimite.value;
 
     // validar();
     // desaparecerCard();
@@ -72,8 +76,118 @@ function cadastrarMaquina(){
             console.log("resposta: ", resposta);
 
             if (resposta.ok) {
+                alert("Nome da máquina cadastrada com sucesso")
 
-                alert("Máquina cadastrada com sucesso")
+
+                fetch("/hardware/cadastrarHardwareCpu", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        cpuServer: cpuVar
+                    })
+                }).then(function(resposta){
+        
+                    console.log("resposta: ", resposta);
+        
+                    if (resposta.ok) {
+                        fetch("/hardware/cadastrarHardwareMemoria", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                memoriaServer: memoriaVar
+                            })
+                        }).then(function(resposta){
+                
+                            console.log("resposta: ", resposta);
+                
+                            if (resposta.ok) {
+                                fetch("/hardware/cadastrarHardwareDisco", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                        discoServer: discoVar
+                                    })
+                                }).then(function(resposta){
+                        
+                                    console.log("resposta: ", resposta);
+                        
+                                    if (resposta.ok) {
+                                        fetch("/hardware/cadastrarHardwareTemperatura", {
+                                            method: "POST",
+                                            headers: {
+                                                "Content-Type": "application/json"
+                                            },
+                                            body: JSON.stringify({
+                                                temperaturaServer: temperaturaVar
+                                            })
+                                        }).then(function(resposta){
+                                
+                                            console.log("resposta: ", resposta);
+                                
+                                            if (resposta.ok) {
+                                                alert("Hardware da máquina cadastrado com sucesso")
+                                                
+                                
+                                            } else{
+                                
+                                                throw("Houve um erro ao realizar o cadastro do hardware!")
+                                
+                                            }
+                                        }). catch(function(resposta){
+                                
+                                            console.log(`#ERRO: ${resposta}`)
+                                
+                                        });
+                                
+                                        return false
+                                        
+                        
+                                    } else{
+                        
+                                        throw("Houve um erro ao realizar o cadastro do hardware!")
+                        
+                                    }
+                                }). catch(function(resposta){
+                        
+                                    console.log(`#ERRO: ${resposta}`)
+                        
+                                });
+                        
+                                return false
+                                
+                
+                            } else{
+                
+                                throw("Houve um erro ao realizar o cadastro do hardware!")
+                
+                            }
+                        }). catch(function(resposta){
+                
+                            console.log(`#ERRO: ${resposta}`)
+                
+                        });
+                
+                        return false
+                        
+        
+                    } else{
+        
+                        throw("Houve um erro ao realizar o cadastro do hardware!")
+        
+                    }
+                }). catch(function(resposta){
+        
+                    console.log(`#ERRO: ${resposta}`)
+        
+                });
+        
+                return false
 
             } else{
 

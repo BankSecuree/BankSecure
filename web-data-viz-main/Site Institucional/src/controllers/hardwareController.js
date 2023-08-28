@@ -109,8 +109,37 @@ function cadastrarHardwareDisco(req, res) {
             );
     }
 }
-
+function cadastrarHardwareTemperatura(req, res) {
+    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
+    var temperatura = req.body.temperaturaServer;
+   
+    
+    // Faça as validações dos valores
+    if (temperatura == undefined) {
+        res.status(400).send("Sua memória está undefined!");
+    }else {
+        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+        hardwareModel.cadastrarHardwareMemoria(temperatura)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o cadastro! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
 module.exports = {
     cadastrarNomeMaquina,
-    cadastrarHardwareCpu
+    cadastrarHardwareCpu,
+    cadastrarHardwareMemoria,
+    cadastrarHardwareDisco,
+    cadastrarHardwareTemperatura
 }

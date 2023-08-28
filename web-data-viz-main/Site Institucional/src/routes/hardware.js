@@ -16,11 +16,11 @@ router.post("/cadastrarHardwareMemoria", function(req,res){
 });
 
 router.post("/cadastrarHardwareDisco", function(req,res){
-    hardwareController.cadastrarNomeMaquina(req,res)
+    hardwareController.cadastrarHardwareDisco(req,res)
+});
+router.post("/cadastrarHardwareTemperatura", function(req,res){
+    hardwareController.cadastrarHardwareTemperatura(req,res)
 });
 
-router.post("/cadastrarHardwareTemperatura", function(req,res){
-    hardwareController.cadastrarHardwareDisco
-});
 
 module.exports = router;

@@ -24,7 +24,7 @@ function cadastrarHardwareCpu(cpu){
 function cadastrarHardwareMemoria(memoria){
     console.log("ACESSEI O HARDWARE MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarHardware()");
     var instrucao = `
-    INSERT INTO componente (nome, unidadeMedida) VALUES("${memoria}", "GB)
+    INSERT INTO componente (nome, unidadeMedida) VALUES("${memoria}", "GB")
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
@@ -49,5 +49,8 @@ function cadastrarHardwareTemperatura(temperatura){
 }
 module.exports = {
     cadastrarNomeMaquina,
-    cadastrarHardwareCpu
+    cadastrarHardwareCpu,
+    cadastrarHardwareMemoria,
+    cadastrarHardwareDisco,
+    cadastrarHardwareTemperatura
 };
