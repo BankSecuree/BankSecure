@@ -1,3 +1,4 @@
+-- Active: 1692322487627@@127.0.0.1@3306@bankSecure
 DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
 USE bankSecure;
@@ -71,6 +72,15 @@ valor INT,
 dataHora DATETIME,
 FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina)
 );
+
+CREATE TABLE registrosAPI(
+idRegistro INT PRIMARY KEY AUTO_INCREMENT,
+cpu INT,
+memoria INT,
+disco INT,
+dataHora DATETIME
+);
+
 
 CREATE TABLE componente (
 	idComponente INT PRIMARY KEY AUTO_INCREMENT,
