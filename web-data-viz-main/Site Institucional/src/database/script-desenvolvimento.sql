@@ -149,15 +149,6 @@ END//
 DELIMITER ;
 
 
-CREATE PROCEDURE cadastrar_hardware(IN
-	nome_maquina VARCHAR(45),
-    fkAgencia INT,
-    nome_cpu VARCHAR(45),
-    nome_memoria VARCHAR(45),
-    nome_disco VARCHAR(45),
-    nome_temperatura VARCHAR(45)
-)
-BEGIN
 	INSERT INTO maquina (nome, fkAgencia)
 		VALUES (nome_maquina, fkAgencia);
 	INSERT INTO componente(nome_cpu, unidadeMedida_cpu)
@@ -176,8 +167,7 @@ BEGIN
 		VALUES (nome_temperatura, "°C");
 	INSERT INTO maquinaComponente (fkMaquina, fkComponente)
 		VALUES ((SELECT MAX(idMaquina) FROM maquina), (SELECT MAX(idComponente) FROM componente));
-END//
-DELIMITER ;
+
 
 
 -- CHAMAR PROCEDURE
