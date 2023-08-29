@@ -6,10 +6,9 @@ import os
 import mysql.connector
 import requests 
 import json
-import mysql.connector
 import platform
  
-conexao = mysql.connector.connect(user='bs_itau', password='itau100', host='localhost', database='bankSecure')
+conexao = mysql.connector.connect(user='bs_itau', password='Itau_100', host='localhost', database='bankSecure')
 
 cursor = conexao.cursor()
 
@@ -37,17 +36,18 @@ def pegar_dados():
 
      so = platform.system()
      processor = platform.processor()
+
+     if (so == 'Windows'):
     # DIRETÓRIO PARA WINDOWS
 
-     disc_total = psutil.disk_usage('C:\\').total / pow(10,9)
-     disc_used = psutil.disk_usage('C:\\').used / pow(10,9)
-     disc_percent = psutil.disk_usage('C:\\').percent
-
+         disc_total = psutil.disk_usage('C:\\').total / pow(10,9)
+         disc_used = psutil.disk_usage('C:\\').used / pow(10,9)
+         disc_percent = psutil.disk_usage('C:\\').percent
+     elif (so == 'Linux'):
     # DIRETÓRIO PARA LINUX
-
-    #  disc_total = psutil.disk_usage('/bin').total / pow(10,9)
-    #  disc_used = psutil.disk_usage('/bin').used / pow(10,9)
-    #  disc_percent = psutil.disk_usage('/bin').percent
+         disc_total = psutil.disk_usage('/bin').total / pow(10,9)
+         disc_used = psutil.disk_usage('/bin').used / pow(10,9)
+         disc_percent = psutil.disk_usage('/bin').percent
 
      ram_total = (psutil.virtual_memory().total) / pow(10,9)
      ram_used = (psutil.virtual_memory().used) / pow(10,9)
@@ -81,12 +81,10 @@ def pegar_dados():
             User          => {user}
             Descrição  => {"Sua memória RAM ultrapassou:"} {ram_percent}%  
             """}
-             chatItau = "https://hooks.slack.com/services/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"
+             chatItau = "https://hooks.slack.com/services/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"
 
              postMsg = requests.post(chatItau, data=json.dumps(mensagem))
              exibiu = True
-
-     print(data)
 
      comp1 = "Memória"
      comp2 = "CPU"

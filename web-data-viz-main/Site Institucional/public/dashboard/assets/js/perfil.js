@@ -109,10 +109,16 @@ function atualizarDados() {
         })
     }).then(function (resposta) {
         if (resposta.ok) {
+            sessionStorage.NOME_USUARIO = nomeVar
+            sessionStorage.CPF_USUARIO = cpfVar
+            sessionStorage.DATA_NASCIMENTO_USUARIO = dataNascimentoVar
+            sessionStorage.TELEFONE_USUARIO = telefoneVar
+            sessionStorage.EMAIL_USUARIO = emailVar
+            sessionStorage.CARGO_USUARIO = cargoVar
             cardMsg.style.display = "block"
             cardMsg.style.border = "2px solid greenyellow"
             cardMsg.style.color = "greenyellow"
-            cardMsg.innerHTML = "✅Dados alterada! Atualizando...✅";
+            cardMsg.innerHTML = "✅Dados alterados! Atualizando...✅";
             setTimeout(function () {
                 location.reload();
             }, 3000);
@@ -185,4 +191,3 @@ function atualizarSenha() {
         });
     }
 }
-
