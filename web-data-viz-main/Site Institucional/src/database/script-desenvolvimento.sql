@@ -91,6 +91,7 @@ CREATE TABLE maquinaComponente (
 );
 
 
+
 -- VIEW
 DROP VIEW IF EXISTS vw_maquina;
 CREATE OR REPLACE VIEW vw_maquina AS SELECT * FROM maquina;
@@ -98,8 +99,16 @@ CREATE OR REPLACE VIEW vw_maquina AS SELECT * FROM maquina;
 DROP VIEW IF EXISTS vw_componente;
 CREATE OR REPLACE VIEW vw_componente AS SELECT * FROM componente;
 
-DROP VIEW IF EXISTS vw_registro;
-CREATE OR REPLACE VIEW vw_registro AS SELECT * FROM registros;
+DROP VIEW IF EXISTS vw_registrosEstruturados;
+CREATE OR REPLACE VIEW vw_registrosEstruturados AS 
+SELECT registros.fkMaquina as "ID", maquina.nome as "Nome", registros.dataHora as "Data",
+MAX( CASE WHEN registros.fkComponente = 1 THEN registros.valor END ) "Cpu" ,
+MAX( CASE WHEN registros.fkComponente = 2 THEN registros.valor END ) "Memória" ,
+MAX( CASE WHEN registros.fkComponente = 3 THEN registros.valor END ) "Disco"
+FROM registros JOIN maquina ON fkMaquina = idMaquina
+GROUP BY registros.fkMaquina, registros.dataHora
+ORDER BY registros.fkMaquina, registros.dataHora ASC;
+
 
 -- PROCEDURE PARA CADASTRAR AGENCIAS
 DELIMITER //
@@ -176,13 +185,8 @@ FLUSH PRIVILEGES;
 
 -- CONTA ITAU
 DROP USER IF EXISTS 'bs_itau'@'localhost';
-<<<<<<< HEAD
-CREATE USER 'bs_itau'@'localhost' IDENTIFIED BY 'itau100';
-GRANT INSERT, SELECT ON bankSecure.registros TO 'bs_itau'@'localhost';
-=======
 CREATE USER 'bs_itau'@'localhost' IDENTIFIED BY 'Itau_100';
-GRANT INSERT, SELECT ON bankSecure.registrosAPI TO 'bs_itau'@'localhost';
->>>>>>> 643cc86729d8173f6f07461964783972f1139d2c
+GRANT INSERT, SELECT ON bankSecure.registros TO 'bs_itau'@'localhost';
 GRANT EXECUTE ON PROCEDURE inserirDadosMaquina to 'bs_itau'@'localhost';
 FLUSH PRIVILEGES;
 
@@ -221,13 +225,4 @@ INSERT INTO componente (nome, unidadeMedida) VALUES
 INSERT INTO maquinaComponente (fkMaquina, fkComponente) VALUES (1, 1), (2, 2);
 INSERT INTO maquinaComponente (fkMaquina, fkComponente) VALUES (3,3);
 
-<<<<<<< HEAD
-select * from empresa;
 
-SELECT apelido, cnpjAgencia, idAgencia FROM agencia WHERE fkEmpresa =3;
-select * from agencia;
-
-select idEmpresa from empresa order by idEmpresa desc LIMIT 1
-=======
-
->>>>>>> 643cc86729d8173f6f07461964783972f1139d2c
