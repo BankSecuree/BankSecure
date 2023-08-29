@@ -216,6 +216,9 @@
   <div id="msg_alertas" class="msg_alertas">
     <span class="ms" id="mensagemErro"></span>
   </div>
+  <div id="msg_alertas2" class="msg_alertas2">
+    <span class="ms" id="mensagemErro2"></span>
+  </div>
   <!-- Sidebar -->
   <aside id="sidebar" class="sidebar">
 
@@ -334,7 +337,7 @@
                   <label for="cpf" class="col-md-4 col-lg-3 col-form-label">CNPJ</label>
                   <div class="col-md-8 col-lg-9">
                     <input type="text" class="form-control" id="iptCnpj" placeholder="Ex: 1101015121321" maxlength="18"
-                    onkeyup="eliminarLetras('iptCnpj'), mascaraCnpj()">
+                    onkeyup="eliminarLetras('iptCnpj')" onkeypress="mascaraCnpj()">
                   </div>
                 </div>
 
@@ -342,7 +345,7 @@
                   <label class="col-md-4 col-lg-3 col-form-label">CEP</label>
                   <div class="col-md-8 col-lg-9">
                     <input type="text" class="form-control" id="iptCep" placeholder="Ex: 09967172" maxlength="9" 
-                    onkeyup="eliminarLetras('iptCep'), mascaraCep()">
+                    onkeyup="eliminarLetras('iptCep')" onkeypress="mascaraCep()">
                   </div>
                 </div>
                 <div class="row mb-3">
