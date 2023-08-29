@@ -18,10 +18,10 @@ function exibirQuantidadeFuncionariosAgencia(idAgencia) {
     return database.executar(instrucao);
 }
 
-function cadastrarAgencia(apelido, cnpj, cep, logradouro, numLogradouro, telefone) {
+function cadastrarAgencia(apelido, cnpj, cep, logradouro, numLogradouro, telefone, fkEmpresa) {
     console.log("ACESSEI A AGENCIAS  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarAgencia()");
     var instrucao = `
-    CALL cadastrarAgencia ('${apelido}', '${cnpj}', '${cep}', '${logradouro}', '${numLogradouro}', '${telefone}');
+    CALL cadastrarAgencia ('${apelido}', '${cnpj}', '${cep}', '${logradouro}', '${numLogradouro}', '${telefone}', '${fkEmpresa}');
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);

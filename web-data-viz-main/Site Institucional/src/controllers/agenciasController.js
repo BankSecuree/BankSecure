@@ -39,6 +39,7 @@ function cadastrarAgencia(req, res) {
   var logradouro = req.body.agenciaLogradouroServer;
   var numLogradouro = req.body.agenciaNumeroServer;
   var telefone = req.body.agenciaTelefoneServer;
+  var fkEmpresa = req.body.fkEmpresaServer;
   
   // if (nomeEmpresa == undefined) {
   //   res.status(400).send("Seu nome está undefined!");
@@ -47,7 +48,7 @@ function cadastrarAgencia(req, res) {
   // } else if (telefone == undefined) {
   //   res.status(400).send("Sua senha está undefined!");
   // } else {
-    agenciasModel.cadastrarAgencia(apelido, cnpj, cep, logradouro, numLogradouro, telefone)
+    agenciasModel.cadastrarAgencia(apelido, cnpj, cep, logradouro, numLogradouro, telefone,fkEmpresa)
       .then(
         function (resultado) {
           res.json(resultado);
