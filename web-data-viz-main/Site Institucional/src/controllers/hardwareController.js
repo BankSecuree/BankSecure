@@ -92,7 +92,7 @@ function cadastrarHardwareDisco(req, res) {
         res.status(400).send("Sua memória está undefined!");
     }else {
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        hardwareModel.cadastrarHardwareMemoria(disco)
+        hardwareModel.cadastrarHardwareDisco(disco)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -119,7 +119,7 @@ function cadastrarHardwareTemperatura(req, res) {
         res.status(400).send("Sua memória está undefined!");
     }else {
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        hardwareModel.cadastrarHardwareMemoria(temperatura)
+        hardwareModel.cadastrarHardwareTemperatura(temperatura)
             .then(
                 function (resultado) {
                     res.json(resultado);
