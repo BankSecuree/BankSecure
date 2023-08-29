@@ -96,7 +96,7 @@ function editarAgencia(idAgencia) {
 }
 
 function excluirAgencia(idAgencia) {
-    
+    console.log(`Excluindo usuário ${idAgencia} funcionando `);   
 }
 
 
@@ -231,8 +231,33 @@ function desaparecerCard() {
     msg_alertas.style.display = "none"
 }
 
+var fkEmpresaGlobal;
+function selectfkEmpresa() {
+    var fkEmpresa;
+    fetch('/usuarios/listarUltimoIdEmpresa').then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          var fkEmpresaArray = resposta[0];
+          fkEmpresa = fkEmpresaArray.idEmpresa;
+          fkEmpresaGlobal = fkEmpresa;
+          console.log(fkEmpresaGlobal);
+          sessionStorage.ID_EMPRESA = fkEmpresaGlobal;
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ ultimo idEmpresa: ${error.message}`);
+      });
+    return fkEmpresa;
+  }
+
 
 function cadastrarAgencia() {
+
+    selectfkEmpresa();
     validar();
     desaparecerCard();
 
@@ -243,6 +268,7 @@ function cadastrarAgencia() {
         var agenciaLogradouroVar = iptLogradouro.value;
         var agenciaNumeroVar = iptNumero.value;
         var agenciaTelefoneVar = iptTelefone.value;
+        var fkEmpresaVar = fkEmpresaGlobal;
 
         // Enviando o valor da nova input
         fetch("/usuarios/cadastrarAgencia", {
@@ -259,6 +285,7 @@ function cadastrarAgencia() {
                 agenciaNumeroServer: agenciaNumeroVar,
                 agenciaCepServer: agenciaCEPVar,
                 agenciaTelefoneServer: agenciaTelefoneVar,
+                agenciaFkEmpresa: fkEmpresaVar
 
             })
         }).then(function (resposta) {
