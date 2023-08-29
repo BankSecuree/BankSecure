@@ -212,9 +212,10 @@ INSERT INTO funcionarioAgencia VALUES (3,1);
 INSERT INTO maquina (nome, fkAgencia) VALUES ('MI-1', 1);
 INSERT INTO maquina (nome, fkAgencia) VALUES ('MI-2', 1);
 INSERT INTO maquina (nome, fkAgencia) VALUES ('MI-3', 1);
+INSERT INTO maquina (nome, fkAgencia) VALUES ('SI-1', 1);
 
 -- SERVIDOR
-INSERT INTO servidor (nome, fkMaquina) VALUES ('SV-1', 1);
+-- INSERT INTO servidor (nome, fkMaquina) VALUES ('SV-1', 1);
 
 -- COMPONENTE
 INSERT INTO componente (nome, unidadeMedida) VALUES

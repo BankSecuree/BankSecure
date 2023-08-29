@@ -28,42 +28,21 @@ def pegar_dados():
      cpu_speed = psutil.cpu_freq().current / pow(10,3)
      cpu_speed_max = psutil.cpu_freq().max / pow(10,3)
 
-     so = platform.system()
-     processor = platform.processor()
-
-     if (so == 'Windows'):
-    # DIRETÓRIO PARA WINDOWS
-
-         disc_total = psutil.disk_usage('C:\\').total / pow(10,9)
-         disc_used = psutil.disk_usage('C:\\').used / pow(10,9)
-         disc_percent = psutil.disk_usage('C:\\').percent
-     elif (so == 'Linux'):
-    # DIRETÓRIO PARA LINUX
-         disc_total = psutil.disk_usage('/bin').total / pow(10,9)
-         disc_used = psutil.disk_usage('/bin').used / pow(10,9)
-         disc_percent = psutil.disk_usage('/bin').percent
-
      ram_total = (psutil.virtual_memory().total) / pow(10,9)
      ram_used = (psutil.virtual_memory().used) / pow(10,9)
      ram_percent = psutil.virtual_memory().percent
 
-     msgOpen = f"""
-    
-     Bank Secure Monitor Report               {data}     
-                                                                 
-     USER  ==> {user}                                                               
-     SO ==> {so}                         
-     COREs ==> {qtd_core}        
+     so = platform.system()
 
-    
-     #          ==>     PORCENT     |      SPEED     |   MAX SPEED    |
-     CPU        ==>     {cpu_porcent:.1f}%     |    {cpu_speed:.2f}GHz     |   {cpu_speed_max:.2f}GHz |
-    
-     #          ==>     PORCENT     |      TOTAL     |      USED      |
-     DISC (GB)  ==>     {disc_percent:.1f}%     |     {disc_total:.1f}     |    {disc_used:.1f}       |
-     RAM  (GB)  ==>     {ram_percent:.1f}%     |     {ram_total:.1f}       |    {ram_used:.1f}        |
+     if (so == 'Windows'):
+         disc_total = psutil.disk_usage('C:\\').total / pow(10,9)
+         disc_used = psutil.disk_usage('C:\\').used / pow(10,9)
+         disc_percent = psutil.disk_usage('C:\\').percent
+     elif (so == 'Linux'):
+         disc_total = psutil.disk_usage('/bin').total / pow(10,9)
+         disc_used = psutil.disk_usage('/bin').used / pow(10,9)
+         disc_percent = psutil.disk_usage('/bin').percent
    
-    """
     # Alerta Slack
      if (exibiu == False):
          if (ram_percent > 83):
@@ -83,13 +62,18 @@ def pegar_dados():
      comp1 = "Memória"
      comp2 = "CPU"
      comp3 = "Disco"
-     cursor.execute(f"CALL inserirDadosMaquina ('{user}', '{comp1}', {ram_percent:.2f}, '{comp2}', {cpu_porcent}, '{comp3}', {disc_percent}, NOW());")
+     if (cont == 0):
+         cursor.execute(f"CALL inserirDadosMaquina ('SI-1', '{comp1}', {ram_percent:.2f}, '{comp2}', {cpu_porcent}, '{comp3}', {disc_percent}, NOW());")
+     elif (cont == 1):
+         cursor.execute(f"CALL inserirDadosMaquina ('MI-1', '{comp1}', {ram_percent:.2f}, '{comp2}', {cpu_porcent}, '{comp3}', {disc_percent}, NOW());")
+     elif (cont == 2):
+         cursor.execute(f"CALL inserirDadosMaquina ('MI-2', '{comp1}', {ram_percent:.2f}, '{comp2}', {cpu_porcent}, '{comp3}', {disc_percent}, NOW());")
+     elif (cont == 3):
+         cursor.execute(f"CALL inserirDadosMaquina ('MI-3', '{comp1}', {ram_percent:.2f}, '{comp2}', {cpu_porcent}, '{comp3}', {disc_percent}, NOW());")
 
-    #Gravar os dados na tabela definitiva
      conexao.commit()
-    #  print(msgOpen)
-    
-
+     cont+=1
+ 
 if (conexao.is_connected()):
     print("A Conexão ao MySql foi iniciada ")
     pegar_dados()
