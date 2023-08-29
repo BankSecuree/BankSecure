@@ -49,20 +49,10 @@ function desaparecerCard() {
     msg_alertas.style.display = "none"
 }
 
-function cadastrarMaquina(){
+function cadastrarNomeMaquina(){
     var nomeMaquinaVar = ipt_nomeMaquina.value;
-    var fkAgenciaVar = ipt_fkAgencia.value;
-    var nome_cpuVar = ipt_cpu.value;
-    var nome_memoriaVar = ipt_memoria.value;
-    var nome_discoVar = ipt_disco.value;
-    var nome_temperaturaVar = ipt_temperaturaLimite.value;
-
-    // validar();
-    // desaparecerCard();
-
-    // if (temErro == false) {
-        
-        fetch("/hardware/cadastrarHardware", {
+    var fkAgenciaVar = ipt_fkAgencia.value;      
+        fetch(`/hardware/cadastrarNomeMaquina`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -70,37 +60,50 @@ function cadastrarMaquina(){
             body: JSON.stringify({
                 nomeMaquinaServer: nomeMaquinaVar,
                 fkAgenciaServer: fkAgenciaVar,
-                nome_cpuServer: nome_cpuVar,
-                nome_memoriaServer: nome_memoriaVar,
-                nome_discoServer: nome_discoVar,
-                nome_temperaturaServer: nome_temperaturaVar
             })
         }).then(function(resposta){
-
             console.log("resposta: ", resposta);
-
             if (resposta.ok) {
                 alert("Máquina cadastrada com sucesso")
-
+                cadastrarComponente(nomeMaquinaVar);
             } else{
-
                 throw("Houve um erro ao realizar o cadastro da máquina!")
-
             }
         }). catch(function(resposta){
-
             console.log(`#ERRO: ${resposta}`)
-
         });
+        return false
+}
 
+function cadastrarComponente(nomeMaquinaVar) {
+    var cpuVar = ipt_cpu.value;
+    var memoriaVar = ipt_memoria.value;
+    var discoVar = ipt_disco.value;
+
+    for (let i = 0; i < array.length; i++) {
+
+        var componenteVar = vetor[i];
+        
+        fetch(`/hardware/cadastrarComponente`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                componenteServer: componenteVar,
+                nomeMaquinaServer: nomeMaquinaVar
+            })
+        }).then(function(resposta){
+            console.log("resposta: ", resposta);
+            if (resposta.ok) {
+                alert("Componente cadastrado com sucesso!")
+            } else{
+                throw("Houve um erro ao realizar o cadastro os componentes!")
+            }
+        }). catch(function(resposta){
+            console.log(`#ERRO: ${resposta}`)
+        });
         return false
 
-    // }
-    // else{
-    //     msg_alertas.style.display = "block"
-    //     Erro = document.getElementById("mensagemErro")
-    //     Erro.classList.add("error")
-    //     mensagemErro.innerHTML += `Corrija os campos`
-    //     temErro = true;
-    // }
+    }
 }
