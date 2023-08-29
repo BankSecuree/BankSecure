@@ -344,17 +344,30 @@
                 <h5 class="card-title">Informações da Máquina</h5>
                 <form>
                   <div class="row mb-3">
-                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Nome</label>
+                    <label class="col-md-4 col-lg-3 col-form-label">Tipo de máquina</label>
                     <div class="col-md-8 col-lg-9">
-                      <input type="text" class="form-control" id="ipt_nomeMaquina">
+                      <select id="ipt_fkMaquina">
+                        <option value="">Selecione um tipo...</option>
+                        <option value="">Servidor</option>
+                        <option value="">Caixa eletrônico</option>
+                      </select>
                     </div>
                   </div>
                   <div class="row mb-3">
                     <label class="col-md-4 col-lg-3 col-form-label">Agência pertencente</label>
                     <div class="col-md-8 col-lg-9">
-                      <input type="" class="form-control" id="ipt_fkAgencia">
+                      <select id="ipt_fkAgencia">
+                        <option value="">Selecione um tipo...</option>
+                      </select>
                     </div>
                   </div>
+                  <div class="row mb-3">
+                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Nome</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input type="text" class="form-control" id="ipt_nomeMaquina">
+                    </div>
+                  </div>
+                
                   <div class="row mb-3">
                     <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Cpu</label>
                     <div class="col-md-8 col-lg-9">
