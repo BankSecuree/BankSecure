@@ -1,7 +1,9 @@
--- Active: 1692322487627@@127.0.0.1@3306@bankSecure
+-- Active: 1692279316574@@127.0.0.1@3306@bankSecure
 DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
 USE bankSecure;
+
+
 
 CREATE TABLE empresa(
 idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
@@ -53,7 +55,7 @@ CREATE TABLE funcionarioAgencia(
 CREATE TABLE maquina(
 	idMaquina INT PRIMARY KEY AUTO_INCREMENT,
 	fkAgencia INT,
-    nome VARCHAR(45), 
+    nome VARCHAR(45) UNIQUE, 
 	FOREIGN KEY (fkAgencia) REFERENCES agencia(idAgencia)
 );
 
@@ -73,28 +75,12 @@ dataHora DATETIME,
 FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina)
 );
 
-CREATE TABLE registrosAPI(
-idRegistro INT PRIMARY KEY AUTO_INCREMENT,
-cpu INT,
-memoria INT,
-disco INT,
-dataHora DATETIME
-);
-
 
 CREATE TABLE componente (
 	idComponente INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45),  
     unidadeMedida VARCHAR(10)
 );
-
-INSERT INTO componente (nome, unidadeMedida) VALUES
--- ('CPU', 'GHZ'),
--- ('Memória', 'GB'),
--- ('Disco', 'KB'),
-('CPU', '%'),
-('Memória', '%'),
-('Disco', '%');
 
 CREATE TABLE maquinaComponente (
 	fkMaquina INT,
@@ -104,6 +90,26 @@ CREATE TABLE maquinaComponente (
     PRIMARY KEY (fkMaquina, fkComponente)
 );
 
+
+
+-- VIEW
+DROP VIEW IF EXISTS vw_maquina;
+CREATE OR REPLACE VIEW vw_maquina AS SELECT * FROM maquina;
+
+DROP VIEW IF EXISTS vw_componente;
+CREATE OR REPLACE VIEW vw_componente AS SELECT * FROM componente;
+
+DROP VIEW IF EXISTS vw_registrosEstruturados;
+CREATE OR REPLACE VIEW vw_registrosEstruturados AS 
+SELECT registros.fkMaquina as "ID", maquina.nome as "Nome", registros.dataHora as "Data",
+MAX( CASE WHEN registros.fkComponente = 1 THEN registros.valor END ) "Cpu" ,
+MAX( CASE WHEN registros.fkComponente = 2 THEN registros.valor END ) "Memória" ,
+MAX( CASE WHEN registros.fkComponente = 3 THEN registros.valor END ) "Disco"
+FROM registros JOIN maquina ON fkMaquina = idMaquina
+GROUP BY registros.fkMaquina, registros.dataHora
+ORDER BY registros.fkMaquina, registros.dataHora ASC;
+
+
 -- PROCEDURE PARA CADASTRAR AGENCIAS
 DELIMITER //
 CREATE PROCEDURE cadastrarAgencia(IN 
@@ -112,11 +118,12 @@ CREATE PROCEDURE cadastrarAgencia(IN
     agencia_CEP CHAR(8),
 	agencia_logradouro VARCHAR(150),
 	agencia_numero VARCHAR(20),
-	agencia_telefone VARCHAR(11)
+	agencia_telefone VARCHAR(11),
+    agencia_fkEmpresa int
 )
 BEGIN
-	INSERT INTO agencia (apelido, cnpjAgencia, CEP, logradouro, numero, telefoneAgencia) 
-		VALUES (agencia_apelido, agencia_CNPJ, agencia_cep, agencia_logradouro, agencia_numero, agencia_telefone);
+	INSERT INTO agencia (apelido, cnpjAgencia, CEP, logradouro, numero, telefoneAgencia, fkEmpresa) 
+		VALUES (agencia_apelido, agencia_CNPJ, agencia_cep, agencia_logradouro, agencia_numero, agencia_telefone, agencia_fkEmpresa);
 END//
 DELIMITER ;
 
@@ -133,11 +140,11 @@ CREATE PROCEDURE inserirDadosMaquina(IN
 )
 BEGIN
 	INSERT INTO registros (fkMaquina, fkComponente, valor, dataHora) VALUES 
-	((SELECT idMaquina FROM maquina WHERE nome = ma_user), (SELECT idComponente FROM componente WHERE nome = co1_nome), re1_valor, re_data);
+	((SELECT idMaquina FROM vw_maquina WHERE nome = ma_user), (SELECT idComponente FROM componente WHERE nome = co1_nome), re1_valor, re_data);
     INSERT INTO registros (fkMaquina, fkComponente, valor, dataHora) VALUES 
-	((SELECT idMaquina FROM maquina WHERE nome = ma_user), (SELECT idComponente FROM componente WHERE nome = co2_nome), re2_valor, re_data);
+	((SELECT idMaquina FROM vw_maquina WHERE nome = ma_user), (SELECT idComponente FROM componente WHERE nome = co2_nome), re2_valor, re_data);
     INSERT INTO registros (fkMaquina, fkComponente, valor, dataHora) VALUES 
-	((SELECT idMaquina FROM maquina WHERE nome = ma_user), (SELECT idComponente FROM componente WHERE nome = co3_nome), re3_valor, re_data);
+	((SELECT idMaquina FROM vw_maquina WHERE nome = ma_user), (SELECT idComponente FROM componente WHERE nome = co3_nome), re3_valor, re_data);
 END//
 DELIMITER ;
 
@@ -199,8 +206,10 @@ BEGIN
 		VALUES (us_email, us_senha, us_nome, us_cpf, us_telefone, us_dataNascimento, (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = emp_cnpjEmpresa), us_cargo, us_fkGerente, us_dataInicio);
 END//
 DELIMITER ;
+
+-- CONTA BANK SECURE 
 DROP USER IF EXISTS 'user_bankSecure'@'localhost';
-CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'urubu100';
+CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'Urubu_100';
 GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';
 GRANT EXECUTE ON PROCEDURE cadastrar_empresaGerente to 'user_bankSecure'@'localhost';
 GRANT EXECUTE ON PROCEDURE cadastrarAgencia to 'user_bankSecure'@'localhost';
@@ -208,10 +217,11 @@ FLUSH PRIVILEGES;
 
 -- CONTA ITAU
 DROP USER IF EXISTS 'bs_itau'@'localhost';
-CREATE USER 'bs_itau'@'localhost' IDENTIFIED BY 'itau100';
-GRANT INSERT, SELECT ON bankSecure.registrosAPI TO 'bs_itau'@'localhost';
+CREATE USER 'bs_itau'@'localhost' IDENTIFIED BY 'Itau_100';
+GRANT INSERT, SELECT ON bankSecure.registros TO 'bs_itau'@'localhost';
 GRANT EXECUTE ON PROCEDURE inserirDadosMaquina to 'bs_itau'@'localhost';
 FLUSH PRIVILEGES;
+
 
 
 -- ADMIN
@@ -226,8 +236,7 @@ INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente,cpf, telefone, car
 INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('analista1itau@bs.com', '12345', 'Julia Lima', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 2);
 
 -- AGENCIA
-INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefoneAgencia, fkEmpresa) VALUES
-('60701190031328', 'Agência Itau Rudge Ramos', 'Rua Rudge Ramos', 80, '09772040', '1130034828', 2);
+INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefoneAgencia, fkEmpresa) VALUES ('60701190031328', 'Agência Itau Rudge Ramos', 'Rua Rudge Ramos', 80, '09772040', '1130034828', 2);
 -- FUNCIONARIOAGENCIA
 INSERT INTO funcionarioAgencia VALUES (3,1);
 
@@ -235,9 +244,17 @@ INSERT INTO funcionarioAgencia VALUES (3,1);
 INSERT INTO maquina (nome, fkAgencia) VALUES ('bruno', 1);
 INSERT INTO maquina (nome, fkAgencia) VALUES ('FYUT-231', 1);
 INSERT INTO maquina (nome, fkAgencia) VALUES ('TWE-981', 1);
+
 -- SERVIDOR
 INSERT INTO servidor (nome, fkMaquina) VALUES ('Servidor 1', 1);
+
+-- COMPONENTE
+INSERT INTO componente (nome, unidadeMedida) VALUES
+-- ('CPU', 'GHZ'), ('Memória', 'GB'), ('Disco', 'KB'),
+('CPU', '%'), ('Memória', '%'), ('Disco', '%');
 
 -- MAQUINA COMPONENTE
 INSERT INTO maquinaComponente (fkMaquina, fkComponente) VALUES (1, 1), (2, 2);
 INSERT INTO maquinaComponente (fkMaquina, fkComponente) VALUES (3,3);
+
+

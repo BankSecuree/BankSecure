@@ -206,16 +206,14 @@
             <img id="foto-usuario" class="rounded-circle" style="padding-right: 5px;">
             <span class="d-none d-md-block" id="nome-usuario"></span>
           </a>
-
+          
         </li>
 
       </ul>
     </nav><!-- End Icons Navigation -->
 
   </header>
-  <div id="msg_alertas" class="msg_alertas">
-    <span class="ms" id="mensagemErro"></span>
-  </div>
+
   <!-- Sidebar -->
   <aside id="sidebar" class="sidebar">
 
@@ -229,42 +227,11 @@
         </a>
       </li>
 
-      <!-- Tabelas Nav -->
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Tabelas</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" href="agencias.html">
+          <i class="bi bi-layout-text-window-reverse"></i>
+          <span>Agências</span>
         </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="tables-general.html">
-              <i class="bi bi-circle"></i><span>General Tables</span>
-            </a>
-          </li>
-          <li>
-            <a href="tables-data.html">
-              <i class="bi bi-circle"></i><span>Data Tables</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-
-      <!-- Gráficos Nav -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-bar-chart"></i><span>Gráficos</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="charts-chartjs.html">
-              <i class="bi bi-circle"></i><span>Chart.js</span>
-            </a>
-          </li>
-          <li>
-            <a href="charts-apexcharts.html">
-              <i class="bi bi-circle"></i><span>ApexCharts</span>
-            </a>
-          </li>
-        </ul>
       </li>
 
       <!-- F.A.Q Nav -->
@@ -285,6 +252,36 @@
         </a>
       </li>
 
+      <!-- Cadastrar Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="conta_usuarios.html">
+          <i class="bi bi-card-list"></i>
+          <span>Usuários</span>
+        </a>
+      </li>
+      <!-- Agencias -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="conta_agencias.html">
+          <i class="bi bi-card-list"></i>
+          <span>Agências</span>
+        </a>
+      </li>
+
+      <!-- Máquinas -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="conta_maquinas.html">
+          <i class="bi bi-card-list"></i>
+          <span>Máquinas</span>
+        </a>
+      </li>
+
+      <!-- Sair Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" onclick="confirmarSair()" style="cursor: pointer;">
+          <i class="bi bi-box-arrow-right"></i>
+          <span>Sair</span>
+        </a>
+      </li>
     </ul>
   </aside>
 
@@ -295,87 +292,27 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Conta</li>
+          <li class="breadcrumb-item">Dashboard</li>
           <li class="breadcrumb-item active">Agências</li>
         </ol>
       </nav>
-    </div>
+    </div><!-- End Page Title -->
 
-    <section class="section profile">
-      <div class="row">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Agências</h5>
-            <table class="table" id="tabela-agencias"></table>
-          </div>
-        </div>
-      </div>
-      </div>
+    <p>Monitore suas agências em tempo real</p>
 
-      <div class="pagetitle">
-        <h1>Nova Agência</h1>
-      </div>
+    <section class="section">
+      <div class="row" id="campo-agencias">
 
-      <div class="row">
-        <div class="row">
+        <!-- <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Informações da Agência</h5>
-              <form>
-                <div class="row mb-3">
-                  <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Apelido</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input type="text" class="form-control" id="iptApelido" placeholder="Ex: Pedro Silva" 
-                    onkeyup="eliminarNumeros('iptApelido')">
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label for="cpf" class="col-md-4 col-lg-3 col-form-label">CNPJ</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input type="text" class="form-control" id="iptCnpj" placeholder="Ex: 1101015121321" maxlength="18"
-                    onkeyup="eliminarLetras('iptCnpj'), mascaraCnpj()">
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label class="col-md-4 col-lg-3 col-form-label">CEP</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input type="text" class="form-control" id="iptCep" placeholder="Ex: 09967172" maxlength="9" 
-                    onkeyup="eliminarLetras('iptCep'), mascaraCep()">
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label class="col-md-4 col-lg-3 col-form-label">Logradouro</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input type="text" class="form-control" id="iptLogradouro" placeholder="Ex: Rua Haddock Lobo" 
-                    onkeyup="eliminarNumeros('iptLogradouro')">
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label class="col-md-4 col-lg-3 col-form-label">Número</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input type="text" class="form-control" id="iptNumero" placeholder="Ex: 123" 
-                    onkeyup="eliminarLetras('iptNumero')">
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label class="col-md-4 col-lg-3 col-form-label">Telefone para contato</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input type="text" class="form-control" id="iptTelefone">
-                  </div>
-                </div>
-
-              </form>
+              <h5 class="card-title">Area Chart</h5>
+              <div id="areaChart"></div>
             </div>
-
           </div>
-        </div>
+        </div> -->
 
-        <div class="text-center" id="campo-botao">
-          <button type="submit" class="btn btn-primary" id="botao-cadastrar"
-            onclick="cadastrarAgencia()">Cadastrar</button>
-        </div>
+      </div>
     </section>
 
   </main>
@@ -387,18 +324,13 @@
     </div>
   </footer>
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-      class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 </body>
-
 </html>
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
 <script src="assets/js/main.js"></script>
-<script src="assets/js/agencias.js"></script>
-<script src="assets/js/usuarios.js"></script>
-
 <script>
   exibirInfos();
-  exibirTabelaAgencias();
 </script>

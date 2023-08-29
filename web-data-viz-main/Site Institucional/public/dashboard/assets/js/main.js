@@ -1,3 +1,163 @@
+if (sessionStorage.GERENTE_USUARIO == 'null') {
+
+  // Botão Usuários
+
+  var barraLateral = document.getElementById("sidebar-nav");
+
+  var li = document.createElement("li");
+  var a = document.createElement("a");
+  var i = document.createElement("i");
+  var span = document.createElement("span");
+
+  li.setAttribute("class", "nav-item");
+  a.setAttribute("class", "nav-link collapsed");
+  a.setAttribute("href", "conta_usuarios.html");
+  i.setAttribute("class", "bi bi-card-list");
+
+  li.appendChild(a);
+  a.appendChild(i);
+  a.appendChild(span);
+  barraLateral.appendChild(li);
+
+  span.innerHTML = "Usuários";
+
+  // Botão Sair
+
+  var barraLateral = document.getElementById("sidebar-nav");
+
+  var li = document.createElement("li");
+  var a = document.createElement("a");
+  var i = document.createElement("i");
+  var span = document.createElement("span");
+
+  li.setAttribute("class", "nav-item");
+  a.setAttribute("class", "nav-link collapsed");
+  a.setAttribute("id", "btnNav");
+  a.setAttribute("onclick", "confirmarSair()");
+  i.setAttribute("class", "bi bi-box-arrow-right");
+
+  li.appendChild(a);
+  a.appendChild(i);
+  a.appendChild(span);
+  barraLateral.appendChild(li);
+
+  span.innerHTML = "Sair";
+
+
+} else if (sessionStorage.GERENTE_USUARIO == 1) {
+
+  // Botão Usuários
+
+  var barraLateral = document.getElementById("sidebar-nav");
+
+  var li = document.createElement("li");
+  var a = document.createElement("a");
+  var i = document.createElement("i");
+  var span = document.createElement("span");
+
+  li.setAttribute("class", "nav-item");
+  a.setAttribute("class", "nav-link collapsed");
+  a.setAttribute("href", "conta_usuarios.html");
+  i.setAttribute("class", "bi bi-card-list");
+
+  li.appendChild(a);
+  a.appendChild(i);
+  a.appendChild(span);
+  barraLateral.appendChild(li);
+
+  span.innerHTML = "Usuários";
+  
+  // Botão Agencias
+
+  var barraLateral = document.getElementById("sidebar-nav");
+
+  var li = document.createElement("li");
+  var a = document.createElement("a");
+  var i = document.createElement("i");
+  var span = document.createElement("span");
+
+  li.setAttribute("class", "nav-item");
+  a.setAttribute("class", "nav-link collapsed");
+  a.setAttribute("href", "conta_agencias.html");
+  i.setAttribute("class", "bi bi-card-list");
+
+  li.appendChild(a);
+  a.appendChild(i);
+  a.appendChild(span);
+  barraLateral.appendChild(li);
+
+  span.innerHTML = "Agências";
+
+  
+  // Botão Máquinas
+
+  var barraLateral = document.getElementById("sidebar-nav");
+
+  var li = document.createElement("li");
+  var a = document.createElement("a");
+  var i = document.createElement("i");
+  var span = document.createElement("span");
+
+  li.setAttribute("class", "nav-item");
+  a.setAttribute("class", "nav-link collapsed");
+  a.setAttribute("href", "conta_maquinas.html");
+  i.setAttribute("class", "bi bi-card-list");
+
+  li.appendChild(a);
+  a.appendChild(i);
+  a.appendChild(span);
+  barraLateral.appendChild(li);
+
+  span.innerHTML = "Máquinas";
+
+  // Botão Sair
+
+  var barraLateral = document.getElementById("sidebar-nav");
+
+  var li = document.createElement("li");
+  var a = document.createElement("a");
+  var i = document.createElement("i");
+  var span = document.createElement("span");
+
+  li.setAttribute("class", "nav-item");
+  a.setAttribute("class", "nav-link collapsed");
+  a.setAttribute("id", "btnNav");
+  a.setAttribute("onclick", "confirmarSair()");
+  i.setAttribute("class", "bi bi-box-arrow-right");
+
+  li.appendChild(a);
+  a.appendChild(i);
+  a.appendChild(span);
+  barraLateral.appendChild(li);
+
+  span.innerHTML = "Sair";
+
+} else {
+
+  // Botão Sair
+
+  var barraLateral = document.getElementById("sidebar-nav");
+
+  var li = document.createElement("li");
+  var a = document.createElement("a");
+  var i = document.createElement("i");
+  var span = document.createElement("span");
+
+  li.setAttribute("class", "nav-item");
+  a.setAttribute("class", "nav-link collapsed");
+  a.setAttribute("id", "btnNav");
+  a.setAttribute("onclick", "confirmarSair()");
+  i.setAttribute("class", "bi bi-box-arrow-right");
+
+  li.appendChild(a);
+  a.appendChild(i);
+  a.appendChild(span);
+  barraLateral.appendChild(li);
+
+  span.innerHTML = "Sair";
+
+}
+
 function exibirInfos() {
   if (sessionStorage.ID_USUARIO == undefined) {
     window.location = "../login.html";

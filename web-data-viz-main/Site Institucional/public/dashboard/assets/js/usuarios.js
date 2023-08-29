@@ -188,9 +188,32 @@ function cadastrarEmpresaGerente() {
         console.log(`#ERRO: ${resposta}`);
         // finalizarAguardar();
     });
-
+    selectfkEmpresa();
     return false;
 }
+
+var fkEmpresaGlobal;
+function selectfkEmpresa() {
+    var fkEmpresa;
+    fetch('/usuarios/listarUltimoIdEmpresa').then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          var fkEmpresaArray = resposta[0];
+          fkEmpresa = fkEmpresaArray.idEmpresa;
+          fkEmpresaGlobal = fkEmpresa;
+          console.log(fkEmpresaGlobal);
+          sessionStorage.ID_EMPRESA = fkEmpresaGlobal;
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ ultimo idEmpresa: ${error.message}`);
+      });
+    return fkEmpresa;
+  }
 
 function cadastrarFuncionario() {
     var nomeCompletoVar = iptNomeCompleto.value;

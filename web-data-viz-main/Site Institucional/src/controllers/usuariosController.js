@@ -79,6 +79,7 @@ function cadastrarAgencia(req, res) {
   var logradouro = req.body.agenciaLogradouroServer;
   var numLogradouro = req.body.agenciaNumeroServer;
   var telefone = req.body.agenciaTelefoneServer;
+  var fkEmpresa = req.body.agenciaFkEmpresa;
   
 
   // Faça as validações dos valores
@@ -91,7 +92,7 @@ function cadastrarAgencia(req, res) {
   // } else {
 
     // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-    usuariosModel.cadastrarAgencia(apelido, cnpj, cep, logradouro, numLogradouro, telefone)
+    usuariosModel.cadastrarAgencia(apelido, cnpj, cep, logradouro, numLogradouro, telefone,fkEmpresa)
       .then(
         function (resultado) {
           res.json(resultado);
@@ -162,9 +163,27 @@ function cadastrarFuncionario(req, res) {
   }
 }
 
+function listarUltimoIdEmpresa(req, res){
+  usuariosModel.listarUltimoIdEmpresa()
+  .then(function (resultado){
+      if(resultado.length > 0){
+          res.status(200).json(resultado);
+      }
+      else{
+          res.status(204).send("Nenhum resultado de empresa encontrados");
+      }
+  }).catch(
+      function(erro){
+          console.log("Houve um erro ao realizar a consulta! Erro:", erro.sqlMessage);
+          res.status(500).json(erro.sqlMessage);
+      }
+  );
+}
+
 module.exports = {
   exibirTabelaUsuarios,
   cadastrarEmpresaGerente, 
   cadastrarFuncionario,
-  cadastrarAgencia
+  cadastrarAgencia,
+  listarUltimoIdEmpresa
 }

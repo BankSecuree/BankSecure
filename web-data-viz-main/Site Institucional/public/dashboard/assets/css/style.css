@@ -286,6 +286,7 @@ h6 {
   border: none;
   border-radius: 5px;
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  padding: 20px;
 }
 
 .card-header,
@@ -879,7 +880,7 @@ h6 {
 }
 
 .dashboard .info-card h6 {
-  font-size: 28px;
+  font-size: 20px;
   color: #012970;
   font-weight: 700;
   margin: 0;
