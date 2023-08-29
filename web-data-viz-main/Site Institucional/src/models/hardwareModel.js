@@ -1,5 +1,19 @@
 var database = require("../database/config");
 
+function cadastrarHardware(nomeMaquina, fkAgencia, nome_cpu, nome_memoria, nome_disco, nome_temperatura){
+    console.log("ACESSEI O HARDWARE MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarHardware()");
+    console.log(nomeMaquina);
+    console.log(fkAgencia);
+    
+    
+    var instrucao = `
+    CALL cadastrar_hardware ('${nomeMaquina}', ${fkAgencia}, '${nome_cpu}', '${nome_memoria}', '${nome_disco}', '${nome_temperatura}')
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
+
 function cadastrarNomeMaquina(nomeMaquina, fkAgencia){
     console.log("ACESSEI O HARDWARE MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarHardware()");
     var instrucao = `
@@ -47,10 +61,17 @@ function cadastrarHardwareTemperatura(temperatura){
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
 }
+
+function cadastrarHardwareTabelaAssociativa(fkComponente_cpu, fkComponente_memoria, fkComponente_disco, fkComponente_temperatura){
+    console.log("ACESSEI O HARDWARE MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarHardware()");
+    var instrucao = `
+    CALL cadastrar_tabela_associativa (${fkComponente_cpu}, ${fkComponente_memoria}, ${fkComponente_disco}, ${fkComponente_temperatura})
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
+
 module.exports = {
-    cadastrarNomeMaquina,
-    cadastrarHardwareCpu,
-    cadastrarHardwareMemoria,
-    cadastrarHardwareDisco,
-    cadastrarHardwareTemperatura
+    cadastrarHardware
 };

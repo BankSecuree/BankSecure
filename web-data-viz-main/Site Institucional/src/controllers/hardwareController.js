@@ -136,10 +136,50 @@ function cadastrarHardwareTemperatura(req, res) {
             );
     }
 }
+
+function cadastrarHardware(req, res) {
+    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
+    var nomeMaquina = req.body.nomeMaquinaServer;
+    var fkAgencia = req.body.fkAgenciaServer;
+    var nome_cpu = req.body.nome_cpuServer;
+    var nome_memoria = req.body.nome_memoriaServer;
+    var nome_disco = req.body.nome_discoServer;
+    var nome_temperatura = req.body.nome_temperaturaServer;
+
+    console.log("aaaaaa")
+    console.log("aaaaaa")
+   
+    if (nomeMaquina == undefined) {
+        res.status(400).send("O nome da sua máquina está undefined");
+    } else if (fkAgencia == undefined) {
+        res.status(400).send("Sua fkAgencia está undefined")       
+    } else if (nome_cpu == undefined) {
+        res.status(400).send("Sua cpu está undefined");
+    } else if (nome_memoria == undefined) {
+        res.status(400).send("Sua memoria está undeifned");
+    } else if (nome_disco == undefined){
+        res.status(400).send("Sua disco está undefined");
+    } else if (nome_temperatura == undefined){
+        res.status(400).send("Sua temperatura está undefined")
+    } else {
+        hardwareModel.cadastrarHardware()
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o cadastro! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+        }
+}
+
 module.exports = {
-    cadastrarNomeMaquina,
-    cadastrarHardwareCpu,
-    cadastrarHardwareMemoria,
-    cadastrarHardwareDisco,
-    cadastrarHardwareTemperatura
+    cadastrarHardware
 }
