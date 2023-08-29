@@ -3,8 +3,6 @@ DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
 USE bankSecure;
 
-SELECT * FROM agencia;
-
 CREATE TABLE empresa(
 idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
 cnpjEmpresa CHAR (14),
@@ -75,14 +73,6 @@ dataHora DATETIME,
 FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina)
 );
 
-CREATE TABLE registrosAPI(
-idRegistro INT PRIMARY KEY AUTO_INCREMENT,
-cpu INT,
-memoria INT,
-disco INT,
-dataHora DATETIME
-);
-
 
 CREATE TABLE componente (
 	idComponente INT PRIMARY KEY AUTO_INCREMENT,
@@ -114,11 +104,12 @@ CREATE PROCEDURE cadastrarAgencia(IN
     agencia_CEP CHAR(8),
 	agencia_logradouro VARCHAR(150),
 	agencia_numero VARCHAR(20),
-	agencia_telefone VARCHAR(11)
+	agencia_telefone VARCHAR(11),
+    agencia_fkEmpresa int
 )
 BEGIN
-	INSERT INTO agencia (apelido, cnpjAgencia, CEP, logradouro, numero, telefoneAgencia) 
-		VALUES (agencia_apelido, agencia_CNPJ, agencia_cep, agencia_logradouro, agencia_numero, agencia_telefone);
+	INSERT INTO agencia (apelido, cnpjAgencia, CEP, logradouro, numero, telefoneAgencia, fkEmpresa) 
+		VALUES (agencia_apelido, agencia_CNPJ, agencia_cep, agencia_logradouro, agencia_numero, agencia_telefone, agencia_fkEmpresa);
 END//
 DELIMITER ;
 
@@ -179,7 +170,7 @@ FLUSH PRIVILEGES;
 -- CONTA ITAU
 DROP USER IF EXISTS 'bs_itau'@'localhost';
 CREATE USER 'bs_itau'@'localhost' IDENTIFIED BY 'itau100';
-GRANT INSERT, SELECT ON bankSecure.registrosAPI TO 'bs_itau'@'localhost';
+GRANT INSERT, SELECT ON bankSecure.registros TO 'bs_itau'@'localhost';
 GRANT EXECUTE ON PROCEDURE inserirDadosMaquina to 'bs_itau'@'localhost';
 FLUSH PRIVILEGES;
 
@@ -211,3 +202,10 @@ INSERT INTO servidor (nome, fkMaquina) VALUES ('Servidor 1', 1);
 -- MAQUINA COMPONENTE
 INSERT INTO maquinaComponente (fkMaquina, fkComponente) VALUES (1, 1), (2, 2);
 INSERT INTO maquinaComponente (fkMaquina, fkComponente) VALUES (3,3);
+
+select * from empresa;
+
+SELECT apelido, cnpjAgencia, idAgencia FROM agencia WHERE fkEmpresa =3;
+select * from agencia;
+
+select idEmpresa from empresa order by idEmpresa desc LIMIT 1
