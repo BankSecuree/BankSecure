@@ -8,7 +8,7 @@ import requests
 import json
 import platform
  
-conexao = mysql.connector.connect(user='bs_itau', password='itau100', host='localhost', database='bankSecure')
+conexao = mysql.connector.connect(user='bs_itau', password='Itau_100', host='localhost', database='bankSecure')
 
 cursor = conexao.cursor()
 

@@ -1,4 +1,4 @@
--- Active: 1692322487627@@127.0.0.1@3306@bankSecure
+-- Active: 1692279316574@@127.0.0.1@3306@bankSecure
 DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
 USE bankSecure;
@@ -173,7 +173,7 @@ DELIMITER ;
 
 -- CONTA BANK SECURE 
 DROP USER IF EXISTS 'user_bankSecure'@'localhost';
-CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'urubu100';
+CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'Urubu_100';
 GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';
 GRANT EXECUTE ON PROCEDURE cadastrar_empresaGerente to 'user_bankSecure'@'localhost';
 GRANT EXECUTE ON PROCEDURE cadastrarAgencia to 'user_bankSecure'@'localhost';
@@ -181,7 +181,7 @@ FLUSH PRIVILEGES;
 
 -- CONTA ITAU
 DROP USER IF EXISTS 'bs_itau'@'localhost';
-CREATE USER 'bs_itau'@'localhost' IDENTIFIED BY 'itau100';
+CREATE USER 'bs_itau'@'localhost' IDENTIFIED BY 'Itau_100';
 GRANT INSERT, SELECT ON bankSecure.registrosAPI TO 'bs_itau'@'localhost';
 GRANT EXECUTE ON PROCEDURE inserirDadosMaquina to 'bs_itau'@'localhost';
 FLUSH PRIVILEGES;
