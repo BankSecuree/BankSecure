@@ -1,4 +1,5 @@
 var temErro = false;
+var fkEmpresaGlobal;
 
 function exibirTabelaAgencias() { 
     var lista = document.getElementById("tabela-agencias");
@@ -108,7 +109,14 @@ function validar() {
     var logradouro = iptLogradouro.value;
     var numero = iptNumero.value;
 
-    if (ipt_apelido == "") {
+    if (ipt_apelido == '' && cnpj == '' && cep == '' && logradouro == '' && numero == '') {
+        msg_alertas.style.display = "block"
+        Erro = document.getElementById("mensagemErro")
+        Erro.classList.add("erro")
+        mensagemErro.innerHTML = `Todos os campos estão vazios`
+        temErro = true;
+    }
+    else if (ipt_apelido == "") {
         msg_alertas.style.display = "block"
         Erro = document.getElementById("mensagemErro")
         Erro.classList.add("alerta")
@@ -143,11 +151,10 @@ function validar() {
         mensagemErro.innerHTML = `O Número não pode ser vazio`
         temErro = true;
     }
-
     if (isNaN(numero)) {
         msg_alertas.style.display = "block"
-        Erro = document.getElementById("mensagemErro")
         Erro.classList.add("erro")
+        Erro = document.getElementById("mensagemErro")
         mensagemErro.innerHTML = `O número não pode ter letras`
         temErro = true;
     }
@@ -182,7 +189,7 @@ function eliminarNumeros(id) {
 function eliminarLetras(id) {
     const input = document.getElementById(id)
     var listaLetras = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@;,?|{}[]~^'
-    
+
     for (var i = 0; i <= 62; i++) {
         if (input.value[input.value.length - 1] == listaLetras[i]) {
             msg_alertas.style.display = "block"
@@ -211,27 +218,74 @@ function mascaraCnpj() {
 
     if (tamanhoCnpj == 2) {
         iptCnpj.value += '.'
-    } if (tamanhoCnpj == 6) {
+    }
+    if (tamanhoCnpj == 6) {
         iptCnpj.value += '.'
-    } if (tamanhoCnpj == 10) {
+    }
+    if (tamanhoCnpj == 10) {
         iptCnpj.value += '/'
-    } if (tamanhoCnpj == 15) {
+    }
+    if (tamanhoCnpj == 15) {
         iptCnpj.value += '-'
     }
 }
+
 function mascaraCep() {
     var tamanhoCep = iptCep.value.length
 
     if (tamanhoCep == 5) {
-        iptCep.value += '-'
+        iptCep.value += "-"
     }
+}
+
+function mascaraTelefone() {
+    var tamanhoTelefone = iptTelefone.value.length
+
+    if (tamanhoTelefone == 0) {
+        iptTelefone.value += "("
+    }
+    if (tamanhoTelefone == 3) {
+        iptTelefone.value += ")"
+    }
+    if (tamanhoTelefone == 9) {
+        iptTelefone.value += "-"
+    }
+}
+
+function eliminarMascaras() {
+    var cepFormatado;
+    var cnpjFormatado;
+    var telefoneFormatado;
+
+    var cepMascarado = iptCep.value
+    var cnpjMascarado = iptCnpj.value
+    var telefoneMascarado = iptTelefone.value
+
+    //Retirando a máscara do cep  
+
+    cepFormatado = cepMascarado.replace("-", "")
+
+    // Retirando a máscara do CNPJ
+
+    cnpjFormatado = cnpjMascarado.replaceAll(".", "")
+    cnpjFormatado = cnpjFormatado.replaceAll("-", "")
+    cnpjFormatado = cnpjFormatado.replaceAll("/", "")
+
+    // Retirando a máscara do telefone
+
+    telefoneFormatado = telefoneMascarado.replaceAll("-", "")
+    telefoneFormatado = telefoneFormatado.replaceAll("(", "")
+    telefoneFormatado = telefoneFormatado.replaceAll(")", "")
+
+    return { cnpjFormatado, cepFormatado, telefoneFormatado }
 }
 
 function desaparecerCard() {
     msg_alertas.style.display = "none"
+    msg_alertas2.style.display = "none"
 }
 
-var fkEmpresaGlobal;
+
 function selectfkEmpresa() {
     var fkEmpresa;
     fetch('/usuarios/listarUltimoIdEmpresa').then(function (response) {
@@ -256,18 +310,23 @@ function selectfkEmpresa() {
 
 
 function cadastrarAgencia() {
-
     selectfkEmpresa();
     validar();
-    desaparecerCard();
+    setTimeout(desaparecerCard, 5000);
+    const retorno = eliminarMascaras()
+
+    cnpjFormatado = retorno.cnpjFormatado
+    cepFormatado = retorno.cepFormatado
+    telefoneFormatado = retorno.telefoneFormatado
+
 
     if (temErro == false) {
         var agenciaApelidoVar = iptApelido.value;
-        var agenciaCNPJVar = iptCnpj.value;
-        var agenciaCEPVar = iptCep.value;
+        var agenciaCNPJVar = cnpjFormatado;
+        var agenciaCEPVar = cepFormatado;
         var agenciaLogradouroVar = iptLogradouro.value;
         var agenciaNumeroVar = iptNumero.value;
-        var agenciaTelefoneVar = iptTelefone.value;
+        var agenciaTelefoneVar = telefoneFormatado;
         var fkEmpresaVar = fkEmpresaGlobal;
 
         // Enviando o valor da nova input
@@ -314,10 +373,9 @@ function cadastrarAgencia() {
 
     }
     else{
-        msg_alertas.style.display += "block"
-        Erro = document.getElementById("mensagemErro")
-        Erro.classList.add("error")
-        mensagemErro.innerHTML += `Corrija seus erros para prosseguir`
-        temErro = true;
+        msg_alertas2.style.display += "block"
+        Erro2 = document.getElementById("mensagemErro2")
+        Erro2.classList.add("erro")
+        mensagemErro2.innerHTML += `Corrija seus erros para prosseguir`
     }
 }  
