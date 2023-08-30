@@ -8,6 +8,8 @@
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
   <!-- Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link
@@ -17,6 +19,7 @@
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <!-- Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 </head>
 
@@ -203,10 +206,10 @@
 
           <!-- Foto e Nome -->
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img id="foto-usuario" class="rounded-circle" style="padding-right: 5px;">
+            <img id="foto-usuario" class="rounded-circle">
             <span class="d-none d-md-block" id="nome-usuario"></span>
           </a>
-          
+
         </li>
 
       </ul>
@@ -221,20 +224,19 @@
 
       <!-- Dashboard Nav -->
       <li class="nav-item">
-        <a class="nav-link " href="index.html">
+        <a class="nav-link collapsed" href="index.html">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="agencias.html">
+        <a class="nav-link" href="agencias.html">
           <i class="bi bi-layout-text-window-reverse"></i>
           <span>Agências</span>
         </a>
       </li>
 
-      <!-- F.A.Q Nav -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="faq.html">
           <i class="bi bi-question-circle"></i>
@@ -251,44 +253,14 @@
           <span>Perfil</span>
         </a>
       </li>
-
-      <!-- Cadastrar Nav -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="conta_usuarios.html">
-          <i class="bi bi-card-list"></i>
-          <span>Usuários</span>
-        </a>
-      </li>
-      <!-- Agencias -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="conta_agencias.html">
-          <i class="bi bi-card-list"></i>
-          <span>Agências</span>
-        </a>
-      </li>
-
-      <!-- Máquinas -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="conta_maquinas.html">
-          <i class="bi bi-card-list"></i>
-          <span>Máquinas</span>
-        </a>
-      </li>
-
-      <!-- Sair Nav -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" onclick="confirmarSair()" style="cursor: pointer;">
-          <i class="bi bi-box-arrow-right"></i>
-          <span>Sair</span>
-        </a>
-      </li>
     </ul>
   </aside>
 
   <main id="main" class="main">
 
+    <!-- Titulo da pagina -->
     <div class="pagetitle">
-      <h1>Agências</h1>
+      <h1>Dashboard</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -296,21 +268,58 @@
           <li class="breadcrumb-item active">Agências</li>
         </ol>
       </nav>
-    </div><!-- End Page Title -->
+    </div>
 
-    <p>Monitore suas agências em tempo real</p>
-
-    <section class="section">
-      <div class="row" id="campo-agencias">
-
-        <!-- <div class="col-lg-6">
+    <section class="section dashboard">
+      <div class="row">
+        <div class="col-lg-4">
           <div class="card">
+            <div class="filter">
+              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <li class="dropdown-header text-start">
+                  <h6>Filtros </h6>
+                </li>
+
+                <li><a class="dropdown-item" href="#">Today</a></li>
+                <li><a class="dropdown-item" href="#">This Month</a></li>
+                <li><a class="dropdown-item" href="#">This Year</a></li>
+              </ul>
+            </div>
+
             <div class="card-body">
-              <h5 class="card-title">Area Chart</h5>
-              <div id="areaChart"></div>
+              <h5 class="card-title">Agências <span>| </span></h5>
+
             </div>
           </div>
-        </div> -->
+        </div><!-- End Right side columns -->
+
+        <div class="col-lg-8">
+          <div class="row">
+
+            <div class="col-12">
+              <div class="card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filtro</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Hoje</a></li>
+                    <li><a class="dropdown-item" href="#">Na semana</a></li>
+                    <li><a class="dropdown-item" href="#">No mês</a></li>
+                  </ul>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Agência <span>| Hoje</span></h5>
+                  <div id="chart"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
     </section>
@@ -324,15 +333,18 @@
     </div>
   </footer>
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
 </body>
+
 </html>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/dash-agencias.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-<script src="assets/js/dash-agencias.js"></script>
-<script src="assets/js/main.js"></script>
 <script>
   exibirInfos();
-  exibirListaAgencias();
+  graficoAgencia()
 </script>

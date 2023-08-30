@@ -41,3 +41,58 @@ function exibirListaAgencias() {
         // finalizarAguardar();
     });
 }
+
+
+function graficoAgencia() {
+    var options = {
+        series: [{
+          name: 'CPU',
+          data: [1, 5, 3, 9]
+        }, {
+          name: 'Memória',
+          data: [50, 67, 63, 60]
+        }, {
+          name: 'Disco',
+          data: [50, 50, 53, 52]
+        }],
+        chart: {
+          type: 'area',
+          stacked: false,
+          height: 350,
+          zoom: {
+            enabled: false
+          },
+        },
+        dataLabels: {
+          enabled: false
+        },
+        markers: {
+          size: 0,
+        },
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shadeIntensity: 1,
+            inverseColors: false,
+            opacityFrom: 0.45,
+            opacityTo: 0.05,
+            stops: [20, 100, 100, 100]
+          },
+        },
+        xaxis: {
+          ype: 'datetime',
+          categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+        },
+        // tooltip: {
+        //   shared: true
+        // },
+        legend: {
+          position: 'top',
+          horizontalAlign: 'center',
+          offsetX: -10
+        }
+      };
+
+      var chart = new ApexCharts(document.querySelector("#chart"), options);
+      chart.render();
+}

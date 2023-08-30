@@ -229,45 +229,13 @@
         </a>
       </li>
 
-      <!-- Tabelas Nav -->
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Tabelas</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" href="agencias.html">
+          <i class="bi bi-layout-text-window-reverse"></i>
+          <span>Agências</span>
         </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="tables-general.html">
-              <i class="bi bi-circle"></i><span>General Tables</span>
-            </a>
-          </li>
-          <li>
-            <a href="tables-data.html">
-              <i class="bi bi-circle"></i><span>Data Tables</span>
-            </a>
-          </li>
-        </ul>
       </li>
 
-      <!-- Gráficos Nav -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-bar-chart"></i><span>Gráficos</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="charts-chartjs.html">
-              <i class="bi bi-circle"></i><span>Chart.js</span>
-            </a>
-          </li>
-          <li>
-            <a href="charts-apexcharts.html">
-              <i class="bi bi-circle"></i><span>ApexCharts</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-
-      <!-- F.A.Q Nav -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="faq.html">
           <i class="bi bi-question-circle"></i>
@@ -277,19 +245,10 @@
 
       <li class="nav-heading">CONTA</li>
 
-      <!-- Perfil Nav -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="conta_perfil.html">
           <i class="bi bi-person"></i>
           <span>Perfil</span>
-        </a>
-      </li>
-
-      <!-- Sair Nav -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" onclick="confirmarSair()" style="cursor: pointer;">
-          <i class="bi bi-box-arrow-right"></i>
-          <span>Sair</span>
         </a>
       </li>
     </ul>
@@ -338,22 +297,27 @@
       </div>
 
       <div class="row">
-          <div class="row">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Informações da Máquina</h5>
-                <form>
-                  <div class="row mb-3">
-                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Nome</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input type="text" class="form-control" id="ipt_nomeMaquina">
-                    </div>
+        <div class="row">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Informações da Máquina</h5>
+              <form>
+                <div class="row mb-3">
+                  <label class="col-md-4 col-lg-3 col-form-label">Tipo de máquina</label>
+                  <div class="col-md-8 col-lg-9">
+                    <select id="ipt_fkMaquina">
+                      <option value="">Selecione um tipo...</option>
+                      <option value="">Servidor</option>
+                      <option value="">Caixa eletrônico</option>
+                    </select>
                   </div>
-                  <div class="row mb-3">
-                    <label class="col-md-4 col-lg-3 col-form-label">Agência pertencente</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input type="" class="form-control" id="ipt_fkAgencia">
-                    </div>
+                </div>
+                <div class="row mb-3">
+                  <label class="col-md-4 col-lg-3 col-form-label">Agência pertencente</label>
+                  <div class="col-md-8 col-lg-9">
+                    <select id="ipt_fkAgencia">
+                      <option value="">Selecione um tipo...</option>
+                    </select>
                   </div>
                   <div class="row mb-3">
                     <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Cpu</label>
@@ -361,6 +325,7 @@
                       <input type="checkbox" class="checkboxAgencia" id="ckb_cpu" value="1">
                     </div>
                   </div>
+                </div>
 
                   <div class="row mb-3">
                     <label for="cpf" class="col-md-4 col-lg-3 col-form-label">Memória</label>
@@ -368,6 +333,7 @@
                       <input type="checkbox" class="checkboxAgencia" id="ckb_memoria" value="2">
                     </div>
                   </div>
+                </div>
 
                   <div class="row mb-3">
                     <label class="col-md-4 col-lg-3 col-form-label">Disco</label>
@@ -375,13 +341,21 @@
                       <input type="checkbox" class="checkboxAgencia" id="ckb_disco" value="3">
                     </div>
                   </div>
+                </div>
 
-                </form>
-              </div>
+                <div class="row mb-3">
+                  <label class="col-md-4 col-lg-3 col-form-label">Disco</label>
+                  <div class="col-md-8 col-lg-9">
+                    <input type="text" class="form-control" id="ipt_disco" value="3">
+                  </div>
+                </div>
 
+              </form>
             </div>
+
           </div>
-        
+        </div>
+
         <div class="text-center" id="campo-botao">
           <button class="btn btn-primary" id="botao-cadastrar" onclick="cadastrarNomeMaquina()">Cadastrar</button>
         </div>

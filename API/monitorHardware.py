@@ -8,7 +8,7 @@ import requests
 import json
 import platform
  
-conexao = mysql.connector.connect(user='bs_itau', password='Itau_100', host='localhost', database='bankSecure')
+conexao = mysql.connector.connect(user='bs_itau', password='Itau_100', host='localhost', database='bankSecure', auth_plugin = 'mysql_native_password')
 
 cursor = conexao.cursor()
 
@@ -101,19 +101,23 @@ def pegar_dados():
 # cria a janela
 janela = Tk()
 janela.title("Seja bem-vindo(a!)")
-janela.geometry("530x580+600+0")
-janela.config(bg="darkblue")
+janela.geometry("2000x800")
+janela.config(bg="#212529")
 
 # qual janela ele faz parte e qual é o texto
-texto_dados = Label(janela, text="Clique aqui para ver os registros da Cpu, disco e memória")
-texto_dados.grid(column=0, row=-0, padx=40, pady=40)
+texto_dados = Label(janela, bg="#47b2e4",fg="#000", height = 30, width = 50) 
+texto_dados.place(x=620, y= 70)
+
+texto_dados2 = Label(janela, text="Clique aqui para ver os registros da Cpu, disco e memória" )
+texto_dados2.place(x=640, y= 95)
 
 #passar a função como parametro, não estou executando a função
 botao = Button(janela, text="Buscar dados", command=pegar_dados)
-botao.grid(column=0, row=1)
+botao.place(x=750, y= 170)
 
 texto_cotacao= Label(janela, text="")
-texto_cotacao.grid(column=0, row=2, padx=10, pady=10)
+texto_cotacao.pack(ipadx=10, ipady=10, padx=3, pady=250)
+texto_cotacao.place(x=630, y=250)
 
 # caminho da imagem
 pastaApp = os.path.dirname(__file__)
@@ -125,7 +129,7 @@ imgLogo=PhotoImage(file=pastaApp+"//computadores.png")
 l_logo=Label(janela,image=imgLogo)
 
 #lugar aonde ela irá aparecer
-l_logo.place(x=190, y=460)
+l_logo.place(x=780, y=500)
 
 # para deixar a janela exibida
 janela.mainloop()
