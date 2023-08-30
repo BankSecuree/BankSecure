@@ -216,9 +216,13 @@ function selectfkEmpresa() {
 }
 
 function cadastrarFuncionario() {
+    validar()
+    setTimeout(desaparecerCard, 5000);
+    const retorno = eliminarMascaras()
+
     var nomeCompletoVar = iptNomeCompleto.value;
-    var cpfVar = iptCPF.value;
-    var celularVar = iptCelular.value;
+    var cpfVar = retorno.cpfFormatado
+    var celularVar = retorno.celularFormatado;
     var nascimentoVar = iptNascimento.value;
     var cargoVar = iptCargo.value;
     var emailVar = iptEmail.value;
@@ -227,6 +231,7 @@ function cadastrarFuncionario() {
     dataInicioVar = `${dataInicioVar.getFullYear().toString()}-${(dataInicioVar.getMonth() + 1).toString().padStart(2, '0')}-${dataInicioVar.getDate().toString().padStart(2, '0')}`
     var cnpjVar = iptCnpj.value;
     var fkGerenteVar;
+
     if (sessionStorage.GERENTE_USUARIO == "null") {
         fkGerenteVar = 1;
     } else {
@@ -392,7 +397,7 @@ function eliminarMascaras() {
     celularFormatado = celularFormatado.replaceAll("(", "")
     celularFormatado = celularFormatado.replaceAll(")", "")
 
-    return { cnpjFormatado, celularFormatado }
+    return { cpfFormatado, celularFormatado }
 }
 
 function desaparecerCard() {
@@ -400,5 +405,11 @@ function desaparecerCard() {
 }
 
 function validar() {
-    
+    var nomeCompleto = iptNomeCompleto.value;
+    var cpf = retorno.cpfFormatado
+    var celular = retorno.celularFormatado;
+    var nascimento = iptNascimento.value;
+    var cargoVar = iptCargo.value;
+    var emailVar = iptEmail.value;
+    var senhaVar = iptSenha.value;
 }
