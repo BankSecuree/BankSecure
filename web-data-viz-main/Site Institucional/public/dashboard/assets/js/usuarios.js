@@ -60,7 +60,8 @@ function exibirTabelaUsuarios() {
                     <a onclick="editarUsuario(${publicacao.idUsuario})" class="btn btn-primary btn-sm" title="Remove my profile image"><i
                     class="bi bi-person-lines-fill"></i></a>
                     <a onclick="excluirUsuario(${publicacao.idUsuario})" class="btn btn-danger btn-sm" title="Remove my profile image"><i
-                    class="bi bi-trash"></i></a>`;
+                    class="bi bi-trash"></i></a>
+                    `;
                     var tr = document.createElement("tr");
                     var tbody = document.createElement("tbody");
 
