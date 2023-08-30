@@ -54,9 +54,11 @@ def pegar_dados():
             User          => {user}
             Descrição  => {"Sua memória RAM ultrapassou:"} {ram_percent}%  
             """}
-             chatItau = "https://hooks.slack.com/services/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"
-
-             postMsg = requests.post(chatItau, data=json.dumps(mensagem))
+             chatItau = "https://hooks.slack.com/services/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"
+             
+             jira = {"text": "/jira create Memória RAM: STATUS CRÍTICO"}
+             requests.post(chatItau, data=json.dumps(mensagem))
+             requests.post(chatItau, data=json.dumps(jira))
              exibiu = True
 
      comp1 = "Memória"
