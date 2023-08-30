@@ -91,25 +91,6 @@ CREATE TABLE maquinaComponente (
 );
 
 
-
--- VIEW
-DROP VIEW IF EXISTS vw_maquina;
-CREATE OR REPLACE VIEW vw_maquina AS SELECT * FROM maquina;
-
-DROP VIEW IF EXISTS vw_componente;
-CREATE OR REPLACE VIEW vw_componente AS SELECT * FROM componente;
-
-DROP VIEW IF EXISTS vw_registrosEstruturados;
-CREATE OR REPLACE VIEW vw_registrosEstruturados AS 
-SELECT registros.fkMaquina as "ID", maquina.nome as "Nome", registros.dataHora as "Data",
-MAX( CASE WHEN registros.fkComponente = 1 THEN registros.valor END ) "Cpu" ,
-MAX( CASE WHEN registros.fkComponente = 2 THEN registros.valor END ) "Memória" ,
-MAX( CASE WHEN registros.fkComponente = 3 THEN registros.valor END ) "Disco"
-FROM registros JOIN maquina ON fkMaquina = idMaquina
-GROUP BY registros.fkMaquina, registros.dataHora
-ORDER BY registros.fkMaquina, registros.dataHora ASC;
-
-
 -- PROCEDURE PARA CADASTRAR AGENCIAS
 DELIMITER //
 CREATE PROCEDURE cadastrarAgencia(IN 
@@ -225,5 +206,25 @@ INSERT INTO componente (nome, unidadeMedida) VALUES
 -- MAQUINA COMPONENTE
 INSERT INTO maquinaComponente (fkMaquina, fkComponente) VALUES (1, 1), (2, 2);
 INSERT INTO maquinaComponente (fkMaquina, fkComponente) VALUES (3,3);
+
+
+
+-- VIEW
+DROP VIEW IF EXISTS vw_maquina;
+CREATE OR REPLACE VIEW vw_maquina AS SELECT * FROM maquina;
+
+DROP VIEW IF EXISTS vw_componente;
+CREATE OR REPLACE VIEW vw_componente AS SELECT * FROM componente;
+
+DROP VIEW IF EXISTS vw_registrosEstruturados;
+CREATE OR REPLACE VIEW vw_registrosEstruturados AS 
+SELECT registros.fkMaquina as "ID", maquina.nome as "Nome", registros.dataHora as "Data",
+MAX( CASE WHEN registros.fkComponente = 1 THEN registros.valor END ) "Cpu" ,
+MAX( CASE WHEN registros.fkComponente = 2 THEN registros.valor END ) "Memória" ,
+MAX( CASE WHEN registros.fkComponente = 3 THEN registros.valor END ) "Disco"
+FROM registros JOIN maquina ON fkMaquina = idMaquina
+GROUP BY registros.fkMaquina, registros.dataHora
+ORDER BY registros.fkMaquina, registros.dataHora ASC;
+
 
 
