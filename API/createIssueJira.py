@@ -4,7 +4,7 @@ import json
 
 url = "https://bank-secure.atlassian.net/rest/api/3/issue"
 
-auth = HTTPBasicAuth("bruno.lima@sptech.school", "ATATT3xFfGF02hPlP9ZKwfS3oc9MWJDOIxbiI1nuAAz8qDt_Dfn6wD2ywUygoXsv2O0VvHIPwpWNMyyO1SP52qAFesum43ALN93qfPFlDKuABECJxd2H4aGqxUyycQKXEkd6gbx4hrnG0gvwB-7jfJNonAV5BdDVDqHS0zipoDL0HKZwWTdMqtQ=F70C5CF6")
+auth = HTTPBasicAuth("bruno.lima@sptech.school", "ATATT3xFfGF0S1Pwv5X3QhR22z2bQVg4SAGRrmyETO5iy2Tl-8XLJ-OTGaCchay9qbAZIdenl5Abu5wYXdQPek3z6lhxNqQulqHr6QSU-5FQVUsFuawCPn0-khG8nVBO-oqmjO7ywvorEQRaNqyUS_Kco0HzH-RfQ0xCI_nvVuU0FoQqB34Gaek=8268F9A8")
 
 headers = {
   "Accept": "application/json",
@@ -12,13 +12,20 @@ headers = {
 }
 
 
-payload = json.dumps( {
+payload = json.dumps({
     "fields":{
         "summary": "RESUMO DO TESTE",
-        "issuetype":{"name": "Bug"},
         "project":{"key":"BSITAU"},
-        'issuetype': {'name': 'Questions for analytics'}
-        }
+        'issuetype': {'name': 'Questions for analytics'},
+        "description": {"content": [{"content": [
+                                      {
+                                        "text": "Order entry fails when selecting supplier.",
+                                        "type": "text"
+                                      }],
+                                     "type": "paragraph"}],
+                                    "type": "doc",
+                                    "version": 1}
+      }
 })
 
 response = requests.request(
