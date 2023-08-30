@@ -49,61 +49,65 @@ function desaparecerCard() {
     msg_alertas.style.display = "none"
 }
 
-function cadastrarNomeMaquina(){
+function cadastrarNomeMaquina() {
     var nomeMaquinaVar = ipt_nomeMaquina.value;
-    var fkAgenciaVar = ipt_fkAgencia.value;      
-        fetch(`/hardware/cadastrarNomeMaquina`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                nomeMaquinaServer: nomeMaquinaVar,
-                fkAgenciaServer: fkAgenciaVar,
-            })
-        }).then(function(resposta){
-            console.log("resposta: ", resposta);
-            if (resposta.ok) {
-                alert("Máquina cadastrada com sucesso")
-                cadastrarComponente(nomeMaquinaVar);
-            } else{
-                throw("Houve um erro ao realizar o cadastro da máquina!")
-            }
-        }). catch(function(resposta){
-            console.log(`#ERRO: ${resposta}`)
-        });
-        return false
+    var fkAgenciaVar = ipt_fkAgencia.value;
+    fetch(`/hardware/cadastrarNomeMaquina`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            nomeMaquinaServer: nomeMaquinaVar,
+            fkAgenciaServer: fkAgenciaVar,
+        })
+    }).then(function (resposta) {
+        console.log("resposta: ", resposta);
+        if (resposta.ok) {
+            alert("Máquina cadastrada com sucesso")
+            cadastrarComponente();
+        } else {
+            throw ("Houve um erro ao realizar o cadastro da máquina!")
+        }
+    }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`)
+    });
+    return false
 }
 
-function cadastrarComponente(nomeMaquinaVar) {
-    var cpuVar = ipt_cpu.value;
-    var memoriaVar = ipt_memoria.value;
-    var discoVar = ipt_disco.value;
+function cadastrarComponente() {
 
-    for (let i = 0; i < array.length; i++) {
+    var valorCheckBox = document.querySelectorAll('input[type="checkbox"]:checked');
+    var vt_listaComponentes = [];
 
-        var componenteVar = vetor[i];
-        
+    valorCheckBox.forEach((checkbox) => {
+        vt_listaComponentes.push(checkbox.value);
+    });
+    console.log(vt_listaComponentes);
+
+    for (let i = 0; i < vt_listaComponentes.length; i++) {
+
+        var componenteVar = vt_listaComponentes[i]
         fetch(`/hardware/cadastrarComponente`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                componenteServer: componenteVar,
-                nomeMaquinaServer: nomeMaquinaVar
+                componenteServer: componenteVar
             })
-        }).then(function(resposta){
+        }).then(function (resposta) {
             console.log("resposta: ", resposta);
             if (resposta.ok) {
-                alert("Componente cadastrado com sucesso!")
-            } else{
-                throw("Houve um erro ao realizar o cadastro os componentes!")
+                alert("Componentes cadastrado com sucesso!")
+            } else {
+                throw ("Houve um erro ao realizar o cadastro os componentes!")
             }
-        }). catch(function(resposta){
+        }).catch(function (resposta) {
             console.log(`#ERRO: ${resposta}`)
         });
-        return false
-
+    
     }
+
+
 }

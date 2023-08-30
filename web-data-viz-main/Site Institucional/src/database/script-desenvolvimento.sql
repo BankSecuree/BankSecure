@@ -1,4 +1,4 @@
--- Active: 1692279316574@@127.0.0.1@3306@bankSecure
+-- Active: 1693338511032@@127.0.0.1@3306@banksecure
 DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
 USE bankSecure;
