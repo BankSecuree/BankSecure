@@ -26,7 +26,36 @@ function cadastrarNomeMaquina(req, res){
     }
 }
 
+function cadastrarComponente(req, res){
+    var cpu = req.body.cpuServer;
+    var memoria = req.body.memoriaServer;
+    var disco = req.body.discoServer;
+
+    
+    var componente = req.body.componenteServer
+
+    if (componente == undefined) {
+        res.status(400).send("A sua cpu está undefined")
+    }else {
+        hardwareModel.cadastrarComponente(componente)
+            .then(
+                function(resultado){
+                    res.json(resultado);
+                }
+            ).catch(
+                    function(erro){
+                    console.log(erro);
+                    console.log("\nHouver um erro ao realizar o cadastro!Erro: ",
+                    erro.sqlMessage
+                    );
+                    res.status(500).send(erro.sqlMessage);
+                }
+            )
+    }
+}
+
 
 module.exports = {
-    cadastrarNomeMaquina
+    cadastrarNomeMaquina,
+    cadastrarComponente
 }

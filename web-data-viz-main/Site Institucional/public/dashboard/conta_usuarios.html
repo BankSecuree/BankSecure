@@ -213,8 +213,12 @@
     </nav><!-- End Icons Navigation -->
 
   </header>
-  <div id="cardMsg">ola</div>
-
+  <div id="msg_alertas" class="msg_alertas">
+    <span class="ms" id="mensagemErro"></span>
+  </div>
+  <div id="msg_alertas2" class="msg_alertas2">
+    <span class="ms" id="mensagemErro2"></span>
+  </div>
   <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
@@ -247,6 +251,12 @@
         <a class="nav-link collapsed" href="conta_perfil.html">
           <i class="bi bi-person"></i>
           <span>Perfil</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="conta_agencias.html">
+          <i class="bi bi-layout-text-window-reverse"></i>
+          <span>Cadastrar Agências</span>
         </a>
       </li>
     </ul>
@@ -292,21 +302,24 @@
                   <div class="row mb-3">
                     <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Nome Completo</label>
                     <div class="col-md-8 col-lg-9">
-                      <input name="fullName" type="text" class="form-control" id="iptNomeCompleto">
+                      <input name="fullName" type="text" class="form-control" id="iptNomeCompleto" 
+                      onkeyup="eliminarNumeros('iptNomeCompleto')">
                     </div>
                   </div>
 
                   <div class="row mb-3">
                     <label for="cpf" class="col-md-4 col-lg-3 col-form-label">CPF</label>
                     <div class="col-md-8 col-lg-9">
-                      <input name="cpf" type="text" class="form-control" id="iptCPF">
+                      <input name="cpf" type="text" class="form-control" id="iptCPF"
+                      onkeyup="eliminarLetras('iptCPF')" onkeypress="mascaraCPF()" maxlength="14">
                     </div>
                   </div>
 
                   <div class="row mb-3">
-                    <label class="col-md-4 col-lg-3 col-form-label">Celular</label>
+                    <label class="col-md-4 col-lg-3 col-form-label">Telefone</label>
                     <div class="col-md-8 col-lg-9">
-                      <input type="text" class="form-control" id="iptCelular">
+                      <input type="text" class="form-control" id="iptCelular"
+                      onkeyup="eliminarLetras('iptCelular')" onkeypress="mascaraTelefone()" maxlength="14">
                     </div>
                   </div>
                   <div class="row mb-3">
@@ -324,7 +337,7 @@
                   <div class="row mb-3">
                     <label class="col-md-4 col-lg-3 col-form-label">Cargo</label>
                     <div class="col-md-8 col-lg-9">
-                      <input type="text" class="form-control" id="iptCargo">
+                      <input type="text" class="form-control" id="iptCargo" onkeyup="eliminarNumeros('iptCargo')">
                     </div>
                   </div>
 

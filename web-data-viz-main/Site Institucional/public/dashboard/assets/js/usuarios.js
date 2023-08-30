@@ -1,3 +1,203 @@
+var temErros;
+
+function eliminarNumeros(id) {
+    const input = document.getElementById(id)
+    var listaLetras = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+    for (var i = 0; i <= 9; i++) {
+        if (input.value[input.value.length - 1] == Number(listaLetras[i]) && input.value[input.value.length - 1] != ' ') {
+            msg_alertas.style.display = "block"
+            Erro = document.getElementById("mensagemErro")
+            Erro.classList.add("erro")
+            mensagemErro.innerHTML = `Este campo não pode ter Números`
+            input.value = ''
+            setTimeout(desaparecerCard, 5000);
+        }
+    }
+    for (var letra = 0; letra <= input.value.length - 1; letra++) {
+        if (isNaN(input.value[letra]) == false && input.value[letra] != ' ') {
+            msg_alertas.style.display = "block"
+            Erro = document.getElementById("mensagemErro")
+            Erro.classList.add("erro")
+            mensagemErro.innerHTML = `Este campo não pode ter Números`
+            input.value = ''
+            setTimeout(desaparecerCard, 5000);
+        }
+    }
+}
+
+function eliminarLetras(id) {
+    const input = document.getElementById(id)
+    var listaLetras = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@;,?|{}[]~^'
+
+    for (var i = 0; i <= 62; i++) {
+        if (input.value[input.value.length - 1] == listaLetras[i]) {
+            msg_alertas.style.display = "block"
+            Erro = document.getElementById("mensagemErro")
+            Erro.classList.add("erro")
+            mensagemErro.innerHTML = `Este campo não pode ter Letras`
+            input.value = ''
+            setTimeout(desaparecerCard, 5000);
+        }
+        for (var letra = 0; letra <= input.value.length - 1; letra++) {
+            if (input.value[letra] == listaLetras[i]) {
+                msg_alertas.style.display = "block"
+                Erro = document.getElementById("mensagemErro")
+                Erro.classList.add("erro")
+                mensagemErro.innerHTML = `Este campo não pode ter Letras`
+                input.value = ''
+                setTimeout(desaparecerCard, 5000);
+            }
+        }
+    }
+
+}
+
+function mascaraCPF() {
+    var tamanhoCpf = iptCPF.value.length
+
+    if (tamanhoCpf == 3) {
+        iptCPF.value += "."
+    }
+    if (tamanhoCpf == 7) {
+        iptCPF.value += "."
+    }
+    if (tamanhoCpf == 11) {
+        iptCPF.value += "-"
+    }
+}
+
+function mascaraTelefone() {
+    var tamanhoTelefone = iptCelular.value.length
+
+    if (tamanhoTelefone == 0) {
+        iptCelular.value += "("
+    }
+    if (tamanhoTelefone == 3) {
+        iptCelular.value += ")"
+    }
+    if (tamanhoTelefone == 9) {
+        iptCelular.value += "-"
+    }
+}
+
+function eliminarMascaras() {
+    var cpfFormatado;
+    var celularFormatado;
+
+    var cpfMascarado = iptCnpj.value
+    var celularMascarado = iptCelular.value
+
+    // Retirando a máscara do CPF
+
+    cpfFormatado = cpfMascarado.replaceAll("-", "")
+    cpfFormatado = cpfFormatado.replaceAll(".", "")
+
+    // Retirando a máscara do telefone
+
+    celularFormatado = celularMascarado.replaceAll("-", "")
+    celularFormatado = celularFormatado.replaceAll("(", "")
+    celularFormatado = celularFormatado.replaceAll(")", "")
+
+    return { cpfFormatado, celularFormatado }
+}
+
+function desaparecerCard() {
+    msg_alertas.style.display = "none"
+    msg_alertas2.style.display = "none"
+}
+
+function validar() {
+    var nomeCompleto = iptNomeCompleto.value;
+    var cpf = iptCPF.value
+    var celular = iptCelular.value;
+    var nascimento = iptNascimento.value;
+    var cargo = iptCargo.value;
+    var email = iptEmail.value;
+    var senha = iptSenha.value;
+
+
+    if (cpf.length < 14) {
+        msg_alertas.style.display = "block"
+        Erro.classList.add("erro")
+        Erro = document.getElementById("mensagemErro")
+        mensagemErro.innerHTML = `Digite um CPF válido`
+        temErro = true;
+    }
+    else if (celular < 14) {
+        msg_alertas.style.display = "block"
+        Erro.classList.add("erro")
+        Erro = document.getElementById("mensagemErro")
+        mensagemErro.innerHTML = `Digite um celular válido`
+        temErro = true;
+    }
+    else if (email.indexOf('@') == -1 || email.indexOf('.') == -1) {
+        msg_alertas.style.display = "block"
+        Erro.classList.add("erro")
+        Erro = document.getElementById("mensagemErro")
+        mensagemErro.innerHTML = `Digite um e-mail válido`
+        temErro = true;
+    }
+    else if (nomeCompleto == "" && cpf == "" && celular == "" && nascimento == "" && cargo == "" && email == "" && senha == "") {
+        msg_alertas.style.display = "block"
+        Erro.classList.add("erro")
+        Erro = document.getElementById("mensagemErro")
+        mensagemErro.innerHTML = `Todos os campos estão vazios`
+        temErro = true;
+    }
+    else if (nomeCompleto == "") {
+        msg_alertas.style.display = "block"
+        Erro.classList.add("alerta")
+        Erro = document.getElementById("mensagemErro")
+        mensagemErro.innerHTML = `O nome não pode ser vazio`
+        temErro = true;
+    }
+    else if (cpf == "") {
+        msg_alertas.style.display = "block"
+        Erro.classList.add("alerta")
+        Erro = document.getElementById("mensagemErro")
+        mensagemErro.innerHTML = `O CPF não pode ser vazio`
+        temErro = true;
+    }
+    else if (celular == "") {
+        msg_alertas.style.display = "block"
+        Erro.classList.add("alerta")
+        Erro = document.getElementById("mensagemErro")
+        mensagemErro.innerHTML = `O celular não pode estar vazio`
+        temErro = true;
+    }
+    else if (nascimento == "") {
+        msg_alertas.style.display = "block"
+        Erro.classList.add("alerta")
+        Erro = document.getElementById("mensagemErro")
+        mensagemErro.innerHTML = `O nascimento não pode estar vazio`
+        temErro = true;
+    }
+    else if (cargo == "") {
+        msg_alertas.style.display = "block"
+        Erro.classList.add("alerta")
+        Erro = document.getElementById("mensagemErro")
+        mensagemErro.innerHTML = `O cargo não pode estar vazio`
+        temErro = true;
+    }
+    else if (email == "") {
+        msg_alertas.style.display = "block"
+        Erro.classList.add("alerta")
+        Erro = document.getElementById("mensagemErro")
+        mensagemErro.innerHTML = `O email não pode estar vazio`
+        temErro = true;
+    }
+    else if (senha == "") {
+        msg_alertas.style.display = "block"
+        Erro.classList.add("alerta")
+        Erro = document.getElementById("mensagemErro")
+        mensagemErro.innerHTML = `A senha não pode estar vazia`
+        temErro = true;
+    }
+}
+
+
+
 function exibirTabelaUsuarios() {
     var lista = document.getElementById("tabela-usuarios");
     var trColunas = document.createElement("tr");
@@ -38,7 +238,7 @@ function exibirTabelaUsuarios() {
             }
             resposta.json().then(function (resposta) {
                 var contId = 0;
-                for (let i = resposta.length-1; i >= 0; i--) {
+                for (let i = resposta.length - 1; i >= 0; i--) {
                     console.log(i)
                     console.log(publicacao)
                     var lista = document.getElementById("tabela-usuarios");
@@ -117,6 +317,10 @@ function obterDadosCNPJ() {
 }
 
 function cadastrarEmpresaGerente() {
+    validar();
+    setTimeout(desaparecerCard, 5000);
+    const retorno = eliminarMascaras();
+
 
     var cnpjVar = iptCnpj.value;
     var razaoSocialVar = iptRazaoSocial.value;
@@ -125,8 +329,8 @@ function cadastrarEmpresaGerente() {
     var cepVar = iptCEP.value;
     var telefoneVar = iptTelefone.value;
     var nomeCompletoVar = iptNomeCompleto.value;
-    var cpfVar = iptCPF.value;
-    var celularVar = iptCelular.value;
+    var cpfVar = retorno.cpfFormatado
+    var celularVar = retorno.celularFormatado;
     var nascimentoVar = iptNascimento.value;
     var cargoVar = iptCargo.value;
     var emailVar = iptEmail.value;
@@ -197,29 +401,33 @@ var fkEmpresaGlobal;
 function selectfkEmpresa() {
     var fkEmpresa;
     fetch('/usuarios/listarUltimoIdEmpresa').then(function (response) {
-      if (response.ok) {
-        response.json().then(function (resposta) {
-          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-          var fkEmpresaArray = resposta[0];
-          fkEmpresa = fkEmpresaArray.idEmpresa;
-          fkEmpresaGlobal = fkEmpresa;
-          console.log(fkEmpresaGlobal);
-          sessionStorage.ID_EMPRESA = fkEmpresaGlobal;
-        });
-      } else {
-        console.error('Nenhum dado encontrado ou erro na API');
-      }
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                var fkEmpresaArray = resposta[0];
+                fkEmpresa = fkEmpresaArray.idEmpresa;
+                fkEmpresaGlobal = fkEmpresa;
+                console.log(fkEmpresaGlobal);
+                sessionStorage.ID_EMPRESA = fkEmpresaGlobal;
+            });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
     })
-      .catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ ultimo idEmpresa: ${error.message}`);
-      });
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ ultimo idEmpresa: ${error.message}`);
+        });
     return fkEmpresa;
-  }
+}
 
 function cadastrarFuncionario() {
+    validar()
+    setTimeout(desaparecerCard, 5000);
+    const retorno = eliminarMascaras()
+
     var nomeCompletoVar = iptNomeCompleto.value;
-    var cpfVar = iptCPF.value;
-    var celularVar = iptCelular.value;
+    var cpfVar = retorno.cpfFormatado
+    var celularVar = retorno.celularFormatado;
     var nascimentoVar = iptNascimento.value;
     var cargoVar = iptCargo.value;
     var emailVar = iptEmail.value;
@@ -228,50 +436,59 @@ function cadastrarFuncionario() {
     dataInicioVar = `${dataInicioVar.getFullYear().toString()}-${(dataInicioVar.getMonth() + 1).toString().padStart(2, '0')}-${dataInicioVar.getDate().toString().padStart(2, '0')}`
     var cnpjVar = iptCnpj.value;
     var fkGerenteVar;
+
     if (sessionStorage.GERENTE_USUARIO == "null") {
         fkGerenteVar = 1;
     } else {
         fkGerenteVar = sessionStorage.ID_USUARIO;
     }
+    if (temErros == false) {
 
-    fetch("/usuarios/cadastrarFuncionario", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            nomeCompletoServer: nomeCompletoVar,
-            cpfServer: cpfVar,
-            celularServer: celularVar,
-            nascimentoServer: nascimentoVar,
-            cargoServer: cargoVar,
-            fkGerenteServer: fkGerenteVar,
-            emailServer: emailVar,
-            senhaServer: senhaVar,
-            dataInicioServer: dataInicioVar,
-            cnpjServer: cnpjVar,
-        })
-    }).then(function (resposta) {
-        console.log("resposta: ", resposta);
-        if (resposta.ok) {
-            cardMsg.style.display = "block"
-            cardMsg.style.border = "2px solid greenyellow"
-            cardMsg.style.color = "greenyellow"
-            cardMsg.innerHTML = "✅Cadastro realizado! Atualizando...✅";
-            setTimeout(function () {
-                location.reload();
-            }, 2000);
-        } else {
-            cardMsg.style.display = "block"
-            cardMsg.style.border = "2px solid red"
-            cardMsg.style.color = "red"
-            cardMsg.innerHTML = "❌Erro ao realizar o cadastro! Tente novamente...❌";
-            throw ('Houve um erro ao tentar realizar o cadastro');
-        }
-    }).catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-    });
-    return false;
+        fetch("/usuarios/cadastrarFuncionario", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nomeCompletoServer: nomeCompletoVar,
+                cpfServer: cpfVar,
+                celularServer: celularVar,
+                nascimentoServer: nascimentoVar,
+                cargoServer: cargoVar,
+                fkGerenteServer: fkGerenteVar,
+                emailServer: emailVar,
+                senhaServer: senhaVar,
+                dataInicioServer: dataInicioVar,
+                cnpjServer: cnpjVar,
+            })
+        }).then(function (resposta) {
+            console.log("resposta: ", resposta);
+            if (resposta.ok) {
+                msg_alertas.style.display = "block"
+                Erro = document.getElementById("mensagemErro")
+                Erro.classList.add("ok")
+                mensagemErro.innerHTML = `Cadastro Realizado!`
+                setTimeout(function () {
+                    location.reload();
+                }, 2000);
+            } else {
+                msg_alertas.style.display = "block"
+                Erro = document.getElementById("mensagemErro")
+                Erro.classList.add("erro")
+                mensagemErro.innerHTML = `Houve um erro ao realizar o cadastro`
+                throw ('Houve um erro ao tentar realizar o cadastro');
+            }
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+        return false;
+    }
+    else {
+        msg_alertas2.style.display += "block"
+        Erro2 = document.getElementById("mensagemErro2")
+        Erro2.classList.add("erro")
+        mensagemErro2.innerHTML += `Corrija seus erros para prosseguir`
+    }
 }
 
 
