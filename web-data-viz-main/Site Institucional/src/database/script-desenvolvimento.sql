@@ -52,18 +52,18 @@ CREATE TABLE funcionarioAgencia(
     PRIMARY KEY (fkUsuario, fkAgencia)
 );
 
+CREATE TABLE tipoMaquina(
+	idTipoMaquina INT PRIMARY KEY AUTO_INCREMENT,
+	nomeTipo  VARCHAR(45)
+);
+
 CREATE TABLE maquina(
 	idMaquina INT PRIMARY KEY AUTO_INCREMENT,
 	fkAgencia INT,
+    fkTipoMaquina INT,
     nome VARCHAR(45) UNIQUE, 
-	FOREIGN KEY (fkAgencia) REFERENCES agencia(idAgencia)
-);
-
-CREATE TABLE servidor(
-	idServidor INT PRIMARY KEY AUTO_INCREMENT,
-	fkMaquina INT,
-    nome VARCHAR(45), 
-	FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina)
+	FOREIGN KEY (fkAgencia) REFERENCES agencia(idAgencia),
+	FOREIGN KEY (fkTipoMaquina) REFERENCES tipoMaquina(idTipoMaquina)
 );
 
 CREATE TABLE registros(
@@ -189,11 +189,14 @@ INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefoneAgen
 -- FUNCIONARIOAGENCIA
 INSERT INTO funcionarioAgencia VALUES (3,1);
 
+-- TIPOMAQUINA
+INSERT INTO tipoMaquina VALUES (1,"Servidor"), (2,"Caixa Eletrônico");
+
 -- MAQUINA
-INSERT INTO maquina (nome, fkAgencia) VALUES ('MI-1', 1);
-INSERT INTO maquina (nome, fkAgencia) VALUES ('MI-2', 1);
-INSERT INTO maquina (nome, fkAgencia) VALUES ('MI-3', 1);
-INSERT INTO maquina (nome, fkAgencia) VALUES ('SI-1', 1);
+INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina) VALUES ('MI-1', 1, 2);
+INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina) VALUES ('MI-2', 1, 2);
+INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina) VALUES ('MI-3', 1, 2);
+INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina) VALUES ('SI-1', 1, 2);
 
 -- SERVIDOR
 -- INSERT INTO servidor (nome, fkMaquina) VALUES ('SV-1', 1);
