@@ -66,6 +66,7 @@ function cadastrarNomeMaquina() {
         if (resposta.ok) {
             alert("Máquina cadastrada com sucesso")
             cadastrarComponente();
+            cadastrarTipoMaquina();
         } else {
             throw ("Houve um erro ao realizar o cadastro da máquina!")
         }
@@ -83,7 +84,6 @@ function cadastrarComponente() {
     valorCheckBox.forEach((checkbox) => {
         vt_listaComponentes.push(checkbox.value);
     });
-    console.log(vt_listaComponentes);
 
     for (let i = 0; i < vt_listaComponentes.length; i++) {
 
@@ -106,10 +106,17 @@ function cadastrarComponente() {
         }).catch(function (resposta) {
             console.log(`#ERRO: ${resposta}`)
         });
-    
+
     }
 
 
+}
+
+function cadastrarTipoMaquina() {
+
+    var valorOptTipoMaquina = document.getElementById("ddlViewBy");
+    var tipoMaquinaVar = valorOptTipoMaquina.value;
+    console.log("Sua máquina é um" + tipoMaquinaVar)
 }
 
 
