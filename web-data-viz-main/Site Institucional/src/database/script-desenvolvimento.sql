@@ -196,7 +196,7 @@ INSERT INTO tipoMaquina VALUES (1,"Servidor"), (2,"Caixa Eletrônico");
 INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina) VALUES ('MI-1', 1, 2);
 INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina) VALUES ('MI-2', 1, 2);
 INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina) VALUES ('MI-3', 1, 2);
-INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina) VALUES ('SI-1', 1, 2);
+INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina) VALUES ('SI-1', 1, 1);
 
 -- SERVIDOR
 -- INSERT INTO servidor (nome, fkMaquina) VALUES ('SV-1', 1);
