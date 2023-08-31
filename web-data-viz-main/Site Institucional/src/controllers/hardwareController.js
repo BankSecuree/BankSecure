@@ -54,8 +54,32 @@ function cadastrarComponente(req, res){
     }
 }
 
+function exibirOptionAgencia(req, res){
+    var idEmpresa = req.params.idEmpresa;
+
+    if (idEmpresa == undefined) {
+        res.status(400).send("A sua idEmpresa está undefined")
+    }else {
+        hardwareModel.exibirOptionAgencia(idEmpresa)
+            .then(
+                function(resultado){
+                    res.json(resultado);
+                }
+            ).catch(
+                    function(erro){
+                    console.log(erro);
+                    console.log("\nHouver um erro ao exibirOptionAgencia !Erro: ",
+                    erro.sqlMessage
+                    );
+                    res.status(500).send(erro.sqlMessage);
+                }
+            )
+    }
+}
+
 
 module.exports = {
     cadastrarNomeMaquina,
-    cadastrarComponente
+    cadastrarComponente,
+    exibirOptionAgencia
 }

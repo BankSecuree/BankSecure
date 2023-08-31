@@ -111,3 +111,33 @@ function cadastrarComponente() {
 
 
 }
+
+
+function exibirOptionAgencia() {
+    fetch(`/hardware/exibirOptionAgencia/${sessionStorage.ID_EMPRESA}`).then(function (resposta) {
+        if (resposta.ok) {
+            if (resposta.status == 204) {
+                var lista = document.getElementById("ipt_fkAgencia");
+                var mensagem = document.createElement("option");
+                mensagem.innerHTML = "Nenhuma agência cadastrada."
+                lista.appendChild(mensagem);
+            }
+            resposta.json().then(function (resposta) {
+                for (let i = 0; i < resposta.length; i++) {
+                    var publicacao = resposta[i];
+                    var lista = document.getElementById("ipt_fkAgencia");
+
+                    var option = document.createElement("option");
+                    option.innerHTML = publicacao.apelido;
+                    option.setAttribute("value", `${publicacao.idAgencia}`);
+
+                    lista.appendChild(option);
+                }
+            });
+        } else {
+            throw ('Houve um erro na API!');
+        }
+    }).catch(function (resposta) {
+        console.error(resposta);
+    });
+}
