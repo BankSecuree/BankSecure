@@ -3,13 +3,17 @@ var hardwareModel = require("../models/hardwareModel")
 function cadastrarNomeMaquina(req, res){
     var nomeMaquina = req.body.nomeMaquinaServer;
     var fkAgencia = req.body.fkAgenciaServer;
+    var tipoMaquina = req.body.tipoMaquinaServer;
 
     if (nomeMaquina == undefined) {
         res.status(400).send("O nome da sua máquina está undefined")
     } else if(fkAgencia == undefined){
         res.status(400).send("A sua fkAgencia está undefined")
-    }else{
-        hardwareModel.cadastrarNomeMaquina(nomeMaquina, fkAgencia)
+    } else if (tipoMaquina == undefined) {
+        res.status(400).send("O seu tipo de máquina está undefined")
+    }
+    else{
+        hardwareModel.cadastrarNomeMaquina(nomeMaquina, fkAgencia, tipoMaquina)
             .then(
                 function(resultado){
                     res.json(resultado);
@@ -27,10 +31,6 @@ function cadastrarNomeMaquina(req, res){
 }
 
 function cadastrarComponente(req, res){
-    var cpu = req.body.cpuServer;
-    var memoria = req.body.memoriaServer;
-    var disco = req.body.discoServer;
-
     
     var componente = req.body.componenteServer
 
