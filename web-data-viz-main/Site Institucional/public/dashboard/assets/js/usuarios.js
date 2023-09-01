@@ -1,4 +1,4 @@
-var temErros;
+var temErros = false;
 
 function eliminarNumeros(id) {
     const input = document.getElementById(id)
@@ -85,7 +85,7 @@ function eliminarMascaras() {
     var cpfFormatado;
     var celularFormatado;
 
-    var cpfMascarado = iptCnpj.value
+    var cpfMascarado = iptCPF.value
     var celularMascarado = iptCelular.value
 
     // Retirando a máscara do CPF
@@ -119,78 +119,78 @@ function validar() {
 
     if (cpf.length < 14) {
         msg_alertas.style.display = "block"
-        Erro.classList.add("erro")
         Erro = document.getElementById("mensagemErro")
+        Erro.classList.add("erro")
         mensagemErro.innerHTML = `Digite um CPF válido`
         temErro = true;
     }
     else if (celular < 14) {
         msg_alertas.style.display = "block"
-        Erro.classList.add("erro")
         Erro = document.getElementById("mensagemErro")
+        Erro.classList.add("erro")
         mensagemErro.innerHTML = `Digite um celular válido`
         temErro = true;
     }
     else if (email.indexOf('@') == -1 || email.indexOf('.') == -1) {
         msg_alertas.style.display = "block"
-        Erro.classList.add("erro")
         Erro = document.getElementById("mensagemErro")
+        Erro.classList.add("erro")
         mensagemErro.innerHTML = `Digite um e-mail válido`
         temErro = true;
     }
     else if (nomeCompleto == "" && cpf == "" && celular == "" && nascimento == "" && cargo == "" && email == "" && senha == "") {
         msg_alertas.style.display = "block"
-        Erro.classList.add("erro")
         Erro = document.getElementById("mensagemErro")
+        Erro.classList.add("erro")
         mensagemErro.innerHTML = `Todos os campos estão vazios`
         temErro = true;
     }
     else if (nomeCompleto == "") {
         msg_alertas.style.display = "block"
-        Erro.classList.add("alerta")
         Erro = document.getElementById("mensagemErro")
+        Erro.classList.add("alerta")
         mensagemErro.innerHTML = `O nome não pode ser vazio`
         temErro = true;
     }
     else if (cpf == "") {
         msg_alertas.style.display = "block"
-        Erro.classList.add("alerta")
         Erro = document.getElementById("mensagemErro")
+        Erro.classList.add("alerta")
         mensagemErro.innerHTML = `O CPF não pode ser vazio`
         temErro = true;
     }
     else if (celular == "") {
         msg_alertas.style.display = "block"
-        Erro.classList.add("alerta")
         Erro = document.getElementById("mensagemErro")
+        Erro.classList.add("alerta")
         mensagemErro.innerHTML = `O celular não pode estar vazio`
         temErro = true;
     }
     else if (nascimento == "") {
         msg_alertas.style.display = "block"
-        Erro.classList.add("alerta")
         Erro = document.getElementById("mensagemErro")
+        Erro.classList.add("alerta")
         mensagemErro.innerHTML = `O nascimento não pode estar vazio`
         temErro = true;
     }
     else if (cargo == "") {
         msg_alertas.style.display = "block"
-        Erro.classList.add("alerta")
         Erro = document.getElementById("mensagemErro")
+        Erro.classList.add("alerta")
         mensagemErro.innerHTML = `O cargo não pode estar vazio`
         temErro = true;
     }
     else if (email == "") {
         msg_alertas.style.display = "block"
-        Erro.classList.add("alerta")
         Erro = document.getElementById("mensagemErro")
+        Erro.classList.add("alerta")
         mensagemErro.innerHTML = `O email não pode estar vazio`
         temErro = true;
     }
     else if (senha == "") {
         msg_alertas.style.display = "block"
-        Erro.classList.add("alerta")
         Erro = document.getElementById("mensagemErro")
+        Erro.classList.add("alerta")
         mensagemErro.innerHTML = `A senha não pode estar vazia`
         temErro = true;
     }
@@ -283,11 +283,6 @@ function exibirTabelaUsuarios() {
         console.error(resposta);
         // finalizarAguardar();
     });
-}
-
-
-function excluirUsuario(idUsuario) {
-    console.log(`Excluindo usuário ${idUsuario} funcionando `)
 }
 
 function obterLogin() {
@@ -568,3 +563,23 @@ function exibirAgenciasNaoVinculadas(){
     thead.appendChild(trColunas);
     lista.appendChild(thead);
 }
+
+
+function excluirUsuario(idUsuario) {
+    fetch(`/usuarios/excluirUsuario/${idUsuario}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function (resposta) {
+        console.log("resposta: ", resposta);
+        if (resposta.ok) {
+            alert(`Agencia ${idUsuario} excluida com sucesso!`);
+        } else {
+            alert(`Houve um erro ao tentar excluir o usuario ${idUsuario}!`);
+        }
+    }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+    });
+    return false;
+}  

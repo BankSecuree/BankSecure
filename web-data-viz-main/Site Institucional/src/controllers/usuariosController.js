@@ -65,50 +65,8 @@ function cadastrarEmpresaGerente(req, res) {
         }
       );
   }
-// }
 
-function cadastrarAgencia(req, res) {
-  // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
-  // var nome = req.body.nomeServer;
-  // var email = req.body.emailServer;
-  // var senha = req.body.senhaServer;
 
-  var apelido = req.body.agenciaApelidoServer;
-  var cnpj = req.body.agenciaCnpjServer;
-  var cep = req.body.agenciaCepServer;
-  var logradouro = req.body.agenciaLogradouroServer;
-  var numLogradouro = req.body.agenciaNumeroServer;
-  var telefone = req.body.agenciaTelefoneServer;
-  var fkEmpresa = req.body.agenciaFkEmpresa;
-  
-
-  // Faça as validações dos valores
-  // if (nomeEmpresa == undefined) {
-  //   res.status(400).send("Seu nome está undefined!");
-  // } else if (email == undefined) {
-  //   res.status(400).send("Seu email está undefined!");
-  // } else if (telefone == undefined) {
-  //   res.status(400).send("Sua senha está undefined!");
-  // } else {
-
-    // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-    usuariosModel.cadastrarAgencia(apelido, cnpj, cep, logradouro, numLogradouro, telefone,fkEmpresa)
-      .then(
-        function (resultado) {
-          res.json(resultado);
-        }
-      ).catch(
-        function (erro) {
-          console.log(erro);
-          console.log(
-            "\nHouve um erro ao realizar o cadastro! Erro: ",
-            erro.sqlMessage
-          );
-          res.status(500).json(erro.sqlMessage);
-        }
-      );
-  }
-// }
 
 function cadastrarFuncionario(req, res) {
   var nomeCompleto = req.body.nomeCompletoServer;
@@ -180,10 +138,27 @@ function listarUltimoIdEmpresa(req, res){
   );
 }
 
+function excluirUsuario(req, res) {
+  var idUsuario = req.params.idUsuario;
+  usuariosModel.excluirUsuario(idUsuario)
+    .then(
+      function (resultado) {
+        res.json(resultado);
+      }
+    )
+    .catch(
+      function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao deletar o usuario: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+      }
+    );
+}
+
 module.exports = {
   exibirTabelaUsuarios,
   cadastrarEmpresaGerente, 
   cadastrarFuncionario,
-  cadastrarAgencia,
-  listarUltimoIdEmpresa
+  listarUltimoIdEmpresa,
+  excluirUsuario
 }
