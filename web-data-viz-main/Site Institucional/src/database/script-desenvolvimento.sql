@@ -1,4 +1,4 @@
--- Active: 1693338511032@@127.0.0.1@3306@banksecure
+-- Active: 1692322487627@@127.0.0.1@3306@bankSecure
 DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
 USE bankSecure;
@@ -186,6 +186,7 @@ INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('analista
 
 -- AGENCIA
 INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefoneAgencia, fkEmpresa) VALUES ('60701190031328', 'Agência Itau Rudge Ramos', 'Rua Rudge Ramos', 80, '09772040', '1130034828', 2);
+INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefoneAgencia, fkEmpresa) VALUES ('12658742036578', 'Agência Itau Cidade Dutra', 'Av. Sen. Teotônio Vilela', 1192, '04801000', '1140028922', 2);
 -- FUNCIONARIOAGENCIA
 INSERT INTO funcionarioAgencia VALUES (3,1);
 
@@ -228,6 +229,9 @@ MAX( CASE WHEN registros.fkComponente = 3 THEN registros.valor END ) "Disco"
 FROM registros JOIN maquina ON fkMaquina = idMaquina
 GROUP BY registros.fkMaquina, registros.dataHora
 ORDER BY registros.fkMaquina, registros.dataHora ASC;
+
+-- SELECT * FROM usuario LEFT JOIN funcionarioAgencia ON fkUsuario = idUsuario WHERE fkAgencia IS NULL AND fkUsuario IS NOT NULL;
+-- JOIN agencia ON fkAgencia = idAgencia and idUsuario = 3;
 
 
 

@@ -299,6 +299,10 @@ h6 {
   padding: 20px;
 }
 
+.row .cardAgencias{
+
+}
+
 .card-header,
 .card-footer {
   border-color: #ebeef4;
@@ -1053,6 +1057,16 @@ h6 {
 }
 
 /*--------------------------------------------------------------
+# Funcionario Agencia
+--------------------------------------------------------------*/
+
+#agenciasFuncionarios {
+  display: flex;
+  justify-content: space-around;
+}
+
+
+/*--------------------------------------------------------------
 # Icons list page
 --------------------------------------------------------------*/
 .iconslist {
@@ -1332,3 +1346,5 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+
+

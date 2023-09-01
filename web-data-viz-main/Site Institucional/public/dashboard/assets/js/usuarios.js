@@ -510,3 +510,61 @@ function exibirCadastro() {
         document.getElementById("botao-cadastrar").setAttribute("onclick", "cadastrarFuncionario()")
     }
 }
+
+function exibirAgenciasVinculadas(){
+    var lista = document.getElementById("tabela-agenciasVinculadas");
+    var trColunas = document.createElement("tr");
+    var thead = document.createElement("thead");
+    var thId = document.createElement("th");
+    thId.setAttribute("scope", "row");
+    thId.innerHTML = "#";
+    var thAgencia = document.createElement("th");
+    thAgencia.setAttribute("scope", "row");
+    thAgencia.innerHTML = "Agencia";
+    var thLogradouro = document.createElement("th");
+    thLogradouro.setAttribute("scope", "row");
+    thLogradouro.innerHTML = "Logradouro";
+    var thCNPJ = document.createElement("th");
+    thCNPJ.setAttribute("scope", "row");
+    thCNPJ.innerHTML = "CNPJ";
+    var thDesvincular = document.createElement("th");
+    thDesvincular.setAttribute("scope", "row");
+    thDesvincular.innerHTML = "Desvincular";
+
+    trColunas.appendChild(thId);
+    trColunas.appendChild(thAgencia);
+    trColunas.appendChild(thLogradouro);
+    trColunas.appendChild(thCNPJ);
+    trColunas.appendChild(thDesvincular);
+    thead.appendChild(trColunas);
+    lista.appendChild(thead);
+}
+
+function exibirAgenciasNaoVinculadas(){
+    var lista = document.getElementById("tabela-agenciasNaoVinculadas");
+    var trColunas = document.createElement("tr");
+    var thead = document.createElement("thead");
+    var thId = document.createElement("th");
+    thId.setAttribute("scope", "row");
+    thId.innerHTML = "#";
+    var thAgencia = document.createElement("th");
+    thAgencia.setAttribute("scope", "row");
+    thAgencia.innerHTML = "Agencia";
+    var thLogradouro = document.createElement("th");
+    thLogradouro.setAttribute("scope", "row");
+    thLogradouro.innerHTML = "Logradouro";
+    var thCNPJ = document.createElement("th");
+    thCNPJ.setAttribute("scope", "row");
+    thCNPJ.innerHTML = "CNPJ";
+    var thVincular = document.createElement("th");
+    thVincular.setAttribute("scope", "row");
+    thVincular.innerHTML = "Vincular";
+
+    trColunas.appendChild(thId);
+    trColunas.appendChild(thAgencia);
+    trColunas.appendChild(thLogradouro);
+    trColunas.appendChild(thCNPJ);
+    trColunas.appendChild(thVincular);
+    thead.appendChild(trColunas);
+    lista.appendChild(thead);
+}
