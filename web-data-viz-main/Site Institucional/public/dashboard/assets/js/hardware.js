@@ -114,8 +114,8 @@ function cadastrarComponente() {
 
 function cadastrarTipoMaquina() {
 
-    var valorOptTipoMaquina = document.getElementById("ddlViewBy");
-    var tipoMaquinaVar = valorOptTipoMaquina.value;
+    var valorOptTipoMaquina = document.getElementById("opt_tipoMaquina");
+    var tipoMaquinaVar = valorOptTipoMaquina.options[valorOptTipoMaquina.selectedIndex].value;
     console.log("Sua máquina é um" + tipoMaquinaVar)
 }
 
