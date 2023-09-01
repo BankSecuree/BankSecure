@@ -19,9 +19,19 @@ function exibirQuantidadeFuncionariosAgencia(idAgencia) {
 }
 
 function cadastrarAgencia(apelido, cnpj, cep, logradouro, numLogradouro, telefone, fkEmpresa) {
-    console.log("ACESSEI A AGENCIAS  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarAgencia()");
+    console.log("ACESSEI A AGÊNCIA  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarAgencia()");
     var instrucao = `
     CALL cadastrarAgencia ('${apelido}', '${cnpj}', '${cep}', '${logradouro}', '${numLogradouro}', '${telefone}', '${fkEmpresa}');
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database
+    .executar(instrucao);
+}
+
+function excluirAgencia(idAgencia) {
+    console.log("ACESSEI O AGÊNCIA  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function excluirAgencia()");
+    var instrucao = `
+    DELETE FROM agencia WHERE idAgencia = ${idAgencia};
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
@@ -30,5 +40,6 @@ function cadastrarAgencia(apelido, cnpj, cep, logradouro, numLogradouro, telefon
 module.exports = {
     exibirTabelaAgencias,
     exibirQuantidadeFuncionariosAgencia,
-    cadastrarAgencia
+    cadastrarAgencia,
+    excluirAgencia
 };
