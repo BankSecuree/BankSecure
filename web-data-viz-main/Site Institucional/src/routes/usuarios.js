@@ -23,4 +23,12 @@ router.delete("/excluirUsuario/:idUsuario", function (req, res) {
     usuariosController.excluirUsuario(req, res);
 });
 
+router.get("/listarFuncionario/:idUsuario", function (req, res){
+    usuariosController.listarFuncionario(req, res);
+})
+
+router.get("/listarAgenciasVinculadas/:idUsuario", function (req, res){
+    usuariosController.listarAgenciasVinculadas(req, res);
+})
+
 module.exports = router;

@@ -46,10 +46,26 @@ function excluirUsuario(idUsuario) {
     return database.executar(instrucao);
 }
 
+function listarFuncionario(idUsuario){
+    var instrucao = ` 
+    SELECT * FROM usuario WHERE idUsuario = ${idUsuario};
+    `
+    return database.executar(instrucao);
+}
+
+function listarAgenciasVinculadas(idUsuario){
+    var instrucao = ` 
+    SELECT a.* FROM usuario AS u JOIN funcionarioAgencia ON fkUsuario = idUsuario JOIN agencia AS a ON fkAgencia = idAgencia AND u.idUsuario = ${idUsuario};
+    `
+    return database.executar(instrucao);
+}
+
 module.exports = {
     exibirTabelaUsuarios,
     cadastrarEmpresaGerente,
     cadastrarFuncionario,
     listarUltimoIdEmpresa,
-    excluirUsuario
+    excluirUsuario,
+    listarFuncionario,
+    listarAgenciasVinculadas
 };

@@ -508,7 +508,81 @@ function exibirCadastro() {
     }
 }
 
-function exibirAgenciasVinculadas(){
+function listarFuncionario(idUsuario) {
+
+    var tabela = document.getElementById("tabela-funcionario");
+    var trColunas = document.createElement("tr");
+    var thead = document.createElement("thead");
+    var thNome = document.createElement("th");
+    thNome.setAttribute("scope", "row");
+    thNome.innerHTML = "Nome";
+    var thEmail = document.createElement("th");
+    thEmail.setAttribute("scope", "row");
+    thEmail.innerHTML = "Email";
+    var thCPF = document.createElement("th");
+    thCPF.setAttribute("scope", "row");
+    thCPF.innerHTML = "CPF";
+    var thTelefone = document.createElement("th");
+    thTelefone.setAttribute("scope", "row");
+    thTelefone.innerHTML = "Telefone";
+    var thCargo = document.createElement("th");
+    thCargo.setAttribute("scope", "row");
+    thCargo.innerHTML = "Cargo";
+
+
+    trColunas.appendChild(thNome);
+    trColunas.appendChild(thEmail);
+    trColunas.appendChild(thCPF);
+    trColunas.appendChild(thTelefone);
+    trColunas.appendChild(thCargo);
+    thead.appendChild(trColunas);
+    tabela.appendChild(thead);
+
+    fetch(`/usuarios/listarFuncionario/${idUsuario}`).then(function (resposta) {
+        if (resposta.ok) {
+            if (resposta.status == 204) {
+
+                throw "Nenhum resultado encontrado!!";
+            }
+            resposta.json().then(function (resposta) {
+
+                var funcionario = resposta[0];
+
+                var tabela = document.getElementById("tabela-funcionario");
+                var tdNome = document.createElement("td");
+                tdNome.innerHTML = funcionario.nome;
+                var tdEmail = document.createElement("td");
+                tdEmail.innerHTML = funcionario.email;
+                var tdCPF = document.createElement("td");
+                tdCPF.innerHTML = funcionario.cpf;
+                var tdTelefone = document.createElement("td");
+                tdTelefone.innerHTML = funcionario.telefone;
+                var tdCargo = document.createElement("td");
+                tdCargo.innerHTML = funcionario.cargo;
+
+
+
+
+                var tr = document.createElement("tr");
+
+                tr.appendChild(tdNome);
+                tr.appendChild(tdEmail);
+                tr.appendChild(tdCPF);
+                tr.appendChild(tdTelefone);
+                tr.appendChild(tdCargo);
+                tabela.appendChild(tr);
+
+            });
+        } else {
+            throw ('Houve um erro na API!');
+        }
+    }).catch(function (resposta) {
+        console.error(resposta);
+        // finalizarAguardar();
+    });
+}
+
+function exibirAgenciasVinculadas(idUsuario) {
     var lista = document.getElementById("tabela-agenciasVinculadas");
     var trColunas = document.createElement("tr");
     var thead = document.createElement("thead");
@@ -535,9 +609,48 @@ function exibirAgenciasVinculadas(){
     trColunas.appendChild(thDesvincular);
     thead.appendChild(trColunas);
     lista.appendChild(thead);
+
+    fetch(`/usuarios/listarAgenciasVinculadas/${idUsuario}`).then(function (resposta) {
+        if (resposta.ok) {
+            if (resposta.status == 204) {
+
+                throw "Nenhum resultado encontrado!!";
+            }
+            resposta.json().then(function (resposta) {
+
+                for (let i = 0; i < resposta.length; i++) {
+                    var agencia = resposta[i];
+                    
+                    var tabela = document.getElementById("tabela-agenciasVinculadas");
+                    var thIndice = document.createElement("th");
+                    thIndice.innerHTML = i+1;
+                    var tdAgencia = document.createElement("td");
+                    tdAgencia.innerHTML = agencia.apelido;
+                    var tdLogradouro = document.createElement("td");
+                    tdLogradouro.innerHTML = `${agencia.logradouro}, ${agencia.numero}`;
+                    var tdCNPJ = document.createElement("td");
+                    tdCNPJ.innerHTML = agencia.cnpjAgencia;
+
+                    var tr = document.createElement("tr");
+
+                    tr.appendChild(thIndice);
+                    tr.appendChild(tdAgencia);
+                    tr.appendChild(tdLogradouro);
+                    tr.appendChild(tdCNPJ);
+                    tabela.appendChild(tr);
+                }
+
+            });
+        } else {
+            throw ('Houve um erro na API!');
+        }
+    }).catch(function (resposta) {
+        console.error(resposta);
+        // finalizarAguardar();
+    });
 }
 
-function exibirAgenciasNaoVinculadas(){
+function exibirAgenciasNaoVinculadas(idUsuario) {
     var lista = document.getElementById("tabela-agenciasNaoVinculadas");
     var trColunas = document.createElement("tr");
     var thead = document.createElement("thead");
@@ -566,13 +679,10 @@ function exibirAgenciasNaoVinculadas(){
     lista.appendChild(thead);
 }
 
-function redirecionarVincularAgencia(par_idUsuario){
-    
+function redirecionarVincularAgencia(idUsuario) {
 
-    const urlParams = new URLSearchParams(window.location.search);
-urlParams.set('conta_funcionarioAgencia.html', 'par_idUsuario');
-window.location.search = urlParams;
-    
+    window.location.href = `conta_funcionarioAgencia.html?${idUsuario}`;
+
 }
 
 
@@ -593,4 +703,6 @@ function excluirUsuario(idUsuario) {
         console.log(`#ERRO: ${resposta}`);
     });
     return false;
-}  
+}
+
+
