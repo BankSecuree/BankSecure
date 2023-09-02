@@ -138,7 +138,7 @@ CREATE PROCEDURE cadastrar_empresaGerente(IN
 	emp_numero INT,
 	emp_CEP CHAR(8),
 	emp_telefone VARCHAR(14),
-	us_email VARCHAR(50),
+	us_email VARCHAR(50),	
 	us_senha VARCHAR(16),
 	us_nome VARCHAR(50),
     us_cpf CHAR(11),
@@ -156,12 +156,32 @@ BEGIN
 END//
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE cadastrar_tipoMaquina(
+	maqn_fkTipoMaquina INT
+)
+BEGIN 
+	INSERT INTO maquina (fkTipoMaquina) VALUES (maqn_fkTipoMaquina);
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE cadastrar_maquinaComponente(
+	maco_fkComponente INT
+)
+BEGIN 
+	INSERT INTO maquinaComponente (fkMaquina,fkComponente) VALUES ((SELECT MAX(idMaquina) FROM maquina),maco_fkComponente);
+END//
+DELIMITER ;
+
 -- CONTA BANK SECURE 
 DROP USER IF EXISTS 'user_bankSecure'@'localhost';
 CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'Urubu_100';
 GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';
 GRANT EXECUTE ON PROCEDURE cadastrar_empresaGerente to 'user_bankSecure'@'localhost';
 GRANT EXECUTE ON PROCEDURE cadastrarAgencia to 'user_bankSecure'@'localhost';
+GRANT EXECUTE ON PROCEDURE cadastrar_maquinaComponente to 'user_bankSecure'@'localhost';
+GRANT EXECUTE ON  PROCEDURE cadastrar_tipoMaquina to 'user_banksecure'@'localhost';
 FLUSH PRIVILEGES;
 
 -- CONTA ITAU
@@ -234,6 +254,5 @@ ORDER BY registros.fkMaquina, registros.dataHora ASC;
 
 -- SELECT * FROM usuario LEFT JOIN funcionarioAgencia ON fkUsuario = idUsuario WHERE fkAgencia IS NULL AND fkUsuario IS NOT NULL;
 -- JOIN agencia ON fkAgencia = idAgencia and idUsuario = 3;
-
 
 

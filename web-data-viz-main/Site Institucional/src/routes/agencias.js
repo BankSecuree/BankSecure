@@ -15,4 +15,8 @@ router.post("/cadastrarAgencia", function (req, res) {
     agenciasController.cadastrarAgencia(req, res);
 })
 
+router.delete("/excluirAgencia/:idAgencia", function (req, res) {
+    agenciasController.excluirAgencia(req, res);
+});
+
 module.exports = router;

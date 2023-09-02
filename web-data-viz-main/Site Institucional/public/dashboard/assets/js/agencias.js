@@ -1,7 +1,7 @@
 var temErro = false;
 var fkEmpresaGlobal;
 
-function exibirTabelaAgencias() { 
+function exibirTabelaAgencias() {
     var lista = document.getElementById("tabela-agencias");
     var trColunas = document.createElement("tr");
     var thead = document.createElement("thead");
@@ -55,13 +55,15 @@ function exibirTabelaAgencias() {
                     tdApelido.innerHTML = publicacao.apelido;
                     var tdCnpj = document.createElement("td");
                     tdCnpj.innerHTML = publicacao.cnpjAgencia;
-                    
+
                     var tdFuncionarios = document.createElement("td");
                     var tdMaquinas = document.createElement("td");
-                    fetch(`/agencias/exibirQuantidadeFuncionariosAgencia/${publicacao.idAgencia}`).then(function (respostaDois) {respostaDois.json().then(function (respostaDois) {
-                        // console.log(respostaDois)
-                        tdFuncionarios.innerHTML = respostaDois[0].funcionarios
-                        tdMaquinas.innerHTML = respostaDois[0].agencias })
+                    fetch(`/agencias/exibirQuantidadeFuncionariosAgencia/${publicacao.idAgencia}`).then(function (respostaDois) {
+                        respostaDois.json().then(function (respostaDois) {
+                            // console.log(respostaDois)
+                            tdFuncionarios.innerHTML = respostaDois[0].funcionarios
+                            tdMaquinas.innerHTML = respostaDois[0].agencias
+                        })
                     });
                     var tdButton = document.createElement("td");
                     tdButton.innerHTML = `<a onclick="editarAgencia(${publicacao.idAgencia})" class="btn btn-primary btn-sm" title="Remove my profile image"><i
@@ -93,12 +95,8 @@ function exibirTabelaAgencias() {
 }
 
 function editarAgencia(idAgencia) {
-    
-    
-}
 
-function excluirAgencia(idAgencia) {
-    console.log(`Excluindo usuário ${idAgencia} funcionando `);   
+
 }
 
 
@@ -290,24 +288,24 @@ function desaparecerCard() {
 function selectfkEmpresa() {
     var fkEmpresa;
     fetch('/usuarios/listarUltimoIdEmpresa').then(function (response) {
-      if (response.ok) {
-        response.json().then(function (resposta) {
-          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-          var fkEmpresaArray = resposta[0];
-          fkEmpresa = fkEmpresaArray.idEmpresa;
-          fkEmpresaGlobal = fkEmpresa;
-          console.log(fkEmpresaGlobal);
-          sessionStorage.ID_EMPRESA = fkEmpresaGlobal;
-        });
-      } else {
-        console.error('Nenhum dado encontrado ou erro na API');
-      }
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                var fkEmpresaArray = resposta[0];
+                fkEmpresa = fkEmpresaArray.idEmpresa;
+                fkEmpresaGlobal = fkEmpresa;
+                console.log(fkEmpresaGlobal);
+                sessionStorage.ID_EMPRESA = fkEmpresaGlobal;
+            });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
     })
-      .catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ ultimo idEmpresa: ${error.message}`);
-      });
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ ultimo idEmpresa: ${error.message}`);
+        });
     return fkEmpresa;
-  }
+}
 
 
 function cadastrarAgencia() {
@@ -320,7 +318,6 @@ function cadastrarAgencia() {
     cepFormatado = retorno.cepFormatado
     telefoneFormatado = retorno.telefoneFormatado
 
-
     if (temErro == false) {
         var agenciaApelidoVar = iptApelido.value;
         var agenciaCNPJVar = cnpjFormatado;
@@ -328,17 +325,14 @@ function cadastrarAgencia() {
         var agenciaLogradouroVar = iptLogradouro.value;
         var agenciaNumeroVar = iptNumero.value;
         var agenciaTelefoneVar = telefoneFormatado;
-        var fkEmpresaVar = fkEmpresaGlobal;
+        var fkEmpresaVar = sessionStorage.ID_EMPRESA;
 
-        // Enviando o valor da nova input
-        fetch("/usuarios/cadastrarAgencia", {
+        fetch("/usuarios/agencias", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                // crie um atributo que recebe o valor recuperado aqui
-                // Agora vá para o arquivo routes/usuario.js
                 agenciaCnpjServer: agenciaCNPJVar,
                 agenciaApelidoServer: agenciaApelidoVar,
                 agenciaLogradouroServer: agenciaLogradouroVar,
@@ -346,37 +340,43 @@ function cadastrarAgencia() {
                 agenciaCepServer: agenciaCEPVar,
                 agenciaTelefoneServer: agenciaTelefoneVar,
                 agenciaFkEmpresa: fkEmpresaVar
-
             })
         }).then(function (resposta) {
-
             console.log("resposta: ", resposta);
-
             if (resposta.ok) {
-                // cardErro.style.display = "block";
-
                 alert("Cadastro realizado com sucesso!");
-
                 window.location = "conta_agencias.html";
-
-
-                // limparFormulario();
-                // finalizarAguardar();
             } else {
                 alert("Houve um erro ao tentar realizar o cadastro!");
             }
         }).catch(function (resposta) {
             console.log(`#ERRO: ${resposta}`);
-            // finalizarAguardar();
         });
-
         return false;
-
     }
-    else{
+    else {
         msg_alertas2.style.display += "block"
         Erro2 = document.getElementById("mensagemErro2")
         Erro2.classList.add("erro")
         mensagemErro2.innerHTML += `Corrija seus erros para prosseguir`
     }
+}
+
+function excluirAgencia(idAgencia) {
+    fetch(`/agencias/excluirAgencia/${idAgencia}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function (resposta) {
+        console.log("resposta: ", resposta);
+        if (resposta.ok) {
+            alert(`Agencia ${idAgencia} excluida com sucesso!`);
+        } else {
+            alert(`Houve um erro ao tentar excluir a agencia ${idAgencia}!`);
+        }
+    }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+    });
+    return false;
 }  

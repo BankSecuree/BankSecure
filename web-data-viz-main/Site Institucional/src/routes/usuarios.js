@@ -15,13 +15,12 @@ router.post("/cadastrarFuncionario", function (req, res) {
     usuariosController.cadastrarFuncionario(req, res);
 })
 
-router.post("/cadastrarAgencia", function (req, res) {
-    usuariosController.cadastrarAgencia(req, res);
-})
-
 router.get("/listarUltimoIdEmpresa", function (req, res){
     usuariosController.listarUltimoIdEmpresa(req, res);
 })
 
+router.delete("/excluirUsuario/:idUsuario", function (req, res) {
+    usuariosController.excluirUsuario(req, res);
+});
 
 module.exports = router;

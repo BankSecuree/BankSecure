@@ -29,15 +29,6 @@ function cadastrarFuncionario(nomeCompleto, cpf, celular, nascimento, email, sen
     return database.executar(instrucao);
 }
 
-function cadastrarAgencia(apelido, cnpj, cep, logradouro, numLogradouro, telefone, fkEmpresa) {
-    console.log("ACESSEI A AGÊNCIA  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarAgencia()");
-    var instrucao = `
-    CALL cadastrarAgencia ('${apelido}', '${cnpj}', '${cep}', '${logradouro}', '${numLogradouro}', '${telefone}', '${fkEmpresa}');
-    `;
-    console.log("Executando a instrução SQL: \n" + instrucao);
-    return database
-    .executar(instrucao);
-}
 
 function listarUltimoIdEmpresa(){
     var instrucao = ` 
@@ -46,10 +37,19 @@ function listarUltimoIdEmpresa(){
     return database.executar(instrucao);
 }
 
+function excluirUsuario(idUsuario) {
+    console.log("ACESSEI O AGÊNCIA  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function excluirAgencia()");
+    var instrucao = `
+    DELETE FROM usuario WHERE idUsuario = ${idUsuario};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
     exibirTabelaUsuarios,
     cadastrarEmpresaGerente,
     cadastrarFuncionario,
-    cadastrarAgencia,
-    listarUltimoIdEmpresa
+    listarUltimoIdEmpresa,
+    excluirUsuario
 };

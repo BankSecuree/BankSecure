@@ -52,6 +52,7 @@ function desaparecerCard() {
 function cadastrarNomeMaquina() {
     var nomeMaquinaVar = ipt_nomeMaquina.value;
     var fkAgenciaVar = ipt_fkAgencia.value;
+    var tipoMaquinaVar = ipt_fkMaquina.value;
     fetch(`/hardware/cadastrarNomeMaquina`, {
         method: "POST",
         headers: {
@@ -60,13 +61,13 @@ function cadastrarNomeMaquina() {
         body: JSON.stringify({
             nomeMaquinaServer: nomeMaquinaVar,
             fkAgenciaServer: fkAgenciaVar,
+            tipoMaquinaServer: tipoMaquinaVar
         })
     }).then(function (resposta) {
         console.log("resposta: ", resposta);
         if (resposta.ok) {
             alert("Máquina cadastrada com sucesso")
             cadastrarComponente();
-            cadastrarTipoMaquina();
         } else {
             throw ("Houve um erro ao realizar o cadastro da máquina!")
         }
@@ -114,9 +115,27 @@ function cadastrarComponente() {
 
 function cadastrarTipoMaquina() {
 
-    var valorOptTipoMaquina = document.getElementById("ddlViewBy");
-    var tipoMaquinaVar = valorOptTipoMaquina.value;
-    console.log("Sua máquina é um" + tipoMaquinaVar)
+    
+    alert(tipoMaquinaVar);
+
+    fetch(`/hardware/cadastrarTipoMaquina`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            tipoMaquinaServer: tipoMaquinaVar
+        })
+    }).then(function (resposta) {
+        console.log("resposta: ", resposta);
+        if (resposta.ok) {
+            alert("Tipo de Máquina cadastrado com sucesso!")
+        } else {
+            throw ("Houve um erro ao realizar o cadastro do tipo de máquina!")
+        }
+    }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`)
+    });
 }
 
 
