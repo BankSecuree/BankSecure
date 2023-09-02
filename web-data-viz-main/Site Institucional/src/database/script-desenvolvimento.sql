@@ -1,4 +1,4 @@
--- Active: 1692322487627@@127.0.0.1@3306@bankSecure
+-- Active: 1692279316574@@127.0.0.1@3306@bankSecure
 DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
 USE bankSecure;
@@ -183,6 +183,8 @@ INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente,cpf, telefone, car
 
 -- ANALISTAS
 INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('analista1itau@bs.com', '12345', 'Julia Lima', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 2);
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('analista1itau2@bs.com', '12345', 'Manoel Gomes', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 2);
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('analista1itau3@bs.com', '12345', 'Michael Jackson', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 2);
 
 -- AGENCIA
 INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefoneAgencia, fkEmpresa) VALUES ('60701190031328', 'Agência Itau Rudge Ramos', 'Rua Rudge Ramos', 80, '09772040', '1130034828', 2);

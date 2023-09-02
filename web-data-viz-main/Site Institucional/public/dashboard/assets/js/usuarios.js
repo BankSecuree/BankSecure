@@ -1,4 +1,5 @@
 var temErros;
+var idUsuario = 0;
 
 function eliminarNumeros(id) {
     const input = document.getElementById(id)
@@ -263,6 +264,7 @@ function exibirTabelaUsuarios() {
                     class="bi bi-trash"></i></a>
                     `;
                     var tr = document.createElement("tr");
+                    tr.setAttribute("onclick", `redirecionarVincularAgencia(${publicacao.idUsuario})`);
                     var tbody = document.createElement("tbody");
 
                     tr.appendChild(thNumero);
@@ -568,3 +570,13 @@ function exibirAgenciasNaoVinculadas(){
     thead.appendChild(trColunas);
     lista.appendChild(thead);
 }
+
+function redirecionarVincularAgencia(par_idUsuario){
+    
+
+    const urlParams = new URLSearchParams(window.location.search);
+urlParams.set('conta_funcionarioAgencia.html', 'par_idUsuario');
+window.location.search = urlParams;
+    
+}
+
