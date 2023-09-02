@@ -195,6 +195,28 @@ function listarAgenciasVinculadas(req, res){
   );
 }
 
+function listarAgenciasNaoVinculadas(req, res){
+
+  var idUsuario = req.params.idUsuario;
+  var fkEmpresa = req.params.fkEmpresa;
+
+
+  usuariosModel.listarAgenciasNaoVinculadas(idUsuario, fkEmpresa)
+  .then(function (resultado){
+      if(resultado.length > 0){
+          res.status(200).json(resultado);
+      }
+      else{
+          res.status(204).send("Nenhuma agência vinculada e esse funcionário(a) encontrada");
+      }
+  }).catch(
+      function(erro){
+          console.log("Houve um erro ao realizar a consulta! Erro:", erro.sqlMessage);
+          res.status(500).json(erro.sqlMessage);
+      }
+  );
+}
+
 module.exports = {
   exibirTabelaUsuarios,
   cadastrarEmpresaGerente, 
@@ -202,5 +224,6 @@ module.exports = {
   listarUltimoIdEmpresa,
   excluirUsuario,
   listarFuncionario,
-  listarAgenciasVinculadas
+  listarAgenciasVinculadas,
+  listarAgenciasNaoVinculadas
 }

@@ -60,6 +60,13 @@ function listarAgenciasVinculadas(idUsuario){
     return database.executar(instrucao);
 }
 
+function listarAgenciasNaoVinculadas(idUsuario, fkEmpresa){
+    var instrucao = ` 
+    SELECT * FROM funcionarioAgencia RIGHT JOIN agencia ON fkAgencia = idAgencia AND fkEmpresa = ${fkEmpresa} AND fkUsuario = ${idUsuario};
+    `
+    return database.executar(instrucao);
+}
+
 module.exports = {
     exibirTabelaUsuarios,
     cadastrarEmpresaGerente,
@@ -67,5 +74,6 @@ module.exports = {
     listarUltimoIdEmpresa,
     excluirUsuario,
     listarFuncionario,
-    listarAgenciasVinculadas
+    listarAgenciasVinculadas,
+    listarAgenciasNaoVinculadas
 };

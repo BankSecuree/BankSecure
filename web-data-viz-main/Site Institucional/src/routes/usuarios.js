@@ -31,4 +31,8 @@ router.get("/listarAgenciasVinculadas/:idUsuario", function (req, res){
     usuariosController.listarAgenciasVinculadas(req, res);
 })
 
+router.get("/listarAgenciasNaoVinculadas/:idUsuario/:fkEmpresa", function (req, res){
+    usuariosController.listarAgenciasNaoVinculadas(req, res);
+})
+
 module.exports = router;
