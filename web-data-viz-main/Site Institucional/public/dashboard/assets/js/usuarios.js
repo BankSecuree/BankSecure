@@ -264,7 +264,7 @@ function exibirTabelaUsuarios() {
                     class="bi bi-trash"></i></a>
                     `;
                     var tr = document.createElement("tr");
-                    tr.setAttribute("onclick", `redirecionarVincularAgencia(${publicacao.idUsuario})`);
+                    tr.setAttribute("onclick", `redirecionarVincularAgencia(${publicacao.idUsuario}, ${publicacao.fkEmpresa})`);
                     var tbody = document.createElement("tbody");
 
                     tr.appendChild(thNumero);
@@ -771,9 +771,9 @@ function exibirAgenciasNaoVinculadas(idUsuario, fkEmpresa) {
     // }
 }
 
-function redirecionarVincularAgencia(idUsuario) {
+function redirecionarVincularAgencia(idUsuario, fkEmpresa) {
 
-    window.location.href = `conta_funcionarioAgencia.html?${idUsuario}`;
+    window.location.href = `conta_funcionarioAgencia.html?${idUsuario}?${fkEmpresa}`;
 
 }
 

@@ -332,10 +332,11 @@
 
 <script>
   var idUsuario = window.location.href.split("?")[1]
+  var fkEmpresa = window.location.href.split("?")[2]
 
   exibirInfos();
   exibirAgenciasVinculadas(idUsuario);
-  exibirAgenciasNaoVinculadas(idUsuario, 2);
+  exibirAgenciasNaoVinculadas(idUsuario, fkEmpresa);
   listarFuncionario(idUsuario);
 
 
