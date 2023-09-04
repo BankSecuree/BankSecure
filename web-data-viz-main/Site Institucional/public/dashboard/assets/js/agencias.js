@@ -54,8 +54,9 @@ function exibirTabelaAgencias() {
                     var tdApelido = document.createElement("td");
                     tdApelido.innerHTML = publicacao.apelido;
                     var tdCnpj = document.createElement("td");
-                    tdCnpj.innerHTML = publicacao.cnpjAgencia;
-
+                    var cnpj = publicacao.cnpjAgencia;
+                    cnpj = cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})/g, '$1.$2.$3/$4-');
+                    tdCnpj.innerHTML = cnpj;
                     var tdFuncionarios = document.createElement("td");
                     var tdMaquinas = document.createElement("td");
                     fetch(`/agencias/exibirQuantidadeFuncionariosAgencia/${publicacao.idAgencia}`).then(function (respostaDois) {

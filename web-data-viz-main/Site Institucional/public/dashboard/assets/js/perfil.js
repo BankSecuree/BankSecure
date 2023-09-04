@@ -13,7 +13,8 @@ function exibirPerfil() {
     let nomeGeral = document.getElementById("nome-geral");
     nomeGeral.innerHTML = sessionStorage.NOME_USUARIO;
     let cpfGeral = document.getElementById("cpf-geral");
-    cpfGeral.innerHTML = sessionStorage.CPF_USUARIO;
+    let cpf = (sessionStorage.CPF_USUARIO).replace(/(\d{3})(\d{3})(\d{3})/g, '$1.$2.$3-');
+    cpfGeral.innerHTML = cpf;
     let dataNascimentoGeral = document.getElementById("dataNascimento-geral");
     dataNascimentoGeral.innerHTML = sessionStorage.DATA_NASCIMENTO_USUARIO;
     let telefoneGeral = document.getElementById("telefone-geral");
@@ -23,7 +24,8 @@ function exibirPerfil() {
     let empresaGeral = document.getElementById("empresa-geral");
     empresaGeral.innerHTML = sessionStorage.NOME_EMPRESA;
     let cnpjGeral = document.getElementById("cnpj-geral");
-    cnpjGeral.innerHTML = sessionStorage.CNPJ_EMPRESA;
+    let cnpj = (sessionStorage.CNPJ_EMPRESA).replace(/(\d{2})(\d{3})(\d{3})(\d{4})/g, '$1.$2.$3/$4-');
+    cnpjGeral.innerHTML = cnpj;
     let cargoGeral = document.getElementById("cargo-geral");
     cargoGeral.innerHTML = sessionStorage.CARGO_USUARIO;
 
@@ -32,7 +34,7 @@ function exibirPerfil() {
     let nomeEditar = document.getElementById("nome-editar");
     nomeEditar.value = sessionStorage.NOME_USUARIO;
     let cpfEditar = document.getElementById("cpf-editar");
-    cpfEditar.value = sessionStorage.CPF_USUARIO;
+    cpfEditar.value = cpf;
     let dataNascimentoEditar = document.getElementById("dataNascimento-editar");
     dataNascimentoEditar.value = sessionStorage.DATA_NASCIMENTO_USUARIO;
     let telefoneEditar = document.getElementById("telefone-editar");
