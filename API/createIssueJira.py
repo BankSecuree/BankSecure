@@ -4,7 +4,7 @@ import json
 
 url = "https://banksecure.atlassian.net/rest/api/3/issue"
 
-auth = HTTPBasicAuth("suporte.banksecure@gmail.com", "ATATT3xFfGF0Zw3miFtrfflrIf8eBXoJ6V9IgsWBTHGrulZXOeEdpqgFz5GN4jURHjZ0VZnXqWdrwYh-nJ4nN6CO00hhLLeWRxMuVEH1yjEM5UtHsRPbAEf0NOCKDR4X4clmIGP9C8ekXUefabGUhK4B8CFDnFVSKq8PkMjAL7pMiEOpjY2vvkA=CCC018D7")
+auth = HTTPBasicAuth("suporte.banksecure@gmail.com", "ATATT3xFfGF0TY7WvTgqpW5R9DIp048nQsbeGDwgD1d1JZb2K0HTtsg_yLZBPveoCvdDTBgFyzTduecMwA6lVMU-6t7d6ARhMAkNTXRww2SbcOgKZjWiyFHpFuErB32pKdztM2E0BgHG0N0Q9QriPaoNVX8ixtPwUzouu5Sc7EvIUUPky33N4-4=5768639E")
 
 headers = {
   "Accept": "application/json",
@@ -13,12 +13,12 @@ headers = {
 
 payload = json.dumps({
     "fields":{
-        "summary": "TESTE API JIRA",
-        "project":{"key":"BSITAU"},
+        "summary": "ALERTA DO SLACK",
+        "project":{"key":"BSB"},
         'issuetype': {'name': 'General request'},
         "description": {"content": [{"content": [
                                       {
-                                        "text": "A API está funcionando!!!!",
+                                        "text": "CONFIRA SEUS ALERTAS!!!!",
                                         "type": "text"
                                       }],
                                      "type": "paragraph"}],

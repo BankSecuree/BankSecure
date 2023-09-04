@@ -8,7 +8,7 @@ import requests
 import json
 import platform
  
-conexao = mysql.connector.connect(user='bs_itau', password='Itau_100', host='localhost', database='bankSecure', auth_plugin = 'mysql_native_password')
+conexao = mysql.connector.connect(user='bs_itau', password='Itau_100', host='localhost', database='bankSecure')
 
 cursor = conexao.cursor()
 
@@ -81,7 +81,7 @@ def pegar_dados():
             User          => {user}
             Descrição  => {"Sua memória RAM ultrapassou:"} {ram_percent}%  
             """}
-             chatItau = "https://hooks.slack.com/services/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"
+             chatItau = "https://hooks.slack.com/services/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"
 
              postMsg = requests.post(chatItau, data=json.dumps(mensagem))
              exibiu = True
@@ -101,35 +101,28 @@ def pegar_dados():
 # cria a janela
 janela = Tk()
 janela.title("Seja bem-vindo(a!)")
-janela.geometry("2000x800")
+janela.geometry("700x500")
 janela.config(bg="#212529")
 
 # qual janela ele faz parte e qual é o texto
-texto_dados = Label(janela, bg="#47b2e4",fg="#000", height = 30, width = 50) 
-texto_dados.place(x=620, y= 70)
+texto_dados = Label(janela, bg="#47b2e4",fg="#000", height = 30, width = 60) 
+texto_dados.place(relx=0.5, rely=0.5, anchor=CENTER)
 
-texto_dados2 = Label(janela, text="Clique aqui para ver os registros da Cpu, disco e memória" )
-texto_dados2.place(x=640, y= 95)
+texto_dados2 = Label(janela, text="Clique aqui para ver os registros da Cpu, disco e memória", width= 60, height= 2)
+texto_dados2.place(relx=0.5, rely=0.2, anchor=CENTER)
 
 #passar a função como parametro, não estou executando a função
 botao = Button(janela, text="Buscar dados", command=pegar_dados)
-botao.place(x=750, y= 170)
+botao.place(relx=0.5, rely=0.5, anchor=CENTER)
 
 texto_cotacao= Label(janela, text="")
 texto_cotacao.pack(ipadx=10, ipady=10, padx=3, pady=250)
-texto_cotacao.place(x=630, y=250)
+texto_cotacao.place(relx=0.5, rely=0.5, anchor=CENTER)
 
-# caminho da imagem
-pastaApp = os.path.dirname(__file__)
+img = PhotoImage(file="API/logo.png")
+label_imagem = Label(janela, image=img).pack()
 
-#indicamos qual é o arquivo e a pasta
-imgLogo=PhotoImage(file=pastaApp+"//computadores.png")
 
-#definindo a janela e a imagem 
-l_logo=Label(janela,image=imgLogo)
-
-#lugar aonde ela irá aparecer
-l_logo.place(x=780, y=500)
-
-# para deixar a janela exibida
 janela.mainloop()
+
+
