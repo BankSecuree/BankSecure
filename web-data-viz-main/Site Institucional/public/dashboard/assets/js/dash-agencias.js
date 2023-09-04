@@ -324,6 +324,7 @@ function graficoAgencia() {
 
   window.setInterval(function () {
 
+    //mexer aqui para passar as variaveis do banco com parametro
   
     var p1Data = getRangeRandom({ min: 10, max: 100 });
     chartProgress1.updateOptions({
