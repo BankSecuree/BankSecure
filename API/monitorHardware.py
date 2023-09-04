@@ -8,7 +8,7 @@ import requests
 import json
 import platform
  
-conexao = mysql.connector.connect(user='bs_itau', password='Itau_100', host='localhost', database='bankSecure')
+conexao = mysql.connector.connect(user='bs_itau', password='Itau_100', host='localhost', database='bankSecure', auth_plugin = "mysql_native_password")
 
 cursor = conexao.cursor()
 
@@ -119,9 +119,13 @@ texto_cotacao= Label(janela, text="")
 texto_cotacao.pack(ipadx=10, ipady=10, padx=3, pady=250)
 texto_cotacao.place(relx=0.5, rely=0.5, anchor=CENTER)
 
-img = PhotoImage(file="API/logo.png")
-label_imagem = Label(janela, image=img).pack()
+# caminho da imagem
+pastaApp = os.path.dirname(__file__)
+imgLogo=PhotoImage(file=pastaApp+"//logo.png")
+l_logo=Label(janela,image=imgLogo)
 
+#lugar aonde ela irá aparecer
+l_logo.place(x = 750, y = 590)
 
 janela.mainloop()
 
