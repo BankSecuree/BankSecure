@@ -43,10 +43,8 @@ function exibirListaAgencias() {
           tdApelido.innerHTML = publicacao.apelido;
           // var tdCnpj = document.createElement("td");
           // tdCnpj.innerHTML = publicacao.cnpjAgencia;
-          var tdButton = document.createElement("div");
-          tdButton.innerHTML = `<a onclick="exibirGrafico(${publicacao.idAgencia})" class="btn btn-primary btn-sm" title="Exibir gráfico da agência"><i
-                    class="bi bi-graph-up"></i></a>`;
-
+          var tdButton = document.createElement("td");
+          tdButton.innerHTML = `<a onclick="exibirGrafico(${publicacao.idAgencia})" class="btn btn-primary btn-sm" title="Exibir gráfico da agência"><i class="bi bi-graph-up"></i></a>`;
           var tr = document.createElement("tr");
           var tbody = document.createElement("tbody");
 

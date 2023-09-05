@@ -256,7 +256,7 @@ function exibirTabelaUsuarios() {
                     var dataInicio = new Date(publicacao.dataInicio)
                     dataInicio = `${dataInicio.getDate().toString().padStart(2, '0')}/${(dataInicio.getMonth() + 1).toString().padStart(2, '0')}/${dataInicio.getFullYear().toString()}`
                     tdInicio.innerHTML = dataInicio;
-                    var tdButton = document.createElement("button");
+                    var tdButton = document.createElement("td");
                     tdButton.innerHTML = `
                     <a onclick="editarUsuario(${publicacao.idUsuario})" class="btn btn-primary btn-sm" title="Remove my profile image"><i
                     class="bi bi-person-lines-fill"></i></a>
