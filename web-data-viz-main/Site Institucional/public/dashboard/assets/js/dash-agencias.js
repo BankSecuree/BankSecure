@@ -1,8 +1,8 @@
 function exibirListaAgencias() {
-    fetch(`/usuarios/exibirListaAgencias/${sessionStorage.ID_USUARIO}`).then(function (resposta) {
+    fetch(`/dashAgencias/exibirListaAgencias/${sessionStorage.ID_USUARIO}`).then(function (resposta) {
         if (resposta.ok) {
             if (resposta.status == 204) {
-                var lista = document.getElementById("campo-agencias");
+                var lista = document.getElementById("listaAgencias");
                 var mensagem = document.createElement("p");
                 mensagem.innerHTML = "Nenhum resultado encontrado."
                 lista.innerHTML = "";
@@ -11,26 +11,32 @@ function exibirListaAgencias() {
             }
             resposta.json().then(function (resposta) {
                 var contId = 0;
-                for (let i = resposta.length - 1; i >= 0; i--) {
+                for (let i = 0; i <= resposta.length; i++) {
                     console.log(i)
                     console.log(publicacao)
 
-                    var lista = document.getElementById("campo-agencias");
+                    var lista = document.getElementById("listaAgencias");
                     var publicacao = resposta[i];
 
-                    var divCol = createElement("div");
-                    divCol.setAttribute("class", "col-lg-6")
-                    var divCard = createElement("div");
-                    divCard.setAttribute("class", "card")
-                    var divCardBody = createElement("div");
-                    divCardBody.setAttribute("class", "card-body")
-                    var h5 = createElement("h5");
-                    h5.setAttribute("class", "card-title")
-                
-                    divCardBody.appendChild(h5);
-                    divCard.appendChild(divCardBody);
-                    divCol.appendChild(divCard);
-                    lista.appendChild(divCol);
+                    var thNumero = document.createElement("th");
+                    thNumero.innerHTML = publicacao.idAgencia;
+                    var tdApelido = document.createElement("td");
+                    tdApelido.innerHTML = publicacao.apelido;
+                    var tdCnpj = document.createElement("td");
+                    tdCnpj.innerHTML = publicacao.cnpjAgencia;
+                    var tdButton = document.createElement("button");
+                    tdButton.innerHTML = `<a onclick="exibirGrafico(${publicacao.idAgencia})" class="btn btn-primary btn-sm" title="Exibir gráfico da agência"><i
+                    class="bi bi-person-lines-fill"></i></a>`;
+
+                    var tr = document.createElement("tr");
+                    var tbody = document.createElement("tbody");
+
+                    tr.appendChild(thNumero);
+                    tr.appendChild(tdApelido);
+                    tr.appendChild(tdCnpj);
+                    tr.appendChild(tdButton);
+                    tbody.appendChild(tr);
+                    lista.appendChild(tbody);
                 }
             });
         } else {

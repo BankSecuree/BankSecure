@@ -211,6 +211,8 @@ INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefoneAgen
 INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefoneAgencia, fkEmpresa) VALUES ('12658742036578', 'Itau Cidade Dutra', 'Av. Sen. Teotônio Vilela', 1192, '04801000', '1140028922', 2);
 -- FUNCIONARIOAGENCIA
 INSERT INTO funcionarioAgencia VALUES (3,1);
+INSERT INTO funcionarioAgencia VALUES (2,1);
+INSERT INTO funcionarioAgencia VALUES (2,2);
 -- INSERT INTO funcionarioAgencia VALUES (3,2);
 
 -- TIPOMAQUINA

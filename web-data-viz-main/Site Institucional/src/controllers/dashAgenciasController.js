@@ -1,4 +1,4 @@
-var dahAgenciasModel = require("../models/dahAgenciasModel");
+var dahAgenciasModel = require("../models/dashAgenciasModel");
 
 function exibirListaAgencias(req, res) {
   var idUsuario = req.params.idUsuario;
