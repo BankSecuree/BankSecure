@@ -3,17 +3,10 @@ var database = require("../database/config")
 function exibirTabelaAgencias(idEmpresa) {
     console.log("ACESSEI O AGENCIAS  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function exibirTabelaUsuarios()");
     var instrucao = `
-    SELECT apelido, cnpjAgencia, idAgencia FROM agencia WHERE fkEmpresa = ${idEmpresa};
-    `;
-    console.log("Executando a instrução SQL: \n" + instrucao);
-    return database.executar(instrucao);
-}
-
-function exibirQuantidadeFuncionariosAgencia(idAgencia) {
-    console.log("ACESSEI O AGENCIAS  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function exibirTabelaUsuarios()");
-    var instrucao = `
-    select (select count(fkUsuario) from funcionarioAgencia Where fkAgencia = ${idAgencia}) as funcionarios, (select count(idMaquina) from maquina Where fkAgencia = ${idAgencia}) as agencias;
-    `;
+    SELECT apelido, cnpjAgencia, idAgencia, 
+    (select count(fkUsuario) from funcionarioAgencia Where fkAgencia = idAgencia) as funcionarios, 
+    (select count(idMaquina) from maquina Where fkAgencia = idAgencia) as maquinas
+        FROM agencia WHERE fkEmpresa = ${idEmpresa};    `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
 }
@@ -39,7 +32,6 @@ function excluirAgencia(idAgencia) {
 
 module.exports = {
     exibirTabelaAgencias,
-    exibirQuantidadeFuncionariosAgencia,
     cadastrarAgencia,
     excluirAgencia
 };

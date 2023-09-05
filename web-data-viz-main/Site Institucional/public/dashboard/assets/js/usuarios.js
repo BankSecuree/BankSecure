@@ -212,6 +212,9 @@ function exibirTabelaUsuarios() {
     var thEmpresa = document.createElement("th");
     thEmpresa.setAttribute("scope", "row");
     thEmpresa.innerHTML = "Empresa";
+    var thAgencias = document.createElement("th");
+    thAgencias.setAttribute("scope", "row");
+    thAgencias.innerHTML = "Agências";
     var thDataInicio = document.createElement("th");
     thDataInicio.setAttribute("scope", "row");
     thDataInicio.innerHTML = "Data de Início";
@@ -222,6 +225,7 @@ function exibirTabelaUsuarios() {
     trColunas.appendChild(thId);
     trColunas.appendChild(thNome);
     trColunas.appendChild(thEmpresa);
+    trColunas.appendChild(thAgencias);
     trColunas.appendChild(thDataInicio);
     trColunas.appendChild(thExcluir);
     thead.appendChild(trColunas);
@@ -252,6 +256,8 @@ function exibirTabelaUsuarios() {
                     tdNome.innerHTML = publicacao.nome;
                     var tdEmpresa = document.createElement("td");
                     tdEmpresa.innerHTML = publicacao.empresa;
+                    var tdAgencias = document.createElement("td");
+                    tdAgencias.innerHTML = publicacao.agencias;
                     var tdInicio = document.createElement("td");
                     var dataInicio = new Date(publicacao.dataInicio)
                     dataInicio = `${dataInicio.getDate().toString().padStart(2, '0')}/${(dataInicio.getMonth() + 1).toString().padStart(2, '0')}/${dataInicio.getFullYear().toString()}`
@@ -270,6 +276,7 @@ function exibirTabelaUsuarios() {
                     tr.appendChild(thNumero);
                     tr.appendChild(tdNome);
                     tr.appendChild(tdEmpresa);
+                    tr.appendChild(tdAgencias);
                     tr.appendChild(tdInicio);
                     tr.appendChild(tdButton);
                     tbody.appendChild(tr);

@@ -58,14 +58,9 @@ function exibirTabelaAgencias() {
                     cnpj = cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})/g, '$1.$2.$3/$4-');
                     tdCnpj.innerHTML = cnpj;
                     var tdFuncionarios = document.createElement("td");
+                    tdFuncionarios.innerHTML = publicacao.funcionarios;
                     var tdMaquinas = document.createElement("td");
-                    fetch(`/agencias/exibirQuantidadeFuncionariosAgencia/${publicacao.idAgencia}`).then(function (respostaDois) {
-                        respostaDois.json().then(function (respostaDois) {
-                            // console.log(respostaDois)
-                            tdFuncionarios.innerHTML = respostaDois[0].funcionarios
-                            tdMaquinas.innerHTML = respostaDois[0].agencias
-                        })
-                    });
+                    tdMaquinas.innerHTML = publicacao.maquinas;                 
                     var tdButton = document.createElement("td");
                     tdButton.innerHTML = `<a onclick="editarAgencia(${publicacao.idAgencia})" class="btn btn-primary btn-sm" title="Remove my profile image"><i
                     class="bi bi-pencil-square"></i></a>

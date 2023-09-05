@@ -3,7 +3,7 @@ var database = require("../database/config")
 function exibirTabelaUsuarios(idUsuario) {
     console.log("ACESSEI O USUARIOS  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function exibirTabelaUsuarios()");
     var instrucao = `
-    SELECT us.idUsuario, us.nome, em.razaoSocial as empresa,  us.dataInicio, us.fkEmpresa
+    SELECT us.idUsuario, us.nome, em.razaoSocial as empresa,  us.dataInicio, us.fkEmpresa, (SELECT count(fkAgencia) FROM funcionarioAgencia WHERE fkUsuario = idUsuario) as agencias
 	    FROM usuario as us, empresa as em WHERE fkGerente = ${idUsuario} AND fkEmpresa = idEmpresa;
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
