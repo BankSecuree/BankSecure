@@ -3,8 +3,6 @@ DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
 USE bankSecure;
 
-
-
 CREATE TABLE empresa(
 idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
 cnpjEmpresa CHAR (14),

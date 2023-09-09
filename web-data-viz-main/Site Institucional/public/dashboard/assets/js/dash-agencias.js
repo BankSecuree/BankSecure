@@ -171,7 +171,7 @@ function graficoAgencia() {
 
   function getDadosMaquina(yrange) {
     const query = `
-      SELECT MAX(Cpu)
+      SELECT MAX(Cpu), MAX(Memória), MAX(Disco)
       FROM vw_registrosEstruturados
       WHERE dataHora = CURRENT_TIMESTAMP
       `;
@@ -181,7 +181,9 @@ function graficoAgencia() {
         console.log(err);
       } else {
         const cpu = result[0].Cpu;
-        console.log(cpu);
+        const memoria = result[0].Memória;
+        const disco = result[0].Disco;
+        console.log(`CPU: ${cpu}, Memória: ${memoria}, Disco: ${disco}`);
       }
     });
   }
