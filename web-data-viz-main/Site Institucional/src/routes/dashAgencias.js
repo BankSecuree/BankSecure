@@ -7,4 +7,9 @@ router.get("/exibirListaAgencias/:idUsuario", function (req, res) {
     dashAgenciasController.exibirListaAgencias(req, res);
 });
 
+
+router.get("/getDadosMaquina/:idUsuario", function (req, res) {
+    dashAgenciasController.getDadosMaquina(req, res);
+});
+
 module.exports = router;
