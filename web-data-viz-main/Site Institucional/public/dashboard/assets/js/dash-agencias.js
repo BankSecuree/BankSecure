@@ -1,12 +1,3 @@
-const sql = require("sql");
-
-const conn = sql.createConnection({
-  host: "localhost",
-  database: "bankSecure",
-  user: "user_bankSecure",
-  password: "Urubu_100",
-});
-
 function exibirListaAgencias() {
   fetch(`/dashAgencias/exibirListaAgencias/${sessionStorage.ID_USUARIO}`)
     .then(function (resposta) {
@@ -170,6 +161,15 @@ function graficoAgencia() {
   };
 
   function getDadosMaquina(yrange) {
+    const sql = require("sql");
+
+    const conn = sql.createConnection({
+      host: "localhost",
+      database: "bankSecure",
+      user: "user_bankSecure",
+      password: "Urubu_100",
+    });
+
     const query = `
       SELECT MAX(Cpu), MAX(Memória), MAX(Disco)
       FROM vw_registrosEstruturados
@@ -180,10 +180,9 @@ function graficoAgencia() {
       if (err) {
         console.log(err);
       } else {
-        const cpu = result[0].Cpu;
-        const memoria = result[0].Memória;
-        const disco = result[0].Disco;
-        console.log(`CPU: ${cpu}, Memória: ${memoria}, Disco: ${disco}`);
+        const dados = [result[0].Cpu, result[0].Memória, result[0].Disco];
+
+        return dados;
       }
     });
   }
@@ -212,7 +211,7 @@ function graficoAgencia() {
     series: [
       {
         name: "CPU",
-        data: [44],
+        data: getDadosMaquina(),
       },
     ],
     title: {
@@ -275,7 +274,7 @@ function graficoAgencia() {
     series: [
       {
         name: "Memória",
-        data: [80],
+        data: getDadosMaquina(),
       },
     ],
     title: {
@@ -342,7 +341,7 @@ function graficoAgencia() {
     series: [
       {
         name: "Disco",
-        data: [74],
+        data: getDadosMaquina(),
       },
     ],
     fill: {
