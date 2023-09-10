@@ -20,7 +20,12 @@ function getDadosMaquina(){
     return database.executar(instrucao);
 }
 
+function atualizarDados(){
+
+}
+
 module.exports = {
     exibirListaAgencias,
-    getDadosMaquina
+    getDadosMaquina, 
+    atualizarDados
 };
