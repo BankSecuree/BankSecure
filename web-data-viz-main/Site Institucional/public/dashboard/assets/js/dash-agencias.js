@@ -44,7 +44,7 @@ function exibirListaAgencias() {
           // var tdCnpj = document.createElement("td");
           // tdCnpj.innerHTML = publicacao.cnpjAgencia;
           var tdButton = document.createElement("td");
-          tdButton.innerHTML = `<a onclick="exibirGrafico(${publicacao.idAgencia})" class="btn btn-primary btn-sm" title="Exibir gráfico da agência"><i class="bi bi-graph-up"></i></a>`;
+          tdButton.innerHTML = `<a onclick="graficoAgencia(${publicacao.idAgencia},${publicacao.maquinas})" class="btn btn-primary btn-sm" title="Exibir gráfico da agência"><i class="bi bi-graph-up"></i></a>`;
           var tr = document.createElement("tr");
           var tbody = document.createElement("tbody");
 
@@ -66,7 +66,7 @@ function exibirListaAgencias() {
 }
 
 
-function graficoAgencia() {
+function graficoAgencia(idAgencia, maquinas) {
   var vt_cpu = [];
   var vt_memoria = [];
   var vt_data = [];
@@ -132,6 +132,11 @@ function graficoAgencia() {
     var chart = new ApexCharts(document.querySelector("#chart"), options);
     chart.render();
   })})
+
+  for (let i = 0; i < maquinas; i++) {
+    console.log(maquinas)
+  }
+
 }
 
 

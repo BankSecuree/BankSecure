@@ -253,9 +253,10 @@ FROM registros JOIN maquina ON fkMaquina = idMaquina
 GROUP BY registros.fkMaquina, registros.dataHora
 ORDER BY registros.fkMaquina, registros.dataHora ASC;
 
+DROP VIEW IF EXISTS vw_servidor1;
+CREATE OR REPLACE VIEW vw_servidor1 AS SELECT * FROM vw_registrosEstruturados WHERE id = 4
+
 -- SELECT * FROM usuario LEFT JOIN funcionarioAgencia ON fkUsuario = idUsuario WHERE fkAgencia IS NULL AND fkUsuario IS NOT NULL;
 -- JOIN agencia ON fkAgencia = idAgencia and idUsuario = 3;
-
-    SELECT * FROM vw_registrosEstruturados WHERE id = 1;
 
 
