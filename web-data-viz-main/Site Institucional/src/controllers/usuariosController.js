@@ -37,7 +37,7 @@ function cadastrarEmpresaGerente(req, res) {
   var email = req.body.emailServer;
   var senha = req.body.senhaServer;
   var dataInicio = req.body.dataInicioServer;
-  
+
 
   // Faça as validações dos valores
   // if (nomeEmpresa == undefined) {
@@ -48,23 +48,23 @@ function cadastrarEmpresaGerente(req, res) {
   //   res.status(400).send("Sua senha está undefined!");
   // } else {
 
-    // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-    usuariosModel.cadastrarEmpresaGerente(cnpj, razaoSocial, logradouro, numLogradouro, cep, telefone, nomeCompleto, cpf, celular, nascimento, email, senha, cargo, fkGerente, dataInicio)
-      .then(
-        function (resultado) {
-          res.json(resultado);
-        }
-      ).catch(
-        function (erro) {
-          console.log(erro);
-          console.log(
-            "\nHouve um erro ao realizar o cadastro! Erro: ",
-            erro.sqlMessage
-          );
-          res.status(500).json(erro.sqlMessage);
-        }
-      );
-  }
+  // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+  usuariosModel.cadastrarEmpresaGerente(cnpj, razaoSocial, logradouro, numLogradouro, cep, telefone, nomeCompleto, cpf, celular, nascimento, email, senha, cargo, fkGerente, dataInicio)
+    .then(
+      function (resultado) {
+        res.json(resultado);
+      }
+    ).catch(
+      function (erro) {
+        console.log(erro);
+        console.log(
+          "\nHouve um erro ao realizar o cadastro! Erro: ",
+          erro.sqlMessage
+        );
+        res.status(500).json(erro.sqlMessage);
+      }
+    );
+}
 
 
 
@@ -79,7 +79,7 @@ function cadastrarFuncionario(req, res) {
   var senha = req.body.senhaServer;
   var dataInicio = req.body.dataInicioServer;
   var cnpjEmpresa = req.body.cnpjServer;
-  
+
   if (nomeCompleto == undefined) {
     res.status(400).send("Seu nome está undefined!");
   } else if (celular == undefined) {
@@ -121,21 +121,21 @@ function cadastrarFuncionario(req, res) {
   }
 }
 
-function listarUltimoIdEmpresa(req, res){
+function listarUltimoIdEmpresa(req, res) {
   usuariosModel.listarUltimoIdEmpresa()
-  .then(function (resultado){
-      if(resultado.length > 0){
-          res.status(200).json(resultado);
+    .then(function (resultado) {
+      if (resultado.length > 0) {
+        res.status(200).json(resultado);
       }
-      else{
-          res.status(204).send("Nenhum resultado de empresa encontrados");
+      else {
+        res.status(204).send("Nenhum resultado de empresa encontrados");
       }
-  }).catch(
-      function(erro){
-          console.log("Houve um erro ao realizar a consulta! Erro:", erro.sqlMessage);
-          res.status(500).json(erro.sqlMessage);
+    }).catch(
+      function (erro) {
+        console.log("Houve um erro ao realizar a consulta! Erro:", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
       }
-  );
+    );
 }
 
 function excluirUsuario(req, res) {
@@ -155,10 +155,118 @@ function excluirUsuario(req, res) {
     );
 }
 
+function listarFuncionario(req, res) {
+
+  var idUsuario = req.params.idUsuario;
+
+  usuariosModel.listarFuncionario(idUsuario)
+    .then(function (resultado) {
+      if (resultado.length > 0) {
+        res.status(200).json(resultado);
+      }
+      else {
+        res.status(204).send("Nenhum resultado desse funcionário(a) encontrado");
+      }
+    }).catch(
+      function (erro) {
+        console.log("Houve um erro ao realizar a consulta! Erro:", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+      }
+    );
+}
+
+function listarAgenciasVinculadas(req, res) {
+
+  var idUsuario = req.params.idUsuario;
+
+  usuariosModel.listarAgenciasVinculadas(idUsuario)
+    .then(function (resultado) {
+      if (resultado.length > 0) {
+        res.status(200).json(resultado);
+      }
+      else {
+        res.status(204).send("Nenhuma agência vinculada e esse funcionário(a) encontrada");
+      }
+    }).catch(
+      function (erro) {
+        console.log("Houve um erro ao realizar a consulta! Erro:", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+      }
+    );
+}
+
+function listarAgenciasNaoVinculadas(req, res) {
+
+  var idUsuario = req.params.idUsuario;
+  var fkEmpresa = req.params.fkEmpresa;
+
+
+  usuariosModel.listarAgenciasNaoVinculadas(idUsuario, fkEmpresa)
+    .then(function (resultado) {
+      if (resultado.length > 0) {
+        res.status(200).json(resultado);
+      }
+      else {
+        res.status(204).send("Nenhuma agência vinculada e esse funcionário(a) encontrada");
+      }
+    }).catch(
+      function (erro) {
+        console.log("Houve um erro ao realizar a consulta! Erro:", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+      }
+    );
+}
+
+function desvincularAgencia(req, res) {
+  var idUsuario = req.params.idUsuario;
+  var idAgencia = req.params.idAgencia;
+
+  usuariosModel.desvincularAgencia(idUsuario, idAgencia)
+    .then(
+      function (resultado) {
+        res.json(resultado);
+      }
+    )
+    .catch(
+      function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao desvincular agência: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+      }
+    );
+}
+
+function vincularAgencia(req, res) {
+  var idUsuario = req.body.idUsuarioServer;
+  var idAgencia = req.body.idAgenciaServer;
+
+  usuariosModel.vincularAgencia(idUsuario, idAgencia)
+    .then(
+      function (resultado) {
+        res.json(resultado);
+      }
+    ).catch(
+      function (erro) {
+        console.log(erro);
+        console.log(
+          "\nHouve um erro ao vincular a agência! Erro: ",
+          erro.sqlMessage
+        );
+        res.status(500).json(erro.sqlMessage);
+      }
+    );
+
+}
+
 module.exports = {
   exibirTabelaUsuarios,
-  cadastrarEmpresaGerente, 
+  cadastrarEmpresaGerente,
   cadastrarFuncionario,
   listarUltimoIdEmpresa,
-  excluirUsuario
+  excluirUsuario,
+  listarFuncionario,
+  listarAgenciasVinculadas,
+  listarAgenciasNaoVinculadas,
+  desvincularAgencia,
+  vincularAgencia
 }

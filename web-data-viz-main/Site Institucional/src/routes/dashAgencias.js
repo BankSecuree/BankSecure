@@ -7,4 +7,13 @@ router.get("/exibirListaAgencias/:idUsuario", function (req, res) {
     dashAgenciasController.exibirListaAgencias(req, res);
 });
 
+
+router.get("/getDadosMaquina/:idUsuario", function (req, res) {
+    dashAgenciasController.getDadosMaquina(req, res);
+});
+
+router.get("/atualizarDados/:idUsuario", function (req, res) {
+    dashAgenciasController.atualizarDados(req, res);
+});
+
 module.exports = router;

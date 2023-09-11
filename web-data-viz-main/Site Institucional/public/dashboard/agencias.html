@@ -253,7 +253,7 @@
           <span>Perfil</span>
         </a>
       </li>
-      
+
     </ul>
   </aside>
 
@@ -290,7 +290,7 @@
 
             <div class="card-body">
               <h5 class="card-title">Agências <span>| </span></h5>
-
+              <table class="table" id="listaAgencias"></table>
             </div>
           </div>
         </div><!-- End Right side columns -->
@@ -360,5 +360,7 @@
 <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
 <script>
   exibirInfos();
-  graficoAgencia()
+  graficoAgencia();
+  exibirListaAgencias();
+
 </script>

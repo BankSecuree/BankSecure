@@ -16,23 +16,6 @@ function exibirTabelaAgencias(req, res) {
   });
 }
 
-function exibirQuantidadeFuncionariosAgencia(req, res) {
-  var idAgencia = req.params.idAgencia;
-
-  agenciasModel.exibirQuantidadeFuncionariosAgencia(idAgencia).then(function (resultado) {
-    if (resultado.length > 0) {
-      res.status(200).json(resultado);
-    } else {
-      res.status(204).send("Nenhum resultado encontrado!")
-    }
-  }).catch(function (erro) {
-    console.log(erro);
-    console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
-    res.status(500).json(erro.sqlMessage);
-  });
-}
-
-
 function cadastrarAgencia(req, res) {
   var apelido = req.body.agenciaApelidoServer;
   var cnpj = req.body.agenciaCnpjServer;
@@ -87,7 +70,6 @@ function excluirAgencia(req, res) {
 
 module.exports = {
   exibirTabelaAgencias,
-  exibirQuantidadeFuncionariosAgencia,
   cadastrarAgencia,
   excluirAgencia
 }

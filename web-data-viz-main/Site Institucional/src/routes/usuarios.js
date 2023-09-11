@@ -23,4 +23,24 @@ router.delete("/excluirUsuario/:idUsuario", function (req, res) {
     usuariosController.excluirUsuario(req, res);
 });
 
+router.get("/listarFuncionario/:idUsuario", function (req, res){
+    usuariosController.listarFuncionario(req, res);
+})
+
+router.get("/listarAgenciasVinculadas/:idUsuario", function (req, res){
+    usuariosController.listarAgenciasVinculadas(req, res);
+})
+
+router.get("/listarAgenciasNaoVinculadas/:idUsuario/:fkEmpresa", function (req, res){
+    usuariosController.listarAgenciasNaoVinculadas(req, res);
+})
+
+router.delete("/desvincularAgencia/:idUsuario/:idAgencia", function (req, res) {
+    usuariosController.desvincularAgencia(req, res);
+});
+
+router.post("/vincularAgencia", function (req, res) {
+    usuariosController.vincularAgencia(req, res);
+})
+
 module.exports = router;

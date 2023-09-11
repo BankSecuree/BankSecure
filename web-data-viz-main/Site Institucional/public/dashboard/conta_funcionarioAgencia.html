@@ -274,12 +274,13 @@
       <div class="row">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Funcionários X</h5>
-            
+            <h5 class="card-title">Dados funcionário</h5>
+            <table class="table" id="tabela-funcionario"></table>
           </div>
         </div>
       </div>
       </div>
+      
 
       <div class="pagetitle">
         <h1>Vínculo de agências</h1>
@@ -287,7 +288,7 @@
 
       <div class="row" id="agenciasFuncionarios">
 
-        <div class="col-lg-4">
+        <div class="col-lg-5">
           <div class="row">
             <div class="card cardAgencias">
               <div class="card-body">
@@ -298,7 +299,7 @@
           </div>
         </div>
 
-        <div class="col-lg-4">
+        <div class="col-lg-5">
           <div class="row">
             <div class="card cardAgencias">
               <div class="card-body">
@@ -330,10 +331,15 @@
 <script src="assets/js/usuarios.js"></script>
 
 <script>
-  exibirInfos();
-  exibirAgenciasVinculadas();
-  exibirAgenciasNaoVinculadas();
+  var idUsuario = window.location.href.split("?")[1]
+  var fkEmpresa = window.location.href.split("?")[2]
 
-  var dadosCNPJ;
+  exibirInfos();
+  exibirAgenciasVinculadas(idUsuario);
+  exibirAgenciasNaoVinculadas(idUsuario, fkEmpresa);
+  listarFuncionario(idUsuario);
+
+
+
 
 </script>

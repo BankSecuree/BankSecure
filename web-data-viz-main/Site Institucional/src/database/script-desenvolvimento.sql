@@ -3,8 +3,6 @@ DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
 USE bankSecure;
 
-
-
 CREATE TABLE empresa(
 idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
 cnpjEmpresa CHAR (14),
@@ -181,7 +179,7 @@ GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';
 GRANT EXECUTE ON PROCEDURE cadastrar_empresaGerente to 'user_bankSecure'@'localhost';
 GRANT EXECUTE ON PROCEDURE cadastrarAgencia to 'user_bankSecure'@'localhost';
 GRANT EXECUTE ON PROCEDURE cadastrar_maquinaComponente to 'user_bankSecure'@'localhost';
-GRANT EXECUTE ON  PROCEDURE cadastrar_tipoMaquina to 'user_banksecure'@'localhost';
+GRANT EXECUTE ON  PROCEDURE cadastrar_tipoMaquina to 'user_bankSecure'@'localhost';
 FLUSH PRIVILEGES;
 
 -- CONTA ITAU
@@ -195,20 +193,25 @@ FLUSH PRIVILEGES;
 
 -- ADMIN
 INSERT INTO empresa (razaoSocial, cnpjEmpresa, idEmpresa) VALUES ('Bank Secure', 12345678901234, 1);
-INSERT INTO usuario (email, senha, nome, fkEmpresa, cargo) VALUES ('banksecure@contato.com', '12345', 'Admin Bank Secure', 1, 'Admin');
+INSERT INTO usuario (email, senha, nome, fkEmpresa, cargo, dataInicio) VALUES ('banksecure@contato.com', '12345', 'Admin Bank Secure', 1, 'Admin', '2023-08-01');
 
 -- GERENTES
 INSERT INTO empresa (razaoSocial, cnpjEmpresa, cep, logradouro, numero, telefoneEmpresa) VALUES ('BANCO ITAUCARD S.A.', 17192451000170, '04344902', 'PRACA ALFREDO EGYDIO DE SOUZA ARANHA 100', 100, '(11) 4004-4828');
-INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente,cpf, telefone, cargo) VALUES ('gerenteitau@bs.com', '12345', 'Fernando Brandão', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 1,12312312300, '(11)90000-1111', 'CTO');
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente,cpf, telefone, cargo, dataInicio) VALUES ('gerenteitau@bs.com', '12345', 'Fernando Brandão', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 1,12312312300, '(11)90000-1111', 'CTO', '2023-08-01');
 
 -- ANALISTAS
-INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente) VALUES ('analista1itau@bs.com', '12345', 'Julia Lima', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 2);
+INSERT INTO usuario (email, senha, nome, cpf, telefone, cargo, dataNascimento, fkEmpresa, fkGerente, dataInicio) VALUES ('analista1itau@bs.com', '12345', 'Julia Lima', '54779854112', '11985698741', 'Analista', '2000-10-24', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 2, '2023-08-01');
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente, dataInicio) VALUES ('analista1itau2@bs.com', '12345', 'Manoel Gomes', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 2, '2023-08-01');
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente, dataInicio) VALUES ('analista1itau3@bs.com', '12345', 'Michael Jackson', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 2, '2023-08-01');
 
 -- AGENCIA
-INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefoneAgencia, fkEmpresa) VALUES ('60701190031328', 'Agência Itau Rudge Ramos', 'Rua Rudge Ramos', 80, '09772040', '1130034828', 2);
-INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefoneAgencia, fkEmpresa) VALUES ('12658742036578', 'Agência Itau Cidade Dutra', 'Av. Sen. Teotônio Vilela', 1192, '04801000', '1140028922', 2);
+INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefoneAgencia, fkEmpresa) VALUES ('60701190031328', 'Itau Rudge Ramos', 'Rua Rudge Ramos', 80, '09772040', '1130034828', 2);
+INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefoneAgencia, fkEmpresa) VALUES ('12658742036578', 'Itau Cidade Dutra', 'Av. Sen. Teotônio Vilela', 1192, '04801000', '1140028922', 2);
 -- FUNCIONARIOAGENCIA
 INSERT INTO funcionarioAgencia VALUES (3,1);
+INSERT INTO funcionarioAgencia VALUES (2,1);
+INSERT INTO funcionarioAgencia VALUES (2,2);
+-- INSERT INTO funcionarioAgencia VALUES (3,2);
 
 -- TIPOMAQUINA
 INSERT INTO tipoMaquina VALUES (1,"Servidor"), (2,"Caixa Eletrônico");
