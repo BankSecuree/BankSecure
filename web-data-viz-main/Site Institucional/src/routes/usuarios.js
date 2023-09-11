@@ -35,4 +35,8 @@ router.get("/listarAgenciasNaoVinculadas/:idUsuario/:fkEmpresa", function (req, 
     usuariosController.listarAgenciasNaoVinculadas(req, res);
 })
 
+router.delete("/desvincularAgencia/:idUsuario/:idAgencia", function (req, res) {
+    usuariosController.desvincularAgencia(req, res);
+});
+
 module.exports = router;

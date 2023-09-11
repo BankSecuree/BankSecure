@@ -637,6 +637,9 @@ function exibirAgenciasVinculadas(idUsuario) {
                     tdLogradouro.innerHTML = `${agencia.logradouro}, ${agencia.numero}`;
                     var tdCNPJ = document.createElement("td");
                     tdCNPJ.innerHTML = agencia.cnpjAgencia;
+                    var btnDesvincular = document.createElement("button");
+                    btnDesvincular.setAttribute("onclick", `desvincularAgencia(${idUsuario}, ${agencia.idAgencia})`);
+                    btnDesvincular.innerHTML = "Desvincular"
 
                     var tr = document.createElement("tr");
 
@@ -644,6 +647,7 @@ function exibirAgenciasVinculadas(idUsuario) {
                     tr.appendChild(tdAgencia);
                     tr.appendChild(tdLogradouro);
                     tr.appendChild(tdCNPJ);
+                    tr.appendChild(btnDesvincular);
                     tabela.appendChild(tr);
                 }
 
@@ -782,6 +786,25 @@ function redirecionarVincularAgencia(idUsuario, fkEmpresa) {
 
     window.location.href = `conta_funcionarioAgencia.html?${idUsuario}?${fkEmpresa}`;
 
+}
+
+function desvincularAgencia(idUsuario, idAgencia){
+    fetch(`/usuarios/desvincularAgencia/${idUsuario}/${idAgencia}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function (resposta) {
+        console.log("resposta: ", resposta);
+        if (resposta.ok) {
+            window.location.reload();
+        } else {
+            alert(`Houve um erro ao tentar desvincular a agência!`);
+        }
+    }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+    });
+    return false;
 }
 
 

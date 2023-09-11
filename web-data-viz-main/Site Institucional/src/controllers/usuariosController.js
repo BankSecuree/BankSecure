@@ -217,6 +217,25 @@ function listarAgenciasNaoVinculadas(req, res){
   );
 }
 
+function desvincularAgencia(req, res) {
+  var idUsuario = req.params.idUsuario;
+  var idAgencia = req.params.idAgencia;
+
+  usuariosModel.desvincularAgencia(idUsuario, idAgencia)
+    .then(
+      function (resultado) {
+        res.json(resultado);
+      }
+    )
+    .catch(
+      function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao desvincular agência: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+      }
+    );
+}
+
 module.exports = {
   exibirTabelaUsuarios,
   cadastrarEmpresaGerente, 
@@ -225,5 +244,6 @@ module.exports = {
   excluirUsuario,
   listarFuncionario,
   listarAgenciasVinculadas,
-  listarAgenciasNaoVinculadas
+  listarAgenciasNaoVinculadas,
+  desvincularAgencia
 }

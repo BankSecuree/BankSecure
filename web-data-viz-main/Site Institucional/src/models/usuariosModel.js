@@ -67,6 +67,15 @@ function listarAgenciasNaoVinculadas(idUsuario, fkEmpresa){
     return database.executar(instrucao);
 }
 
+function desvincularAgencia(idUsuario, idAgencia) {
+    console.log("ACESSEI O AGÊNCIA  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function excluirAgencia()");
+    var instrucao = `
+    DELETE FROM funcionarioAgencia WHERE fkUsuario = ${idUsuario} AND fkAgencia = ${idAgencia};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
     exibirTabelaUsuarios,
     cadastrarEmpresaGerente,
@@ -75,5 +84,6 @@ module.exports = {
     excluirUsuario,
     listarFuncionario,
     listarAgenciasVinculadas,
-    listarAgenciasNaoVinculadas
+    listarAgenciasNaoVinculadas,
+    desvincularAgencia
 };
