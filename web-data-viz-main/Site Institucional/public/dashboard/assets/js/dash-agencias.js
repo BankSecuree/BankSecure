@@ -159,7 +159,7 @@ function graficoAgencia() {
     }
   };
 
-  function getDadosMaquina() {
+  /*function getDadosMaquina() {
     fetch("/getDadosMaquina").then(function (resposta) {
       if (resposta.ok) {
         return resposta.json();
@@ -174,9 +174,13 @@ function graficoAgencia() {
     .catch(function (erro) {
       console.error(erro);
     });
+  }*/
+
+  function getDadosMaquina(yrange){
+    return Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min
   }
 
-  function atualizarDados(){
+  /*function atualizarDados(){
     var cpuData = dados.cpu;
     var memoriaData = dados.cpu;
     var discoData = dados.cpu;
@@ -196,7 +200,7 @@ function graficoAgencia() {
       subtitle: { text: discoData + "%" }
     });
 
-  }
+  }*/
 
   var optionsProgress1 = {
     chart: {

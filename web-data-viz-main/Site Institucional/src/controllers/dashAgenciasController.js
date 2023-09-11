@@ -16,7 +16,7 @@ function exibirListaAgencias(req, res) {
   });
 }
 
-function getDadosMaquina(res) {
+/*function getDadosMaquina(res) {
 
   dahAgenciasModel.getDadosMaquina().then(function (resultado) {
     if (resultado.length > 0) {
@@ -29,14 +29,14 @@ function getDadosMaquina(res) {
     console.log("Houve um erro ao buscar getDadosMaquina: ", erro.sqlMessage);
     res.status(500).json(erro.sqlMessage);
   });
-}
+}*/
 
-function atualizarDados(){
+/*function atualizarDados(){
   
-}
+}*/
 
 module.exports = {
-  exibirListaAgencias, 
-  getDadosMaquina,
-  atualizarDados
+  exibirListaAgencias 
+  /*getDadosMaquina,
+  atualizarDados*/
 }
