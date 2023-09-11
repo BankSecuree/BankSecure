@@ -39,4 +39,8 @@ router.delete("/desvincularAgencia/:idUsuario/:idAgencia", function (req, res) {
     usuariosController.desvincularAgencia(req, res);
 });
 
+router.post("/vincularAgencia", function (req, res) {
+    usuariosController.vincularAgencia(req, res);
+})
+
 module.exports = router;

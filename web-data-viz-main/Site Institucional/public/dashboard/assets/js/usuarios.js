@@ -700,9 +700,9 @@ function exibirAgenciasNaoVinculadas(idUsuario, fkEmpresa) {
                 for (let i = 0; i < resposta.length; i++) {
                     var agencia = resposta[i];
 
-                    if(agencia.fkUsuario == undefined && agencia.fkAgencia == undefined){
+                    if (agencia.fkUsuario == undefined && agencia.fkAgencia == undefined) {
 
-                        
+
                         var tabela = document.getElementById("tabela-agenciasNaoVinculadas");
                         var thIndice = document.createElement("th");
                         thIndice.innerHTML = i + 1;
@@ -712,13 +712,17 @@ function exibirAgenciasNaoVinculadas(idUsuario, fkEmpresa) {
                         tdLogradouro.innerHTML = `${agencia.logradouro}, ${agencia.numero}`;
                         var tdCNPJ = document.createElement("td");
                         tdCNPJ.innerHTML = agencia.cnpjAgencia;
-                        
+                        var btnVincular = document.createElement("button");
+                        btnVincular.setAttribute("onclick", `vincularAgencia(${idUsuario}, ${agencia.idAgencia})`);
+                        btnVincular.innerHTML = "Vincular"
+
                         var tr = document.createElement("tr");
-                        
+
                         tr.appendChild(thIndice);
                         tr.appendChild(tdAgencia);
                         tr.appendChild(tdLogradouro);
                         tr.appendChild(tdCNPJ);
+                        tr.appendChild(btnVincular);
                         tabela.appendChild(tr);
                     }
                 }
@@ -788,7 +792,7 @@ function redirecionarVincularAgencia(idUsuario, fkEmpresa) {
 
 }
 
-function desvincularAgencia(idUsuario, idAgencia){
+function desvincularAgencia(idUsuario, idAgencia) {
     fetch(`/usuarios/desvincularAgencia/${idUsuario}/${idAgencia}`, {
         method: "DELETE",
         headers: {
@@ -805,6 +809,32 @@ function desvincularAgencia(idUsuario, idAgencia){
         console.log(`#ERRO: ${resposta}`);
     });
     return false;
+}
+
+function vincularAgencia(idUsuario, idAgencia) {
+
+    fetch("/usuarios/vincularAgencia", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+
+            idUsuarioServer: idUsuario,
+            idAgenciaServer: idAgencia
+        })
+    }).then(function (resposta) {
+
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+            window.location.reload();
+        } else {
+            throw ("Houve um erro ao tentar vincular a agência!");
+        }
+    }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+    });
 }
 
 
