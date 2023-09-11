@@ -16,4 +16,8 @@ router.get("/atualizarDados/:idUsuario", function (req, res) {
     dashAgenciasController.atualizarDados(req, res);
 });
 
+router.get("/exibirView/:idMaquina", function (req, res) {
+    dashAgenciasController.exibirView(req, res);
+});
+
 module.exports = router;

@@ -247,7 +247,7 @@ DROP VIEW IF EXISTS vw_registrosEstruturados;
 CREATE OR REPLACE VIEW vw_registrosEstruturados AS 
 SELECT registros.fkMaquina as "ID", maquina.nome as "Nome", registros.dataHora as "Data",
 MAX( CASE WHEN registros.fkComponente = 1 THEN registros.valor END ) "Cpu" ,
-MAX( CASE WHEN registros.fkComponente = 2 THEN registros.valor END ) "Memória" ,
+MAX( CASE WHEN registros.fkComponente = 2 THEN registros.valor END ) "Memoria" ,
 MAX( CASE WHEN registros.fkComponente = 3 THEN registros.valor END ) "Disco"
 FROM registros JOIN maquina ON fkMaquina = idMaquina
 GROUP BY registros.fkMaquina, registros.dataHora
@@ -255,5 +255,7 @@ ORDER BY registros.fkMaquina, registros.dataHora ASC;
 
 -- SELECT * FROM usuario LEFT JOIN funcionarioAgencia ON fkUsuario = idUsuario WHERE fkAgencia IS NULL AND fkUsuario IS NOT NULL;
 -- JOIN agencia ON fkAgencia = idAgencia and idUsuario = 3;
+
+    SELECT * FROM vw_registrosEstruturados WHERE id = 1;
 
 
