@@ -159,8 +159,8 @@ function graficoAgencia() {
     }
   };
 
-  /*function getDadosMaquina() {
-    fetch("/getDadosMaquina").then(function (resposta) {
+  function getDadosMaquina(idAgencia) {
+    fetch("/dashAgencias/getDadosMaquina").then(function (resposta) {
       if (resposta.ok) {
         return resposta.json();
       } else {
@@ -174,7 +174,7 @@ function graficoAgencia() {
     .catch(function (erro) {
       console.error(erro);
     });
-  }*/
+  }
 
   function getDadosMaquina(yrange){
     return Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min
