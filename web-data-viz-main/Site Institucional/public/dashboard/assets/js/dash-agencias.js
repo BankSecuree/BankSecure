@@ -76,7 +76,9 @@ function graficoAgencia() {
       var publi = resposta[i];
       vt_memoria.push(publi.Memoria);
       vt_cpu.push(publi.Cpu);
-      vt_data.push(publi.Data);
+      var data = new Date(publi.Data);
+      data = `${data.getHours()}:${data.getMinutes().toString().padStart(2, '0')}:${data.getSeconds().toString().padStart(2, '0')}`
+      vt_data.push(data);
       console.log(publi)
     }
     console.log(vt_cpu)
