@@ -15,7 +15,7 @@ def pegar_dados():
     exibiu = False
     cont = 0
 
-    while cont <= 4:
+    while cont <= 1:
     
      data = datetime.now()
      data = data.strftime('%Y/%m/%d %H:%M:%S')
@@ -64,11 +64,11 @@ def pegar_dados():
      comp3 = "Disco"
      if (cont == 0):
          cursor.execute(f"CALL inserirDadosMaquina ('SI-1', '{comp1}', {ram_percent:.2f}, '{comp2}', {cpu_porcent}, '{comp3}', {disc_percent}, NOW());")
-     elif (cont == 1):
+    
          cursor.execute(f"CALL inserirDadosMaquina ('MI-1', '{comp1}', {ram_percent:.2f}, '{comp2}', {cpu_porcent}, '{comp3}', {disc_percent}, NOW());")
-     elif (cont == 2):
+     
          cursor.execute(f"CALL inserirDadosMaquina ('MI-2', '{comp1}', {ram_percent:.2f}, '{comp2}', {cpu_porcent}, '{comp3}', {disc_percent}, NOW());")
-     elif (cont == 3):
+     
          cursor.execute(f"CALL inserirDadosMaquina ('MI-3', '{comp1}', {ram_percent:.2f}, '{comp2}', {cpu_porcent}, '{comp3}', {disc_percent}, NOW());")
 
      conexao.commit()

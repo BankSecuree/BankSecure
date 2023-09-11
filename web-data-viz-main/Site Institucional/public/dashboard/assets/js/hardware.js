@@ -178,20 +178,16 @@ function exibirTabelaMaquinas() {
     var thApelido = document.createElement("th");
     thApelido.setAttribute("scope", "row");
     thApelido.innerHTML = "Apelido";
-    var thCpu = document.createElement("th");
-    thCpu.setAttribute("scope", "row");
-    thCpu.innerHTML = "CPU";
-    var thMemoria = document.createElement("th");
-    thMemoria.setAttribute("scope", "row");
-    thMemoria.innerHTML = "Memória";
-    var thDisco = document.createElement("th");
-    thDisco.setAttribute("scope", "row");
-    thDisco.innerHTML = "Disco";
+    var thTipo = document.createElement("th");
+    thTipo.setAttribute("scope", "row");
+    thTipo.innerHTML = "Tipo";
+    var thAgencia = document.createElement("th");
+    thAgencia.setAttribute("scope", "row");
+    thAgencia.innerHTML = "Agência";
     trColunas.appendChild(thId);
     trColunas.appendChild(thApelido);
-    trColunas.appendChild(thCpu);
-    trColunas.appendChild(thMemoria);
-    trColunas.appendChild(thDisco);
+    trColunas.appendChild(thTipo);
+    trColunas.appendChild(thAgencia);
     if (sessionStorage.GERENTE_USUARIO == "1") {
         var thExcluir = document.createElement("th");
         thExcluir.setAttribute("scope", "row");
@@ -219,13 +215,11 @@ function exibirTabelaMaquinas() {
                     thNumero.innerHTML = publicacao.idMaquina;
                     thNumero.setAttribute("scope", "row");
                     var tdApelido = document.createElement("td");
-                    tdApelido.innerHTML = publicacao.apelido;
-                    var tdCpu = document.createElement("td");
-                    tdCpu.innerHTML = publicacao.cpuMaquina;
-                    var tdmemoria= document.createElement("td");
-                    tdmemoria.innerHTML = publicacao.cpuMaquina;
-                    var tdDisco = document.createElement("td");
-                    tdDisco.innerHTML = publicacao.cpuMaquina;
+                    tdApelido.innerHTML = publicacao.nome;
+                    var tdTipo = document.createElement("td");
+                    tdTipo.innerHTML = publicacao.tipo;
+                    var tdAgencia= document.createElement("td");
+                    tdAgencia.innerHTML = publicacao.agencia;
                     var tdButton = document.createElement("td");
                     tdButton.innerHTML = `<a onclick="editarAgencia(${publicacao.idMaquina})" class="btn btn-primary btn-sm" title="Remove my profile image"><i
                     class="bi bi-pencil-square"></i></a>
@@ -238,9 +232,8 @@ function exibirTabelaMaquinas() {
 
                     tr.appendChild(thNumero);
                     tr.appendChild(tdApelido);
-                    tr.appendChild(tdCpu);
-                    tr.appendChild(tdMemoria);
-                    tr.appendChild(tdDisco);
+                    tr.appendChild(tdTipo);
+                    tr.appendChild(tdAgencia);
                     tr.appendChild(tdButton);
                     tbody.appendChild(tr);
                     lista.appendChild(tbody);

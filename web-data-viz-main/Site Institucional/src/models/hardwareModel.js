@@ -21,7 +21,7 @@ function cadastrarComponente(componente){
 function exibirTabelaMaquinas(idEmpresa) {
     console.log("ACESSEI O AGENCIAS  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function exibirTabelaUsuarios()");
     var instrucao = `
-    SELECT nome, idAgencia FROM agencia WHERE fkEmpresa = ${idEmpresa};
+    SELECT m.idMaquina, m.nome, (SELECT nomeTipo FROM tipoMaquina WHERE idTipoMaquina = m.fkTipoMaquina) as tipo, a.apelido as agencia  FROM maquina as m JOIN agencia as a ON m.fkAgencia = a.idAgencia AND a.fkEmpresa = 2;
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
