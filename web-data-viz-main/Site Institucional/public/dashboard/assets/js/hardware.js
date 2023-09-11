@@ -167,3 +167,90 @@ function exibirOptionAgencia() {
         console.error(resposta);
     });
 }
+
+function exibirTabelaMaquinas() {
+    var lista = document.getElementById("tabela-maquinas");
+    var trColunas = document.createElement("tr");
+    var thead = document.createElement("thead");
+    var thId = document.createElement("th");
+    thId.setAttribute("scope", "row");
+    thId.innerHTML = "#";
+    var thApelido = document.createElement("th");
+    thApelido.setAttribute("scope", "row");
+    thApelido.innerHTML = "Apelido";
+    var thCpu = document.createElement("th");
+    thCpu.setAttribute("scope", "row");
+    thCpu.innerHTML = "CPU";
+    var thMemoria = document.createElement("th");
+    thMemoria.setAttribute("scope", "row");
+    thMemoria.innerHTML = "Memória";
+    var thDisco = document.createElement("th");
+    thDisco.setAttribute("scope", "row");
+    thDisco.innerHTML = "Disco";
+    trColunas.appendChild(thId);
+    trColunas.appendChild(thApelido);
+    trColunas.appendChild(thCpu);
+    trColunas.appendChild(thMemoria);
+    trColunas.appendChild(thDisco);
+    if (sessionStorage.GERENTE_USUARIO == "1") {
+        var thExcluir = document.createElement("th");
+        thExcluir.setAttribute("scope", "row");
+        thExcluir.innerHTML = "Editar/Excluir";
+        trColunas.appendChild(thExcluir);
+    }
+    thead.appendChild(trColunas);
+    lista.appendChild(thead);
+    fetch(`/hardware/exibirTabelaMaquinas/${sessionStorage.ID_EMPRESA}`).then(function (resposta) {
+        if (resposta.ok) {
+            if (resposta.status == 204) {
+                var lista = document.getElementById("tabela-maquinas");
+                var mensagem = document.createElement("p");
+                mensagem.innerHTML = "Nenhum resultado encontrado."
+                lista.innerHTML = "";
+                lista.appendChild(mensagem);
+                throw "Nenhum resultado encontrado!!";
+            }
+            resposta.json().then(function (resposta) {
+                for (let i = 0; i < resposta.length; i++) {
+                    var publicacao = resposta[i];
+                    var lista = document.getElementById("tabela-maquinas");
+
+                    var thNumero = document.createElement("th");
+                    thNumero.innerHTML = publicacao.idMaquina;
+                    thNumero.setAttribute("scope", "row");
+                    var tdApelido = document.createElement("td");
+                    tdApelido.innerHTML = publicacao.apelido;
+                    var tdCpu = document.createElement("td");
+                    tdCpu.innerHTML = publicacao.cpuMaquina;
+                    var tdmemoria= document.createElement("td");
+                    tdmemoria.innerHTML = publicacao.cpuMaquina;
+                    var tdDisco = document.createElement("td");
+                    tdDisco.innerHTML = publicacao.cpuMaquina;
+                    var tdButton = document.createElement("td");
+                    tdButton.innerHTML = `<a onclick="editarAgencia(${publicacao.idMaquina})" class="btn btn-primary btn-sm" title="Remove my profile image"><i
+                    class="bi bi-pencil-square"></i></a>
+                    <a onclick="excluirAgencia(${publicacao.idMaquina})" class="btn btn-danger btn-sm" title="Remove my profile image"><i
+                    class="bi bi-trash"></i></a>
+                    `;
+                    var tr = document.createElement("tr");
+                    var tbody = document.createElement("tbody");
+
+
+                    tr.appendChild(thNumero);
+                    tr.appendChild(tdApelido);
+                    tr.appendChild(tdCpu);
+                    tr.appendChild(tdMemoria);
+                    tr.appendChild(tdDisco);
+                    tr.appendChild(tdButton);
+                    tbody.appendChild(tr);
+                    lista.appendChild(tbody);
+                }
+            });
+        } else {
+            throw ('Houve um erro na API!');
+        }
+    }).catch(function (resposta) {
+        console.error(resposta);
+        // finalizarAguardar();
+    });
+}
