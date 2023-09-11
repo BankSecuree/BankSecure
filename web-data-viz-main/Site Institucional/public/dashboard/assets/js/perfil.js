@@ -81,7 +81,6 @@ function atualizarFoto() {
             cardMsg.style.border = "2px solid red"
             cardMsg.style.color = "red"
             cardMsg.innerHTML = "❌Erro ao atualizar a foto! Tente novamente...";
-            throw ('Houve um erro na API!');
         }
     }).catch(function (resposta) {
         console.error(resposta);
