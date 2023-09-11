@@ -520,6 +520,9 @@ function listarFuncionario(idUsuario) {
     var tabela = document.getElementById("tabela-funcionario");
     var trColunas = document.createElement("tr");
     var thead = document.createElement("thead");
+    var thId = document.createElement("th");
+    thId.setAttribute("scope", "row");
+    thId.innerHTML = "#";
     var thNome = document.createElement("th");
     thNome.setAttribute("scope", "row");
     thNome.innerHTML = "Nome";
@@ -537,6 +540,7 @@ function listarFuncionario(idUsuario) {
     thCargo.innerHTML = "Cargo";
 
 
+    trColunas.appendChild(thId);
     trColunas.appendChild(thNome);
     trColunas.appendChild(thEmail);
     trColunas.appendChild(thCPF);
@@ -556,6 +560,9 @@ function listarFuncionario(idUsuario) {
                 var funcionario = resposta[0];
 
                 var tabela = document.getElementById("tabela-funcionario");
+                var tbody = document.createElement("tbody");
+                var tdId = document.createElement("th");
+                tdId.innerHTML = funcionario.idUsuario;
                 var tdNome = document.createElement("td");
                 tdNome.innerHTML = funcionario.nome;
                 var tdEmail = document.createElement("td");
@@ -566,18 +573,16 @@ function listarFuncionario(idUsuario) {
                 tdTelefone.innerHTML = funcionario.telefone;
                 var tdCargo = document.createElement("td");
                 tdCargo.innerHTML = funcionario.cargo;
-
-
-
-
                 var tr = document.createElement("tr");
 
+                tr.appendChild(tdId);
                 tr.appendChild(tdNome);
                 tr.appendChild(tdEmail);
                 tr.appendChild(tdCPF);
                 tr.appendChild(tdTelefone);
                 tr.appendChild(tdCargo);
-                tabela.appendChild(tr);
+                tbody.appendChild(tr);
+                tabela.appendChild(tbody);
 
             });
         } else {
@@ -602,9 +607,6 @@ function exibirAgenciasVinculadas(idUsuario) {
     var thLogradouro = document.createElement("th");
     thLogradouro.setAttribute("scope", "row");
     thLogradouro.innerHTML = "Logradouro";
-    var thCNPJ = document.createElement("th");
-    thCNPJ.setAttribute("scope", "row");
-    thCNPJ.innerHTML = "CNPJ";
     var thDesvincular = document.createElement("th");
     thDesvincular.setAttribute("scope", "row");
     thDesvincular.innerHTML = "Desvincular";
@@ -612,7 +614,6 @@ function exibirAgenciasVinculadas(idUsuario) {
     trColunas.appendChild(thId);
     trColunas.appendChild(thAgencia);
     trColunas.appendChild(thLogradouro);
-    trColunas.appendChild(thCNPJ);
     trColunas.appendChild(thDesvincular);
     thead.appendChild(trColunas);
     lista.appendChild(thead);
@@ -629,28 +630,30 @@ function exibirAgenciasVinculadas(idUsuario) {
                     var agencia = resposta[i];
 
                     var tabela = document.getElementById("tabela-agenciasVinculadas");
+                    var tbody = document.createElement("tbody");
                     var thIndice = document.createElement("th");
                     thIndice.innerHTML = i + 1;
                     var tdAgencia = document.createElement("td");
                     tdAgencia.innerHTML = agencia.apelido;
                     var tdLogradouro = document.createElement("td");
                     tdLogradouro.innerHTML = `${agencia.logradouro}, ${agencia.numero}`;
-                    var tdCNPJ = document.createElement("td");
-                    tdCNPJ.innerHTML = agencia.cnpjAgencia;
-                    var btnDesvincular = document.createElement("button");
-                    btnDesvincular.setAttribute("onclick", `desvincularAgencia(${idUsuario}, ${agencia.idAgencia})`);
-                    btnDesvincular.innerHTML = "Desvincular"
-
+                    var tdDesvincular = document.createElement("td");
+                    var aDesvincular = document.createElement("td");
+                    aDesvincular.setAttribute("onclick",`desvincularAgencia(${idUsuario}, ${agencia.idAgencia})`)
+                    aDesvincular.setAttribute("class",`btn btn-danger btn-sm`)
+                    var iDesvincular = document.createElement("td");
+                    iDesvincular.setAttribute("class",`bi bi-box-arrow-right`)
                     var tr = document.createElement("tr");
 
                     tr.appendChild(thIndice);
                     tr.appendChild(tdAgencia);
                     tr.appendChild(tdLogradouro);
-                    tr.appendChild(tdCNPJ);
-                    tr.appendChild(btnDesvincular);
-                    tabela.appendChild(tr);
+                    aDesvincular.appendChild(iDesvincular);
+                    tdDesvincular.appendChild(aDesvincular);
+                    tr.appendChild(tdDesvincular);
+                    tbody.appendChild(tr);
+                    tabela.appendChild(tbody);
                 }
-
             });
         } else {
             throw ('Houve um erro na API!');
@@ -674,9 +677,6 @@ function exibirAgenciasNaoVinculadas(idUsuario, fkEmpresa) {
     var thLogradouro = document.createElement("th");
     thLogradouro.setAttribute("scope", "row");
     thLogradouro.innerHTML = "Logradouro";
-    var thCNPJ = document.createElement("th");
-    thCNPJ.setAttribute("scope", "row");
-    thCNPJ.innerHTML = "CNPJ";
     var thVincular = document.createElement("th");
     thVincular.setAttribute("scope", "row");
     thVincular.innerHTML = "Vincular";
@@ -684,7 +684,6 @@ function exibirAgenciasNaoVinculadas(idUsuario, fkEmpresa) {
     trColunas.appendChild(thId);
     trColunas.appendChild(thAgencia);
     trColunas.appendChild(thLogradouro);
-    trColunas.appendChild(thCNPJ);
     trColunas.appendChild(thVincular);
     thead.appendChild(trColunas);
     lista.appendChild(thead);
@@ -702,28 +701,26 @@ function exibirAgenciasNaoVinculadas(idUsuario, fkEmpresa) {
 
                     if (agencia.fkUsuario == undefined && agencia.fkAgencia == undefined) {
 
-
                         var tabela = document.getElementById("tabela-agenciasNaoVinculadas");
+                        var tbody = document.createElement("tbody");
                         var thIndice = document.createElement("th");
                         thIndice.innerHTML = i + 1;
                         var tdAgencia = document.createElement("td");
                         tdAgencia.innerHTML = agencia.apelido;
                         var tdLogradouro = document.createElement("td");
                         tdLogradouro.innerHTML = `${agencia.logradouro}, ${agencia.numero}`;
-                        var tdCNPJ = document.createElement("td");
-                        tdCNPJ.innerHTML = agencia.cnpjAgencia;
-                        var btnVincular = document.createElement("button");
-                        btnVincular.setAttribute("onclick", `vincularAgencia(${idUsuario}, ${agencia.idAgencia})`);
-                        btnVincular.innerHTML = "Vincular"
-
+                        var btnVincular = document.createElement("td");
+                        // btnVincular.setAttribute("onclick", `vincularAgencia(${idUsuario}, ${agencia.idAgencia})`);
+                        btnVincular.innerHTML = `<a onclick="vincularAgencia(${idUsuario}, ${agencia.idAgencia})" class="btn btn-primary btn-sm" title="Remove my profile image"><i
+                        class="bi bi-box-arrow-in-left"></i></a>`;
                         var tr = document.createElement("tr");
 
                         tr.appendChild(thIndice);
                         tr.appendChild(tdAgencia);
                         tr.appendChild(tdLogradouro);
-                        tr.appendChild(tdCNPJ);
                         tr.appendChild(btnVincular);
-                        tabela.appendChild(tr);
+                        tbody.appendChild(tr);
+                        tabela.appendChild(tbody);
                     }
                 }
 
