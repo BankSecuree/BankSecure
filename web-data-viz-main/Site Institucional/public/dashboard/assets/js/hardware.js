@@ -66,8 +66,14 @@ function cadastrarNomeMaquina() {
     }).then(function (resposta) {
         console.log("resposta: ", resposta);
         if (resposta.ok) {
-            alert("Máquina cadastrada com sucesso")
             cadastrarComponente();
+            cardMsg.style.display = "block"
+            cardMsg.style.border = "2px solid greenyellow"
+            cardMsg.style.color = "greenyellow"
+            cardMsg.innerHTML = "✅Máquina cadastrada! Atualizando...✅";
+            setTimeout(function () {
+                location.reload();
+            }, 2000);
         } else {
             throw ("Houve um erro ao realizar o cadastro da máquina!")
         }
@@ -100,7 +106,6 @@ function cadastrarComponente() {
         }).then(function (resposta) {
             console.log("resposta: ", resposta);
             if (resposta.ok) {
-                alert("Componentes cadastrado com sucesso!")
             } else {
                 throw ("Houve um erro ao realizar o cadastro os componentes!")
             }
@@ -115,9 +120,6 @@ function cadastrarComponente() {
 
 function cadastrarTipoMaquina() {
 
-    
-    alert(tipoMaquinaVar);
-
     fetch(`/hardware/cadastrarTipoMaquina`, {
         method: "POST",
         headers: {
@@ -129,7 +131,6 @@ function cadastrarTipoMaquina() {
     }).then(function (resposta) {
         console.log("resposta: ", resposta);
         if (resposta.ok) {
-            alert("Tipo de Máquina cadastrado com sucesso!")
         } else {
             throw ("Houve um erro ao realizar o cadastro do tipo de máquina!")
         }
@@ -218,7 +219,7 @@ function exibirTabelaMaquinas() {
                     tdApelido.innerHTML = publicacao.nome;
                     var tdTipo = document.createElement("td");
                     tdTipo.innerHTML = publicacao.tipo;
-                    var tdAgencia= document.createElement("td");
+                    var tdAgencia = document.createElement("td");
                     tdAgencia.innerHTML = publicacao.agencia;
                     var tdButton = document.createElement("td");
                     tdButton.innerHTML = `<a onclick="editarAgencia(${publicacao.idMaquina})" class="btn btn-primary btn-sm" title="Remove my profile image"><i
