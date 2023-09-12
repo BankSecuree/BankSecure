@@ -197,7 +197,7 @@ INSERT INTO usuario (email, senha, nome, fkEmpresa, cargo, dataInicio) VALUES ('
 
 -- GERENTES
 INSERT INTO empresa (razaoSocial, cnpjEmpresa, cep, logradouro, numero, telefoneEmpresa) VALUES ('BANCO ITAUCARD S.A.', 17192451000170, '04344902', 'PRACA ALFREDO EGYDIO DE SOUZA ARANHA 100', 100, '(11) 4004-4828');
-INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente,cpf, telefone, cargo, dataInicio) VALUES ('gerenteitau@bs.com', '12345', 'Fernando Brandão', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 1,12312312300, '(11)90000-1111', 'CTO', '2023-08-01');
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente,cpf, telefone, cargo, dataInicio) VALUES ('gerenteitau@bs.com', '12345', 'Fernando Brandão', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 1,12312312300, '(11)90000-1111', 'Gerente de TI', '2023-08-01');
 
 -- ANALISTAS
 INSERT INTO usuario (email, senha, nome, cpf, telefone, cargo, dataNascimento, fkEmpresa, fkGerente, dataInicio) VALUES ('analista1itau@bs.com', '12345', 'Julia Lima', '54779854112', '11985698741', 'Analista', '2000-10-24', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 2, '2023-08-01');
