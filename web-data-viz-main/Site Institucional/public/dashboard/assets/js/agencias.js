@@ -60,9 +60,9 @@ function exibirTabelaAgencias() {
                     var tdFuncionarios = document.createElement("td");
                     tdFuncionarios.innerHTML = publicacao.funcionarios;
                     var tdMaquinas = document.createElement("td");
-                    tdMaquinas.innerHTML = publicacao.maquinas;                 
+                    tdMaquinas.innerHTML = publicacao.maquinas;
                     var tdButton = document.createElement("td");
-                    tdButton.innerHTML = `<a onclick="editarAgencia(${publicacao.idAgencia})" class="btn btn-primary btn-sm" title="Remove my profile image"><i
+                    tdButton.innerHTML = `<a href="conta_editarAgencia.html?${publicacao.idAgencia}" class="btn btn-primary btn-sm" title="Remove my profile image"><i
                     class="bi bi-pencil-square"></i></a>
                     <a onclick="excluirAgencia(${publicacao.idAgencia})" class="btn btn-danger btn-sm" title="Remove my profile image"><i
                     class="bi bi-trash"></i></a>
@@ -90,10 +90,86 @@ function exibirTabelaAgencias() {
     });
 }
 
-function editarAgencia(idAgencia) {
 
+function listarAgencia(idAgencia) {
+
+    fetch(`/agencias/listarAgencia/${idAgencia}`).then(function (resposta) {
+        if (resposta.ok) {
+            if (resposta.status == 204) {
+
+                throw "Nenhum resultado encontrado!!";
+            }
+            resposta.json().then(function (resposta) {
+
+                var agencia = resposta[0];
+                console.log(agencia);
+
+                iptApelido.value = agencia.apelido;
+                iptCnpj.value = agencia.cnpjAgencia;
+                iptCep.value = agencia.CEP;
+                iptLogradouro.value = agencia.logradouro;
+                iptNumero.value = agencia.numero;
+                iptTelefone.value = agencia.telefoneAgencia;
+
+            });
+        } else {
+            throw ('Houve um erro na API!');
+        }
+    }).catch(function (resposta) {
+        console.error(resposta);
+        // finalizarAguardar();
+    });
 
 }
+
+function editarAgencia(idAgencia) {
+
+    const retorno = eliminarMascaras()
+
+    cnpjFormatado = retorno.cnpjFormatado
+    cepFormatado = retorno.cepFormatado
+    telefoneFormatado = retorno.telefoneFormatado
+    
+    
+    var agenciaIdVar = idAgencia;
+    var agenciaApelidoVar = iptApelido.value;
+    var agenciaCNPJVar = cnpjFormatado;
+    var agenciaCEPVar = cepFormatado;
+    var agenciaLogradouroVar = iptLogradouro.value;
+    var agenciaNumeroVar = iptNumero.value;
+    var agenciaTelefoneVar = telefoneFormatado;
+
+    fetch("/agencias/atualizarAgencia", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+
+            agenciaIdServer: agenciaIdVar,
+            agenciaCnpjServer: agenciaCNPJVar,
+            agenciaApelidoServer: agenciaApelidoVar,
+            agenciaLogradouroServer: agenciaLogradouroVar,
+            agenciaNumeroServer: agenciaNumeroVar,
+            agenciaCepServer: agenciaCEPVar,
+            agenciaTelefoneServer: agenciaTelefoneVar,
+
+        })
+    }).then(function (resposta) {
+        console.log("resposta: ", resposta);
+        if (resposta.ok) {
+            alert("Agência atualizada com sucesso!");
+            window.location = "conta_agencias.html";
+        } else {
+            alert("Houve um erro ao tentar atualizar a agência!");
+        }
+    }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+    });
+    return false;
+}
+
+
 
 
 function validar() {
