@@ -71,25 +71,25 @@ def pegar_dados():
    
     """
     # Alerta Slack
-     if (exibiu == False):
-         if (ram_percent > 83):
-             mensagem = {"text": f"""
-            🚨ALERTA🚨
+    #  if (exibiu == False):
+    #      if (ram_percent > 83):
+    #          mensagem = {"text": f"""
+    #         🚨ALERTA🚨
 
-            Protocolo  => 837021
-            Data          => {data}
-            User          => {user}
-            Descrição  => {"Sua memória RAM ultrapassou:"} {ram_percent}%  
-            """}
-             chatItau = "https://hooks.slack.com/services/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"
+    #         Protocolo  => 837021
+    #         Data          => {data}
+    #         User          => {user}
+    #         Descrição  => {"Sua memória RAM ultrapassou:"} {ram_percent}%  
+    #         """}
+    #          chatItau = "https://hooks.slack.com/services/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"
 
-             postMsg = requests.post(chatItau, data=json.dumps(mensagem))
-             exibiu = True
+    #          postMsg = requests.post(chatItau, data=json.dumps(mensagem))
+    #          exibiu = True
 
-     comp1 = "Memória"
-     comp2 = "CPU"
-     comp3 = "Disco"
-     cursor.execute(f"CALL inserirDadosMaquina ('{user}', '{comp1}', {ram_percent:.2f}, '{comp2}', {cpu_porcent}, '{comp3}', {disc_percent}, NOW());")
+    #  comp1 = "Memória"
+    #  comp2 = "CPU"
+    #  comp3 = "Disco"
+    #  cursor.execute(f"CALL inserirDadosMaquina ('{user}', '{comp1}', {ram_percent:.2f}, '{comp2}', {cpu_porcent}, '{comp3}', {disc_percent}, NOW());")
 
     #Gravar os dados na tabela definitiva
      conexao.commit()

@@ -19,10 +19,10 @@ while repetir:
 
                 Protocolo  => 837021
                 Data          => {data}
-                User          => ${user}
+                User          => {user}
                 Descrição  => {"Sua memória RAM ultrapassou:"} {ram_percent}%  
                 """}
-    chatItau = "https://hooks.slack.com/services/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"
+    chatItau = "https://hooks.slack.com/services/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"
 
     postMsg = requests.post(chatItau, data=json.dumps(mensagem))
 
@@ -30,7 +30,7 @@ while repetir:
 
     url = "https://banksecure.atlassian.net/rest/api/3/issue"
 
-    auth = HTTPBasicAuth("suporte.banksecure@gmail.com", "ATATT3xFfGF08LobAfSeXkqk1KRpSciYfZiZivdvAznaP8Xxby91xg9uNlg7VbJa6JYpWigvebjO9qvCvCjrh7eDV_Nhctmt-m9-oknCJl60EFEGS_NEn-17qzJl2L8MNvALO0a5veSRE5kN2q8mNTmfT7w3-MUsiVa9a-PmFxe9NJwswQZCpKw=EE3CC2AE")
+    auth = HTTPBasicAuth("suporte.banksecure@gmail.com", "ATATT3xFfGF047qQDbi2GlvIp8w8QrnhfnpUxSgS4GXkW3Y3eKYSN80T-maYdduxCywgW-xlfmS8kkzqbYKUp57whv7mDOLqQZzmhZDT9noqvGlXlcL6gOl1AnXTP81y9q8Iw7bdgJ0VJb7gIb953PuM9Sft-JVqOCWmBCeBLMzA-2zuEhLq-FM=A302DFA1")
 
     headers = {
       "Accept": "application/json",
