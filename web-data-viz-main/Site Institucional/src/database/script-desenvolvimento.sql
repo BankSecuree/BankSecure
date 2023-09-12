@@ -201,8 +201,8 @@ INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente,cpf, telefone, car
 
 -- ANALISTAS
 INSERT INTO usuario (email, senha, nome, cpf, telefone, cargo, dataNascimento, fkEmpresa, fkGerente, dataInicio) VALUES ('analista1itau@bs.com', '12345', 'Julia Lima', '54779854112', '11985698741', 'Analista', '2000-10-24', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 2, '2023-08-01');
-INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente, dataInicio) VALUES ('analista1itau2@bs.com', '12345', 'Manoel Gomes', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 2, '2023-08-01');
-INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente, dataInicio) VALUES ('analista1itau3@bs.com', '12345', 'Michael Jackson', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 2, '2023-08-01');
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente, dataInicio) VALUES ('analista1itau2@bs.com', '12345', 'Celso Fernandes', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 2, '2023-08-01');
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente, dataInicio) VALUES ('analista1itau3@bs.com', '12345', 'Carolina Barros', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 2, '2023-08-01');
 
 -- AGENCIA
 INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefoneAgencia, fkEmpresa) VALUES ('60701190031328', 'Itau Rudge Ramos', 'Rua Rudge Ramos', 80, '09772040', '1130034828', 2);
