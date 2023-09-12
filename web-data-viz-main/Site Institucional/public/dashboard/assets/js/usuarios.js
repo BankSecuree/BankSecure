@@ -209,24 +209,20 @@ function exibirTabelaUsuarios() {
     var thNome = document.createElement("th");
     thNome.setAttribute("scope", "row");
     thNome.innerHTML = "Nome";
-    var thEmpresa = document.createElement("th");
-    thEmpresa.setAttribute("scope", "row");
-    thEmpresa.innerHTML = "Empresa";
-    var thAgencias = document.createElement("th");
-    thAgencias.setAttribute("scope", "row");
-    thAgencias.innerHTML = "Agências";
-    var thDataInicio = document.createElement("th");
-    thDataInicio.setAttribute("scope", "row");
-    thDataInicio.innerHTML = "Data de Início";
+    var thNumAgenciasVinculadas = document.createElement("th");
+    thNumAgenciasVinculadas.setAttribute("scope", "row");
+    thNumAgenciasVinculadas.innerHTML = "N° Agências Vinculadas";
+    var thVincularAgencia = document.createElement("th");
+    thVincularAgencia.setAttribute("scope", "row");
+    thVincularAgencia.innerHTML = "Vincular agência";
     var thExcluir = document.createElement("th");
     thExcluir.setAttribute("scope", "row");
     thExcluir.innerHTML = "Editar/Excluir";
 
     trColunas.appendChild(thId);
     trColunas.appendChild(thNome);
-    trColunas.appendChild(thEmpresa);
-    trColunas.appendChild(thAgencias);
-    trColunas.appendChild(thDataInicio);
+    trColunas.appendChild(thNumAgenciasVinculadas);
+    trColunas.appendChild(thVincularAgencia);
     trColunas.appendChild(thExcluir);
     thead.appendChild(trColunas);
     lista.appendChild(thead);
@@ -254,14 +250,11 @@ function exibirTabelaUsuarios() {
                     thNumero.setAttribute("scope", "row");
                     var tdNome = document.createElement("td");
                     tdNome.innerHTML = publicacao.nome;
-                    var tdEmpresa = document.createElement("td");
-                    tdEmpresa.innerHTML = publicacao.empresa;
-                    var tdAgencias = document.createElement("td");
-                    tdAgencias.innerHTML = publicacao.agencias;
-                    var tdInicio = document.createElement("td");
-                    var dataInicio = new Date(publicacao.dataInicio)
-                    dataInicio = `${dataInicio.getDate().toString().padStart(2, '0')}/${(dataInicio.getMonth() + 1).toString().padStart(2, '0')}/${dataInicio.getFullYear().toString()}`
-                    tdInicio.innerHTML = dataInicio;
+                    var tdNumAgenciasVinculadas = document.createElement("td");
+                    tdNumAgenciasVinculadas.innerHTML = publicacao.agencias;
+                    var tdBtnVincularAgencia = document.createElement("td");
+                    tdBtnVincularAgencia.innerHTML = `<a onclick="redirecionarVincularAgencia(${publicacao.idUsuario}, ${publicacao.fkEmpresa})" class="btn btn-primary btn-sm" title="Remove my profile image"><i
+                    class="bi bi-building-fill-add"></i></a>`
                     var tdButton = document.createElement("td");
                     tdButton.innerHTML = `
                     <a onclick="editarUsuario(${publicacao.idUsuario})" class="btn btn-primary btn-sm" title="Remove my profile image"><i
@@ -270,14 +263,12 @@ function exibirTabelaUsuarios() {
                     class="bi bi-trash"></i></a>
                     `;
                     var tr = document.createElement("tr");
-                    tr.setAttribute("onclick", `redirecionarVincularAgencia(${publicacao.idUsuario}, ${publicacao.fkEmpresa})`);
                     var tbody = document.createElement("tbody");
 
                     tr.appendChild(thNumero);
                     tr.appendChild(tdNome);
-                    tr.appendChild(tdEmpresa);
-                    tr.appendChild(tdAgencias);
-                    tr.appendChild(tdInicio);
+                    tr.appendChild(tdNumAgenciasVinculadas);
+                    tr.appendChild(tdBtnVincularAgencia);
                     tr.appendChild(tdButton);
                     tbody.appendChild(tr);
                     lista.appendChild(tbody);
