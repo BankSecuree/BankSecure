@@ -186,6 +186,8 @@ FLUSH PRIVILEGES;
 DROP USER IF EXISTS 'bs_itau'@'localhost';
 CREATE USER 'bs_itau'@'localhost' IDENTIFIED BY 'Itau_100';
 GRANT INSERT, SELECT ON bankSecure.registros TO 'bs_itau'@'localhost';
+GRANT INSERT, SELECT ON bankSecure.maquinacomponente TO 'bs_itau'@'localhost';
+GRANT INSERT, SELECT ON bankSecure.maquina TO 'bs_itau'@'localhost';
 GRANT EXECUTE ON PROCEDURE inserirDadosMaquina to 'bs_itau'@'localhost';
 FLUSH PRIVILEGES;
 
