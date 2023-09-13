@@ -69,7 +69,7 @@ function entrar() {
                     
                    
                     setTimeout(function () {
-                        window.location = "./dashboard/agencias.html";
+                        window.location = "./dashboard/index.html";
                     }, 2000); 
 
                 });
