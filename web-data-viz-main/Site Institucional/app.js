@@ -12,6 +12,7 @@ var loginRouter = require("./src/routes/login");
 var usuariosRouter = require("./src/routes/usuarios");
 var agenciasRouter = require("./src/routes/agencias");
 var dashAgenciasRouter = require("./src/routes/dashAgencias");
+var dashDonutRouter = require("./src/routes/dashDonut");
 var perfilRouter = require("./src/routes/perfil");
 var hardwareRouter = require("./src/routes/hardware");
 
@@ -25,6 +26,7 @@ app.use("/login", loginRouter);
 app.use("/usuarios", usuariosRouter);
 app.use("/agencias", agenciasRouter);
 app.use("/dashAgencias", dashAgenciasRouter);
+app.use("/dashDonut", dashDonutRouter);
 app.use("/perfil", perfilRouter);
 app.use("/hardware", hardwareRouter);
 

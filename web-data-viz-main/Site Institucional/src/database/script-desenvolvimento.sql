@@ -248,13 +248,38 @@ CREATE OR REPLACE VIEW vw_componente AS SELECT * FROM componente;
 DROP VIEW IF EXISTS vw_registrosEstruturados;
 CREATE OR REPLACE VIEW vw_registrosEstruturados AS 
 SELECT registros.fkMaquina as "ID", maquina.nome as "Nome", registros.dataHora as "Data",
-MAX( CASE WHEN registros.fkComponente = 1 THEN registros.valor END ) "Cpu" ,
-MAX( CASE WHEN registros.fkComponente = 2 THEN registros.valor END ) "Memoria" ,
-MAX( CASE WHEN registros.fkComponente = 3 THEN registros.valor END ) "Disco"
+MAX( CASE WHEN registros.fkComponente = 1 THEN registros.valor END ) "cpuu" ,
+MAX( CASE WHEN registros.fkComponente = 2 THEN registros.valor END ) "memoria" ,
+MAX( CASE WHEN registros.fkComponente = 3 THEN registros.valor END ) "disco"
 FROM registros JOIN maquina ON fkMaquina = idMaquina
 GROUP BY registros.fkMaquina, registros.dataHora
 ORDER BY registros.fkMaquina, registros.dataHora ASC;
 
+
+DROP VIEW IF EXISTS vw_donut_servidor;
+CREATE OR REPLACE VIEW vw_donut_servidor AS 
+SELECT (SELECT count(id) as critico FROM (SELECT id, avg(cpuu) as media FROM vw_registrosEstruturados, vw_maquina WHERE id = idMaquina AND fkTipoMaquina = 1 GROUP BY id) as m WHERE media >= 90) as s_cpu_critico,
+	   (SELECT count(id) as alerta FROM (SELECT id, avg(cpuu) as media FROM vw_registrosEstruturados, vw_maquina WHERE id = idMaquina AND fkTipoMaquina = 1 GROUP BY id) as m WHERE media >= 70 AND media < 90) as s_cpu_alerta,
+	   (SELECT count(id) as ideal FROM (SELECT id, avg(cpuu) as media FROM vw_registrosEstruturados, vw_maquina WHERE id = idMaquina AND fkTipoMaquina = 1 GROUP BY id) as m WHERE media >= 0 AND media < 70) as s_cpu_ideal,
+	   (SELECT count(id) as critico FROM (SELECT id, avg(memoria) as media FROM vw_registrosEstruturados, vw_maquina WHERE id = idMaquina AND fkTipoMaquina = 1 GROUP BY id) as m WHERE media >= 90) as s_mem_critico,
+	   (SELECT count(id) as alerta FROM (SELECT id, avg(memoria) as media FROM vw_registrosEstruturados, vw_maquina WHERE id = idMaquina AND fkTipoMaquina = 1 GROUP BY id) as m WHERE media >= 70 AND media < 90) as s_mem_alerta,
+       (SELECT count(id) as ideal FROM (SELECT id, avg(memoria)as media FROM vw_registrosEstruturados, vw_maquina WHERE id = idMaquina AND fkTipoMaquina = 1 GROUP BY id) as m WHERE media >= 0 AND media < 70) as s_mem_ideal,
+       (SELECT count(id) as critico FROM (SELECT id, avg(disco)as media FROM vw_registrosEstruturados, vw_maquina WHERE id = idMaquina AND fkTipoMaquina = 1 GROUP BY id) as m WHERE media >= 90) as s_disco_critico,
+       (SELECT count(id) as alerta FROM (SELECT id, avg(disco)as media FROM vw_registrosEstruturados, vw_maquina WHERE id = idMaquina AND fkTipoMaquina = 1 GROUP BY id) as m WHERE media >= 70 AND media < 90) as s_disco_alerta,
+       (SELECT count(id) as ideal FROM (SELECT id, avg(disco)as media FROM vw_registrosEstruturados, vw_maquina WHERE id = idMaquina AND fkTipoMaquina = 1 GROUP BY id) as m WHERE media >= 0 AND media < 70) as s_disco_ideal;
+
+DROP VIEW IF EXISTS vw_donut_maquina;
+CREATE OR REPLACE VIEW vw_donut_maquina AS 
+SELECT (SELECT count(id) as critico FROM (SELECT id, avg(cpuu) as media FROM vw_registrosEstruturados, vw_maquina WHERE id = idMaquina AND fkTipoMaquina = 2 GROUP BY id) as m WHERE media >= 90) as s_cpu_critico,
+	   (SELECT count(id) as alerta FROM (SELECT id, avg(cpuu) as media FROM vw_registrosEstruturados, vw_maquina WHERE id = idMaquina AND fkTipoMaquina = 2 GROUP BY id) as m WHERE media >= 70 AND media < 90) as s_cpu_alerta,
+	   (SELECT count(id) as ideal FROM (SELECT id, avg(cpuu) as media FROM vw_registrosEstruturados, vw_maquina WHERE id = idMaquina AND fkTipoMaquina = 2 GROUP BY id) as m WHERE media >= 0 AND media < 70) as s_cpu_ideal,
+	   (SELECT count(id) as critico FROM (SELECT id, avg(memoria) as media FROM vw_registrosEstruturados, vw_maquina WHERE id = idMaquina AND fkTipoMaquina = 2 GROUP BY id) as m WHERE media >= 90) as s_mem_critico,
+	   (SELECT count(id) as alerta FROM (SELECT id, avg(memoria) as media FROM vw_registrosEstruturados, vw_maquina WHERE id = idMaquina AND fkTipoMaquina = 2 GROUP BY id) as m WHERE media >= 70 AND media < 90) as s_mem_alerta,
+       (SELECT count(id) as ideal FROM (SELECT id, avg(memoria)as media FROM vw_registrosEstruturados, vw_maquina WHERE id = idMaquina AND fkTipoMaquina = 2 GROUP BY id) as m WHERE media >= 0 AND media < 70) as s_mem_ideal,
+       (SELECT count(id) as critico FROM (SELECT id, avg(disco)as media FROM vw_registrosEstruturados, vw_maquina WHERE id = idMaquina AND fkTipoMaquina = 2 GROUP BY id) as m WHERE media >= 90) as s_disco_critico,
+       (SELECT count(id) as alerta FROM (SELECT id, avg(disco)as media FROM vw_registrosEstruturados, vw_maquina WHERE id = idMaquina AND fkTipoMaquina = 2 GROUP BY id) as m WHERE media >= 70 AND media < 90) as s_disco_alerta,
+       (SELECT count(id) as ideal FROM (SELECT id, avg(disco)as media FROM vw_registrosEstruturados, vw_maquina WHERE id = idMaquina AND fkTipoMaquina = 2 GROUP BY id) as m WHERE media >= 0 AND media < 70) as s_disco_ideal;
+       
 DROP VIEW IF EXISTS vw_servidor1;
 CREATE OR REPLACE VIEW vw_servidor1 AS SELECT * FROM vw_registrosEstruturados WHERE id = 4
 
