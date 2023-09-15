@@ -8,14 +8,11 @@ var PORTA = process.env.AMBIENTE_PROCESSO == "desenvolvimento" ? 3333 : 8080;
 
 var app = express();
 
-var indexRouter = require("./src/routes/index");
 var loginRouter = require("./src/routes/login");
 var usuariosRouter = require("./src/routes/usuarios");
 var agenciasRouter = require("./src/routes/agencias");
 var dashAgenciasRouter = require("./src/routes/dashAgencias");
 var perfilRouter = require("./src/routes/perfil");
-var avisosRouter = require("./src/routes/avisos");
-var medidasRouter = require("./src/routes/medidas");
 var hardwareRouter = require("./src/routes/hardware");
 
 app.use(express.json());
@@ -24,13 +21,10 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(cors());
 
-app.use("/", indexRouter);
 app.use("/login", loginRouter);
 app.use("/usuarios", usuariosRouter);
 app.use("/agencias", agenciasRouter);
 app.use("/dashAgencias", dashAgenciasRouter);
-app.use("/avisos", avisosRouter);
-app.use("/medidas", medidasRouter);
 app.use("/perfil", perfilRouter);
 app.use("/hardware", hardwareRouter);
 
