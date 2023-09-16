@@ -11,17 +11,6 @@ function exibirListaAgencias(idUsuario) {
     return database.executar(instrucao);
 }
 
-function getDadosMaquina(){
-    console.log("ACESSEI O AGENCIAS  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function getDadosMaquina()");
-    var instrucao = `
-      SELECT MAX(Cpu), MAX(Memória), MAX(Disco)
-      FROM vw_registrosEstruturados
-      WHERE dataHora = CURRENT_TIMESTAMP
-    `;
-    console.log("Executando a instrução SQL: \n" + instrucao);
-    return database.executar(instrucao);
-}
-
 function exibirView(idMaquina) {
     console.log("ACESSEI O AGENCIAS  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function exibirListaAgencias()");
     var instrucao = `

@@ -388,48 +388,9 @@ function graficoAgencia(idAgencia, maquinas) {
 }
 
 
-  // function getDadosMaquina(idAgencia) {
-  //   fetch("/dashAgencias/getDadosMaquina").then(function (resposta) {
-  //     if (resposta.ok) {
-  //       return resposta.json();
-  //     } else {
-  //       throw "Erro na solicitação ao banco de dados!";
-  //     }
-  //   })
-  //   .then(function (dados) {
-  //     // Chame uma função para atualizar os gráficos com os novos dados
-  //     atualizarGraficos(dados);
-  //   })
-  //   .catch(function (erro) {
-  //     console.error(erro);
-  //   });
-  // }
-
   function getDadosMaquina(yrange){
     return Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min
   }
-
-  // /*function atualizarDados(){
-  //   var cpuData = dados.cpu;
-  //   var memoriaData = dados.cpu;
-  //   var discoData = dados.cpu;
-
-  //   chartProgress1.updateOptions({
-  //     series: [{ data: [cpuData] }],
-  //     subtitle: { text: cpuData + "%" }
-  //   });
-
-  //   chartProgress2.updateOptions({
-  //     series: [{ data: [memoriaData] }],
-  //     subtitle: { text: memoriaData + "%" }
-  //   });
-
-  //   chartProgress3.updateOptions({
-  //     series: [{ data: [discoData] }],
-  //     subtitle: { text: discoData + "%" }
-  //   });
-
-  // }*/
 
   window.setInterval(function () {
 
