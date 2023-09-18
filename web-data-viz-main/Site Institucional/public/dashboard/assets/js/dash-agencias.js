@@ -156,7 +156,7 @@ function graficoAgencia(idAgencia, maquinas) {
     colMd7.appendChild(boxMt4);
     boxMt4.appendChild(mt4);
     mt4.appendChild(progress1, progress2, progress3);
-    card.appendChild();
+    card.appendChild(colMd7);
 
 
 
@@ -386,46 +386,3 @@ function graficoAgencia(idAgencia, maquinas) {
   }
 
 }
-
-
-  function getDadosMaquina(yrange){
-    return Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min
-  }
-
-  window.setInterval(function () {
-
-    //mexer aqui para passar as variaveis do banco com parametro
-
-    var p1Data = getDadosMaquina({ min: 10, max: 100 });
-    chartProgress1.updateOptions({
-      series: [{
-        data: [p1Data]
-      }],
-      subtitle: {
-        text: p1Data + "%"
-      }
-    })
-
-    var p2Data = getDadosMaquina({ min: 10, max: 100 });
-    chartProgress2.updateOptions({
-      series: [{
-        data: [p2Data]
-      }],
-      subtitle: {
-        text: p2Data + "%"
-      }
-    })
-
-    var p3Data = getDadosMaquina({ min: 10, max: 100 });
-    chartProgress3.updateOptions({
-      series: [{
-        data: [p3Data]
-      }],
-      subtitle: {
-        text: p3Data + "%"
-      }
-    })
-
-
-
-  }, 3000);
