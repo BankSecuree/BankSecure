@@ -53,6 +53,7 @@ function cadastrarNomeMaquina() {
     var nomeMaquinaVar = ipt_nomeMaquina.value;
     var fkAgenciaVar = ipt_fkAgencia.value;
     var tipoMaquinaVar = ipt_fkMaquina.value;
+    
     fetch(`/hardware/cadastrarNomeMaquina`, {
         method: "POST",
         headers: {
@@ -66,13 +67,14 @@ function cadastrarNomeMaquina() {
     }).then(function (resposta) {
         console.log("resposta: ", resposta);
         if (resposta.ok) {
-            cadastrarComponente();
+            cadastrarComponente()
+            criarViewMaquina(nomeMaquinaVar)
             cardMsg.style.display = "block"
             cardMsg.style.border = "2px solid greenyellow"
             cardMsg.style.color = "greenyellow"
             cardMsg.innerHTML = "✅Máquina cadastrada! Atualizando...✅";
             setTimeout(function () {
-                location.reload();
+                //location.reload();
             }, 2000);
         } else {
             cardMsg.style.display = "block"
@@ -84,6 +86,27 @@ function cadastrarNomeMaquina() {
         console.log(`#ERRO: ${resposta}`)
     });
     return false
+}
+
+function criarViewMaquina(nomeMaquina) {
+
+    fetch(`/hardware/criarViewMaquina`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            nomeMaquinaServer: nomeMaquina
+        })
+    }).then(function (resposta) {
+        console.log("resposta: ", resposta);
+        if (resposta.ok) {
+        } else {
+            throw ("Houve um erro ao criar a view da máquina!")
+        }
+    }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`)
+    });
 }
 
 function cadastrarComponente() {
@@ -117,7 +140,6 @@ function cadastrarComponente() {
         });
 
     }
-
 
 }
 

@@ -186,7 +186,7 @@ FLUSH PRIVILEGES;
 DROP USER IF EXISTS 'bs_itau'@'localhost';
 CREATE USER 'bs_itau'@'localhost' IDENTIFIED BY 'Itau_100';
 GRANT INSERT, SELECT ON bankSecure.registros TO 'bs_itau'@'localhost';
-GRANT INSERT, SELECT ON bankSecure.maquinacomponente TO 'bs_itau'@'localhost';
+GRANT INSERT, SELECT ON bankSecure.maquinaComponente TO 'bs_itau'@'localhost';
 GRANT INSERT, SELECT ON bankSecure.maquina TO 'bs_itau'@'localhost';
 GRANT EXECUTE ON PROCEDURE inserirDadosMaquina to 'bs_itau'@'localhost';
 FLUSH PRIVILEGES;
@@ -281,7 +281,7 @@ SELECT (SELECT count(id) as critico FROM (SELECT id, avg(cpuu) as media FROM vw_
        (SELECT count(id) as ideal FROM (SELECT id, avg(disco)as media FROM vw_registrosEstruturados, vw_maquina WHERE id = idMaquina AND fkTipoMaquina = 2 GROUP BY id) as m WHERE media >= 0 AND media < 70) as s_disco_ideal;
        
 DROP VIEW IF EXISTS vw_servidor1;
-CREATE OR REPLACE VIEW vw_servidor1 AS SELECT * FROM vw_registrosEstruturados WHERE id = 4
+CREATE OR REPLACE VIEW vw_servidor1 AS SELECT * FROM vw_registrosEstruturados WHERE id = 4;
 
 -- SELECT * FROM usuario LEFT JOIN funcionarioAgencia ON fkUsuario = idUsuario WHERE fkAgencia IS NULL AND fkUsuario IS NOT NULL;
 -- JOIN agencia ON fkAgencia = idAgencia and idUsuario = 3;

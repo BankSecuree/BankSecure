@@ -30,6 +30,26 @@ function cadastrarNomeMaquina(req, res){
     }
 }
 
+function criarViewMaquina(req, res) {
+    var nomeMaquina = req.body.nomeMaquinaServer;
+
+    hardwareModel.criarViewMaquina(nomeMaquina)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao Criar a view! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).send(erro.sqlMessage);
+            }
+        )
+
+}
+
 function cadastrarComponente(req, res){
     
     var componente = req.body.componenteServer
@@ -98,5 +118,6 @@ module.exports = {
     cadastrarNomeMaquina,
     cadastrarComponente,
     exibirTabelaMaquinas,
-    exibirOptionAgencia
+    exibirOptionAgencia,
+    criarViewMaquina
 }
