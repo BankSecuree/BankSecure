@@ -46,10 +46,19 @@ function exibirOptionAgencia(idEmpresa){
     return database.executar(instrucao);
 }
 
+function deletarMaquina(idMaquina){
+    console.log("CHEGUEI AQUI");
+
+    var comando = `
+        DELETE FROM maquina WHERE idMaquina = '${idMaquina}'
+    `
+}
+
 module.exports = {
     cadastrarNomeMaquina,
     cadastrarComponente,
     exibirOptionAgencia,
     exibirTabelaMaquinas,
-    criarViewMaquina
+    criarViewMaquina,
+    deletarMaquina
 };

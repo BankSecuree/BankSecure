@@ -50,6 +50,7 @@ function criarViewMaquina(req, res) {
 
 }
 
+
 function cadastrarComponente(req, res){
     
     var componente = req.body.componenteServer
@@ -113,11 +114,25 @@ function exibirTabelaMaquinas(req, res) {
     });
   }
 
+function deletarMaquina(req, res){
+    var idMaquina = req.params.idMaquina;
+
+    if(idMaquina == undefined){
+        res.status(400).send("Não chegou o dado");
+    } else{
+        hardwareModel.deletarMaquina(idMaquina).then((resp) =>{
+            res.json(resp)
+        }).catch((err) => {
+            res.status(400).send(err)
+        })
+    }
+}
 
 module.exports = {
     cadastrarNomeMaquina,
     cadastrarComponente,
     exibirTabelaMaquinas,
     exibirOptionAgencia,
-    criarViewMaquina
+    criarViewMaquina,
+    deletarMaquina
 }

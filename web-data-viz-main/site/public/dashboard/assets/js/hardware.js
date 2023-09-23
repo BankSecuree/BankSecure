@@ -275,5 +275,12 @@ function exibirTabelaMaquinas() {
 }
 
 function excluirMaquina(idMaquina){
-    fetch("")
+    fetch(`/hardware/deletarMaquina/${idMaquina}`).then((resposta) => {
+        if(resposta.ok){
+            alert("Excluido com sucesso")
+            window.location.reload()
+        } else{
+            alert("Algo deu errado!")
+        }
+    })
 }
