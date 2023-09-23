@@ -247,9 +247,9 @@ function exibirTabelaMaquinas() {
                     var tdAgencia = document.createElement("td");
                     tdAgencia.innerHTML = publicacao.agencia;
                     var tdButton = document.createElement("td");
-                    tdButton.innerHTML = `<a onclick="editarAgencia(${publicacao.idMaquina})" class="btn btn-primary btn-sm" title="Remove my profile image"><i
+                    tdButton.innerHTML = `<a onclick="editarMaquina(${publicacao.idMaquina})" class="btn btn-primary btn-sm" title="Remove my profile image"><i
                     class="bi bi-pencil-square"></i></a>
-                    <a onclick="excluirAgencia(${publicacao.idMaquina})" class="btn btn-danger btn-sm" title="Remove my profile image"><i
+                    <a onclick="excluirMaquina(${publicacao.idMaquina})" class="btn btn-danger btn-sm" title="Remove my profile image"><i
                     class="bi bi-trash"></i></a>
                     `;
                     var tr = document.createElement("tr");
@@ -272,4 +272,8 @@ function exibirTabelaMaquinas() {
         console.error(resposta);
         // finalizarAguardar();
     });
+}
+
+function excluirMaquina(idMaquina){
+    fetch("")
 }
