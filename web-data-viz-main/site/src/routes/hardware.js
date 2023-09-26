@@ -21,4 +21,12 @@ router.get("/exibirOptionAgencia/:idEmpresa", function (req, res) {
     hardwareController.exibirOptionAgencia(req, res);
 });
 
+router.get("/deletarMaquina/:idMaquina", (req, res) => {
+    hardwareController.deletarMaquina(req, res);
+})
+
+router.post("/alterarMaquina", (req, res) => {
+    hardwareController.alterarMaquina(req, res);
+})
+
 module.exports = router;

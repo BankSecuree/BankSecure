@@ -60,8 +60,8 @@ CREATE TABLE maquina(
 	fkAgencia INT,
     fkTipoMaquina INT,
     nome VARCHAR(45) UNIQUE, 
-	FOREIGN KEY (fkAgencia) REFERENCES agencia(idAgencia),
-	FOREIGN KEY (fkTipoMaquina) REFERENCES tipoMaquina(idTipoMaquina)
+	FOREIGN KEY (fkAgencia) REFERENCES agencia(idAgencia) ON DELETE CASCADE,
+	FOREIGN KEY (fkTipoMaquina) REFERENCES tipoMaquina(idTipoMaquina) ON DELETE CASCADE
 );
 
 CREATE TABLE registros(
@@ -70,7 +70,7 @@ fkMaquina INT,
 fkComponente INT,
 valor DOUBLE,
 dataHora DATETIME,
-FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina)
+FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina) ON DELETE CASCADE
 );
 
 
@@ -83,8 +83,8 @@ CREATE TABLE componente (
 CREATE TABLE maquinaComponente (
 	fkMaquina INT,
     fkComponente INT,
-    FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina),
-    FOREIGN KEY (fkComponente) REFERENCES componente(idComponente),
+    FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina) ON DELETE CASCADE,
+    FOREIGN KEY (fkComponente) REFERENCES componente(idComponente) ON DELETE CASCADE,
     PRIMARY KEY (fkMaquina, fkComponente)
 );
 

@@ -50,6 +50,7 @@ function criarViewMaquina(req, res) {
 
 }
 
+
 function cadastrarComponente(req, res){
     
     var componente = req.body.componenteServer
@@ -113,11 +114,47 @@ function exibirTabelaMaquinas(req, res) {
     });
   }
 
+function deletarMaquina(req, res){
+    var idMaquina = req.params.idMaquina;
+
+    if(idMaquina == undefined){
+        res.status(400).send("Não chegou o dado");
+    } else{
+        hardwareModel.deletarMaquina(idMaquina).then((resp) =>{
+            res.json(resp)
+        }).catch(function (erro) {
+            console.log(erro);
+            console.log("Houve um erro ao deletar a máquina: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+          });
+        }
+}
+
+function alterarMaquina(req, res){
+    var nome = req.body.nomeMaquinaServer;
+    var tipo = req.body.tipoServer;
+    var agencia = req.body.agenciaServer;
+    var idMaquina = req.body.idMaquinaServer;
+
+    if(idMaquina == undefined){
+        res.status(400).send("Não chegou o dado");
+    } else{
+        hardwareModel.alterarMaquina(idMaquina, nome, tipo, agencia).then((resp) =>{
+            res.json(resp)
+        }).catch(function (erro) {
+            console.log(erro);
+            console.log("Houve um erro ao alterar a máquina: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+          });
+        }
+}
 
 module.exports = {
     cadastrarNomeMaquina,
     cadastrarComponente,
     exibirTabelaMaquinas,
     exibirOptionAgencia,
-    criarViewMaquina
+    criarViewMaquina,
+    deletarMaquina,
+    alterarMaquina
 }

@@ -1,3 +1,6 @@
+globalDadosPreAlteracoes = [];
+let contador = 0;
+
 function validar() {
 
     var nomeMaquinaVar = ipt_nomeMaquina.value;
@@ -240,13 +243,18 @@ function exibirTabelaMaquinas() {
                     var thNumero = document.createElement("th");
                     thNumero.innerHTML = publicacao.idMaquina;
                     thNumero.setAttribute("scope", "row");
+                    thNumero.setAttribute("id", `campoId${publicacao.idMaquina}`)
                     var tdApelido = document.createElement("td");
                     tdApelido.innerHTML = publicacao.nome;
+                    tdApelido.setAttribute("id", `campoNome${publicacao.idMaquina}`)
                     var tdTipo = document.createElement("td");
                     tdTipo.innerHTML = publicacao.tipo;
+                    tdTipo.setAttribute("id", `campoTipo${publicacao.idMaquina}`)
                     var tdAgencia = document.createElement("td");
                     tdAgencia.innerHTML = publicacao.agencia;
+                    tdAgencia.setAttribute("id", `campoAgencia${publicacao.idMaquina}`)
                     var tdButton = document.createElement("td");
+                    tdButton.setAttribute("id", `campoBotoes${publicacao.idMaquina}`)
                     tdButton.innerHTML = `<a onclick="editarMaquina(${publicacao.idMaquina})" class="btn btn-primary btn-sm" title="Remove my profile image"><i
                     class="bi bi-pencil-square"></i></a>
                     <a onclick="excluirMaquina(${publicacao.idMaquina})" class="btn btn-danger btn-sm" title="Remove my profile image"><i
@@ -275,5 +283,85 @@ function exibirTabelaMaquinas() {
 }
 
 function excluirMaquina(idMaquina){
-    fetch("")
+    fetch(`/hardware/deletarMaquina/${idMaquina}`).then((resposta) => {
+        if(resposta.ok){
+            alert("Excluido com sucesso")
+            window.location.reload()
+        } else{
+            alert("Algo deu errado!")
+        }
+    })
+}
+
+function editarMaquina(idMaquina){
+    let nome = document.getElementById(`campoNome${idMaquina}`)
+    let tipo = document.getElementById(`campoTipo${idMaquina}`      )
+    let agencia = document.getElementById(`campoAgencia${idMaquina}`)
+    let botoes = document.getElementById(`campoBotoes${idMaquina}`)
+    let valorNome = nome.innerText;
+    let valorTipo = tipo.innerText;
+    let valorAgencia = agencia.innerText;
+
+    nome.innerHTML = `<input type='text' id='novoNome${idMaquina}' value='${valorNome}'> `
+    tipo.innerHTML = `<input type='text' id='novoTipo${idMaquina}' value='${valorTipo}'> `
+    agencia.innerHTML = `<input type='text' id='novoAgencia${idMaquina}' value='${valorAgencia}'> `
+    botoes.innerHTML = `<button onclick='alterarMaquina(${idMaquina})' class="btn btn-danger btn-sm" >Alterar</button>
+    <button onclick='voltar(${idMaquina}, ${contador})' class="btn btn-primary btn-sm">Voltar</button>'`
+
+    globalDadosPreAlteracoes.push({
+        nome: valorNome,
+        tipo: valorTipo,
+        agencia: valorAgencia
+    });
+    contador++
+}
+
+function alterarMaquina(idMaquina){
+    let valorNome = document.getElementById(`novoNome${idMaquina}`).value;
+    let valorTipo = document.getElementById(`novoTipo${idMaquina}`).value;
+    let valorAgencia = document.getElementById(`novoAgencia${idMaquina}`).value;
+
+    fetch(`/hardware/alterarMaquina`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            idMaquinaServer: idMaquina,
+            nomeMaquinaServer: valorNome,
+            tipoServer: valorTipo,
+            agenciaServer: valorAgencia
+        })
+    }).then( (resposta) => {
+        if(resposta.ok){
+            alert("Alterado com sucesso");
+            let nome = document.getElementById(`campoNome${idMaquina}`)
+            let tipo = document.getElementById(`campoTipo${idMaquina}`      )
+            let agencia = document.getElementById(`campoAgencia${idMaquina}`)
+            nome.innerHTML = valorNome;
+            tipo.innerHTML = valorTipo;
+            agencia.innerHTML = valorAgencia;
+            document.getElementById(`campoBotoes${idMaquina}`).innerHTML = `<a onclick="editarMaquina(${idMaquina})" class="btn btn-primary btn-sm" title="Remove my profile image"><i
+            class="bi bi-pencil-square"></i></a>
+            <a onclick="excluirMaquina(${idMaquina})" class="btn btn-danger btn-sm" title="Remove my profile image"><i
+            class="bi bi-trash"></i></a>
+             `;
+        }
+    }).catch((err) => {
+        alert(err);
+    })
+
+}
+function voltar(idMaquina, posicao){
+    let nome = document.getElementById(`campoNome${idMaquina}`)
+    let tipo = document.getElementById(`campoTipo${idMaquina}`      )
+    let agencia = document.getElementById(`campoAgencia${idMaquina}`)
+    nome.innerHTML = globalDadosPreAlteracoes[posicao].nome;
+    tipo.innerHTML = globalDadosPreAlteracoes[posicao].tipo;
+    agencia.innerHTML = globalDadosPreAlteracoes[posicao].agencia;
+    document.getElementById(`campoBotoes${idMaquina}`).innerHTML = `<a onclick="editarMaquina(${idMaquina})" class="btn btn-primary btn-sm" title="Remove my profile image"><i
+    class="bi bi-pencil-square"></i></a>
+    <a onclick="excluirMaquina(${idMaquina})" class="btn btn-danger btn-sm" title="Remove my profile image"><i
+    class="bi bi-trash"></i></a>
+    `;
 }
