@@ -122,10 +122,12 @@ function deletarMaquina(req, res){
     } else{
         hardwareModel.deletarMaquina(idMaquina).then((resp) =>{
             res.json(resp)
-        }).catch((err) => {
-            res.status(400).send(err)
-        })
-    }
+        }).catch(function (erro) {
+            console.log(erro);
+            console.log("Houve um erro ao deletar a máquina: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+          });
+        }
 }
 
 module.exports = {

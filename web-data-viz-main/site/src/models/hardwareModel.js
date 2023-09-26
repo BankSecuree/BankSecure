@@ -50,8 +50,10 @@ function deletarMaquina(idMaquina){
     console.log("CHEGUEI AQUI");
 
     var comando = `
-        DELETE FROM maquina WHERE idMaquina = '${idMaquina}'
+        DELETE FROM maquina WHERE idMaquina = ${idMaquina}
     `
+    console.log(comando)
+    return database.executar(comando);
 }
 
 module.exports = {

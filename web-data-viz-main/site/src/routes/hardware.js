@@ -22,7 +22,7 @@ router.get("/exibirOptionAgencia/:idEmpresa", function (req, res) {
 });
 
 router.get("/deletarMaquina/:idMaquina", (req, res) => {
-    hardwareController.deletarMaquina();
+    hardwareController.deletarMaquina(req, res);
 })
 
 module.exports = router;
