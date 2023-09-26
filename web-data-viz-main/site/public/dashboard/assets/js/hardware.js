@@ -240,13 +240,18 @@ function exibirTabelaMaquinas() {
                     var thNumero = document.createElement("th");
                     thNumero.innerHTML = publicacao.idMaquina;
                     thNumero.setAttribute("scope", "row");
+                    thNumero.setAttribute("id", `campoId${publicacao.idMaquina}`)
                     var tdApelido = document.createElement("td");
                     tdApelido.innerHTML = publicacao.nome;
+                    tdApelido.setAttribute("id", `campoNome${publicacao.idMaquina}`)
                     var tdTipo = document.createElement("td");
                     tdTipo.innerHTML = publicacao.tipo;
+                    tdTipo.setAttribute("id", `campoTipo${publicacao.idMaquina}`)
                     var tdAgencia = document.createElement("td");
                     tdAgencia.innerHTML = publicacao.agencia;
+                    tdAgencia.setAttribute("id", `campoAgencia${publicacao.idMaquina}`)
                     var tdButton = document.createElement("td");
+                    tdButton.setAttribute("id", `campoBotoes${publicacao.idMaquina}`)
                     tdButton.innerHTML = `<a onclick="editarMaquina(${publicacao.idMaquina})" class="btn btn-primary btn-sm" title="Remove my profile image"><i
                     class="bi bi-pencil-square"></i></a>
                     <a onclick="excluirMaquina(${publicacao.idMaquina})" class="btn btn-danger btn-sm" title="Remove my profile image"><i
@@ -283,4 +288,17 @@ function excluirMaquina(idMaquina){
             alert("Algo deu errado!")
         }
     })
+}
+
+function editarMaquina(idMaquina){
+    let nome = document.getElementById(`campoNome${idMaquina}`)
+    let tipo = document.getElementById(`campoTipo${idMaquina}`)
+    let agencia = document.getElementById(`campoAgencia${idMaquina}`)
+    let valorNome = nome.innerText;
+    let valorTipo = tipo.innerText;
+    let valorAgencia = agencia.innerText;
+
+    nome.innerHTML = `<input type='text' id='novoNome${idMaquina}' value='${valorNome}'> `
+    tipo.innerHTML = `<input type='text' id='novoTipo${idMaquina}' value='${valorTipo}'> `
+    agencia.innerHTML = `<input type='text' id='novoAgencia ${idMaquina}' value='${valorAgencia}'> `
 }
