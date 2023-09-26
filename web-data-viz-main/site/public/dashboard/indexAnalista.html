@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>BankSecure</title>
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+    <!-- CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+    <!-- Main CSS File -->
+
+    <link href="assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+
+        <!-- Logo -->
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="index.html" class="logo d-flex align-items-center">
+                <img src="assets/img/logo.png" alt="">
+                <span class="d-none d-lg-block">BankSecure</span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+        </div>
+
+
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+
+                <!-- Notification Nav -->
+                <!-- <li class="nav-item dropdown"> -->
+
+                <!-- Notification Icon -->
+                <!-- <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+            <span class="badge bg-primary badge-number">4</span>
+          </a> -->
+                <!-- End Notification Icon -->
+
+
+                <!-- Messages Nav -->
+
+
+                <!-- Profile Nav -->
+                <li class="nav-item dropdown pe-3">
+
+                    <!-- Foto e Nome -->
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <img id="foto-usuario" class="rounded-circle">
+                        <span class="d-none d-md-block" id="nome-usuario"></span>
+                    </a>
+
+                </li>
+
+            </ul>
+        </nav><!-- End Icons Navigation -->
+
+    </header>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <!-- Dashboard Nav -->
+            <li class="nav-item">
+                <a id="aDash" class="nav-link" href="">
+                    <i class="bi bi-grid"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="agencias.html">
+                    <i class="bi bi-layout-text-window-reverse"></i>
+                    <span>Agências</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="faq.html">
+                    <i class="bi bi-question-circle"></i>
+                    <span>F.A.Q</span>
+                </a>
+            </li>
+
+            <li class="nav-heading">CONTA</li>
+
+            <!-- Perfil Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="conta_perfil.html">
+                    <i class="bi bi-person"></i>
+                    <span>Perfil</span>
+                </a>
+            </li>
+
+        </ul>
+    </aside>
+
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1>Dashboard</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </nav>
+        </div>
+
+        <section class="section dashboard">
+            <div class="row">
+
+                <!-- Colunas do Select e CPU | RAM | Disco -->
+                <div class="col-lg-12">
+                    <div class="row">
+
+                        <div class="col-xxl-4 col-md-6">
+                            <div class="card info-card sales-card">
+
+                                <div class="card-body">
+                                    <h5 class="card-title">CPU Livre<span>| Agora</span> </h5>
+
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-cpu"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>14%</h6>
+                                            <span class="text-success small pt-1 fw-bold">Estável</span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div><!-- End Card CPU -->
+
+                        <!-- Card Ram -->
+                        <div class="col-xxl-4 col-md-6">
+                            <div class="card info-card revenue-card">
+
+                                <div class="card-body">
+                                    <h5 class="card-title">Memória Livre <span>| Agora</span></h5>
+
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-sd-card"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>75%</h6>
+                                            <span class="text-success small pt-1 fw-bold">Estável</span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div><!-- End Card Ram -->
+
+                        <!-- Card Disk -->
+                        <div class="col-xxl-4 col-xl-12">
+
+                            <div class="card info-card customers-card">
+
+                                <div class="card-body">
+                                    <h5 class="card-title">Disco Livre <span>| Agora</span></h5>
+
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+
+                                            <!-- Icon -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 28px;height:28px"
+                                                width="16" height="16" fill="currentColor" class="bi bi-floppy"
+                                                viewBox="0 0 16 16">
+                                                <path d="M11 2H9v3h2V2Z" />
+                                                <path
+                                                    d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0ZM1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5Zm3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4v4.5ZM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5V15Z" />
+                                            </svg>
+
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>20%</h6>
+                                            <span class="text-danger small pt-1 fw-bold">Atenção</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div><!-- End Card Disk -->
+
+                        <!-- Selects -->
+                        <div class="col-xxl-6 col-md-6">
+                            <div class="card info-card sales-card">
+                                <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
+                                    <h5>Selecionar Agência</h5>
+                                    <select name="" id="listaAgencias">
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-6 col-md-6">
+                            <div class="card info-card sales-card">
+                                <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
+                                    <h5>Selecionar Componente</h5>
+                                    <!-- <br> -->
+                                    <select name="" id="selectComponente">
+                                        <option value="1">CPU</option>
+                                        <option value="2">Memória RAM</option>
+                                        <option value="3">Disco</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div><!-- End Card Select -->
+
+                        <!-- Gráfico Principal -->
+                        <div class="col-12">
+                            <div class="card">
+
+                                <div class="filter">
+                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                            class="bi bi-three-dots"></i></a>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                        <li class="dropdown-header text-start">
+                                            <h6>Filter</h6>
+                                        </li>
+
+                                        <li><a class="dropdown-item" href="#">Today</a></li>
+                                        <li><a class="dropdown-item" href="#">This Month</a></li>
+                                        <li><a class="dropdown-item" href="#">This Year</a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="card-body">
+                                    <h5 class="card-title">Gráfico <span>/ Hoje</span></h5>
+
+                                    <!-- Line Chart -->
+                                    <div id="reportsChart"></div>
+
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", () => {
+                                            new ApexCharts(document.querySelector("#reportsChart"), {
+                                                series: [{
+                                                    name: 'Sales',
+                                                    data: [31, 40, 28, 51, 42, 82, 56],
+                                                }, {
+                                                    name: 'Revenue',
+                                                    data: [11, 32, 45, 32, 34, 52, 41]
+                                                }, {
+                                                    name: 'Customers',
+                                                    data: [15, 11, 32, 18, 9, 24, 11]
+                                                }],
+                                                chart: {
+                                                    height: 350,
+                                                    type: 'area',
+                                                    toolbar: {
+                                                        show: false
+                                                    },
+                                                },
+                                                markers: {
+                                                    size: 4
+                                                },
+                                                colors: ['#4154f1', '#2eca6a', '#ff771d'],
+                                                fill: {
+                                                    type: "gradient",
+                                                    gradient: {
+                                                        shadeIntensity: 1,
+                                                        opacityFrom: 0.3,
+                                                        opacityTo: 0.4,
+                                                        stops: [0, 90, 100]
+                                                    }
+                                                },
+                                                dataLabels: {
+                                                    enabled: false
+                                                },
+                                                stroke: {
+                                                    curve: 'smooth',
+                                                    width: 2
+                                                },
+                                                xaxis: {
+                                                    type: 'datetime',
+                                                    categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+                                                },
+                                                tooltip: {
+                                                    x: {
+                                                        format: 'dd/MM/yy HH:mm'
+                                                    },
+                                                }
+                                            }).render();
+                                        });
+                                    </script>
+                                    <!-- End Line Chart -->
+
+                                </div>
+
+                            </div>
+                        </div><!-- End Reports -->
+
+                    </div>
+                </div>
+
+                <!-- Colunas da direita -->
+                <div class="col-lg-4">
+
+                    <div class="card">
+                        <div class="filter">
+                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                <li class="dropdown-header text-start">
+                                    <h6>Filtros</h6>
+                                </li>
+
+                                <li><a class="dropdown-item" onclick="exibirGraficoDonut(1)">CPU</a></li>
+                                <li><a class="dropdown-item" onclick="exibirGraficoDonut(2)">Memória</a></li>
+                                <li><a class="dropdown-item" onclick="exibirGraficoDonut(3)">Disco</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="card-body pb-0">
+                            <h5 class="card-title">Servidores Gerais <span id="optionSelecionada">| CPU</span></h5>
+                            <div id="graficoDonut" style="min-height: 400px;" class="echart"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="copyright">
+            &copy; Copyright <strong><span>BankSecure</span></strong>. All Rights Reserved
+        </div>
+    </footer>
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+        <i class="bi bi-arrow-up-short"></i>
+    </a>
+
+</body>
+
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/dashAnalistaIndex.js"></script>
+<script src="assets/js/dashDonut.js"></script>
+<script>
+    exibirListaAgencias();
+    exibirGraficoDonut(1)
+</script>
