@@ -46,10 +46,32 @@ function exibirOptionAgencia(idEmpresa){
     return database.executar(instrucao);
 }
 
+function deletarMaquina(idMaquina){
+    console.log("CHEGUEI AQUI");
+
+    var comando = `
+        DELETE FROM maquina WHERE idMaquina = ${idMaquina}
+    `
+    console.log(comando)
+    return database.executar(comando);
+}
+function alterarMaquina(idMaquina, nome, tipo, agencia){
+    console.log("CHEGUEI AQUI");
+
+    var comando = `
+    UPDATE maquina SET nome = '${nome}', fkTipoMaquina = (SELECT idTipoMaquina FROM tipoMaquina WHERE nomeTipo = '${tipo}'),
+    fkAgencia = (SELECT idAgencia FROM agencia WHERE apelido = '${agencia}') WHERE idMaquina = ${idMaquina}
+    `
+    console.log(comando)
+    return database.executar(comando);
+}
+
 module.exports = {
     cadastrarNomeMaquina,
     cadastrarComponente,
     exibirOptionAgencia,
     exibirTabelaMaquinas,
-    criarViewMaquina
+    criarViewMaquina,
+    deletarMaquina,
+    alterarMaquina
 };
