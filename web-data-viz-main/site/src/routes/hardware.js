@@ -25,4 +25,8 @@ router.get("/deletarMaquina/:idMaquina", (req, res) => {
     hardwareController.deletarMaquina(req, res);
 })
 
+router.post("/alterarMaquina", (req, res) => {
+    hardwareController.alterarMaquina(req, res);
+})
+
 module.exports = router;
