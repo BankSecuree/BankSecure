@@ -62,8 +62,11 @@ function listarAgenciasVinculadas(idUsuario){
 
 function listarAgenciasNaoVinculadas(idUsuario, fkEmpresa){
     var instrucao = ` 
-    SELECT * FROM funcionarioAgencia RIGHT JOIN agencia ON fkAgencia = idAgencia AND fkEmpresa = ${fkEmpresa} AND fkUsuario = ${idUsuario};
-    `
+    SELECT a.* FROM agencia a WHERE fkEmpresa = ${fkEmpresa} AND idAgencia NOT IN (
+        SELECT fkAgencia FROM funcionarioAgencia WHERE fkUsuario = ${idUsuario})
+        
+    `  
+    console.log(instrucao)
     return database.executar(instrucao);
 }
 
