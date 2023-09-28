@@ -69,7 +69,14 @@ function entrar() {
                     
                    
                     setTimeout(function () {
-                        window.location = "./dashboard/index.html";
+                        if (sessionStorage.GERENTE_USUARIO == 'null') {//Interno
+                            window.location = "./dashboard/index.html";
+                        }else if (sessionStorage.GERENTE_USUARIO == 1) {//Gerente de TI
+                            window.location = "./dashboard/indexGerente.html";
+                        }else{
+
+                            window.location = "./dashboard/indexAnalista\.html";
+                        }
                     }, 2000); 
 
                 });

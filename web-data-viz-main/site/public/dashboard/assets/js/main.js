@@ -1,7 +1,10 @@
-if (sessionStorage.GERENTE_USUARIO == 'null') {
+if (sessionStorage.GERENTE_USUARIO == 'null') {//Interno
+
+  //Botão Dash
+  var btnDash = document.getElementById("aDash");
+  btnDash.href="index.html"
 
   // Botão Usuários
-
   var barraLateral = document.getElementById("sidebar-nav");
 
   var li = document.createElement("li");
@@ -44,10 +47,13 @@ if (sessionStorage.GERENTE_USUARIO == 'null') {
   span.innerHTML = "Sair";
 
 
-} else if (sessionStorage.GERENTE_USUARIO == 1) {
+} else if (sessionStorage.GERENTE_USUARIO == 1) {//Gerente de TI
+
+  //Botão Gerentes Dashboard
+  var btnDash = document.getElementById("aDash");
+  btnDash.href="indexGerente.html"
 
   // Botão Usuários
-
   var barraLateral = document.getElementById("sidebar-nav");
 
   var li = document.createElement("li");
@@ -132,7 +138,11 @@ if (sessionStorage.GERENTE_USUARIO == 'null') {
 
   span.innerHTML = "Sair";
 
-} else {
+} else {//Analista
+
+  //Botão Dashboard
+  var btnDash = document.getElementById("aDash");
+  btnDash.href="indexAnalista.html"
 
   // Botão Sair
 
