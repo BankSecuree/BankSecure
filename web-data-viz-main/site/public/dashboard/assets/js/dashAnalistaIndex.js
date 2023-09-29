@@ -37,13 +37,59 @@ function exibirListaAgencias() {
       // finalizarAguardar();
     });
 }
+function listaMaquinas(){
+
+  let agencia = document.getElementById("listaAgencias").value;
+
+  if(agencia == "" || agencia == undefined || agencia == null){
+    agencia = 1
+  }
+
+  fetch(`/dashAgencias/exibirListaMaquinas/${agencia}`)
+    .then(function (resposta) {
+      if (resposta.ok) {
+
+        if (resposta.status == 204) {
+          var lista = document.getElementById("listaMaquinas");
+          var mensagem = document.createElement("p");
+          mensagem.innerHTML = "Nenhum resultado encontrado.";
+          lista.innerHTML = "";
+          lista.appendChild(mensagem);
+          throw "Nenhum resultado encontrado!!";
+        }
+        resposta.json().then(function (resposta) {
+          var contId = 0;
+          var lista = document.getElementById("listaMaquinas");
+          console.log(resposta[0].idMaquina)
+          for (let i = 0; i <= resposta.length; i++) {
+
+              // var lista = document.getElementById("listaAgencias");
+            var publicacao = resposta[i];
+            console.log(i);
+            console.log(publicacao);
+
+            var opcao = document.createElement("option");
+            opcao.value = resposta[i].idMaquina
+            opcao.innerHTML = resposta[i].nome
+            lista.appendChild(opcao)
+          }
+        });
+      } else {
+        throw "Houve um erro na API!";
+      }
+    })
+    .catch(function (resposta) {
+      console.error(resposta);
+      // finalizarAguardar();
+    });
+}
 
 function atualizarGrafico() {
   console.log("RODOU")
   let dados = []
   let textos = []
 
-  let agencia = document.getElementById("listaAgencias").value
+  let agencia = document.getElementById("listaMaquinas").value
   let componente = document.getElementById("selectComponente").value
 
   console.log("Componente: ", componente);

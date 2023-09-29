@@ -3,6 +3,10 @@ var router = express.Router();
 
 var dashAgenciasController = require("../controllers/dashAgenciasController");
 
+router.get("/exibirListaMaquinas/:idMaquina", function (req, res) {
+    dashAgenciasController.exibirListaMaquinas(req, res);
+});
+
 router.get("/exibirListaAgencias/:idUsuario", function (req, res) {
     dashAgenciasController.exibirListaAgencias(req, res);
 });

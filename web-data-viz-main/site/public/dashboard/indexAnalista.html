@@ -129,6 +129,17 @@
                 <div class="col-lg-12">
                     <div class="row">
 
+                        <div class="col-xxl-12 col-md-12">
+                            <div class="card info-card sales-card">
+                                <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
+                                    <h5>Selecionar Agência</h5>
+                                    <select name="" id="listaAgencias" onchange="atualizarGrafico(), listaMaquinas()">
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="col-xxl-4 col-md-6">
                             <div class="card info-card sales-card">
 
@@ -211,8 +222,8 @@
                         <div class="col-xxl-6 col-md-6">
                             <div class="card info-card sales-card">
                                 <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
-                                    <h5>Selecionar Agência</h5>
-                                    <select name="" id="listaAgencias" onchange="atualizarGrafico()">
+                                    <h5>Selecionar Maquina</h5>
+                                    <select name="" id="listaMaquinas" onchange="atualizarGrafico()">
 
                                     </select>
                                 </div>
@@ -291,8 +302,9 @@
 <script src="assets/js/dashAnalistaIndex.js"></script>
 <script>
     exibirListaAgencias();
-    atualizarGrafico();
+    // atualizarGrafico();
     exibirInfos();
+    listaMaquinas();
 
     let elemento = document.querySelector("#reportsChart");
     

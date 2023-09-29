@@ -11,6 +11,13 @@ function exibirListaAgencias(idUsuario) {
     return database.executar(instrucao);
 }
 
+function exibirListaMaquinas(idMaquina) {
+    console.log("ACESSEI O AGENCIAS  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function exibirListaAgencias()");
+    var instrucao = `select * from maquina where fkAgencia = ${idMaquina};`;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 function exibirView(idMaquina) {
     console.log("ACESSEI O AGENCIAS  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function exibirListaAgencias()");
     var instrucao = `
@@ -50,6 +57,7 @@ function dadosAnalista(agencia,componente) {
 // }
 
 module.exports = {
+    exibirListaMaquinas,
     dadosAnalista,
     // dadosCards,
     exibirListaAgencias,
