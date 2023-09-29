@@ -127,6 +127,51 @@ function atualizarGrafico() {
   setTimeout(atualizarGrafico,5000)
 }
 
-function atualizarCards(){
-  
-}
+// function atualizarCards(){
+//   dadoCpu = document.getElementById("h4-cpu");
+//   alertaCpu = document.getElementById("msg-cpu");
+
+//   dadoMemoria = document.getElementById("h4-memoria");
+//   alertaMemoria = document.getElementById("msg-memoria");
+
+//   dadoDisco = document.getElementById("h4-disco");
+//   alertaDisco = document.getElementById("msg-disco");
+
+
+//   let agencia = document.getElementById("listaAgencias").value
+//   let componente = document.getElementById("selectComponente").value
+
+//   console.log("Componente: ", componente);
+//   console.log("Agencia: ", agencia);
+
+//   fetch("/dashAgencias/dadosCards", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify({
+//       agenciaServer: agencia,
+//       componenteServer: componente
+//     })
+//   }).then(function (resposta) {
+//     console.log("ESTOU NO THEN DO pegar dados analista()!")
+
+//     if (resposta.ok) {
+//       console.log(resposta);
+
+//       resposta.json().then(json => {
+//         console.log(json);
+//         console.log(JSON.stringify(json));
+//         console.log("")
+//       });
+
+//     } else {
+//       console.log("Houve um erro ao tentar pegar os dados!");
+//     }
+
+//   }).catch(function (erro) {
+//     console.log(erro);
+//   })
+
+
+// }
