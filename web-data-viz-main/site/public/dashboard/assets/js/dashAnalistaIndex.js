@@ -126,3 +126,7 @@ function atualizarGrafico() {
 
   setTimeout(atualizarGrafico,5000)
 }
+
+function atualizarCards(){
+  
+}
