@@ -24,7 +24,7 @@
     <link href="assets/css/style.css" rel="stylesheet">
 </head>
 
-<body>
+<body onload="">
 
     <!-- Header -->
     <header id="header" class="header fixed-top d-flex align-items-center">
@@ -214,7 +214,7 @@
                             <div class="card info-card sales-card">
                                 <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
                                     <h5>Selecionar Agência</h5>
-                                    <select name="" id="listaAgencias">
+                                    <select name="" id="listaAgencias" onchange="atualizarGrafico()">
 
                                     </select>
                                 </div>
@@ -225,7 +225,7 @@
                                 <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
                                     <h5>Selecionar Componente</h5>
                                     <!-- <br> -->
-                                    <select name="" id="selectComponente">
+                                    <select name="" id="selectComponente" onchange="atualizarGrafico()">
                                         <option value="1">CPU</option>
                                         <option value="2">Memória RAM</option>
                                         <option value="3">Disco</option>
@@ -257,59 +257,6 @@
 
                                     <!-- Line Chart -->
                                     <div id="reportsChart"></div>
-
-                                    <script>
-                                        document.addEventListener("DOMContentLoaded", () => {
-                                            new ApexCharts(document.querySelector("#reportsChart"), {
-                                                series: [{
-                                                    name: 'Sales',
-                                                    data: [31, 40, 28, 51, 42, 82, 56],
-                                                }, {
-                                                    name: 'Revenue',
-                                                    data: [11, 32, 45, 32, 34, 52, 41]
-                                                }, {
-                                                    name: 'Customers',
-                                                    data: [15, 11, 32, 18, 9, 24, 11]
-                                                }],
-                                                chart: {
-                                                    height: 350,
-                                                    type: 'area',
-                                                    toolbar: {
-                                                        show: false
-                                                    },
-                                                },
-                                                markers: {
-                                                    size: 4
-                                                },
-                                                colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                                                fill: {
-                                                    type: "gradient",
-                                                    gradient: {
-                                                        shadeIntensity: 1,
-                                                        opacityFrom: 0.3,
-                                                        opacityTo: 0.4,
-                                                        stops: [0, 90, 100]
-                                                    }
-                                                },
-                                                dataLabels: {
-                                                    enabled: false
-                                                },
-                                                stroke: {
-                                                    curve: 'smooth',
-                                                    width: 2
-                                                },
-                                                xaxis: {
-                                                    type: 'datetime',
-                                                    categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-                                                },
-                                                tooltip: {
-                                                    x: {
-                                                        format: 'dd/MM/yy HH:mm'
-                                                    },
-                                                }
-                                            }).render();
-                                        });
-                                    </script>
                                     <!-- End Line Chart -->
 
                                 </div>
@@ -320,31 +267,8 @@
                     </div>
                 </div>
 
-                <!-- Colunas da direita -->
-                <div class="col-lg-4">
-
-                    <div class="card">
-                        <div class="filter">
-                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                <li class="dropdown-header text-start">
-                                    <h6>Filtros</h6>
-                                </li>
-
-                                <li><a class="dropdown-item" onclick="exibirGraficoDonut(1)">CPU</a></li>
-                                <li><a class="dropdown-item" onclick="exibirGraficoDonut(2)">Memória</a></li>
-                                <li><a class="dropdown-item" onclick="exibirGraficoDonut(3)">Disco</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="card-body pb-0">
-                            <h5 class="card-title">Servidores Gerais <span id="optionSelecionada">| CPU</span></h5>
-                            <div id="graficoDonut" style="min-height: 400px;" class="echart"></div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
+            <button onclick="atualizarGrafico()">aaaaaaaa</button>
         </section>
 
     </main>
@@ -367,8 +291,56 @@
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="assets/js/dashAnalistaIndex.js"></script>
-<script src="assets/js/dashDonut.js"></script>
 <script>
     exibirListaAgencias();
-    exibirGraficoDonut(1)
+    atualizarGrafico();
+
+    let elemento = document.querySelector("#reportsChart");
+    
+    let opcao = {
+            series: [{
+                name: 'Usando em %',
+                data: [31, 40, 28],
+            }],
+            xaxis: {
+                type: 'datetime',
+                categories: ["2018-09-19 10:00:00", "2018-09-19 11:30:00", "2018-09-19 12:30:00"]
+            },
+            chart: {
+                height: 350,
+                type: 'area',
+                toolbar: {
+                    show: false
+                },
+            },
+            markers: {
+                size: 5
+            },
+            colors: ['#4154f1'],
+            fill: {
+                type: "gradient",
+                gradient: {
+                    shadeIntensity: 1,
+                    opacityFrom: 0.3,
+                    opacityTo: 0.4,
+                    stops: [0, 90, 100]
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'smooth',
+                width: 2
+            },
+            tooltip: {
+                x: {
+                    format: 'dd/MM/yy HH:mm'
+                },
+            }
+        }
+
+        let grafico = new ApexCharts(elemento, opcao)
+        grafico.render();
 </script>
+<!-- CORES: '#2eca6a', '#ff771d' -->
