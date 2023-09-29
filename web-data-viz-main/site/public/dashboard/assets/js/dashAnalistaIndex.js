@@ -37,13 +37,59 @@ function exibirListaAgencias() {
       // finalizarAguardar();
     });
 }
+function listaMaquinas(){
+
+  let agencia = document.getElementById("listaAgencias").value;
+
+  if(agencia == "" || agencia == undefined || agencia == null){
+    agencia = 1
+  }
+
+  fetch(`/dashAgencias/exibirListaMaquinas/${agencia}`)
+    .then(function (resposta) {
+      if (resposta.ok) {
+
+        if (resposta.status == 204) {
+          var lista = document.getElementById("listaMaquinas");
+          var mensagem = document.createElement("p");
+          mensagem.innerHTML = "Nenhum resultado encontrado.";
+          lista.innerHTML = "";
+          lista.appendChild(mensagem);
+          throw "Nenhum resultado encontrado!!";
+        }
+        resposta.json().then(function (resposta) {
+          var contId = 0;
+          var lista = document.getElementById("listaMaquinas");
+          console.log(resposta[0].idMaquina)
+          for (let i = 0; i <= resposta.length; i++) {
+
+              // var lista = document.getElementById("listaAgencias");
+            var publicacao = resposta[i];
+            console.log(i);
+            console.log(publicacao);
+
+            var opcao = document.createElement("option");
+            opcao.value = resposta[i].idMaquina
+            opcao.innerHTML = resposta[i].nome
+            lista.appendChild(opcao)
+          }
+        });
+      } else {
+        throw "Houve um erro na API!";
+      }
+    })
+    .catch(function (resposta) {
+      console.error(resposta);
+      // finalizarAguardar();
+    });
+}
 
 function atualizarGrafico() {
   console.log("RODOU")
   let dados = []
   let textos = []
 
-  let agencia = document.getElementById("listaAgencias").value
+  let agencia = document.getElementById("listaMaquinas").value
   let componente = document.getElementById("selectComponente").value
 
   console.log("Componente: ", componente);
@@ -126,3 +172,52 @@ function atualizarGrafico() {
 
   setTimeout(atualizarGrafico,5000)
 }
+
+// function atualizarCards(){
+//   dadoCpu = document.getElementById("h4-cpu");
+//   alertaCpu = document.getElementById("msg-cpu");
+
+//   dadoMemoria = document.getElementById("h4-memoria");
+//   alertaMemoria = document.getElementById("msg-memoria");
+
+//   dadoDisco = document.getElementById("h4-disco");
+//   alertaDisco = document.getElementById("msg-disco");
+
+
+//   let agencia = document.getElementById("listaAgencias").value
+//   let componente = document.getElementById("selectComponente").value
+
+//   console.log("Componente: ", componente);
+//   console.log("Agencia: ", agencia);
+
+//   fetch("/dashAgencias/dadosCards", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify({
+//       agenciaServer: agencia,
+//       componenteServer: componente
+//     })
+//   }).then(function (resposta) {
+//     console.log("ESTOU NO THEN DO pegar dados analista()!")
+
+//     if (resposta.ok) {
+//       console.log(resposta);
+
+//       resposta.json().then(json => {
+//         console.log(json);
+//         console.log(JSON.stringify(json));
+//         console.log("")
+//       });
+
+//     } else {
+//       console.log("Houve um erro ao tentar pegar os dados!");
+//     }
+
+//   }).catch(function (erro) {
+//     console.log(erro);
+//   })
+
+
+// }

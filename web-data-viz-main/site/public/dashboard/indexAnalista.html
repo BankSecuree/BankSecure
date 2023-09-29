@@ -56,20 +56,18 @@
                 <!-- Messages Nav -->
 
 
-                <!-- Profile Nav -->
                 <li class="nav-item dropdown pe-3">
 
                     <!-- Foto e Nome -->
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img id="foto-usuario" class="rounded-circle">
-                        <span class="d-none d-md-block" id="nome-usuario"></span>
+                      <img id="foto-usuario" class="rounded-circle">
+                      <span class="d-none d-md-block" id="nome-usuario"></span>
                     </a>
-
-                </li>
+          
+                  </li>
 
             </ul>
         </nav><!-- End Icons Navigation -->
-
     </header>
 
     <!-- Sidebar -->
@@ -131,11 +129,22 @@
                 <div class="col-lg-12">
                     <div class="row">
 
+                        <div class="col-xxl-12 col-md-12">
+                            <div class="card info-card sales-card">
+                                <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
+                                    <h5>Selecionar Agência</h5>
+                                    <select name="" id="listaAgencias" onchange="atualizarGrafico(), listaMaquinas()">
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="col-xxl-4 col-md-6">
                             <div class="card info-card sales-card">
 
                                 <div class="card-body">
-                                    <h5 class="card-title">CPU Livre<span>| Agora</span> </h5>
+                                    <h5 class="card-title">CPU Livre <span>| Agora</span> </h5>
 
                                     <div class="d-flex align-items-center">
                                         <div
@@ -143,8 +152,8 @@
                                             <i class="bi bi-cpu"></i>
                                         </div>
                                         <div class="ps-3">
-                                            <h6>14%</h6>
-                                            <span class="text-success small pt-1 fw-bold">Estável</span>
+                                            <h6 id="h4-cpu">14%</h6>
+                                            <span id="msg-cpu" class="text-success small pt-1 fw-bold">Estável</span>
 
                                         </div>
                                     </div>
@@ -166,8 +175,8 @@
                                             <i class="bi bi-sd-card"></i>
                                         </div>
                                         <div class="ps-3">
-                                            <h6>75%</h6>
-                                            <span class="text-success small pt-1 fw-bold">Estável</span>
+                                            <h6 id="h4-memoria">75%</h6>
+                                            <span id="msg-memoria" class="text-success small pt-1 fw-bold">Estável</span>
 
                                         </div>
                                     </div>
@@ -199,8 +208,8 @@
 
                                         </div>
                                         <div class="ps-3">
-                                            <h6>20%</h6>
-                                            <span class="text-danger small pt-1 fw-bold">Atenção</span>
+                                            <h6 id="h4-disco">20%</h6>
+                                            <span id="msg-disco" class="text-danger small pt-1 fw-bold">Atenção</span>
                                         </div>
                                     </div>
 
@@ -213,8 +222,8 @@
                         <div class="col-xxl-6 col-md-6">
                             <div class="card info-card sales-card">
                                 <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
-                                    <h5>Selecionar Agência</h5>
-                                    <select name="" id="listaAgencias" onchange="atualizarGrafico()">
+                                    <h5>Selecionar Maquina</h5>
+                                    <select name="" id="listaMaquinas" onchange="atualizarGrafico()">
 
                                     </select>
                                 </div>
@@ -294,6 +303,8 @@
 <script>
     exibirListaAgencias();
     atualizarGrafico();
+    exibirInfos();
+    listaMaquinas();
 
     let elemento = document.querySelector("#reportsChart");
     
