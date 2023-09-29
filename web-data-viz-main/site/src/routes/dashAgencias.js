@@ -15,4 +15,9 @@ router.get("/exibirView/:idMaquina", function (req, res) {
     dashAgenciasController.exibirView(req, res);
 });
 
+router.post("/dadosAnalista", function (req, res) {
+    // console.log("Cheguei na rota")
+    dashAgenciasController.dadosAnalista(req, res);
+});
+
 module.exports = router;

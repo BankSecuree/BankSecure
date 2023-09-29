@@ -26,8 +26,9 @@ def pegar_dados():
      data = datetime.now()
      data = data.strftime('%Y/%m/%d %H:%M:%S')
 
-     user = [user[0] for user in psutil.users()]
-     user = user[0]
+    #  user = [user[0] for user in psutil.users()]
+    #  user = user[0]
+     user = "MI-1"
      qtd_core = psutil.cpu_count(logical=False)
 
      cpu_porcent = psutil.cpu_percent(interval=1)
@@ -86,21 +87,21 @@ def pegar_dados():
     #          postMsg = requests.post(chatItau, data=json.dumps(mensagem))
     #          exibiu = True
 
-    #  comp1 = "Memória"
-    #  comp2 = "CPU"
-    #  comp3 = "Disco"
-    #  cursor.execute(f"CALL inserirDadosMaquina ('{user}', '{comp1}', {ram_percent:.2f}, '{comp2}', {cpu_porcent}, '{comp3}', {disc_percent}, NOW());")
+     comp1 = "Memória"
+     comp2 = "CPU"
+     comp3 = "Disco"
+     cursor.execute(f"CALL inserirDadosMaquina ('{user}', '{comp1}', {ram_percent:.2f}, '{comp2}', {cpu_porcent}, '{comp3}', {disc_percent}, NOW());")
 
     #Gravar os dados na tabela definitiva
      conexao.commit()
      texto_cotacao['text'] = msgOpen
      janela.update()
-    #  time.sleep(3)
+     time.sleep(3)
 
      
 # cria a janela
 janela = Tk()
-janela.title("Seja bem-vindo(a!)")
+janela.title("Seja bem-vindo(a)!")
 janela.geometry("700x500")
 janela.config(bg="#212529")
 
