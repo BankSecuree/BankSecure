@@ -18,10 +18,10 @@ function exibirListaMaquinas(idMaquina) {
     return database.executar(instrucao);
 }
 
-function exibirView(idMaquina) {
+function exibirView(idUsuario, idMaquina) {
     console.log("ACESSEI O AGENCIAS  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function exibirListaAgencias()");
     var instrucao = `
-    SELECT * FROM vw_registrosEstruturados WHERE id = 1;
+    SELECT * FROM registros JOIN componente ON idComponente = fkComponente WHERE fkMaquina = ${idMaquina} ORDER BY idRegistro DESC LIMIT 10;
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
@@ -46,6 +46,26 @@ function dadosAnalista(agencia,componente) {
     return database.executar(instrucao);
 }
 
+function consultarMaquinas(idAgencia){
+    console.log("ACESSEI O dashAnalistaModel \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function exibirDonut()");
+
+    var instrucao = `
+    select * from maquina where fkAgencia = ${idAgencia};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
+function consultarPeloTempo(idMaquina, inicio, fim){
+    console.log("ACESSEI O consultarPeloTempo \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function consultarPeloTempo()");
+
+    var comando = `
+    SELECT * FROM registros JOIN componente ON idComponente = fkComponente WHERE fkMaquina = ${idMaquina} AND dataHora > "${inicio}" AND dataHora < "${fim}";
+    `
+    console.log("Executando a instrução SQL: \n" + comando);
+    return database.executar(comando);
+}
+
 // function dadosAnalista(agencia,componente) {
 //     console.log("ACESSEI O dashAnalistaModel \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function exibirDonut()");
 
@@ -62,5 +82,7 @@ module.exports = {
     // dadosCards,
     exibirListaAgencias,
     graficoAgencia,
-    exibirView
+    exibirView,
+    consultarMaquinas,
+    consultarPeloTempo
 };
