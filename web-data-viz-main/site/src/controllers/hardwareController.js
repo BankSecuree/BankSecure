@@ -149,6 +149,22 @@ function alterarMaquina(req, res){
         }
 }
 
+function consultarTudo(req, res){
+    var idEmpresa = req.params.idEmpresa;
+
+    if(idEmpresa == undefined){
+        res.status(400).send("Não chegou o dado");
+    } else{
+        hardwareModel.consultarTudo(idEmpresa).then((resp) =>{
+            res.json(resp)
+        }).catch(function (erro) {
+            console.log(erro);
+            console.log("Houve um erro ao consultar a máquina: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+          });
+        }
+}
+
 module.exports = {
     cadastrarNomeMaquina,
     cadastrarComponente,
@@ -156,5 +172,6 @@ module.exports = {
     exibirOptionAgencia,
     criarViewMaquina,
     deletarMaquina,
-    alterarMaquina
+    alterarMaquina,
+    consultarTudo
 }

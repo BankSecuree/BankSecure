@@ -66,6 +66,15 @@ function alterarMaquina(idMaquina, nome, tipo, agencia){
     return database.executar(comando);
 }
 
+function consultarTudo(idEmpresa){
+    console.log("CHEGUEI AQUI");
+
+    var comando = `
+        SELECT * FROM agencia WHERE fkEmpresa = ${idEmpresa};
+    `
+    console.log(comando)
+    return database.executar(comando);
+}
 module.exports = {
     cadastrarNomeMaquina,
     cadastrarComponente,
@@ -73,5 +82,6 @@ module.exports = {
     exibirTabelaMaquinas,
     criarViewMaquina,
     deletarMaquina,
-    alterarMaquina
+    alterarMaquina,
+    consultarTudo
 };

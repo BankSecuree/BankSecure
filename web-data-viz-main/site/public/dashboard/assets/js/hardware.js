@@ -1,3 +1,5 @@
+//const { json } = require("express");
+
 globalDadosPreAlteracoes = [];
 let contador = 0;
 
@@ -56,7 +58,7 @@ function cadastrarNomeMaquina() {
     var nomeMaquinaVar = ipt_nomeMaquina.value;
     var fkAgenciaVar = ipt_fkAgencia.value;
     var tipoMaquinaVar = ipt_fkMaquina.value;
-    
+
     fetch(`/hardware/cadastrarNomeMaquina`, {
         method: "POST",
         headers: {
@@ -282,20 +284,20 @@ function exibirTabelaMaquinas() {
     });
 }
 
-function excluirMaquina(idMaquina){
+function excluirMaquina(idMaquina) {
     fetch(`/hardware/deletarMaquina/${idMaquina}`).then((resposta) => {
-        if(resposta.ok){
+        if (resposta.ok) {
             alert("Excluido com sucesso")
             window.location.reload()
-        } else{
+        } else {
             alert("Algo deu errado!")
         }
     })
 }
 
-function editarMaquina(idMaquina){
+function editarMaquina(idMaquina) {
     let nome = document.getElementById(`campoNome${idMaquina}`)
-    let tipo = document.getElementById(`campoTipo${idMaquina}`      )
+    let tipo = document.getElementById(`campoTipo${idMaquina}`)
     let agencia = document.getElementById(`campoAgencia${idMaquina}`)
     let botoes = document.getElementById(`campoBotoes${idMaquina}`)
     let valorNome = nome.innerText;
@@ -303,8 +305,20 @@ function editarMaquina(idMaquina){
     let valorAgencia = agencia.innerText;
 
     nome.innerHTML = `<input type='text' id='novoNome${idMaquina}' value='${valorNome}'> `
-    tipo.innerHTML = `<input type='text' id='novoTipo${idMaquina}' value='${valorTipo}'> `
-    agencia.innerHTML = `<input type='text' id='novoAgencia${idMaquina}' value='${valorAgencia}'> `
+    tipo.innerHTML = `<select name="select" id='novoTipo${idMaquina}'></select>`
+    agencia.innerHTML = `<select name="select" id='novoAgencia${idMaquina}'></select>`
+    fetch(`/hardware/consultarTudo/${sessionStorage.ID_EMPRESA}`).then((resposta) => {
+        console.log(resposta)
+        resposta.json().then((valores) => {
+            for (let i = 0; i < valores.length; i++) {
+                
+                document.getElementById(`novoAgencia${idMaquina}`).innerHTML += `<option value="${valores[i].apelido}">${valores[i].apelido}</option>`;
+            }
+        })
+
+    })
+    document.getElementById(`novoTipo${idMaquina}`).innerHTML += `<option value="Servidor">Servidor</option>`;
+    document.getElementById(`novoTipo${idMaquina}`).innerHTML += `<option value="Caixa Eletrônico">Caixa Eletrônico</option>`;
     botoes.innerHTML = `<button onclick='alterarMaquina(${idMaquina})' class="btn btn-danger btn-sm" >Alterar</button>
     <button onclick='voltar(${idMaquina}, ${contador})' class="btn btn-primary btn-sm">Voltar</button>'`
 
@@ -316,7 +330,7 @@ function editarMaquina(idMaquina){
     contador++
 }
 
-function alterarMaquina(idMaquina){
+function alterarMaquina(idMaquina) {
     let valorNome = document.getElementById(`novoNome${idMaquina}`).value;
     let valorTipo = document.getElementById(`novoTipo${idMaquina}`).value;
     let valorAgencia = document.getElementById(`novoAgencia${idMaquina}`).value;
@@ -332,11 +346,11 @@ function alterarMaquina(idMaquina){
             tipoServer: valorTipo,
             agenciaServer: valorAgencia
         })
-    }).then( (resposta) => {
-        if(resposta.ok){
+    }).then((resposta) => {
+        if (resposta.ok) {
             alert("Alterado com sucesso");
             let nome = document.getElementById(`campoNome${idMaquina}`)
-            let tipo = document.getElementById(`campoTipo${idMaquina}`      )
+            let tipo = document.getElementById(`campoTipo${idMaquina}`)
             let agencia = document.getElementById(`campoAgencia${idMaquina}`)
             nome.innerHTML = valorNome;
             tipo.innerHTML = valorTipo;
@@ -352,9 +366,9 @@ function alterarMaquina(idMaquina){
     })
 
 }
-function voltar(idMaquina, posicao){
+function voltar(idMaquina, posicao) {
     let nome = document.getElementById(`campoNome${idMaquina}`)
-    let tipo = document.getElementById(`campoTipo${idMaquina}`      )
+    let tipo = document.getElementById(`campoTipo${idMaquina}`)
     let agencia = document.getElementById(`campoAgencia${idMaquina}`)
     nome.innerHTML = globalDadosPreAlteracoes[posicao].nome;
     tipo.innerHTML = globalDadosPreAlteracoes[posicao].tipo;
