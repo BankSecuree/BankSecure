@@ -165,23 +165,27 @@
                     <li><a class="dropdown-item" href="#">No mês</a></li>
                   </ul>
                 </div>
-                <div class="card-body">
-                  <h5 class="card-title">Agência <span>| Hoje</span></h5>
+                <div class="card-body" >
+                  <h5 class="card-title">Maquinas <span>| Hoje</span></h5>
+
+                  <table class="table"id="listaMaquinas">
+                    
+                  </table>
                   <div id="chart"></div>
                 </div>
               </div>
               <div id="graficos">
 
               </div>
-              <div class="card">
-                <h5 class="card-title">Caixa <span>| Hoje</span></h5>  
+              <div class="card" style="padding: 25px;">
+                <h5 class="card-title">Gráficos <span>| Por data</span></h5>  
                 <div class="col-md-7">
                   <div class="box mt-4">
                     <div class="mt-4">
-                      <div class="progress1"></div>
+                      <div class="progress2" id="areaConsulta"></div>
                     </div>
                     <div class="mt-4">
-                      <div class="progress2"></div>
+                      <div class="progress1" id="plotGrafico"></div>
                     </div>
                     <div class="mt-4">
                       <div class="progress3"></div>
@@ -218,7 +222,7 @@
 <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
 <script>
   exibirInfos();
-  graficoAgencia();
+  //graficoAgencia();
   exibirListaAgencias();
 
 </script>

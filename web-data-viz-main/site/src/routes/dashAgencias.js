@@ -15,9 +15,17 @@ router.get("/graficoAgencia/:idAgencia", function (req, res) {
     dashAgenciasController.graficoAgencia(req, res);
 });
 
-router.get("/exibirView/:idMaquina", function (req, res) {
+router.get("/exibirView/:idUsuario/:idMaquina", function (req, res) {
     dashAgenciasController.exibirView(req, res);
 });
+
+router.get(`/consultarMaquinas/:idAgencia`, function (req, res){
+    dashAgenciasController.consultarMaquinas(req, res);
+})
+
+router.get(`/consultarPeloTempo/:idMaquina/:inicio/:fim`, (req,res) => {
+    dashAgenciasController.consultarPeloTempo(req, res);
+})
 
 router.post("/dadosAnalista", function (req, res) {
     // console.log("Cheguei na rota")

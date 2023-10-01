@@ -33,9 +33,10 @@ function exibirListaMaquinas(req, res) {
 }
 
 function exibirView(req, res) {
+  var idUsuario = req.params.idUsuario;
   var idMaquina = req.params.idMaquina;
 
-  dahAgenciasModel.exibirView(idMaquina).then(function (resultado) {
+  dahAgenciasModel.exibirView(idUsuario, idMaquina).then(function (resultado) {
     if (resultado.length > 0) {
       res.status(200).json(resultado);
     } else {
@@ -94,10 +95,66 @@ function dadosAnalista(req, res) {
   }
 }
 
+function consultarMaquinas(req, res){
+  var idAgencia = req.params.idAgencia;
+  if (idAgencia == undefined) {
+    res.status(400).send("Seu componente está undefined!");
+  } else {
+    dahAgenciasModel.consultarMaquinas(idAgencia)
+      .then(
+        function (resultado) {
+          res.json(resultado);
+        }
+      ).catch(
+        function (erro) {
+          console.log(erro);
+          console.log(
+            "\nHouve um erro ao realizar o cadastro! Erro: ",
+            erro.sqlMessage
+          );
+          res.status(500).json(erro.sqlMessage);
+        }
+      );
+  }
+  
+}
+
+function consultarPeloTempo(req, res){
+  var idMaquina = req.params.idMaquina;
+  var inicio = req.params.inicio;
+  var fim = req.params.fim;
+
+  if (idMaquina == undefined) {
+    res.status(400).send("Seu idMaquina está undefined!");
+  } else if(inicio == undefined){
+    res.status(400).send("Seu inicio está undefined!");
+  }else if(fim == undefined){
+    res.status(400).send("Seu fim está undefined!");
+  }else {
+    dahAgenciasModel.consultarPeloTempo(idMaquina, inicio, fim)
+      .then(
+        function (resultado) {
+          res.json(resultado);
+        }
+      ).catch(
+        function (erro) {
+          console.log(erro);
+          console.log(
+            "\nHouve um erro ao realizar o cadastro! Erro: ",
+            erro.sqlMessage
+          );
+          res.status(500).json(erro.sqlMessage);
+        }
+      );
+  }
+}
+
 module.exports = {
   exibirListaMaquinas,
   dadosAnalista,
   exibirListaAgencias ,
   exibirView,
-  graficoAgencia
+  graficoAgencia,
+  consultarMaquinas,
+  consultarPeloTempo
 }
