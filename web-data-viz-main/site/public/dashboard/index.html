@@ -9,6 +9,7 @@
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <!-- Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -295,11 +296,11 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Sales <span>| Today</span></h5>
+                  <h5 class="card-title">CPU <span>| Today</span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-cart"></i>
+                      <i class="bi bi-cpu"></i>
                     </div>
                     <div class="ps-3">
                       <h6>145</h6>
@@ -331,11 +332,11 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Revenue <span>| This Month</span></h5>
+                  <h5 class="card-title">Disco <span>| This Month</span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-currency-dollar"></i>
+                      <i class="bi bi-device-hdd"></i>
                     </div>
                     <div class="ps-3">
                       <h6>$3,264</h6>
@@ -368,11 +369,11 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Customers <span>| This Year</span></h5>
+                  <h5 class="card-title">Ram <span>| This Year</span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-people"></i>
+                      <i class="bi bi-memory"></i>
                     </div>
                     <div class="ps-3">
                       <h6>1244</h6>
@@ -403,14 +404,68 @@
                     <li><a class="dropdown-item" href="#">This Year</a></li>
                   </ul>
                 </div>
-
+                <br>
                 <div class="card-body">
                   <h5 class="card-title">Reports <span>/Today</span></h5>
+                  <div id="graficoGeral" style="border: 1px solid red;">
+                    <canvas id="reportsChart4"></canvas>
+                  </div>
 
                   <!-- Line Chart -->
                   <div id="reportsChart"></div>
 
+
                   <script>
+                    const grafico = document.getElementById("reportsChart4")
+                    new Chart(grafico, {
+
+                      type: 'line', 
+                      data: {
+                        labels: ["00:00", "01:30", "02:30", "03:30", "04:30", "05:30", "06:30"],
+                        datasets: [
+                          {
+                          label: 'CPU',
+                          data: [31, 40, 28, 51, 42, 82, 56],
+                          borderWidth: 2,
+                          borderColor: "#4154f1",
+                          backgroundColor: "#4154f1",
+                          tension: 0.3
+                        },
+                        {
+                          label: 'Disco',
+                          data: [11, 32, 45, 32, 34, 52, 41],
+                          borderWidth: 2,
+                          borderColor: "#2eca6a",
+                          backgroundColor: "#2eca6a",
+                          tension: 0.3
+                        },
+                        {
+                          label: 'RAM',
+                          data: [15, 11, 32, 18, 9, 24, 11],
+                          borderWidth: 2,
+                          borderColor: "#ff771d",
+                          backgroundColor: "#ff771d",
+                          tension: 0.3
+                        }
+                      ]
+                      },
+                      options: {
+                        responsive: true,
+                        scales: {
+                          y: {
+                            title: "",
+                            beginAtZero: true
+                          },
+                          x: {
+                            title: "",
+                            grid:{
+                              display: false
+                            }
+                          }
+                        }
+                      }
+                    });
+
                     document.addEventListener("DOMContentLoaded", () => {
                       new ApexCharts(document.querySelector("#reportsChart"), {
                         series: [{
@@ -470,7 +525,7 @@
             </div><!-- End Reports -->
 
             <!-- Recent Sales -->
-            
+
 
           </div>
         </div>
