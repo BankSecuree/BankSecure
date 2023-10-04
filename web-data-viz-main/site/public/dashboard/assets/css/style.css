@@ -1377,5 +1377,10 @@ h6 {
   position: relative;
   height: 50vh;
   width: 95%;
+
+}
+#reportsChart4{
+  height: 50vh;
+  width: 95%;
 }
 
