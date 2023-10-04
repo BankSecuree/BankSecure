@@ -37,6 +37,7 @@ function exibirListaAgencias() {
       // finalizarAguardar();
     });
 }
+
 function listaMaquinas(){
 
   let agencia = document.getElementById("listaAgencias").value;
@@ -85,6 +86,7 @@ function listaMaquinas(){
 }
 
 function atualizarGrafico() {
+  // alert("rpda")
   console.log("RODOU")
   let dados = []
   let textos = []
@@ -170,54 +172,92 @@ function atualizarGrafico() {
   //Mudar valor das "Labels" os textos
   
 
-  setTimeout(atualizarGrafico,5000)
+  atualizarCards()
 }
 
-// function atualizarCards(){
-//   dadoCpu = document.getElementById("h4-cpu");
-//   alertaCpu = document.getElementById("msg-cpu");
+function atualizarCards(){
+  dadoCpu = document.getElementById("h4-cpu");
+  alertaCpu = document.getElementById("msg-cpu");
 
-//   dadoMemoria = document.getElementById("h4-memoria");
-//   alertaMemoria = document.getElementById("msg-memoria");
+  dadoMemoria = document.getElementById("h4-memoria");
+  alertaMemoria = document.getElementById("msg-memoria");
 
-//   dadoDisco = document.getElementById("h4-disco");
-//   alertaDisco = document.getElementById("msg-disco");
+  dadoDisco = document.getElementById("h4-disco");
+  alertaDisco = document.getElementById("msg-disco");
 
+  let maquina = document.getElementById("listaMaquinas").value
 
-//   let agencia = document.getElementById("listaAgencias").value
-//   let componente = document.getElementById("selectComponente").value
+  console.log("maquina: ", maquina);
 
-//   console.log("Componente: ", componente);
-//   console.log("Agencia: ", agencia);
+  fetch("/dashAgencias/dadosCards", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      maquinaServer: maquina,
+    })
+  }).then(function (resposta) {
+    console.log("ESTOU NO THEN DO pegar dados dos cards()!")
 
-//   fetch("/dashAgencias/dadosCards", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify({
-//       agenciaServer: agencia,
-//       componenteServer: componente
-//     })
-//   }).then(function (resposta) {
-//     console.log("ESTOU NO THEN DO pegar dados analista()!")
+    if (resposta.ok) {
+      console.log(resposta);
 
-//     if (resposta.ok) {
-//       console.log(resposta);
+      resposta.json().then(json => {
+        console.log(json);
+        console.log(JSON.stringify(json));
+        console.log("")
 
-//       resposta.json().then(json => {
-//         console.log(json);
-//         console.log(JSON.stringify(json));
-//         console.log("")
-//       });
+        let cpu = json[0].cpuu;
+        let memoria = json[0].memoria
+        let disco = json[0].disco
 
-//     } else {
-//       console.log("Houve um erro ao tentar pegar os dados!");
-//     }
+        dadoCpu.innerHTML = cpu + " %"
+        dadoMemoria.innerHTML = memoria + " %"
+        dadoDisco.innerHTML = disco + " %"
 
-//   }).catch(function (erro) {
-//     console.log(erro);
-//   })
+        if(cpu <= 20){
+          alertaCpu.innerHTML = "Estável"
+          alertaCpu.style.color = "rgb(25, 135, 84)"
+        }else if(cpu <= 70){
+          alertaCpu.innerHTML = "Atenção"
+          alertaCpu.style.color = "rgb(255, 193, 7)"
+        }else{
+          alertaCpu.innerHTML = "Problema"
+          alertaCpu.style.color = "rgb(220, 53, 69)"
+        }
+        
+        if(memoria <= 20){
+          alertaMemoria.innerHTML = "Estável"
+          alertaMemoria.style.color = "rgb(25, 135, 84)"
+        }else if(memoria <= 50){
+          alertaMemoria.innerHTML = "Atenção"
+          alertaMemoria.style.color = "rgb(255, 193, 7)"
+        }else{
+          alertaMemoria.innerHTML = "Problema"
+          alertaMemoria.style.color = "rgb(220, 53, 69)"
+        }
 
+        if(disco <= 20){
+          alertaDisco.innerHTML = "Estável"
+          alertaDisco.style.color = "rgb(25, 135, 84)"
+        }else if(disco <= 70){
+          alertaDisco.innerHTML = "Atenção"
+          alertaDisco.style.color = "rgb(255, 193, 7)"
+        }else{
+          alertaDisco.innerHTML = "Problema"
+          alertaDisco.style.color = "rgb(220, 53, 69)"
+        }
 
-// }
+      });
+
+    } else {
+      console.log("Houve um erro ao tentar pegar os dados!");
+    }
+
+  }).catch(function (erro) {
+    console.log(erro);
+  })
+
+  setTimeout(atualizarGrafico,5000)
+}

@@ -32,9 +32,8 @@ router.post("/dadosAnalista", function (req, res) {
     dashAgenciasController.dadosAnalista(req, res);
 });
 
-// router.post("/dadosCards", function (req, res) {
-//     // console.log("Cheguei na rota")
-//     dashAgenciasController.dadosCards(req, res);
-// });
+router.post("/dadosCards", function (req, res) {
+    dashAgenciasController.dadosCards(req, res);
+});
 
 module.exports = router;

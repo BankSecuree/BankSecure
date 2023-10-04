@@ -24,7 +24,7 @@
     <link href="assets/css/style.css" rel="stylesheet">
 </head>
 
-<body onload="">
+<body onload="atualizarGrafico()">
 
     <!-- Header -->
     <header id="header" class="header fixed-top d-flex align-items-center">
@@ -144,7 +144,7 @@
                             <div class="card info-card sales-card">
 
                                 <div class="card-body">
-                                    <h5 class="card-title">CPU Livre <span>| Agora</span> </h5>
+                                    <h5 class="card-title">CPU Usada <span>| Agora</span> </h5>
 
                                     <div class="d-flex align-items-center">
                                         <div
@@ -152,8 +152,8 @@
                                             <i class="bi bi-cpu"></i>
                                         </div>
                                         <div class="ps-3">
-                                            <h6 id="h4-cpu">14%</h6>
-                                            <span id="msg-cpu" class="text-success small pt-1 fw-bold">Estável</span>
+                                            <h6 id="h4-cpu">%</h6>
+                                            <span id="msg-cpu" class="small pt-1 fw-bold">...</span>
 
                                         </div>
                                     </div>
@@ -167,7 +167,7 @@
                             <div class="card info-card revenue-card">
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Memória Livre <span>| Agora</span></h5>
+                                    <h5 class="card-title">Memória Usada <span>| Agora</span></h5>
 
                                     <div class="d-flex align-items-center">
                                         <div
@@ -175,8 +175,8 @@
                                             <i class="bi bi-sd-card"></i>
                                         </div>
                                         <div class="ps-3">
-                                            <h6 id="h4-memoria">75%</h6>
-                                            <span id="msg-memoria" class="text-success small pt-1 fw-bold">Estável</span>
+                                            <h6 id="h4-memoria">%</h6>
+                                            <span id="msg-memoria" class="small pt-1 fw-bold">...</span>
 
                                         </div>
                                     </div>
@@ -191,7 +191,7 @@
                             <div class="card info-card customers-card">
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Disco Livre <span>| Agora</span></h5>
+                                    <h5 class="card-title">Disco Usado <span>| Agora</span></h5>
 
                                     <div class="d-flex align-items-center">
                                         <div
@@ -208,8 +208,8 @@
 
                                         </div>
                                         <div class="ps-3">
-                                            <h6 id="h4-disco">20%</h6>
-                                            <span id="msg-disco" class="text-danger small pt-1 fw-bold">Atenção</span>
+                                            <h6 id="h4-disco">%</h6>
+                                            <span id="msg-disco" class="small pt-1 fw-bold">...</span>
                                         </div>
                                     </div>
 
@@ -301,21 +301,15 @@
 <script src="assets/js/main.js"></script>
 <script src="assets/js/dashAnalistaIndex.js"></script>
 <script>
-    exibirListaAgencias();
-    atualizarGrafico();
-    exibirInfos();
-    listaMaquinas();
 
     let elemento = document.querySelector("#reportsChart");
     
     let opcao = {
             series: [{
                 name: 'Usando em %',
-                data: [31, 40, 28],
             }],
             xaxis: {
                 type: 'datetime',
-                categories: ["2018-09-19 10:00:00", "2018-09-19 11:30:00", "2018-09-19 12:30:00"]
             },
             chart: {
                 height: 350,
@@ -349,9 +343,14 @@
                     format: 'dd/MM/yy HH:mm'
                 },
             }
-        }
+    }
 
-        let grafico = new ApexCharts(elemento, opcao)
-        grafico.render();
+    let grafico = new ApexCharts(elemento, opcao)
+    grafico.render();
+
+    atualizarGrafico();
+    exibirListaAgencias();
+    exibirInfos();
+    listaMaquinas();
 </script>
 <!-- CORES: '#2eca6a', '#ff771d' -->
