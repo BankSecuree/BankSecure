@@ -67,7 +67,7 @@ def rudge_ramos():
         conexao.commit()
         cont+=1
 
-        # time.sleep(1)
+        time.sleep(3)
         rudge_ramos()
  
 

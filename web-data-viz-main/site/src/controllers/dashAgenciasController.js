@@ -94,7 +94,34 @@ function dadosAnalista(req, res) {
   }
 }
 
+function dadosCards(req, res) {
+  var maquina = req.body.maquinaServer;
+
+  console.log("To na controller")
+  
+  if (maquina == undefined) {
+    res.status(400).send("Sua maquina está undefined!");
+  } else {
+    dahAgenciasModel.dadosCards(maquina)
+      .then(
+        function (resultado) {
+          res.json(resultado);
+        }
+      ).catch(
+        function (erro) {
+          console.log(erro);
+          console.log(
+            "\nHouve um erro ao realizar dadosCards! Erro: ",
+            erro.sqlMessage
+          );
+          res.status(500).json(erro.sqlMessage);
+        }
+      );
+  }
+}
+
 module.exports = {
+  dadosCards,
   exibirListaMaquinas,
   dadosAnalista,
   exibirListaAgencias ,
