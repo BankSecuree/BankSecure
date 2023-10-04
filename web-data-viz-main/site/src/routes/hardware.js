@@ -29,4 +29,8 @@ router.post("/alterarMaquina", (req, res) => {
     hardwareController.alterarMaquina(req, res);
 })
 
+router.get("/consultarTudo/:idEmpresa", (req, res) => {
+    hardwareController.consultarTudo(req, res);
+})
+
 module.exports = router;
