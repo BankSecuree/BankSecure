@@ -289,22 +289,21 @@
                       <h6>Filtro</h6>
                     </li>
 
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao(1)">Hoje</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao(2)">Este Mês</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao(3)">Este Ano</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('cpu', '1')">Hoje</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('cpu', '2')">Este Mês</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('cpu', '3')">Este Ano</a></li>
                   </ul>
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">CPU <span id="periodoVizualizacaoCpu">| Hoje</span></h5>
+                  <h5 class="card-title">CPU <span>| </span><span id="cpu_period_info">Hoje</span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-cpu"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>145</h6>
-                      <span class="text-success small pt-1 fw-bold">0%</span>
+                      <h6 id="cpu_info">0</h6>
 
                     </div>
                   </div>
@@ -324,22 +323,22 @@
                       <h6>Filtro</h6>
                     </li>
 
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao(1)">Hoje</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao(2)">Este Mês</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao(3)">Este Ano</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('hd', '1')">Hoje</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('hd', '2')">Este Mês</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('hd', '3')">Este Ano</a></li>
                   </ul>
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Disco Rígido<span>| Este Mês</span></h5>
+                  <h5 class="card-title">Disco Rígido <span>| </span><span id="hd_period_info">Este Mês</span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-device-hdd"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>$3,264</h6>
-                      <span class="text-success small pt-1 fw-bold">0%</span> 
+                      <h6 id="hd_info">0</h6>
+                      
 
                     </div>
                   </div>
@@ -360,22 +359,21 @@
                       <h6>Filtro</h6>
                     </li>
 
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao(1)">Hoje</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao(2)">Este Mês</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao(3)">Este Ano</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('ram', '1')">Hoje</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('ram', '2')">Este Mês</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('ram', '3')">Este Ano</a></li>
                   </ul>
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Memória RAM <span>| Este Ano</span></h5>
+                  <h5 class="card-title">Memória RAM <span>| </span><span id="ram_period_info">Este Ano</span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-memory"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>1244</h6>
-                      <!-- <span class="text-danger small pt-1 fw-bold">0%</span> -->
+                      <h6 id="ram_info">0</h6>
 
                     </div>
                   </div>
@@ -396,15 +394,15 @@
                       <h6>Filtro</h6>
                     </li>
 
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao(1)">Hoje</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao(2)">Este Mês</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao(3)">Este Ano</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('graficoPrincipal', '1')">Hoje</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('graficoPrincipal', '2')">Este Mês</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('graficoPrincipal', '3')">Este Ano</a></li>
                   </ul>
                 </div>
                 <br>
                 <div class="card-body">
                   <h5 class="card-title">Registros <span>/Hoje</span></h5>
-                  <div id="graficoGeral" style="border: 1px solid red;">
+                  <div id="graficoGeral">
                     <canvas id="reportsChart4"></canvas>
                   </div>
 
@@ -500,7 +498,7 @@
 
                 <li><a class="dropdown-item" onclick="exibirGraficoDonut(1)">CPU</a></li>
                 <li><a class="dropdown-item" onclick="exibirGraficoDonut(2)">Memória</a></li>
-                <li><a class="dropdown-item" onclick="exibirGraficoDonut(3)">Disco</a></li>
+                <li><a class="dropdown-item" onclick="exibirGraficoDonut('ram')">Disco</a></li>
               </ul>
             </div>
 
