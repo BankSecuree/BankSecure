@@ -9,6 +9,16 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+.divAlertas{
+  position: absolute;
+    background-color: #FFFFFF;
+    top: 60px;
+    padding: 10px;
+    --bs-border-radius-lg: 10px;
+    border: 2px solid black;
+    right: 0;
+}
+
 
 .btnAlertas{
   background-color: rgba(255, 0, 0, 0);

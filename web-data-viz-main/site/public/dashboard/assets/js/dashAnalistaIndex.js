@@ -32,7 +32,9 @@ function exibirListaAgencias() {
             opcao.value = resposta[i].idAgencia
             opcao.innerHTML = resposta[i].apelido
             lista.appendChild(opcao)
+            // alert(arrayAgencias[i])
           }
+          pegarMaquinas();
         });
       } else {
         throw "Houve um erro na API!";
@@ -42,6 +44,7 @@ function exibirListaAgencias() {
       console.error(resposta);
       // finalizarAguardar();
     });
+    
 }
 
 function listaMaquinas(){
@@ -280,7 +283,7 @@ function pegarMaquinas(){
 
   sql += ";"
 
-  alert(sql)
+  // alert(sql)
 
   fetch("/dashAgencias/pegarMaquinas", {
     method: "POST",
@@ -309,6 +312,7 @@ function pegarMaquinas(){
           arrayNomeMaquinas.push(json[i].nome);
         }
         
+        pegarDadosGerais();
         
       });
       
@@ -321,18 +325,22 @@ function pegarMaquinas(){
     console.log(erro);
   })
 
-  pegarDadosGerais()
 }
 
-function criarCard(cpu,memoria,disco,nome){
-  var div = document.querySelector("#divAlertas")
+let soma = 0;
+
+function criarCard(nomeMaquina,nomeComponente,valor){
+  soma++;
+  $('.bell').attr('valor-alerta', soma);
+
+  var div = document.querySelector(".divAlertas")
   var tela = document.createElement("div");
-  tela.innerHTML = `CPU: ${cpu}, Memoria: ${memoria}, Disco: ${disco}, Nome: ${nome}`;
+  tela.innerHTML = `${nomeComponente} está com: ${valor}% | Na máquina: ${nomeMaquina}`;
   div.appendChild(tela)
 }
 
 function pegarDadosGerais(){
-  alert(arrayMaquinas[0])
+  // alert(arrayMaquinas[0])
   for (let i = 0; i < arrayMaquinas.length; i++) {
     
     fetch("/dashAgencias/pegarDadosGerais", {
@@ -363,10 +371,28 @@ function pegarDadosGerais(){
           console.log(`Disco: ${disco}`)
           console.log(`Cpu: ${cpu}`)
 
+          //atenção
+          if(memoria > 40 && memoria < 50){
+            criarCard(arrayNomeMaquinas[i],'Memoria',memoria)
+          }else if(memoria >= 50){
+            criarCard(arrayNomeMaquinas[i],'Memoria',memoria)
+          }
+          
+          if(cpu > 40 && cpu < 50){
+            criarCard(arrayNomeMaquinas[i],'CPU',cpu)
+          }else if(cpu >= 50){
+            criarCard(arrayNomeMaquinas[i],'CPU',cpu)
+          }
+          
+          if(disco > 20 && disco < 40){
+            criarCard(arrayNomeMaquinas[i],'Disco',disco)
+          }else if(disco >= 40){
+            criarCard(arrayNomeMaquinas[i],'Disco',disco)
+          }
+
         // criarCard(cpu,memoria,disco,arrayNomeMaquinas[i])
           
         });
-        
   
       } else {
         console.log("Houve um erro ao tentar pegar os dados GERAIS das maquinas!");
@@ -378,9 +404,14 @@ function pegarDadosGerais(){
     
   }
 }
-// attr(valor-alerta)
-var soma = 0;
+
+function esconder(){
+  $('.divAlertas').hide();
+  if(soma == 0){
+    $('.bell').attr('valor-alerta', soma);
+  }
+}
+
 $('#btnAlerta').on('click', function () {
-  soma++;
-  $('.bell').attr('valor-alerta', soma);
+  $('.divAlertas').slideToggle();
 });
