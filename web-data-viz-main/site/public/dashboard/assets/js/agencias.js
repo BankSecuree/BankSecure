@@ -399,7 +399,7 @@ function cadastrarAgencia() {
         var agenciaTelefoneVar = telefoneFormatado;
         var fkEmpresaVar = sessionStorage.ID_EMPRESA;
 
-        fetch("/usuarios/agencias", {
+        fetch("/agencias/cadastrarAgencia", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
