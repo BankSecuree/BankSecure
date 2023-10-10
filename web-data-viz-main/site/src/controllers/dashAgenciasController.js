@@ -175,7 +175,61 @@ function dadosCards(req, res) {
   }
 }
 
+function pegarDadosGerais(req, res) {
+  var idMaquina = req.body.idMaquinaServer;
+
+  console.log("To na controller")
+  
+  if (idMaquina == undefined) {
+    res.status(400).send("Seu IDMaquina está undefined!");
+  } else {
+    dahAgenciasModel.pegarDadosGerais(idMaquina)
+      .then(
+        function (resultado) {
+          res.json(resultado);
+        }
+      ).catch(
+        function (erro) {
+          console.log(erro);
+          console.log(
+            "\nHouve um erro ao realizar pegarDadosGerais! Erro: ",
+            erro.sqlMessage
+          );
+          res.status(500).json(erro.sqlMessage);
+        }
+      );
+  }
+}
+
+function pegarMaquinas(req, res) {
+  var sql = req.body.sqlServer;
+
+  console.log("To na controller")
+  
+  if (sql == undefined) {
+    res.status(400).send("Sua sql está undefined!");
+  } else {
+    dahAgenciasModel.pegarMaquinas(sql)
+      .then(
+        function (resultado) {
+          res.json(resultado);
+        }
+      ).catch(
+        function (erro) {
+          console.log(erro);
+          console.log(
+            "\nHouve um erro ao realizar pegarMaquinas! Erro: ",
+            erro.sqlMessage
+          );
+          res.status(500).json(erro.sqlMessage);
+        }
+      );
+  }
+}
+
 module.exports = {
+  pegarDadosGerais,
+  pegarMaquinas,
   dadosCards,
   exibirListaMaquinas,
   dadosAnalista,

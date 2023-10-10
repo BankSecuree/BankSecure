@@ -36,4 +36,12 @@ router.post("/dadosCards", function (req, res) {
     dashAgenciasController.dadosCards(req, res);
 });
 
+router.post("/pegarMaquinas", function (req, res) {
+    dashAgenciasController.pegarMaquinas(req, res);
+});
+
+router.post("/pegarDadosGerais", function (req, res) {
+    dashAgenciasController.pegarDadosGerais(req, res);
+});
+
 module.exports = router;

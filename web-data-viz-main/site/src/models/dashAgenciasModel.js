@@ -85,7 +85,36 @@ function dadosCards(maquina) {
     return database.executar(instrucao);
 }
 
+function pegarDadosGerais(idMaquina) {
+    console.log("ACESSEI O pegarDadosGerais \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function exibirDonut()");
+
+    var instrucao = `
+    select sum(valorM) as memoria, sum(valorc) as cpuu, sum(valord) as disco from (
+        (select valor as valor, dataHora, 'M' as tipo , valor as valorM, 0 AS valorC, 0 as valorD
+        from registros where fkComponente = 2 and fkMaquina = ${idMaquina} order by dataHora desc limit 1)
+    union
+        (select valor as valor, dataHora, 'C' as tipo, 0 as valorM, valor AS valorC, 0 as valorD
+        from registros where fkComponente = 1 and fkMaquina = ${idMaquina} order by dataHora desc limit 1)
+    union
+        (select valor as valor, dataHora, 'D' as tipo, 0 as valorM, 0 AS valorC, valor as valorD
+        from registros where fkComponente = 3 and fkMaquina = ${idMaquina} order by dataHora desc limit 1) 
+    ) as retorno ;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
+function pegarMaquinas(sql) {
+    console.log("ACESSEI O pegarMaquinas \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function exibirDonut()");
+
+    var instrucao = sql;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
+    pegarDadosGerais,
+    pegarMaquinas,
     exibirListaMaquinas,
     dadosAnalista,
     dadosCards,
