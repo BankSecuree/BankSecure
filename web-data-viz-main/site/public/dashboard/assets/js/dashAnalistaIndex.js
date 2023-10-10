@@ -1,3 +1,7 @@
+let arrayAgencias = []
+let arrayMaquinas = []
+let arrayNomeMaquinas = []
+
 function exibirListaAgencias() {
   fetch(`/dashAgencias/exibirListaAgencias/${sessionStorage.ID_USUARIO}`)
     .then(function (resposta) {
@@ -15,12 +19,14 @@ function exibirListaAgencias() {
           var contId = 0;
           var lista = document.getElementById("listaAgencias");
           console.log(resposta[0].idAgencia)
-          for (let i = 0; i <= resposta.length; i++) {
+          for (let i = 0; i < resposta.length; i++) {
 
             //   var lista = document.getElementById("listaAgencias");
             var publicacao = resposta[i];
             console.log(i);
             console.log(publicacao);
+
+            arrayAgencias.push(resposta[i].idAgencia)
 
             var opcao = document.createElement("option");
             opcao.value = resposta[i].idAgencia
@@ -164,14 +170,6 @@ function atualizarGrafico() {
   })
 
 
-  //arrays que vai armazenar os dados e os textos pegados do banco
-  
-
-  //Mudar valor dos dados
-
-  //Mudar valor das "Labels" os textos
-  
-
   atualizarCards()
 }
 
@@ -260,4 +258,124 @@ function atualizarCards(){
   })
 
   setTimeout(atualizarGrafico,5000)
+}
+
+function pegarMaquinas(){
+  arrayMaquinas = [];
+  arrayNomeMaquinas = [];
+
+  let repetcao = " or fkAgencia = " //sql de repetição
+  let sql = "Select * from maquina where fkAgencia = " //sql inicial base
+
+  sql += arrayAgencias[0] //adiciono a primeira agencia
+
+  if(arrayAgencias.length > 1){//se tiver mais de uma agencia
+
+    for(let i = 1; i < arrayAgencias.length; i++){ //for que vai percorrer mais de uma agencia
+          sql += repetcao
+          sql += arrayAgencias[i]
+      }
+      
+  }
+
+  sql += ";"
+
+  alert(sql)
+
+  fetch("/dashAgencias/pegarMaquinas", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      sqlServer: sql,
+    })
+  }).then(function (resposta) {
+    console.log("ESTOU NO THEN DO pegar dados das maquinas()!")
+
+    if (resposta.ok) {
+      console.log("================================")
+      console.log(resposta);
+      console.log("================================")
+
+      resposta.json().then(json => {
+
+        console.log(JSON.stringify(json));
+        console.log(json);
+
+        console.log(json[0])
+        for (let i = 0; i < json.length; i++) {
+          arrayMaquinas.push(json[i].idMaquina);
+          arrayNomeMaquinas.push(json[i].nome);
+        }
+        
+        
+      });
+      
+
+    } else {
+      console.log("Houve um erro ao tentar pegar os dados das maquinas!");
+    }
+
+  }).catch(function (erro) {
+    console.log(erro);
+  })
+
+  pegarDadosGerais()
+}
+
+function criarCard(cpu,memoria,disco,nome){
+  var div = document.querySelector("#divAlertas")
+  var tela = document.createElement("div");
+  tela.innerHTML = `CPU: ${cpu}, Memoria: ${memoria}, Disco: ${disco}, Nome: ${nome}`;
+  div.appendChild(tela)
+}
+
+function pegarDadosGerais(){
+  alert(arrayMaquinas[0])
+  for (let i = 0; i < arrayMaquinas.length; i++) {
+    
+    fetch("/dashAgencias/pegarDadosGerais", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        idMaquinaServer: arrayMaquinas[i],
+      })
+    }).then(function (resposta) {
+      console.log("ESTOU NO THEN DO pegar dados GERAI()!")
+  
+      if (resposta.ok) {
+        console.log(resposta);
+        
+        resposta.json().then(json => {
+  
+          console.log(JSON.stringify(json));
+          console.log(json);  
+
+        let cpu = json[0].cpuu;
+        let memoria = json[0].memoria
+        let disco = json[0].disco
+
+
+
+        criarCard(cpu,memoria,disco,arrayNomeMaquinas[i])
+          
+        });
+        
+  
+      } else {
+        console.log("Houve um erro ao tentar pegar os dados GERAIS das maquinas!");
+      }
+  
+    }).catch(function (erro) {
+      console.log(erro);
+    })
+    
+  }
+}
+
+function abrirAlertas(){
+  alert("EU")
 }

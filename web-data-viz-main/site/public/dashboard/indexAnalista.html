@@ -24,10 +24,12 @@
     <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
     <!-- Main CSS File -->
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <link href="assets/css/style.css" rel="stylesheet">
 </head>
 
-<body onload="atualizarGrafico()">
+<body>
 
     <!-- Header -->
     <header id="header" class="header fixed-top d-flex align-items-center">
@@ -45,15 +47,21 @@
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
 
+<<<<<<< Updated upstream
                 <button class="btnAlertas">
                     <span class="bell fa fa-bell"></span>
                 </button>
 
                 <!-- Messages Nav -->
+=======
+                <button onclick="abrirAlertas()" class="btnAlerta">
+                    <i class="fa fa-bell bell"></i>
+                </button>
+>>>>>>> Stashed changes
 
+                <br>
 
                 <li class="nav-item dropdown pe-3">
-
                     <!-- Foto e Nome -->
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                       <img id="foto-usuario" class="rounded-circle">
@@ -107,6 +115,8 @@
     </aside>
 
     <main id="main" class="main">
+
+        <!-- <div id="divAlertas" style="width: 200px;height: 200px;background-color: rgba(93, 179, 240, 0.403);"></div> -->
 
         <div class="pagetitle">
             <h1>Dashboard</h1>
@@ -276,6 +286,8 @@
             <!-- <button onclick="atualizarGrafico()">aaaaaaaa</button> -->
         </section>
 
+        <button onclick="pegarDadosGerais()" style="z-index: 4;background-color: rgb(85, 0, 255);">aaaaaaaaa</button>
+        <button onclick="pegarMaquinas()" style="z-index: 4;background-color: red;">aaaaaaaaa</button>
     </main>
 
     <footer id="footer" class="footer">
