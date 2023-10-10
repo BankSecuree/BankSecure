@@ -300,9 +300,15 @@ function graficoAgencia(idAgencia, maquinas) {
 function consultarTempo(idMaquina){
   var inicio = document.getElementById("ipt_inicio").value;
   var fim = document.getElementById("ipt_fim").value;
+
+
+
+
+  
   fetch(`/dashAgencias/consultarPeloTempo/${idMaquina}/${inicio}/${fim}`).then((resposta) =>{
     resposta.json().then((valores) => {
       alert(JSON.stringify(valores))
+      valores.reverse()
       vt_cpu = []
       vt_memoria = []
       vt_data = []
@@ -314,10 +320,23 @@ function consultarTempo(idMaquina){
           vt_memoria.push(publi.valor);
         } 
         var data = new Date(publi.dataHora);
-        data = `${data.getHours()}:${data
-          .getMinutes()
-          .toString()
-          .padStart(2, "0")}:${data.getSeconds().toString().padStart(2, "0")}`;
+        
+        // data = `${data.toLocalDate().getDayOfMonth()}/${data.getHours()}:${data
+        //   .getMinutes()
+        //   .toString()
+        //   .padStart(2, "0")}:${data.getSeconds().toString().padStart(2, "0")}`;
+
+        // data = `${data.getHours()}:${data
+        //   .getMinutes()
+        //   .toString()
+        //   .padStart(2, "0")}:${data.getSeconds().toString().padStart(2, "0")}`;
+
+
+        data =` ${data.getDate()}/${data.getMonth()}/${data.getFullYear()} ${data.getHours()}:${data
+            .getMinutes()
+            .toString()
+            .padStart(2, "0")}:${data.getSeconds().toString().padStart(2, "0")} `
+
         vt_data.push(data);
         
       }
@@ -364,13 +383,19 @@ function consultarTempo(idMaquina){
           ype: "datetime",
           categories: vt_data,
         },
+        tooltip: {
+          x: {
+              format: 'dd/MM/yy HH:mm'
+          },
+        },
         // tooltip: {
         //   shared: true
         // },
         legend: {
+          show: false,
           position: "top",
           horizontalAlign: "center",
-          offsetX: -10,
+          offsetX: -30,
         },
       };
       

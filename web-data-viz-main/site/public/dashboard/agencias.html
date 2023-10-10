@@ -128,22 +128,20 @@
       <div class="row">
         <div class="col-lg-4">
           <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filtros </h6>
-                </li>
-
-                <li><a class="dropdown-item" href="#">Today</a></li>
-                <li><a class="dropdown-item" href="#">This Month</a></li>
-                <li><a class="dropdown-item" href="#">This Year</a></li>
-              </ul>
-            </div>
-
             <div class="card-body">
               <h5 class="card-title">Agências <span>| </span></h5>
               <table class="table" id="listaAgencias"></table>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body" >
+              <h5 class="card-title">Maquinas <span>| Hoje</span></h5>
+
+              <table class="table"id="listaMaquinas">
+                
+              </table>
+              <div id="chart"></div>
             </div>
           </div>
         </div><!-- End Right side columns -->
@@ -152,34 +150,15 @@
           <div class="row">
 
             <div class="col-12">
-              <div class="card">
+              
 
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filtro</h6>
-                    </li>
-                    <li><a class="dropdown-item" href="#">Hoje</a></li>
-                    <li><a class="dropdown-item" href="#">Na semana</a></li>
-                    <li><a class="dropdown-item" href="#">No mês</a></li>
-                  </ul>
-                </div>
-                <div class="card-body" >
-                  <h5 class="card-title">Maquinas <span>| Hoje</span></h5>
-
-                  <table class="table"id="listaMaquinas">
-                    
-                  </table>
-                  <div id="chart"></div>
-                </div>
-              </div>
               <div id="graficos">
 
               </div>
+
               <div class="card" style="padding: 25px;">
                 <h5 class="card-title">Gráficos <span>| Por data</span></h5>  
-                <div class="col-md-7">
+                <div class="col-md-12">
                   <div class="box mt-4">
                     <div class="mt-4">
                       <div class="progress2" id="areaConsulta"></div>
