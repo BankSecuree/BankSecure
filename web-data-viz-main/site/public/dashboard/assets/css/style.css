@@ -9,7 +9,7 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
-<<<<<<< Updated upstream
+
 .btnAlertas{
   background-color: rgba(255, 0, 0, 0);
   border: none;
@@ -37,16 +37,7 @@
   height: 25px;
   font-size: 25px;
   color: #012970;
-=======
-
-.bell{
-  display:block;
-  width: 30px;
-  height: 30px;
-  font-size: 30px;
-  color: #04537D;
->>>>>>> Stashed changes
-  margin-right: 20px;
+    margin-right: 20px;
   -webkit-animation: ring 4s .7s ease-in-out infinite;
   -webkit-transform-origin: 50% 4px;
   -moz-animation: ring 4s .7s ease-in-out infinite;
@@ -139,31 +130,6 @@
   100% { transform: rotate(0); }
 }
 
-<<<<<<< Updated upstream
-=======
-.bell::after{
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  font-size: 10px;
-  content: "15";
-  border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: Arial, Helvetica, sans-serif;
-  color: white;
-  background-color: crimson;
-}
-
-.btnAlerta{
-  background-color: rgba(255, 255, 255, 0);
-  border: none;
-}
-
->>>>>>> Stashed changes
 :root {
   scroll-behavior: smooth;
 }

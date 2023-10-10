@@ -358,9 +358,12 @@ function pegarDadosGerais(){
         let memoria = json[0].memoria
         let disco = json[0].disco
 
+          console.log(`----- Maquina ${arrayNomeMaquinas[i]} -----`)
+          console.log(`Memoria: ${memoria}`)
+          console.log(`Disco: ${disco}`)
+          console.log(`Cpu: ${cpu}`)
 
-
-        criarCard(cpu,memoria,disco,arrayNomeMaquinas[i])
+        // criarCard(cpu,memoria,disco,arrayNomeMaquinas[i])
           
         });
         
@@ -375,7 +378,9 @@ function pegarDadosGerais(){
     
   }
 }
-
-function abrirAlertas(){
-  alert("EU")
-}
+// attr(valor-alerta)
+var soma = 0;
+$('#btnAlerta').on('click', function () {
+  soma++;
+  $('.bell').attr('valor-alerta', soma);
+});
