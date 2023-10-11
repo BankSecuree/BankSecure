@@ -297,20 +297,33 @@ function graficoAgencia(idAgencia, maquinas) {
   }
 }
 
+$('#ipt_inicio').mask('00/00/0000 00:00:00');
+$('#ipt_fim').mask('00/00/0000 00:00:00');
+
 function consultarTempo(idMaquina){
-  var inicio = document.getElementById("ipt_inicio").value;
-  var fim = document.getElementById("ipt_fim").value;
+  var inicioNormal = document.getElementById("ipt_inicio").value;
+  var fimNormal = document.getElementById("ipt_fim").value;
+
+  var fim = "";
+  var inicio = "";
+
+  var inicioMoment = moment(inicioNormal, 'DD/MM/YYYY HH:mm:ss');
+  var fimMoment = moment(fimNormal, 'DD/MM/YYYY HH:mm:ss');
+
+  inicio = inicioMoment.format('YYYY-MM-DD HH:mm:ss');
+  // alert(inicio);
+
+  fim = fimMoment.format('YYYY-MM-DD HH:mm:ss');
+  // alert(fim);
 
 
-
-
-  
   fetch(`/dashAgencias/consultarPeloTempo/${idMaquina}/${inicio}/${fim}`).then((resposta) =>{
     resposta.json().then((valores) => {
       alert(JSON.stringify(valores))
       valores.reverse()
       vt_cpu = []
       vt_memoria = []
+      vt_disco = []
       vt_data = []
       for(let i = 0; i < valores.length; i++){
         var publi = valores[i];
@@ -318,19 +331,10 @@ function consultarTempo(idMaquina){
           vt_cpu.push(publi.valor);
         } else if(publi.nome == "Memória"){
           vt_memoria.push(publi.valor);
-        } 
+        } else if(publi.nome == "Disco"){
+          vt_disco.push(publi.valor);
+        }
         var data = new Date(publi.dataHora);
-        
-        // data = `${data.toLocalDate().getDayOfMonth()}/${data.getHours()}:${data
-        //   .getMinutes()
-        //   .toString()
-        //   .padStart(2, "0")}:${data.getSeconds().toString().padStart(2, "0")}`;
-
-        // data = `${data.getHours()}:${data
-        //   .getMinutes()
-        //   .toString()
-        //   .padStart(2, "0")}:${data.getSeconds().toString().padStart(2, "0")}`;
-
 
         data =` ${data.getDate()}/${data.getMonth()}/${data.getFullYear()} ${data.getHours()}:${data
             .getMinutes()
@@ -353,6 +357,10 @@ function consultarTempo(idMaquina){
           {
             name: "Memória",
             data: vt_memoria,
+          },
+          {
+            name: "Disco",
+            data: vt_disco,
           },
         ],
         chart: {
@@ -382,20 +390,12 @@ function consultarTempo(idMaquina){
         xaxis: {
           ype: "datetime",
           categories: vt_data,
+            labels: {
+              show: false,
+            }
         },
         tooltip: {
-          x: {
-              format: 'dd/MM/yy HH:mm'
-          },
-        },
-        // tooltip: {
-        //   shared: true
-        // },
-        legend: {
-          show: false,
-          position: "top",
-          horizontalAlign: "center",
-          offsetX: -30,
+          shared: true
         },
       };
       
