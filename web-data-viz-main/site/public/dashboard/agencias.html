@@ -10,7 +10,9 @@
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
   <!-- Fonts -->
+  <script src="assets/js/jquery.js"></script>
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link
     href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
@@ -21,6 +23,10 @@
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
   <!-- Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+  <!-- Latest compiled and minified JavaScript --><script src="https://cdn.es.gov.br/scripts/jquery/1.11.2/jquery-1.11.2.min.js"></script><script src="https://cdn.es.gov.br/scripts/jquery/jquery-mask/1.7.7/jquery.mask.min.js"></script>
+
 </head>
 
 <body>
@@ -111,7 +117,6 @@
   </aside>
 
   <main id="main" class="main">
-
     <!-- Titulo da pagina -->
     <div class="pagetitle">
       <h1>Dashboard</h1>
@@ -128,22 +133,20 @@
       <div class="row">
         <div class="col-lg-4">
           <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filtros </h6>
-                </li>
-
-                <li><a class="dropdown-item" href="#">Today</a></li>
-                <li><a class="dropdown-item" href="#">This Month</a></li>
-                <li><a class="dropdown-item" href="#">This Year</a></li>
-              </ul>
-            </div>
-
             <div class="card-body">
               <h5 class="card-title">Agências <span>| </span></h5>
               <table class="table" id="listaAgencias"></table>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body" >
+              <h5 class="card-title">Maquinas <span>| Hoje</span></h5>
+
+              <table class="table"id="listaMaquinas">
+                
+              </table>
+              <div id="chart"></div>
             </div>
           </div>
         </div><!-- End Right side columns -->
@@ -152,34 +155,15 @@
           <div class="row">
 
             <div class="col-12">
-              <div class="card">
+              
 
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filtro</h6>
-                    </li>
-                    <li><a class="dropdown-item" href="#">Hoje</a></li>
-                    <li><a class="dropdown-item" href="#">Na semana</a></li>
-                    <li><a class="dropdown-item" href="#">No mês</a></li>
-                  </ul>
-                </div>
-                <div class="card-body" >
-                  <h5 class="card-title">Maquinas <span>| Hoje</span></h5>
-
-                  <table class="table"id="listaMaquinas">
-                    
-                  </table>
-                  <div id="chart"></div>
-                </div>
-              </div>
               <div id="graficos">
 
               </div>
+
               <div class="card" style="padding: 25px;">
-                <h5 class="card-title">Gráficos <span>| Por data</span></h5>  
-                <div class="col-md-7">
+                <h5 class="card-title">Gráficos em % <span>| Por data</span></h5>  
+                <div class="col-md-12">
                   <div class="box mt-4">
                     <div class="mt-4">
                       <div class="progress2" id="areaConsulta"></div>

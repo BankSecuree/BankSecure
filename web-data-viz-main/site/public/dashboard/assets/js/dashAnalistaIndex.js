@@ -162,8 +162,10 @@ function atualizarGrafico() {
           })
 
         }
+  
+        atualizarCards()
       });
-
+      
     } else {
       console.log("Houve um erro ao tentar pegar os dados!");
     }
@@ -173,7 +175,7 @@ function atualizarGrafico() {
   })
 
 
-  atualizarCards()
+  
 }
 
 function atualizarCards(){
@@ -249,7 +251,8 @@ function atualizarCards(){
           alertaDisco.innerHTML = "Problema"
           alertaDisco.style.color = "rgb(220, 53, 69)"
         }
-
+        
+        pegarDadosGerais()
       });
 
     } else {
@@ -260,7 +263,6 @@ function atualizarCards(){
     console.log(erro);
   })
 
-  setTimeout(atualizarGrafico,5000)
 }
 
 function pegarMaquinas(){
@@ -312,7 +314,7 @@ function pegarMaquinas(){
           arrayNomeMaquinas.push(json[i].nome);
         }
         
-        pegarDadosGerais();
+        atualizarGrafico();
         
       });
       
@@ -341,7 +343,9 @@ function criarCard(nomeMaquina,nomeComponente,valor){
 
 function pegarDadosGerais(){
   // alert(arrayMaquinas[0])
-  for (let i = 0; i < arrayMaquinas.length; i++) {
+  var div = document.querySelector(".divAlertas")
+  div.innerHTML = ""
+ for (let i = 0; i < arrayMaquinas.length; i++) {
     
     fetch("/dashAgencias/pegarDadosGerais", {
       method: "POST",
@@ -403,6 +407,8 @@ function pegarDadosGerais(){
     })
     
   }
+  soma = 0;
+  setTimeout(atualizarGrafico,5000)
 }
 
 function esconder(){

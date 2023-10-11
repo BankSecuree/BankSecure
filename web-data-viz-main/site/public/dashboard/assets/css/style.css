@@ -750,7 +750,10 @@ h6 {
   font-weight: 600;
   margin-bottom: 5px;
 }
-
+#header>div{
+  flex-direction: row-reverse;
+  gap: 30px;
+}
 .header-nav .notifications .notification-item p {
   font-size: 13px;
   margin-bottom: 3px;
@@ -875,7 +878,7 @@ h6 {
 
   #main,
   #footer {
-    margin-left: 300px;
+    /* margin-left: 300px; */
   }
 }
 
