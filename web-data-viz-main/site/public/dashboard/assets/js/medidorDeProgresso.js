@@ -317,4 +317,5 @@ function alterarPeriodoVizualizacao(campoParaAlterar, periodo){
         periodoId.innerHTML = periodos[periodo]
     }
 
+    }
 }
