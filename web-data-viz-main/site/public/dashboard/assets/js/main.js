@@ -73,28 +73,6 @@ if (sessionStorage.GERENTE_USUARIO == 'null') {//Interno
 
   span.innerHTML = "Usuários";
   
-  // Botão Agencias
-
-  var barraLateral = document.getElementById("sidebar-nav");
-
-  var li = document.createElement("li");
-  var a = document.createElement("a");
-  var i = document.createElement("i");
-  var span = document.createElement("span");
-
-  li.setAttribute("class", "nav-item");
-  a.setAttribute("class", "nav-link collapsed");
-  a.setAttribute("href", "conta_agencias.html");
-  i.setAttribute("class", "bi bi-card-list");
-
-  li.appendChild(a);
-  a.appendChild(i);
-  a.appendChild(span);
-  barraLateral.appendChild(li);
-
-  span.innerHTML = "Agências";
-
-  
   // Botão Máquinas
 
   var barraLateral = document.getElementById("sidebar-nav");

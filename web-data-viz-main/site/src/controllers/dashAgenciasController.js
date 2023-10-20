@@ -1,4 +1,5 @@
 var dahAgenciasModel = require("../models/dashAgenciasModel");
+var dashAnalistaModel = require("../models/dashAnalistaModel");
 
 function exibirListaAgencias(req, res) {
   var idUsuario = req.params.idUsuario;
@@ -227,6 +228,25 @@ function pegarMaquinas(req, res) {
   }
 }
 
+function verificarNivel(req, res) {
+  var fkEmpresa = req.params.fkEmpresa;
+  var fkMaquina = req.params.fkMaquina;
+  var nivel = req.params.nivel;
+  var fkComponente = req.params.fkComponente;
+
+  dashAnalistaModel.verificarNivel(fkMaquina,fkEmpresa,nivel,fkComponente).then(function (resultado) {
+    if (resultado.length > 0) {
+      res.status(200).json(resultado);
+    } else {
+      res.status(204).send("Nenhum resultado encontrado!")
+    }
+  }).catch(function (erro) {
+    console.log(erro);
+    console.log("Houve um erro ao buscar graficoAgencia: ", erro.sqlMessage);
+    res.status(500).json(erro.sqlMessage);
+  });
+}
+
 module.exports = {
   pegarDadosGerais,
   pegarMaquinas,
@@ -237,6 +257,7 @@ module.exports = {
   exibirView,
   graficoAgencia,
   consultarMaquinas,
-  consultarPeloTempo
+  consultarPeloTempo,
+  verificarNivel,
 }
 

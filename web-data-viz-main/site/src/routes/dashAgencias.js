@@ -27,6 +27,10 @@ router.get(`/consultarPeloTempo/:idMaquina/:inicio/:fim`, (req,res) => {
     dashAgenciasController.consultarPeloTempo(req, res);
 })
 
+router.get(`/verificarNivel/:fkMaquina/:fkEmpresa/:nivel/:fkComponente`, (req,res) => {
+    dashAgenciasController.verificarNivel(req, res);
+})
+
 router.post("/dadosAnalista", function (req, res) {
     // console.log("Cheguei na rota")
     dashAgenciasController.dadosAnalista(req, res);
