@@ -244,7 +244,7 @@ function atualizarCards() {
         if (disco <= 20) {
           alertaDisco.innerHTML = "Estável"
           alertaDisco.style.color = "rgb(25, 135, 84)"
-        } else if (disco <= 70) {
+        } else if (disco <= 50) {
           alertaDisco.innerHTML = "Atenção"
           alertaDisco.style.color = "rgb(255, 193, 7)"
         } else {
