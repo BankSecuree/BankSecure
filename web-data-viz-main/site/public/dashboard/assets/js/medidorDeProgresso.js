@@ -218,7 +218,7 @@ function plotarGrafico(respostaCpu, respostaDisco, respostaMemoria, idEmpresa, p
         }
     });
 
-    setTimeout(() => atualizarGrafico(idEmpresa, periodo, componente, grafico, dados), 2000)
+    // setTimeout(() => atualizarGrafico(idEmpresa, periodo, componente, grafico, dados), 2000)
 
 
 }

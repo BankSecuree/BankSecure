@@ -4,27 +4,26 @@ function exibirGraficoDonut(option) {
     var alerta;
     var ideal;
     span = document.getElementById("optionSelecionada")
-
-
-    fetch(`/dashDonut/exibirDonut`).then(function (resposta) {
+    
+    fetch(`/dashDonut/exibirDonut/${sessionStorage.ID_EMPRESA}/${option}`).then(function (resposta) {
         if (resposta.ok) {
             resposta.json().then(function (resposta) {
-                var publi = resposta[0];
+
                 if (option == 1) {
                     span.innerHTML = '| CPU'
-                    critico = publi.s_cpu_critico;
-                    alerta = publi.s_cpu_alerta;
-                    ideal = publi.s_cpu_ideal;
+                    critico = resposta[0].qtd;
+                    alerta = resposta[1].qtd;
+                    ideal = resposta[2].qtd;
                 } else if (option == 2) {
                     span.innerHTML = '| Memória'
-                    critico = publi.s_mem_critico;
-                    alerta = publi.s_mem_alerta;
-                    ideal = publi.s_mem_ideal;
+                    critico = resposta[0].qtd;
+                    alerta = resposta[1].qtd;
+                    ideal = resposta[2].qtd;
                 } else if (option == 3) {
                     span.innerHTML = '| Disco'
-                    critico = publi.s_disco_critico;
-                    alerta = publi.s_disco_alerta;
-                    ideal = publi.s_disco_ideal;
+                    critico = resposta[0].qtd;
+                    alerta = resposta[1].qtd;
+                    ideal = resposta[2].qtd;
                 }
                 
                 var grafico = echarts.init(document.querySelector("#graficoDonut")).setOption({

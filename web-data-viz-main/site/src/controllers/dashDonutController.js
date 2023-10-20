@@ -1,7 +1,10 @@
 var dashDonutModel = require("../models/dashDonutModel");
 
 function exibirDonut(req, res) {
-  dashDonutModel.exibirDonut().then(function (resultado) {
+  var fkEmpresa = req.params.fkEmpresa;
+  var fkComponente = req.params.fkComponente;
+
+  dashDonutModel.exibirDonut(fkEmpresa,fkComponente).then(function (resultado) {
     if (resultado.length > 0) {
       res.status(200).json(resultado);
     } else {
