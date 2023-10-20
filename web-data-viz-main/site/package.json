@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "apexcharts": "^3.42.0",
+    "chartjs": "^0.3.24",
     "consultar-cnpj": "^1.0.18",
     "cors": "^2.8.5",
     "express": "^4.17.1",

@@ -1506,4 +1506,15 @@ h6 {
   color: #012970;
 }
 
+#graficoGeral{
+  margin: 10px 20px;
+  position: relative;
+  height: 50vh;
+  width: 95%;
+
+}
+#reportsChart4{
+  height: 50vh;
+  width: 95%;
+}
 

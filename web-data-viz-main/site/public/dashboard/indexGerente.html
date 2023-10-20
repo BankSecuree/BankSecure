@@ -10,6 +10,8 @@
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="assets/js/medidorDeProgresso.js"></script>
+
 
   <!-- Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -21,10 +23,13 @@
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
   <!-- Main CSS File -->
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="assets/css/style.css" rel="stylesheet">
 </head>
 
-<body>
+<body onload="exibirKpiGerente(2, 'day', 1), exibirKpiGerente(2,'day', 2), exibirKpiGerente(2, 'day', 3), obterDadosGrafico(2, 'day', 1)">
 
   <!-- Header -->
   <header id="header" class="header fixed-top d-flex align-items-center">
@@ -38,23 +43,8 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div>
 
-    <!-- Search Bar -->
-    <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-      </form>
-    </div>
-
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-
-        <!-- Search Icon-->
-        <li class="nav-item d-block d-lg-none">
-          <a class="nav-link nav-icon search-bar-toggle " href="#">
-            <i class="bi bi-search"></i>
-          </a>
-        </li>
 
         <!-- Notification Nav -->
         <!-- <li class="nav-item dropdown"> -->
@@ -225,40 +215,34 @@
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
-      <!-- Dashboard Nav -->
-      <li class="nav-item">
-        <a class="nav-link" href="index.html">
-          <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
-        </a>
-      </li>
+        <!-- Dashboard Nav -->
+        <li class="nav-item">
+            <a id="aDash" class="nav-link" href="">
+                <i class="bi bi-grid"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="agencias.html">
-          <i class="bi bi-layout-text-window-reverse"></i>
-          <span>Agências</span>
-        </a>
-      </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="faq.html">
+                <i class="bi bi-question-circle"></i>
+                <span>F.A.Q</span>
+            </a>
+        </li>
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="faq.html">
-          <i class="bi bi-question-circle"></i>
-          <span>F.A.Q</span>
-        </a>
-      </li>
+        <li class="nav-heading">CONTA</li>
 
-      <li class="nav-heading">CONTA</li>
-
-      <!-- Perfil Nav -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="conta_perfil.html">
-          <i class="bi bi-person"></i>
-          <span>Perfil</span>
-        </a>
-      </li>
+        <!-- Perfil Nav -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="conta_perfil.html">
+                <i class="bi bi-person"></i>
+                <span>Perfil</span>
+            </a>
+        </li>
 
     </ul>
-  </aside>
+</aside>
+
 
   <main id="main" class="main">
 
@@ -289,9 +273,10 @@
                       <h6>Filtro</h6>
                     </li>
 
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('cpu', '1')">Hoje</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('cpu', '2')">Este Mês</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('cpu', '3')">Este Ano</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('cpu', 'day')">Hoje</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('cpu', 'month')">Este Mês</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('cpu', 'year')">Este Ano</a></li>
+
                   </ul>
                 </div>
 
@@ -323,9 +308,11 @@
                       <h6>Filtro</h6>
                     </li>
 
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('hd', '1')">Hoje</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('hd', '2')">Este Mês</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('hd', '3')">Este Ano</a></li>
+
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('hd', 'day')">Hoje</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('hd', 'month')">Este Mês</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('hd', 'year')">Este Ano</a></li>
+
                   </ul>
                 </div>
 
@@ -359,11 +346,12 @@
                       <h6>Filtro</h6>
                     </li>
 
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('ram', '1')">Hoje</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('ram', '2')">Este Mês</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('ram', '3')">Este Ano</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('ram', 'day')">Hoje</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('ram', 'month')">Este Mês</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('ram', 'year')">Este Ano</a></li>
                   </ul>
                 </div>
+
 
                 <div class="card-body">
                   <h5 class="card-title">Memória RAM <span>| </span><span id="ram_period_info">Este Ano</span></h5>
@@ -382,7 +370,7 @@
               </div>
 
             </div><!-- End Customers Card -->
-
+            
             <!-- Reports -->
             <div class="col-12">
               <div class="card">
@@ -394,14 +382,17 @@
                       <h6>Filtro</h6>
                     </li>
 
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('graficoPrincipal', '1')">Hoje</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('graficoPrincipal', '2')">Este Mês</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('graficoPrincipal', '3')">Este Ano</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('graficoPrincipal', 'day')">Hoje</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('graficoPrincipal', 'month')">Este Mês</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('graficoPrincipal', 'year')">Este Ano</a></li>
+
                   </ul>
                 </div>
                 <br>
                 <div class="card-body">
-                  <h5 class="card-title">Registros <span>/Hoje</span></h5>
+                  
+                  <h5 class="card-title">Registros <span id="periodoGrafico">/Hoje</span></h5>
+
                   <div id="graficoGeral">
                     <canvas id="reportsChart4"></canvas>
                   </div>
@@ -411,67 +402,7 @@
 
 
                   <script>
-                    const grafico = document.getElementById("reportsChart4")
-                    dados1 = [31, 40, 28, 51, 42, 82, 10]
-                    dados2 = [11, 32, 45, 32, 34, 52, 21]
-                    dados3 = [15, 11, 32, 18, 9, 24, 50]
-                    new Chart(grafico, {
 
-                      type: 'line',
-                      data: {
-                        labels: ["00:00", "01:30", "02:30", "03:30", "04:30", "05:30", "06:30"],
-                        datasets: [
-                          {
-                            label: 'CPU',
-                            data: dados1,
-                            borderWidth: 2,
-                            borderColor: "#4154f1",
-                            backgroundColor: "#4154f1",
-                            tension: 0.3
-                          },
-                          {
-                            label: 'Disco',
-                            data: dados2,
-                            borderWidth: 2,
-                            borderColor: "#2eca6a",
-                            backgroundColor: "#2eca6a",
-                            tension: 0.3
-                          },
-                          {
-                            label: 'Memória',
-                            data: dados3,
-                            borderWidth: 2,
-                            borderColor: "#ff771d",
-                            backgroundColor: "#ff771d",
-                            tension: 0.3
-                          }
-                        ]
-                      },
-                      options: {
-                        plugins: {
-                          legend: {
-                            display: true,
-                            labels: {
-                              usePointStyle: true,
-                            },
-                          }
-                        },
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                          y: {
-                            title: "",
-                            beginAtZero: true
-                          },
-                          x: {
-                            title: "",
-                            grid: {
-                              display: false
-                            }
-                          }
-                        }
-                      }
-                    });
                   </script>
                   <!-- End Line Chart -->
                 </div>
@@ -498,7 +429,8 @@
 
                 <li><a class="dropdown-item" onclick="exibirGraficoDonut(1)">CPU</a></li>
                 <li><a class="dropdown-item" onclick="exibirGraficoDonut(2)">Memória</a></li>
-                <li><a class="dropdown-item" onclick="exibirGraficoDonut('ram')">Disco</a></li>
+                <li><a class="dropdown-item" onclick="exibirGraficoDonut(3)">Disco</a></li>
+
               </ul>
             </div>
 
@@ -527,13 +459,10 @@
 </body>
 
 </html>
-
+<script src="assets/js/medidorDeProgresso.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="assets/js/dashDonut.js"></script>
-<script src="assets/js/medidorDeProgresso.js"></script>
-
-<script>
   exibirGraficoDonut(1)
 </script>
