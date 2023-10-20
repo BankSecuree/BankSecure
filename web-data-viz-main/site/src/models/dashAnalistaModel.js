@@ -9,7 +9,13 @@ function dadosAnalista(agencia,componente) {
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
 }
-
+function verificarNivel(fkMaquina,fkEmpresa,nivel,fkComponente){
+    console.log("======================================================Testar======================================================")
+    var instrucao = `CALL verificarNivel(${fkEmpresa},${fkMaquina},${nivel},${fkComponente})`
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
 module.exports = {
-    dadosAnalista
+    dadosAnalista,
+    verificarNivel
 };

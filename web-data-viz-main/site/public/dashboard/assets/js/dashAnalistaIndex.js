@@ -341,11 +341,28 @@ function criarCard(nomeMaquina,nomeComponente,valor){
   div.appendChild(tela)
 }
 
+function verificarNivel(fkMaquina,fkEmpresa,nivel,fkComponente){
+
+  fetch(`/dashAgencias/verificarNivel/${fkMaquina}/${fkEmpresa}/${nivel}/${fkComponente}`).then(function (resposta) {
+    if (resposta.ok) {
+        resposta.json().then(function (resposta) {
+            
+          // alert("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAa")
+
+        });
+    } else {
+        throw ('Houve um erro na API!');
+    }
+});
+
+}
+
 function pegarDadosGerais(){
-  // alert(arrayMaquinas[0])
+
   var div = document.querySelector(".divAlertas")
   div.innerHTML = ""
- for (let i = 0; i < arrayMaquinas.length; i++) {
+ 
+  for (let i = 0; i < arrayMaquinas.length; i++) {
     
     fetch("/dashAgencias/pegarDadosGerais", {
       method: "POST",
@@ -378,20 +395,32 @@ function pegarDadosGerais(){
           //atenção
           if(memoria > 40 && memoria < 50){
             criarCard(arrayNomeMaquinas[i],'Memoria',memoria)
+            verificarNivel(arrayMaquinas[i],sessionStorage.ID_EMPRESA,2,2)
           }else if(memoria >= 50){
             criarCard(arrayNomeMaquinas[i],'Memoria',memoria)
+            verificarNivel(arrayMaquinas[i],sessionStorage.ID_EMPRESA,3,2)
+          }else{
+            verificarNivel(arrayMaquinas[i],sessionStorage.ID_EMPRESA,1,2)
           }
           
           if(cpu > 40 && cpu < 50){
             criarCard(arrayNomeMaquinas[i],'CPU',cpu)
+            verificarNivel(arrayMaquinas[i],sessionStorage.ID_EMPRESA,2,1)
           }else if(cpu >= 50){
             criarCard(arrayNomeMaquinas[i],'CPU',cpu)
+            verificarNivel(arrayMaquinas[i],sessionStorage.ID_EMPRESA,3,1)
+          }else{
+            verificarNivel(arrayMaquinas[i],sessionStorage.ID_EMPRESA,1,1)
           }
           
           if(disco > 20 && disco < 40){
             criarCard(arrayNomeMaquinas[i],'Disco',disco)
+            verificarNivel(arrayMaquinas[i],sessionStorage.ID_EMPRESA,2,3)
           }else if(disco >= 40){
             criarCard(arrayNomeMaquinas[i],'Disco',disco)
+            verificarNivel(arrayMaquinas[i],sessionStorage.ID_EMPRESA,3,3)
+          }else{
+            verificarNivel(arrayMaquinas[i],sessionStorage.ID_EMPRESA,1,3)
           }
 
         // criarCard(cpu,memoria,disco,arrayNomeMaquinas[i])

@@ -12,6 +12,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="assets/js/medidorDeProgresso.js"></script>
 
+
   <!-- Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link
@@ -22,6 +23,7 @@
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
   <!-- Main CSS File -->
+
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="assets/css/style.css" rel="stylesheet">
@@ -41,12 +43,8 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div>
 
-    
-
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-
-       
 
         <!-- Notification Nav -->
         <!-- <li class="nav-item dropdown"> -->
@@ -245,6 +243,7 @@
     </ul>
 </aside>
 
+
   <main id="main" class="main">
 
     <div class="pagetitle">
@@ -277,6 +276,7 @@
                     <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('cpu', 'day')">Hoje</a></li>
                     <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('cpu', 'month')">Este Mês</a></li>
                     <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('cpu', 'year')">Este Ano</a></li>
+
                   </ul>
                 </div>
 
@@ -308,9 +308,11 @@
                       <h6>Filtro</h6>
                     </li>
 
+
                     <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('hd', 'day')">Hoje</a></li>
                     <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('hd', 'month')">Este Mês</a></li>
                     <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('hd', 'year')">Este Ano</a></li>
+
                   </ul>
                 </div>
 
@@ -349,7 +351,7 @@
                     <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('ram', 'year')">Este Ano</a></li>
                   </ul>
                 </div>
-                
+
 
                 <div class="card-body">
                   <h5 class="card-title">Memória RAM <span>| </span><span id="ram_period_info">Este Ano</span></h5>
@@ -368,11 +370,7 @@
               </div>
 
             </div><!-- End Customers Card -->
-
-            <script>
-              
-            </script>
-
+            
             <!-- Reports -->
             <div class="col-12">
               <div class="card">
@@ -387,11 +385,14 @@
                     <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('graficoPrincipal', 'day')">Hoje</a></li>
                     <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('graficoPrincipal', 'month')">Este Mês</a></li>
                     <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('graficoPrincipal', 'year')">Este Ano</a></li>
+
                   </ul>
                 </div>
                 <br>
                 <div class="card-body">
+                  
                   <h5 class="card-title">Registros <span id="periodoGrafico">/Hoje</span></h5>
+
                   <div id="graficoGeral">
                     <canvas id="reportsChart4"></canvas>
                   </div>
@@ -401,67 +402,7 @@
 
 
                   <script>
-                    // const grafico = document.getElementById("reportsChart4")
-                    // dados1 = [31, 40, 28, 51, 42, 82, 10]
-                    // dados2 = [11, 32, 45, 32, 34, 52, 21]
-                    // dados3 = [15, 11, 32, 18, 9, 24, 50]
-                    // new Chart(grafico, {
 
-                    //   type: 'line',
-                    //   data: {
-                    //     labels: ["00:00", "01:30", "02:30", "03:30", "04:30", "05:30", "06:30"],
-                    //     datasets: [
-                    //       {
-                    //         label: 'CPU',
-                    //         data: dados1,
-                    //         borderWidth: 2,
-                    //         borderColor: "#4154f1",
-                    //         backgroundColor: "#4154f1",
-                    //         tension: 0.3
-                    //       },
-                    //       {
-                    //         label: 'Disco',
-                    //         data: dados2,
-                    //         borderWidth: 2,
-                    //         borderColor: "#2eca6a",
-                    //         backgroundColor: "#2eca6a",
-                    //         tension: 0.3
-                    //       },
-                    //       {
-                    //         label: 'Memória',
-                    //         data: dados3,
-                    //         borderWidth: 2,
-                    //         borderColor: "#ff771d",
-                    //         backgroundColor: "#ff771d",
-                    //         tension: 0.3
-                    //       }
-                    //     ]
-                    //   },
-                    //   options: {
-                    //     plugins: {
-                    //       legend: {
-                    //         display: true,
-                    //         labels: {
-                    //           usePointStyle: true,
-                    //         },
-                    //       }
-                    //     },
-                    //     responsive: true,
-                    //     maintainAspectRatio: false,
-                    //     scales: {
-                    //       y: {
-                    //         title: "",
-                    //         beginAtZero: true
-                    //       },
-                    //       x: {
-                    //         title: "",
-                    //         grid: {
-                    //           display: false
-                    //         }
-                    //       }
-                    //     }
-                    //   }
-                    // });
                   </script>
                   <!-- End Line Chart -->
                 </div>
@@ -489,6 +430,7 @@
                 <li><a class="dropdown-item" onclick="exibirGraficoDonut(1)">CPU</a></li>
                 <li><a class="dropdown-item" onclick="exibirGraficoDonut(2)">Memória</a></li>
                 <li><a class="dropdown-item" onclick="exibirGraficoDonut(3)">Disco</a></li>
+
               </ul>
             </div>
 
@@ -522,9 +464,5 @@
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="assets/js/dashDonut.js"></script>
-
-
-<script>
-
   exibirGraficoDonut(1)
 </script>
