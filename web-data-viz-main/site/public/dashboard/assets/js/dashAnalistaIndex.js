@@ -44,14 +44,14 @@ function exibirListaAgencias() {
       console.error(resposta);
       // finalizarAguardar();
     });
-    
+
 }
 
-function listaMaquinas(){
+function listaMaquinas() {
 
   let agencia = document.getElementById("listaAgencias").value;
 
-  if(agencia == "" || agencia == undefined || agencia == null){
+  if (agencia == "" || agencia == undefined || agencia == null) {
     agencia = 1
   }
 
@@ -73,7 +73,7 @@ function listaMaquinas(){
           console.log(resposta[0].idMaquina)
           for (let i = 0; i <= resposta.length; i++) {
 
-              // var lista = document.getElementById("listaAgencias");
+            // var lista = document.getElementById("listaAgencias");
             var publicacao = resposta[i];
             console.log(i);
             console.log(publicacao);
@@ -126,7 +126,7 @@ function atualizarGrafico() {
         console.log(JSON.stringify(json));
         console.log("")
         console.log(json[0].dataHora)
-        
+
         for (let i = 0; i < json.length; i++) {
           dados.push(json[i].valor)
           textos.push(json[i].dataHora)
@@ -144,28 +144,28 @@ function atualizarGrafico() {
           },
         })
 
-        if(componente == 1){
+        if (componente == 1) {
           grafico.updateOptions({
             colors: ['#4154f1'],
           })
 
-        }else if(componente == 2){
+        } else if (componente == 2) {
 
           grafico.updateOptions({
             colors: ['#2eca6a'],
           })
 
-        }else{
-          
+        } else {
+
           grafico.updateOptions({
             colors: ['#ff771d'],
           })
 
         }
-  
+
         atualizarCards()
       });
-      
+
     } else {
       console.log("Houve um erro ao tentar pegar os dados!");
     }
@@ -175,10 +175,10 @@ function atualizarGrafico() {
   })
 
 
-  
+
 }
 
-function atualizarCards(){
+function atualizarCards() {
   dadoCpu = document.getElementById("h4-cpu");
   alertaCpu = document.getElementById("msg-cpu");
 
@@ -219,39 +219,39 @@ function atualizarCards(){
         dadoMemoria.innerHTML = memoria + " %"
         dadoDisco.innerHTML = disco + " %"
 
-        if(cpu <= 20){
+        if (cpu <= 20) {
           alertaCpu.innerHTML = "Estável"
           alertaCpu.style.color = "rgb(25, 135, 84)"
-        }else if(cpu <= 70){
+        } else if (cpu <= 70) {
           alertaCpu.innerHTML = "Atenção"
           alertaCpu.style.color = "rgb(255, 193, 7)"
-        }else{
+        } else {
           alertaCpu.innerHTML = "Problema"
           alertaCpu.style.color = "rgb(220, 53, 69)"
         }
-        
-        if(memoria <= 20){
+
+        if (memoria <= 20) {
           alertaMemoria.innerHTML = "Estável"
           alertaMemoria.style.color = "rgb(25, 135, 84)"
-        }else if(memoria <= 50){
+        } else if (memoria <= 50) {
           alertaMemoria.innerHTML = "Atenção"
           alertaMemoria.style.color = "rgb(255, 193, 7)"
-        }else{
+        } else {
           alertaMemoria.innerHTML = "Problema"
           alertaMemoria.style.color = "rgb(220, 53, 69)"
         }
 
-        if(disco <= 20){
+        if (disco <= 20) {
           alertaDisco.innerHTML = "Estável"
           alertaDisco.style.color = "rgb(25, 135, 84)"
-        }else if(disco <= 70){
+        } else if (disco <= 70) {
           alertaDisco.innerHTML = "Atenção"
           alertaDisco.style.color = "rgb(255, 193, 7)"
-        }else{
+        } else {
           alertaDisco.innerHTML = "Problema"
           alertaDisco.style.color = "rgb(220, 53, 69)"
         }
-        
+
         pegarDadosGerais()
       });
 
@@ -265,7 +265,7 @@ function atualizarCards(){
 
 }
 
-function pegarMaquinas(){
+function pegarMaquinas() {
   arrayMaquinas = [];
   arrayNomeMaquinas = [];
 
@@ -274,13 +274,13 @@ function pegarMaquinas(){
 
   sql += arrayAgencias[0] //adiciono a primeira agencia
 
-  if(arrayAgencias.length > 1){//se tiver mais de uma agencia
+  if (arrayAgencias.length > 1) {//se tiver mais de uma agencia
 
-    for(let i = 1; i < arrayAgencias.length; i++){ //for que vai percorrer mais de uma agencia
-          sql += repetcao
-          sql += arrayAgencias[i]
-      }
-      
+    for (let i = 1; i < arrayAgencias.length; i++) { //for que vai percorrer mais de uma agencia
+      sql += repetcao
+      sql += arrayAgencias[i]
+    }
+
   }
 
   sql += ";"
@@ -313,11 +313,11 @@ function pegarMaquinas(){
           arrayMaquinas.push(json[i].idMaquina);
           arrayNomeMaquinas.push(json[i].nome);
         }
-        
+
         atualizarGrafico();
-        
+
       });
-      
+
 
     } else {
       console.log("Houve um erro ao tentar pegar os dados das maquinas!");
@@ -331,7 +331,7 @@ function pegarMaquinas(){
 
 let soma = 0;
 
-function criarCard(nomeMaquina,nomeComponente,valor){
+function criarCard(nomeMaquina, nomeComponente, valor) {
   soma++;
   $('.bell').attr('valor-alerta', soma);
 
@@ -341,29 +341,40 @@ function criarCard(nomeMaquina,nomeComponente,valor){
   div.appendChild(tela)
 }
 
-function verificarNivel(fkMaquina,fkEmpresa,nivel,fkComponente){
+function verificarNivel(fkMaquina, fkEmpresa, nivel, fkComponente) {
 
   fetch(`/dashAgencias/verificarNivel/${fkMaquina}/${fkEmpresa}/${nivel}/${fkComponente}`).then(function (resposta) {
     if (resposta.ok) {
-        resposta.json().then(function (resposta) {
-            
-          // alert("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAa")
+      resposta.json().then(function (resposta) {
 
-        });
+        // alert("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAa")
+
+      });
     } else {
-        throw ('Houve um erro na API!');
+      throw ('Houve um erro na API!');
     }
-});
+  });
 
 }
 
-function pegarDadosGerais(){
+function pegarDadosGerais() {
+  atencaoMemoria = 0;
+  problemaMemoria = 0;
+  okMemoria = 0;
+
+  atencaoCpu = 0;
+  problemaCpu = 0;
+  okCpu = 0;
+
+  atencaoDisco = 0;
+  problemaDisco = 0;
+  okDisco = 0;
 
   var div = document.querySelector(".divAlertas")
   div.innerHTML = ""
- 
+
   for (let i = 0; i < arrayMaquinas.length; i++) {
-    
+
     fetch("/dashAgencias/pegarDadosGerais", {
       method: "POST",
       headers: {
@@ -374,18 +385,18 @@ function pegarDadosGerais(){
       })
     }).then(function (resposta) {
       console.log("ESTOU NO THEN DO pegar dados GERAI()!")
-  
+
       if (resposta.ok) {
         console.log(resposta);
-        
-        resposta.json().then(json => {
-  
-          console.log(JSON.stringify(json));
-          console.log(json);  
 
-        let cpu = json[0].cpuu;
-        let memoria = json[0].memoria
-        let disco = json[0].disco
+        resposta.json().then(json => {
+
+          console.log(JSON.stringify(json));
+          console.log(json);
+
+          let cpu = json[0].cpuu;
+          let memoria = json[0].memoria
+          let disco = json[0].disco
 
           console.log(`----- Maquina ${arrayNomeMaquinas[i]} -----`)
           console.log(`Memoria: ${memoria}`)
@@ -393,56 +404,83 @@ function pegarDadosGerais(){
           console.log(`Cpu: ${cpu}`)
 
           //atenção
-          if(memoria > 40 && memoria < 50){
-            criarCard(arrayNomeMaquinas[i],'Memoria',memoria)
-            verificarNivel(arrayMaquinas[i],sessionStorage.ID_EMPRESA,2,2)
-          }else if(memoria >= 50){
-            criarCard(arrayNomeMaquinas[i],'Memoria',memoria)
-            verificarNivel(arrayMaquinas[i],sessionStorage.ID_EMPRESA,3,2)
-          }else{
-            verificarNivel(arrayMaquinas[i],sessionStorage.ID_EMPRESA,1,2)
-          }
-          
-          if(cpu > 40 && cpu < 50){
-            criarCard(arrayNomeMaquinas[i],'CPU',cpu)
-            verificarNivel(arrayMaquinas[i],sessionStorage.ID_EMPRESA,2,1)
-          }else if(cpu >= 50){
-            criarCard(arrayNomeMaquinas[i],'CPU',cpu)
-            verificarNivel(arrayMaquinas[i],sessionStorage.ID_EMPRESA,3,1)
-          }else{
-            verificarNivel(arrayMaquinas[i],sessionStorage.ID_EMPRESA,1,1)
-          }
-          
-          if(disco > 20 && disco < 40){
-            criarCard(arrayNomeMaquinas[i],'Disco',disco)
-            verificarNivel(arrayMaquinas[i],sessionStorage.ID_EMPRESA,2,3)
-          }else if(disco >= 40){
-            criarCard(arrayNomeMaquinas[i],'Disco',disco)
-            verificarNivel(arrayMaquinas[i],sessionStorage.ID_EMPRESA,3,3)
-          }else{
-            verificarNivel(arrayMaquinas[i],sessionStorage.ID_EMPRESA,1,3)
+          if (memoria > 40 && memoria < 50) {
+
+            criarCard(arrayNomeMaquinas[i], 'Memoria', memoria)
+            verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 2, 2)
+            atencaoMemoria += 1;
+
+          } else if (memoria >= 50) {
+
+            criarCard(arrayNomeMaquinas[i], 'Memoria', memoria)
+            verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 3, 2)
+            problemaMemoria += 1;
+
+          } else {
+
+            verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 1, 2)
+            okMemoria += 1;
+
           }
 
-        // criarCard(cpu,memoria,disco,arrayNomeMaquinas[i])
-          
+          if (cpu > 40 && cpu < 50) {
+
+            criarCard(arrayNomeMaquinas[i], 'CPU', cpu)
+            verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 2, 1)
+            atencaoCpu += 1;
+
+          } else if (cpu >= 50) {
+
+            criarCard(arrayNomeMaquinas[i], 'CPU', cpu)
+            verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 3, 1)
+            problemaCpu += 1;
+
+          } else {
+
+            verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 1, 1)
+            okCpu += 1;
+
+          }
+
+          if (disco > 20 && disco < 40) {
+
+            criarCard(arrayNomeMaquinas[i], 'Disco', disco)
+            verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 2, 3)
+            atencaoMemoria += 1;
+
+          } else if (disco >= 40) {
+
+            criarCard(arrayNomeMaquinas[i], 'Disco', disco)
+            verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 3, 3)
+            problemaMemoria += 1;
+
+          } else {
+
+            verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 1, 3)
+            okMemoria += 1;
+
+          }
+
+          // criarCard(cpu,memoria,disco,arrayNomeMaquinas[i])
+
         });
-  
+
       } else {
         console.log("Houve um erro ao tentar pegar os dados GERAIS das maquinas!");
       }
-  
+
     }).catch(function (erro) {
       console.log(erro);
     })
-    
+
   }
   soma = 0;
-  setTimeout(atualizarGrafico,5000)
+  setTimeout(atualizarGrafico, 5000)
 }
 
-function esconder(){
+function esconder() {
   $('.divAlertas').hide();
-  if(soma == 0){
+  if (soma == 0) {
     $('.bell').attr('valor-alerta', soma);
   }
 }
@@ -450,3 +488,94 @@ function esconder(){
 $('#btnAlerta').on('click', function () {
   $('.divAlertas').slideToggle();
 });
+
+
+
+
+function exibirGraficoDonut(option) {
+  
+  span = document.getElementById("optionSelecionada")
+  var critico = 0;
+  var alerta = 0;
+  var ideal = 0;
+  var atencaoMemoria = 0;
+  var problemaMemoria = 0;
+  var okMemoria = 0;
+
+  var atencaoCpu = 0;
+  var problemaCpu = 0;
+  var okCpu = 0;
+  
+  var atencaoDisco = 0;
+  var problemaDisco = 0;
+  var okDisco = 0;
+
+  
+      if (option == 1) {
+        span.innerHTML = '| CPU'
+        critico = problemaCpu
+        alerta = atencaoCpu
+        ideal = okCpu
+      } else if (option == 2) {
+        span.innerHTML = '| Memória'
+        critico = problemaMemoria
+        alerta = atencaoMemoria
+        ideal = okMemoria
+      } else if (option == 3) {
+        span.innerHTML = '| Disco'
+        critico = problemaDisco
+        alerta = atencaoDisco
+        ideal = okDisco
+      }
+
+      var grafico = echarts.init(document.querySelector("#graficoDonut")).setOption({
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          top: '5%',
+          left: 'center'
+        },
+        series: [{
+          name: 'Quantidade',
+          type: 'pie',
+          radius: ['40%', '70%'],
+          avoidLabelOverlap: false,
+          itemStyle: {
+            borderRadius: 10,
+            borderColor: '#fff',
+            borderWidth: 2
+          },
+          label: {
+            show: false,
+            position: 'center'
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: '18',
+              fontWeight: 'bold'
+            }
+          },
+          labelLine: {
+            show: false
+          },
+          data: [{
+            value: critico,
+            name: 'Crítico',
+            itemStyle: { color: '#FF7070' }
+          },
+          {
+            value: alerta,
+            name: 'Alerta',
+            itemStyle: { color: '#FEDB5F' }
+          },
+          {
+            value: ideal,
+            name: 'Ideal',
+            itemStyle: { color: '#91CC75' }
+          }
+          ],
+        }]
+      });
+}

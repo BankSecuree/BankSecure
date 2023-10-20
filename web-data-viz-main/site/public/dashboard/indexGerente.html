@@ -427,9 +427,9 @@
                   <h6>Filtro</h6>
                 </li>
 
-                <li><a class="dropdown-item" onclick="exibirGraficoDonut(1)">CPU</a></li>
-                <li><a class="dropdown-item" onclick="exibirGraficoDonut(2)">Memória</a></li>
-                <li><a class="dropdown-item" onclick="exibirGraficoDonut(3)">Disco</a></li>
+                <li><a class="dropdown-item" onclick="pegarDadosGerais(1)">CPU</a></li>
+                <li><a class="dropdown-item" onclick="pegarDadosGerais(2)">Memória</a></li>
+                <li><a class="dropdown-item" onclick="pegarDadosGerais(3)">Disco</a></li>
 
               </ul>
             </div>
@@ -465,5 +465,6 @@
 <script src="assets/js/main.js"></script>
 <script src="assets/js/dashDonut.js"></script>
 <script>
+  exibirListaAgencias()
   exibirGraficoDonut(1)
 </script>
