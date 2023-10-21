@@ -1,5 +1,5 @@
 
-const { default: Config } = require("chart.js/dist/core/core.config");
+//const { default: Config } = require("chart.js/dist/core/core.config");
 
 
 
@@ -15,26 +15,29 @@ function alterarPeriodoVizualizacao(campoParaAlterar, periodo) {
     if (campoParaAlterar == 'cpu') {
         console.log(sessionStorage.ID_EMPRESA, periodo)
         exibirKpiGerente(sessionStorage.ID_EMPRESA, periodo, 1)
+        periodoL = periodo;
         periodoId.innerHTML = periodos[periodo]
     } else if (campoParaAlterar == 'ram') {
         exibirKpiGerente(sessionStorage.ID_EMPRESA, periodo, 2)
+        periodoL = periodo;
         periodoId.innerHTML = periodos[periodo]
     } else if (campoParaAlterar == 'hd') {
         exibirKpiGerente(sessionStorage.ID_EMPRESA, periodo, 3)
+        periodoL = periodo;
         periodoId.innerHTML = periodos[periodo]
     } else if (campoParaAlterar == 'graficoDonut') {
         periodoId.innerHTML = periodos[periodo]
     } else if (campoParaAlterar == 'graficoPrincipal') {
         obterDadosGrafico(sessionStorage.ID_EMPRESA, periodo, 1)
+        periodoL = periodo;
         periodoGrafico.innerHTML = periodos[periodo]
-
-
     }
 
 
 }
 
 function exibirKpiGerente(idEmpresa, periodo, componente) {
+    console.log(periodo)
     fetch(`/dashGerente/dadosKpi/${idEmpresa}/${periodo}/${componente}`)
         .then(function (resposta) {
             if (resposta.ok) {
