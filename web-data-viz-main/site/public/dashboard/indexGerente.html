@@ -442,6 +442,36 @@
               <div id="graficoDonut" style="min-height: 400px;" class="echart"></div>
             </div>
           </div>
+          <div class='card' style="height: 30%;">
+            <div class="card-body pb-0" >
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filtro</h6>
+                  </li>
+  
+                  <li><a class="dropdown-item" onclick="mediaDadosComps(1)">CPU</a></li>
+                  <li><a class="dropdown-item" onclick="mediaDadosComps(2)">Memória</a></li>
+                  <li><a class="dropdown-item" onclick="mediaDadosComps(3)">Disco</a></li>
+  
+                </ul>
+              </div>
+  
+              <h5 class="card-title">Media Componentes ideais <span id="optionSelecionadaMedia">| CPU</span></h5>
+              <div id="dadosMediaGeral" style="min-height: 400px;" class="echart">
+                <div class="card" style="width: 85%; height: 60%">
+                  <div class="card-body">
+                    <h5 class="card-title">CPU</h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">Uso ideal de CPU: 50%</h6>
+                    <p class="card-text">Aqui consta a quantidade ideal que consideramos como bom para sua CPU.</p>
+                    <a href="#cpu_info" class="card-link">Visualizar a quantidade atual!</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </div>
