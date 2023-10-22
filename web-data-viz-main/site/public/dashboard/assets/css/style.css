@@ -11,14 +11,37 @@
 --------------------------------------------------------------*/
 .divAlertas{
   position: absolute;
-    background-color: #FFFFFF;
-    top: 60px;
-    padding: 10px;
-    --bs-border-radius-lg: 10px;
-    border: 2px solid black;
-    right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #FFFFFF;
+  top: 60px;
+  padding: 10px;
+  border: 2px solid black;
+  right: 0;
 }
 
+.divAlerta{
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+}
+.divAtencao{
+  border-radius: 10px;
+  border: 2px #ff914d solid;
+  color: #ff914d;
+  font-weight: 600;
+  background-color: #F9E9B4;
+}
+.divProblema{
+  border-radius: 10px;
+  border: 2px #FF5757 solid;
+  color: #FF5757;
+  font-weight: 600;
+  background-color: #F6B1B1;
+}
 
 .btnAlertas{
   background-color: rgba(255, 0, 0, 0);
