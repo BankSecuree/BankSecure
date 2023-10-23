@@ -241,12 +241,12 @@ function pegarDadosGerais(option) {
           console.log(`Cpu: ${cpu}`)
 
           //atenção
-          if (memoria > 40 && memoria < 50) {
+          if (memoria > 60 && memoria < 70) {
 
             verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 2, 2)
             atencaoMemoria += 1;
             
-        } else if (memoria >= 50) {
+        } else if (memoria >= 70) {
             
             verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 3, 2)
             problemaMemoria += 1;
@@ -258,12 +258,12 @@ function pegarDadosGerais(option) {
 
           }
 
-          if (cpu > 40 && cpu < 50) {
+          if (cpu > 60 && cpu < 70) {
 
             verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 2, 1)
             atencaoCpu += 1;
 
-          } else if (cpu >= 50) {
+          } else if (cpu >= 70) {
 
             verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 3, 1)
             problemaCpu += 1;
@@ -275,12 +275,12 @@ function pegarDadosGerais(option) {
 
           }
 
-          if (disco > 20 && disco < 40) {
+          if (disco > 60 && disco < 70) {
 
             verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 2, 3)
             atencaoDisco += 1;
 
-          } else if (disco >= 40) {
+          } else if (disco >= 70) {
 
             verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 3, 3)
             problemaDisco += 1;
