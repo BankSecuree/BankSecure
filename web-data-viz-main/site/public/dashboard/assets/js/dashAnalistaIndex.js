@@ -219,7 +219,7 @@ function atualizarCards() {
         dadoMemoria.innerHTML = memoria + " %"
         dadoDisco.innerHTML = disco + " %"
 
-        if (cpu <= 20) {
+        if (cpu < 60) {
           alertaCpu.innerHTML = "Estável"
           alertaCpu.style.color = "rgb(25, 135, 84)"
         } else if (cpu <= 70) {
@@ -230,10 +230,10 @@ function atualizarCards() {
           alertaCpu.style.color = "rgb(220, 53, 69)"
         }
 
-        if (memoria <= 20) {
+        if (memoria < 60) {
           alertaMemoria.innerHTML = "Estável"
           alertaMemoria.style.color = "rgb(25, 135, 84)"
-        } else if (memoria <= 50) {
+        } else if (memoria <= 70) {
           alertaMemoria.innerHTML = "Atenção"
           alertaMemoria.style.color = "rgb(255, 193, 7)"
         } else {
@@ -241,10 +241,10 @@ function atualizarCards() {
           alertaMemoria.style.color = "rgb(220, 53, 69)"
         }
 
-        if (disco <= 20) {
+        if (disco < 60) {
           alertaDisco.innerHTML = "Estável"
           alertaDisco.style.color = "rgb(25, 135, 84)"
-        } else if (disco <= 50) {
+        } else if (disco <= 70) {
           alertaDisco.innerHTML = "Atenção"
           alertaDisco.style.color = "rgb(255, 193, 7)"
         } else {
@@ -415,13 +415,13 @@ function pegarDadosGerais() {
           console.log(`Cpu: ${cpu}`)
 
           //atenção
-          if (memoria > 40 && memoria < 50) {
+          if (memoria > 60 && memoria < 70) {
 
             criarCard(arrayNomeMaquinas[i], 'Memoria', memoria,2)
             verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 2, 2)
             atencaoMemoria += 1;
 
-          } else if (memoria >= 50) {
+          } else if (memoria >= 70) {
 
             criarCard(arrayNomeMaquinas[i], 'Memoria', memoria,3)
             verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 3, 2)
@@ -434,13 +434,13 @@ function pegarDadosGerais() {
 
           }
 
-          if (cpu > 40 && cpu < 50) {
+          if (cpu > 60 && cpu < 70) {
 
             criarCard(arrayNomeMaquinas[i], 'CPU', cpu,2)
             verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 2, 1)
             atencaoCpu += 1;
 
-          } else if (cpu >= 50) {
+          } else if (cpu >= 70) {
 
             criarCard(arrayNomeMaquinas[i], 'CPU', cpu,3)
             verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 3, 1)
@@ -453,13 +453,13 @@ function pegarDadosGerais() {
 
           }
 
-          if (disco > 20 && disco < 40) {
+          if (disco > 60 && disco < 70) {
 
             criarCard(arrayNomeMaquinas[i], 'Disco', disco,2)
             verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 2, 3)
             atencaoMemoria += 1;
 
-          } else if (disco >= 40) {
+          } else if (disco >= 70) {
 
             criarCard(arrayNomeMaquinas[i], 'Disco', disco,3)
             verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 3, 3)
