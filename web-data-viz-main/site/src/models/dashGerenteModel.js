@@ -59,7 +59,7 @@ function buscarUltimasMedidas(idEmpresa, periodo, componente) {
         JOIN empresa ON fkEmpresa = idEmpresa
         WHERE fkEmpresa = ${idEmpresa}
         AND fkComponente = ${componente}
-        AND dataHora >= NOW() - INTERVAL 1 MONTH
+        AND dataHora >= NOW() - INTERVAL 1 YEAR
         GROUP BY hora
         ORDER BY hora DESC LIMIT 12;`
     }
