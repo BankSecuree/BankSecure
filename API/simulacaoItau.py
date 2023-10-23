@@ -11,8 +11,11 @@ conexao = mysql.connector.connect(user='bs_itau', password='Itau_100', host='loc
 
 cursor = conexao.cursor()
 
+cont = 0
+
 def rudge_ramos():
-    cont = 0
+    global problema
+    problema = 0
     
     qtd_core = psutil.cpu_count(logical=False)
     cpu_um_speed_max = psutil.cpu_freq().max / pow(10,3)
@@ -22,8 +25,10 @@ def rudge_ramos():
         disco_um_total = psutil.disk_usage('C:\\').total / pow(10,9)
     elif (so == 'Linux'):
         disco_um_total = psutil.disk_usage('/bin').total / pow(10,9)
-    
-    while True:
+
+    testes = True
+
+    while (testes):
         data = datetime.now()
         data = data.strftime('%Y/%m/%d %H:%M:%S')
         cpu_m1 = psutil.cpu_percent(interval=1)
@@ -34,7 +39,7 @@ def rudge_ramos():
             disco_m1 = psutil.disk_usage('C:\\').percent
         elif (so == 'Linux'):
             disco_m1 = psutil.disk_usage('/bin').percent
-        
+            
         cpu_s1 = cpu_m1 * 1.15
         cpu_s1 = 100 if cpu_s1 >= 100 else cpu_s1
         ram_s1 = ram_m1
@@ -59,13 +64,24 @@ def rudge_ramos():
         disco_m3 = disco_m1 * 0.95
         disco_m3 = 0 if disco_m3 <= 0 else disco_m3
 
+        if(problema >= 5):
+            cpu_m1 = 70
+            print(cpu_m1)
+
         cursor.execute(f"CALL inserirDadosMaquina ('MI-1', 'Memória', {ram_m1:.1f}, 'CPU', {cpu_m1:.1f}, 'Disco', {disco_m1:.1f}, NOW());")
         cursor.execute(f"CALL inserirDadosMaquina ('MI-2', 'Memória', {ram_m2:.1f}, 'CPU', {cpu_m2:.1f}, 'Disco', {disco_m2:.1f}, NOW());")
         cursor.execute(f"CALL inserirDadosMaquina ('MI-3', 'Memória', {ram_m3:.1f}, 'CPU', {cpu_m3:.1f}, 'Disco', {disco_m3:.1f}, NOW());")
         cursor.execute(f"CALL inserirDadosMaquina ('SI-1', 'Memória', {ram_s1:.1f}, 'CPU', {cpu_s1:.1f}, 'Disco', {disco_s1:.1f}, NOW());")
             
-        conexao.commit()
-        cont+=1
+        # if(problema == 10):
+        #     problema = 0 
+
+        print(cpu_m1)
+        print(cont)
+        print(problema + 1)
+
+        problema += 1
+
 
         time.sleep(3)
         rudge_ramos()
