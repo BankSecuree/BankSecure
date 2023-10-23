@@ -315,6 +315,40 @@ function pegarDadosGerais(option) {
   
 }
 
+function mediaDadosComps(valorComp){
+  if(valorComp == 1){
+    optionSelecionadaMedia.innerHTML = " | CPU"
+    dadosMediaGeral.innerHTML = `<div class="card" style="width: 85%; height: 60%">
+    <div class="card-body">
+      <h5 class="card-title">CPU</h5>
+      <h6 class="card-subtitle mb-2 text-body-secondary">Uso ideal de CPU: 50%</h6>
+      <p class="card-text">Aqui consta a quantidade ideal que consideramos como bom para sua CPU.</p>
+      <a href="#cpu_info" class="card-link">Visualizar a quantidade atual!</a>
+    </div>
+  </div>`
+  }
+  else if(valorComp == 2){
+    optionSelecionadaMedia.innerHTML = " | Memória"
+    dadosMediaGeral.innerHTML = `<div class="card" style="width: 85%; height: 60%">
+    <div class="card-body">
+      <h5 class="card-title">Memória RAM</h5>
+      <h6 class="card-subtitle mb-2 text-body-secondary">Uso ideal de Memória RAM: 40%</h6>
+      <p class="card-text">Aqui consta a quantidade ideal que consideramos como bom para sua memória RAM.</p>
+      <a href="#ram_info" class="card-link">Visualizar a quantidade atual!</a>
+    </div>
+  </div>`
+  } else{
+    optionSelecionadaMedia.innerHTML = " | Disco"
+    dadosMediaGeral.innerHTML = `<div class="card" style="width: 85%; height: 60%">
+    <div class="card-body">
+      <h5 class="card-title">Disco</h5>
+      <h6 class="card-subtitle mb-2 text-body-secondary">Uso ideal de Disco: 20%</h6>
+      <p class="card-text">Aqui consta a quantidade ideal que consideramos como bom para seu Disco.</p>
+      <a href="#disco_info" class="card-link">Visualizar a quantidade atual!</a>
+    </div>
+  </div>`
+  }
+}
 
 
 
