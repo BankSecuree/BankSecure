@@ -65,26 +65,24 @@ def rudge_ramos():
         disco_m3 = 0 if disco_m3 <= 0 else disco_m3
 
         if(problema >= 5):
-            cpu_m1 = 70
+            cpu_m1 += 30
             print(cpu_m1)
+
 
         cursor.execute(f"CALL inserirDadosMaquina ('MI-1', 'Memória', {ram_m1:.1f}, 'CPU', {cpu_m1:.1f}, 'Disco', {disco_m1:.1f}, NOW());")
         cursor.execute(f"CALL inserirDadosMaquina ('MI-2', 'Memória', {ram_m2:.1f}, 'CPU', {cpu_m2:.1f}, 'Disco', {disco_m2:.1f}, NOW());")
         cursor.execute(f"CALL inserirDadosMaquina ('MI-3', 'Memória', {ram_m3:.1f}, 'CPU', {cpu_m3:.1f}, 'Disco', {disco_m3:.1f}, NOW());")
         cursor.execute(f"CALL inserirDadosMaquina ('SI-1', 'Memória', {ram_s1:.1f}, 'CPU', {cpu_s1:.1f}, 'Disco', {disco_s1:.1f}, NOW());")
-            
-        # if(problema == 10):
-        #     problema = 0 
 
-        print(cpu_m1)
-        print(cont)
-        print(problema + 1)
-
+        conexao.commit()
         problema += 1
+        print(problema)
 
+        if(problema == 10):
+            problema = 0
 
         time.sleep(3)
-        rudge_ramos()
+        # rudge_ramos()
  
 
 if (conexao.is_connected()):
