@@ -1,11 +1,13 @@
 import requests
 from requests.auth import HTTPBasicAuth
 import json
-from datetime import datetime
-import psutil
+import os
+from dotenv import load_dotenv
 
-
-class issue_manipulation:
+load_dotenv()
+jira_api_token = os.environ.get('JIRA_TOKEN')
+print(jira_api_token)
+class create_issue  :
     def __init__(
         self, maquina: str, componente: str, porcentagem_uso: float, prioridade: int
     ):
@@ -13,15 +15,15 @@ class issue_manipulation:
         self.componente = componente
         self.porcentagem_uso = porcentagem_uso
         self.prioridade = str(prioridade)
-        self.url = "https://banksecure.atlassian.net/rest/api/3/"
+        self.url = "https://banksecure.atlassian.net/rest/api/3"
         self.auth = HTTPBasicAuth(
             "suporte.banksecure@gmail.com",
-            "ATATT3xFfGF0npBFytU7RID76c8RWa5_r0f-k0fylHHwlPJdlpSSkl4TizynJLj0ADs-hA6MvYAU7qxaUXhj-R0wSa2HU-pD3DAN8DerGwckV69RsjkQep0pVZGK0ol3u6VBUorcL8ihiSLJAO6EGIvudv-lJsX8GRnaU1w0Zib5yK4HzhApwq4=35F55320",
+            jira_api_token
         )
         self.__verify_issue()
 
     def __post_issue(self):
-        url = self.url + "issue"
+        url = f'{self.url}/issue'
         mensagem_alerta = f"""Componente: {self.componente}\nPorcentagem de uso: {self.porcentagem_uso}"""
         headers = {"Accept": "application/json", "Content-Type": "application/json"}
         payload = json.dumps(
@@ -50,7 +52,7 @@ class issue_manipulation:
         )
 
     def __update_issue(self, issueKey: str):
-        url = f"{self.url}issue/{issueKey}"
+        url = f"{self.url}/issue/{issueKey}"
         headers = {"Accept": "application/json", "Content-Type": "application/json"}
 
         mensagem_alerta = f"""Componente: {self.componente}\nPorcentagem de uso: {self.porcentagem_uso}"""
@@ -80,7 +82,7 @@ class issue_manipulation:
         )
 
     def __verify_issue(self):
-        url = self.url + "search"
+        url = f'{self.url}/search'
         headers = {"Accept": "application/json"}
         response = requests.request("GET", url, headers=headers, auth=self.auth)
         chamados = []

@@ -10,6 +10,7 @@ import json
 import platform
 from jira_bot import issue_manipulation
 
+
 conexao = mysql.connector.connect(
     user="user_bankSecure",
     password="Urubu_100",
@@ -95,26 +96,27 @@ def pegar_dados():
         ram_percent = round(ram_percent, 2)
 
         if ram_percent >= 60.0 and ram_percent < 75.0:
-            problema = issue_manipulation(maquina, comp1, ram_percent, 3)
+            issue_manipulation(maquina, comp1, ram_percent, 3)
         elif ram_percent >= 75.0 and ram_percent < 90:
-            problema = issue_manipulation(maquina, comp1, ram_percent, 2)
+            issue_manipulation(maquina, comp1, ram_percent, 2)
         elif ram_percent >= 90:
-            problema = issue_manipulation(maquina, comp1, ram_percent, 1)
+            issue_manipulation(maquina, comp1, ram_percent, 1)
 
         if cpu_percent >= 60.0 and cpu_percent < 75.0:
-            problema = issue_manipulation(maquina, comp2, cpu_percent, 3)
+            issue_manipulation(maquina, comp2, cpu_percent, 3)
         elif cpu_percent >= 75.0 and cpu_percent < 90:
-            problema = issue_manipulation(maquina, comp2, cpu_percent, 2)
+            issue_manipulation(maquina, comp2, cpu_percent, 2)
         elif cpu_percent >= 90:
-            problema = issue_manipulation(maquina, comp2, cpu_percent, 1)
+            issue_manipulation(maquina, comp2, cpu_percent, 1)
+            
 
         if disc_percent >= 60.0 and disc_percent < 75.0:
-            problema = issue_manipulation(maquina, comp3, disc_percent, 3)
+            issue_manipulation(maquina, comp3, disc_percent, 3)
         elif disc_percent >= 75.0 and disc_percent < 90:
-            problema = issue_manipulation(maquina, comp3, disc_percent, 2)
+            issue_manipulation(maquina, comp3, disc_percent, 2)
         elif disc_percent >= 90:
             print("esse foi acessado")
-            problema = issue_manipulation(maquina, comp3, disc_percent, 1)
+            issue_manipulation(maquina, comp3, disc_percent, 1)
 
         cursor.execute(
             f"CALL inserirDadosMaquina ('{maquina}', '{comp1}', {ram_percent}, '{comp2}', {cpu_percent}, '{comp3}', {disc_percent}, NOW());"
