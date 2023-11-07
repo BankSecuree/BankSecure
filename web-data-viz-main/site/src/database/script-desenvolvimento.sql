@@ -1,4 +1,3 @@
--- Active: 1692322487627@@127.0.0.1@3306@bankSecure
 DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
 USE bankSecure;
@@ -54,11 +53,13 @@ CREATE TABLE tipoMaquina(
 	idTipoMaquina INT PRIMARY KEY AUTO_INCREMENT,
 	nomeTipo  VARCHAR(45)
 );
-
+SELECT * FROM tipoMaquina;
 CREATE TABLE maquina(
 	idMaquina INT PRIMARY KEY AUTO_INCREMENT,
 	fkAgencia INT,
     fkTipoMaquina INT,
+    macAddress VARCHAR(100) unique,
+    localizacao VARCHAR(200),
     nome VARCHAR(45) UNIQUE, 
 	FOREIGN KEY (fkAgencia) REFERENCES agencia(idAgencia) ON DELETE CASCADE,
 	FOREIGN KEY (fkTipoMaquina) REFERENCES tipoMaquina(idTipoMaquina) ON DELETE CASCADE
@@ -283,7 +284,7 @@ SELECT (SELECT count(id) as critico FROM (SELECT id, avg(cpuu) as media FROM vw_
 DROP VIEW IF EXISTS vw_servidor1;
 CREATE OR REPLACE VIEW vw_servidor1 AS SELECT * FROM vw_registrosEstruturados WHERE id = 4;
 
+SELECT * FROM maquina;
+
 -- SELECT * FROM usuario LEFT JOIN funcionarioAgencia ON fkUsuario = idUsuario WHERE fkAgencia IS NULL AND fkUsuario IS NOT NULL;
 -- JOIN agencia ON fkAgencia = idAgencia and idUsuario = 3;
-
-
