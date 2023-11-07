@@ -9,6 +9,8 @@
     <link href="assets/img/favicon.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="assets/css/dashTemperatura.css">
 
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -48,15 +50,11 @@
 
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
-
                 <button id="btnAlerta" class="btnAlertas">
                     <i class="fa fa-bell bell"></i>
                 </button>
-
                 <div class="divAlertas col-lg-4 col-md-5">
-
                 </div>
-
                 <br>
 
 
@@ -85,6 +83,7 @@
                     <span>Dashboard Geral</span>
                 </a>
             </li>
+
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="teste.html">
@@ -117,6 +116,7 @@
                 </a>
             </li>
 
+
         </ul>
     </aside>
 
@@ -125,7 +125,7 @@
         <!-- <div id="divAlertas" style="width: 200px;height: 200px;background-color: rgba(93, 179, 240, 0.403);"></div> -->
 
         <div class="pagetitle">
-            <h1>Dashboard</h1>
+            <h1>Dashboard de Temperatura</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -138,7 +138,7 @@
             <div class="row">
 
                 <!-- Colunas do Select e CPU | RAM | Disco -->
-                <div class="col-lg-12">
+                <div class="col-lg-20">
                     <div class="row">
 
                         <div class="col-xxl-4 col-md-4">
@@ -151,6 +151,8 @@
                                 </div>
                             </div>
                         </div>
+
+
                         <div class="col-xxl-4 col-md-4">
                             <div class="card info-card sales-card">
                                 <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
@@ -161,106 +163,32 @@
                                 </div>
                             </div>
                         </div>
+
+                         <!-- KPI de uso e temperatura -->
                         <div class="col-xxl-4 col-md-4">
-                            <div class="card info-card sales-card">
+                            <div class="card info-card sales-card" style="height: 89px;">
                                 <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
-                                    <h5>Selecionar Componente</h5>
-                                    <!-- <br> -->
-                                    <select name="" id="selectComponente" onchange="atualizarGrafico()">
-                                        <option value="1">CPU</option>
-                                        <option value="2">Memória RAM</option>
-                                        <option value="3">Disco</option>
-                                    </select>
+                                    <div class="filter">
+                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                class="bi bi-three-dots"></i></a>
+                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                            <li class="dropdown-header text-start">
+                                                <h6>Filter</h6>
+                                            </li>
+    
+                                            <li><a class="dropdown-item" href="#">Temperatura | Agora </a></li>
+                                            <li><a class="dropdown-item" href="#">Uso de CPU | Agora</a></li>
+                                        </ul>
+                                    </div>
+                                    <h5>Selecionar Uso e Temperatura</h5>
+
                                 </div>
                             </div>
-                        </div><!-- End Card Select -->
-
-                        <div id="divKpi" class="col-lg-4">
-
-                            <div class="col-xxl-12 col-md-12">
-                                <div class="card info-card sales-card">
-
-                                    <div class="card-body">
-                                        <h5 class="card-title">CPU Usada <span>| Agora</span> </h5>
-
-                                        <div class="d-flex align-items-center">
-                                            <div
-                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                <i class="bi bi-cpu"></i>
-                                            </div>
-                                            <div class="ps-3">
-                                                <h6 id="h4-cpu">%</h6>
-                                                <span id="msg-cpu" class="small pt-1 fw-bold">...</span>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div><!-- End Card CPU -->
-
-                            <!-- Card Ram -->
-                            <div class="col-xxl-12 col-md-12">
-                                <div class="card info-card revenue-card">
-
-                                    <div class="card-body">
-                                        <h5 class="card-title">Memória Usada <span>| Agora</span></h5>
-
-                                        <div class="d-flex align-items-center">
-                                            <div
-                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                <i class="bi bi-sd-card"></i>
-                                            </div>
-                                            <div class="ps-3">
-                                                <h6 id="h4-memoria">%</h6>
-                                                <span id="msg-memoria" class="small pt-1 fw-bold">...</span>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div><!-- End Card Ram -->
-
-                            <!-- Card Disk -->
-                            <div class="col-xxl-12 col-md-12">
-
-                                <div class="card info-card customers-card">
-
-                                    <div class="card-body">
-                                        <h5 class="card-title">Disco Usado <span>| Agora</span></h5>
-
-                                        <div class="d-flex align-items-center">
-                                            <div
-                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-
-                                                <!-- Icon -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" style="width: 28px;height:28px"
-                                                    width="16" height="16" fill="currentColor" class="bi bi-floppy"
-                                                    viewBox="0 0 16 16">
-                                                    <path d="M11 2H9v3h2V2Z" />
-                                                    <path
-                                                        d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0ZM1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5Zm3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4v4.5ZM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5V15Z" />
-                                                </svg>
-
-                                            </div>
-                                            <div class="ps-3">
-                                                <h6 id="h4-disco">%</h6>
-                                                <span id="msg-disco" class="small pt-1 fw-bold">...</span>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div><!-- End Card Disk -->
-
                         </div>
-
-
-
-                        <!-- Gráfico Principal -->
-                        <div class="col-12 col-xxl-8 col-xl-8 col">
-                            <div class="card">
+                        
+                        <!-- End Card Select -->
+                        <div class="col-12 col-xxl-8 col-xl-20 col">
+                            <div class="card" style="height: 60vh;">
 
                                 <div class="filter">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -276,17 +204,59 @@
                                     </ul>
                                 </div>
 
-                                <div class="card-body">
+                                <div class="card-body" style="height: 60vh;">
                                     <h5 class="card-title">Gráfico <span>/ Hoje</span></h5>
-
-                                    <!-- Line Chart -->
-                                    <div id="reportsChart"></div>
-                                    <!-- End Line Chart -->
-
+                                    <canvas id="myChart" style="height: 500px; display: block; box-sizing: border-box; width: 1137px;" width="1137" height="500"></canvas>
                                 </div>
 
                             </div>
+
+                              <!-- Gráfico Principal -->
+                       
                         </div><!-- End Reports -->
+
+
+                        <div id="divKpi" class="col-lg-4">
+
+                            <div class="col-xxl-15 col-md-15">
+                                <div class="card info-card sales-card">
+                            <!-- Card Ram -->
+                            <div class="col-xxl-12 col-md-12">
+                                <div class="card info-card revenue-card">
+
+                                    <div class="filter">
+                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                class="bi bi-three-dots"></i></a>
+                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                            <li class="dropdown-header text-start">
+                                                <h6>Filter</h6>
+                                            </li>
+    
+                                            <li><a class="dropdown-item" href="#"> Download CSV </a></li>
+                                            <li><a class="dropdown-item" href="#"> Download PDF </a></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <h5 class="card-title">Relatório <span>| Últimas 24h </span></h5>
+
+                                        <div class="d-flex align-items-center">
+                                            <div class="ps-3">
+                                                <h6 id="h4-memoria">Temperatura limite:<br>
+                                                    Maior Temperatura:<br>
+                                                    Menor Temperatura:<br>
+                                                    Maior Uso: <br>
+                                                    Menor Uso: <br>
+                                                    Frequência de Excedência:<br>
+                                                    Média - Temperatura: <br>
+                                                    Média -  Uso: </h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div><!-- End Card Ram -->
+                        </div>
 
                     </div>
                 </div>
@@ -307,65 +277,74 @@
     </a>
 
 </body>
-
 </html>
 
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/main.js"></script>
-<script src="assets/js/dashAnalistaIndex.js"></script>
+<script src = "assets/js/dashAnalistaIndex.js"></script>
+
 <script>
+    // Seu código JavaScript
+  
+    let elemento = document.querySelector("#myChart");
+  
+    let data = {
+      labels: ["10h", "11h", "12h", "13h", "14h"],
+      datasets: [
+        {
+          label: "Uso CPU",
+          data: [30, 45, 60, 55, 70],
+          borderColor: "#4CAF50", // Verde
+          backgroundColor: "rgba(76, 175, 80, 0.4)",
+          fill: true,
+        },
+        {
+          label: "Temperatura",
+          data: [25, 28, 30, 32, 27],
+          borderColor: "#FFC107", // Amarelo
+          backgroundColor: "rgba(255, 193, 7, 0.4)",
+          fill: true,
+        },
+      ],
+    };
+  
+    let opcoes = {
+      scales: {
+        x: {
+          type: 'category',
+          title: {
+            display: true,
+            text: 'Tempo',
+          },
+        },
+        y: {
+          title: {
+            display: true,
+            text: 'Valor',
+          },
+        },
+      },
+      maintainAspectRatio: false, // Impede a manutenção automática da proporção (aspect ratio) do gráfico
+      responsive: true, // Permite que o gráfico seja responsivo
+      height: 200, // Defina a altura desejada em pixels
+    };
+  
+    let grafico = new Chart(elemento, {
+      type: "line",
+      data: data,
+      options: opcoes,
+    });
 
-    let elemento = document.querySelector("#reportsChart");
 
-    let opcao = {
-        series: [{
-            name: 'Usando em %',
-        }],
-        xaxis: {
-            type: 'datetime',
-        },
-        chart: {
-            height: 350,
-            type: 'area',
-            toolbar: {
-                show: false
-            },
-        },
-        markers: {
-            size: 5
-        },
-        colors: ['#4154f1'],
-        fill: {
-            type: "gradient",
-            gradient: {
-                shadeIntensity: 1,
-                opacityFrom: 0.3,
-                opacityTo: 0.4,
-                stops: [0, 90, 100]
-            }
-        },
-        dataLabels: {
-            enabled: false
-        },
-        stroke: {
-            curve: 'smooth',
-            width: 2
-        },
-        tooltip: {
-            x: {
-                format: 'dd/MM/yy HH:mm'
-            },
-        }
-    }
-
-    let grafico = new ApexCharts(elemento, opcao)
     grafico.render();
-
     atualizarGrafico();
     exibirListaAgencias();
     exibirInfos();
     listaMaquinas();
     esconder()
-</script>
+  
+  </script>
+  
+
 <!-- CORES: '#2eca6a', '#ff771d' -->
