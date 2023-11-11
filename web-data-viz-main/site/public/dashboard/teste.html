@@ -188,7 +188,7 @@
                         
                         <!-- End Card Select -->
                         <div class="col-12 col-xxl-8 col-xl-20 col">
-                            <div class="card" style="height: 60vh;">
+                            <div class="card" style="height:60vh;margin: 10px;">
 
                                 <div class="filter">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -204,7 +204,7 @@
                                     </ul>
                                 </div>
 
-                                <div class="card-body" style="height: 60vh;">
+                                <div style="height: 50vh;margin: 13px;">
                                     <h5 class="card-title">Gráfico <span>/ Hoje</span></h5>
                                     <canvas id="myChart" style="height: 500px; display: block; box-sizing: border-box; width: 1137px;" width="1137" height="500"></canvas>
                                 </div>
@@ -265,6 +265,22 @@
             <!-- <button onclick="atualizarGrafico()">aaaaaaaa</button> -->
         </section>
     </main>
+
+    <!--Div abaixo deixar em display none por enquanto-->
+    <div class="col-xxl-4 col-md-4" style="display: none;">
+        <div class="card info-card sales-card">
+            <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
+                <h5>Selecionar Componente</h5>
+                <!-- <br> -->
+                <select name="" id="selectComponente" onchange="atualizarGrafico()">
+                    <option value="1">CPU</option>
+                    <option value="2">Memória RAM</option>
+                    <option value="3">Disco</option>
+                </select>
+            </div>
+        </div>
+    </div><!-- End Card Select -->
+
 
     <footer id="footer" class="footer">
         <div class="copyright">
@@ -327,7 +343,7 @@
       },
       maintainAspectRatio: false, // Impede a manutenção automática da proporção (aspect ratio) do gráfico
       responsive: true, // Permite que o gráfico seja responsivo
-      height: 200, // Defina a altura desejada em pixels
+      height: 100, // Defina a altura desejada em pixels
     };
   
     let grafico = new Chart(elemento, {
