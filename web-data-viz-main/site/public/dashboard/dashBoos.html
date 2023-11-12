@@ -217,7 +217,7 @@
 
       <!-- Dashboard Nav -->
       <li class="nav-item">
-        <a id="aDash" class="nav-link" href="">
+        <a id="aDash" class="nav-link" href="indexGerente.html">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -254,11 +254,11 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Dashboard</h1>
+      <h1>Dashboard Vitor Boos</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard</li>
+          <li class="breadcrumb-item active">Dashboard </li>
         </ol>
       </nav>
     </div>
@@ -274,7 +274,7 @@
               <div class="card info-card sales-card">
 
                 <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <a class="icon" href="#" data-bs-toggle="dropdown"></a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li class="dropdown-header text-start">
                       <h6>Filtro</h6>
@@ -309,7 +309,7 @@
               <div class="card info-card revenue-card">
 
                 <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <a class="icon" href="#" data-bs-toggle="dropdown"></a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li class="dropdown-header text-start">
                       <h6>Filtro</h6>
@@ -347,7 +347,7 @@
               <div class="card info-card customers-card">
 
                 <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <a class="icon" href="#" data-bs-toggle="dropdown"></a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li class="dropdown-header text-start">
                       <h6>Filtro</h6>
@@ -383,7 +383,7 @@
               <div class="card">
 
                 <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <a class="icon" href="#" data-bs-toggle="dropdown"></a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li class="dropdown-header text-start">
                       <h6>Filtro</h6>
@@ -424,64 +424,41 @@
 
 
           </div>
-        </div>
+        </div>  
 
         <!-- Colunas da direita -->
         <div class="col-lg-4">
 
           <div class="card">
             <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+              <a class="icon" href="#" data-bs-toggle="dropdown"></a>
               <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                 <li class="dropdown-header text-start">
                   <h6>Filtro</h6>
                 </li>
-
-                <li><a class="dropdown-item" onclick="pegarDadosGerais(1)">CPU</a></li>
-                <li><a class="dropdown-item" onclick="pegarDadosGerais(2)">Memória</a></li>
-                <li><a class="dropdown-item" onclick="pegarDadosGerais(3)">Disco</a></li>
-
               </ul>
             </div>
 
             <div class="card-body pb-0">
-              <h5 class="card-title">Servidores Gerais <span id="optionSelecionada">| CPU</span></h5>
-              <div id="graficoDonut" style="min-height: 400px;" class="echart"></div>
-            </div>
-          </div>
-          <div class='card' style="height: 30%;">
-            <div class="card-body pb-0" >
-              <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filtro</h6>
-                  </li>
-  
-                  <li><a class="dropdown-item" onclick="mediaDadosComps(1)">CPU</a></li>
-                  <li><a class="dropdown-item" onclick="mediaDadosComps(2)">Memória</a></li>
-                  <li><a class="dropdown-item" onclick="mediaDadosComps(3)">Disco</a></li>
-  
-                </ul>
-              </div>
-  
-              <h5 class="card-title">Media Componentes ideais <span id="optionSelecionadaMedia">| CPU</span></h5>
-              <div id="dadosMediaGeral" style="min-height: 400px;" class="echart">
-                <div class="card" style="width: 85%; height: 60%">
-                  <div class="card-body">
-                    <h5 class="card-title">CPU</h5>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">Uso ideal de CPU: 50%</h6>
-                    <p class="card-text">Aqui consta a quantidade ideal que consideramos como bom para sua CPU.</p>
-                    <a href="#cpu_info" class="card-link">Visualizar a quantidade atual!</a>
-                  </div>
+              <h5 class="card-title">Quantidade de problemas por agência<span>|CPU, Disco e Ram</span></h5>
+              	<div class="ranque card-title">
                 </div>
-              </div>
+            </div>
+
+            <div class="filter">
+              <a class="icon" href="#" data-bs-toggle="dropdown"></a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <li class="dropdown-header text-start">
+                </li>
+
+                <li><a class="dropdown-item" onclick="mediaDadosComps(1)">CPU</a></li>
+                <li><a class="dropdown-item" onclick="mediaDadosComps(2)">Memória</a></li>
+                <li><a class="dropdown-item" onclick="mediaDadosComps(3)">Disco</a></li>
+
+              </ul>
             </div>
           </div>
-
         </div>
-
-      </div>
     </section>
 
   </main>
@@ -499,36 +476,13 @@
 </body>
 
 </html>
-<script src="assets/js/medidorDeProgresso.js"></script>
+<script src="assets/js/dashBoos.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/main.js"></script>
-<script src="assets/js/dashDonut.js"></script>
 <script>
-  //exibirKpiGerente(2, 'day', 1)
-  //exibirKpiGerente(2,'day', 2)
-  //exibirKpiGerente(2, 'day', 3)
-  //obterDadosGrafico(2, 'day', 1)  
-  periodoL = "day";
-
-  exibirKpiGerente(2, periodoL, 1)
-      exibirKpiGerente(2, periodoL, 2)
-      exibirKpiGerente(2, periodoL, 3)
-      obterDadosGrafico(2, periodoL, 1)
   function chamarFuncoes() {
-    setInterval(() => {
-      
-      exibirKpiGerente(2, periodoL, 1)
-      exibirKpiGerente(2, periodoL, 2)
-      exibirKpiGerente(2, periodoL, 3)
-      obterDadosGrafico(2, periodoL, 1)
-          
-    }, 3000)
-
-
-
-    exibirListaAgencias()
-    exibirGraficoDonut(1)
+    obterKpiAgencia()
   }
 
 </script>

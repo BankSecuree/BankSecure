@@ -16,6 +16,7 @@ var dashDonutRouter = require("./src/routes/dashDonut");
 var perfilRouter = require("./src/routes/perfil");
 var hardwareRouter = require("./src/routes/hardware");
 var dashGerenteRouter = require("./src/routes/dashGerente");
+var dashBoosRouter = require("./src/routes/dashBoos")
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -31,6 +32,7 @@ app.use("/dashDonut", dashDonutRouter);
 app.use("/perfil", perfilRouter);
 app.use("/hardware", hardwareRouter);
 app.use("/dashGerente", dashGerenteRouter)
+app.use("/dashBoos", dashBoosRouter)
 
 app.listen(PORTA, function () {
     console.log(`Servidor do seu site já está rodando! Acesse o caminho a seguir para visualizar: http://localhost:${PORTA} \n

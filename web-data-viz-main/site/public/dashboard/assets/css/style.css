@@ -1541,3 +1541,19 @@ h6 {
   width: 95%;
 }
 
+
+.ranque {
+  text-align: start;
+}
+
+/* CSS */
+.ranque div {
+  margin-bottom: 40px; 
+}
+
+.ranque div:nth-child(odd) {
+  margin-bottom: 0; 
+}
+
+
+
