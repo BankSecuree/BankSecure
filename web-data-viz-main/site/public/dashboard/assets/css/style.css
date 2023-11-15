@@ -1541,3 +1541,12 @@ h6 {
   width: 95%;
 }
 
+.btn-group-dashboard{
+  display: flex;
+  width: 98%;
+  justify-content: space-between;
+  margin: 10px;
+}
+.btn-dashboard{
+  width: 30%;
+}

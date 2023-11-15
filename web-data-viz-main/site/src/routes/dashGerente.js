@@ -19,5 +19,10 @@ router.get("/tempo-real/:idEmpresa/:periodo/:componente", function (req, res) {
     dashGerenteController.buscarMedidasTempoReal(req, res)
 })
 
+router.get("/kpicorrelacao/:idEmpresa/:periodo", function(req, res){
+    console.log("Acessando a model gerente Kpi correlacao")
+    dashGerenteController.kpiCorrelacao(req, res)
+})
+
 
 module.exports = router;

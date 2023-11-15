@@ -8,7 +8,7 @@ import mysql.connector
 import requests
 import json
 import platform
-from jira_bot import issue_manipulation
+from jira_bot import create_issue
 
 
 conexao = mysql.connector.connect(
@@ -95,28 +95,28 @@ def pegar_dados():
         ram_used = round(ram_used, 2)
         ram_percent = round(ram_percent, 2)
 
-        if ram_percent >= 60.0 and ram_percent < 75.0:
-            issue_manipulation(maquina, comp1, ram_percent, 3)
-        elif ram_percent >= 75.0 and ram_percent < 90:
-            issue_manipulation(maquina, comp1, ram_percent, 2)
-        elif ram_percent >= 90:
-            issue_manipulation(maquina, comp1, ram_percent, 1)
+        # if ram_percent >= 60.0 and ram_percent < 75.0:
+        #     issue_manipulation(maquina, comp1, ram_percent, 3)
+        # elif ram_percent >= 75.0 and ram_percent < 90:
+        #     issue_manipulation(maquina, comp1, ram_percent, 2)
+        # elif ram_percent >= 90:
+        #     issue_manipulation(maquina, comp1, ram_percent, 1)
 
-        if cpu_percent >= 60.0 and cpu_percent < 75.0:
-            issue_manipulation(maquina, comp2, cpu_percent, 3)
-        elif cpu_percent >= 75.0 and cpu_percent < 90:
-            issue_manipulation(maquina, comp2, cpu_percent, 2)
-        elif cpu_percent >= 90:
-            issue_manipulation(maquina, comp2, cpu_percent, 1)
+        # if cpu_percent >= 60.0 and cpu_percent < 75.0:
+        #     issue_manipulation(maquina, comp2, cpu_percent, 3)
+        # elif cpu_percent >= 75.0 and cpu_percent < 90:
+        #     issue_manipulation(maquina, comp2, cpu_percent, 2)
+        # elif cpu_percent >= 90:
+        #     issue_manipulation(maquina, comp2, cpu_percent, 1)
             
 
-        if disc_percent >= 60.0 and disc_percent < 75.0:
-            issue_manipulation(maquina, comp3, disc_percent, 3)
-        elif disc_percent >= 75.0 and disc_percent < 90:
-            issue_manipulation(maquina, comp3, disc_percent, 2)
-        elif disc_percent >= 90:
-            print("esse foi acessado")
-            issue_manipulation(maquina, comp3, disc_percent, 1)
+        # if disc_percent >= 60.0 and disc_percent < 75.0:
+        #     issue_manipulation(maquina, comp3, disc_percent, 3)
+        # elif disc_percent >= 75.0 and disc_percent < 90:
+        #     issue_manipulation(maquina, comp3, disc_percent, 2)
+        # elif disc_percent >= 90:
+        #     print("esse foi acessado")
+        #     issue_manipulation(maquina, comp3, disc_percent, 1)
 
         cursor.execute(
             f"CALL inserirDadosMaquina ('{maquina}', '{comp1}', {ram_percent}, '{comp2}', {cpu_percent}, '{comp3}', {disc_percent}, NOW());"

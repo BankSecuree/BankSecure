@@ -35,6 +35,18 @@ function alterarPeriodoVizualizacao(campoParaAlterar, periodo) {
 
 
 }
+function alterarPeriodoGraficos(periodo){
+    alterarPeriodoVizualizacao('ram',periodo)
+    alterarPeriodoVizualizacao('cpu',periodo)
+    alterarPeriodoVizualizacao('hd',periodo)
+    alterarPeriodoVizualizacao('graficoPrincipal', )
+    alterarPeriodoVizualizacao('graficoPrincipal', periodo)
+    alterarPeriodoVizualizacao('graficoPrincipal', periodo)
+}
+
+function correlacaoEntreMetricas(periodo){
+
+}
 
 function exibirKpiGerente(idEmpresa, periodo, componente) {
     console.log(periodo)
@@ -77,7 +89,7 @@ function obterDadosGrafico(idEmpresa, periodo, componente) {
                 console.log(`Dados recebidos: ${JSON.stringify(respostaCpu)}`);
                 respostaCpu.reverse();
 
-                // plotarGrafico(respostaCpu, idEmpresa, periodo, componente)
+                // plotarGraficoPrincipal(respostaCpu, idEmpresa, periodo, componente)
                 componente = 2
                 fetch(`/dashGerente/ultimas/${idEmpresa}/${periodo}/${componente}`, { cache: 'no-store' }).then(function (response) {
                     if (response.ok) {
@@ -85,7 +97,7 @@ function obterDadosGrafico(idEmpresa, periodo, componente) {
                             console.log(`Dados recebidos: ${JSON.stringify(respostaDisco)}`);
                             respostaDisco.reverse();
 
-                            // plotarGrafico(respostaCpu, idEmpresa, periodo, componente)
+                            // plotarGraficoPrincipal(respostaCpu, idEmpresa, periodo, componente)
                             componente = 3
                             fetch(`/dashGerente/ultimas/${idEmpresa}/${periodo}/${componente}`, { cache: 'no-store' }).then(function (response) {
                                 if (response.ok) {
@@ -93,7 +105,7 @@ function obterDadosGrafico(idEmpresa, periodo, componente) {
                                         console.log(`Dados recebidos: ${JSON.stringify(respostaMemoria)}`);
                                         respostaMemoria.reverse();
 
-                                        plotarGrafico(respostaCpu, respostaDisco, respostaMemoria, idEmpresa, periodo, componente)
+                                        plotarGraficoPrincipal(respostaCpu, respostaDisco, respostaMemoria, idEmpresa, periodo, componente)
 
 
                                     });
@@ -125,36 +137,33 @@ function obterDadosGrafico(idEmpresa, periodo, componente) {
         })
 }
 
-function plotarGrafico(respostaCpu, respostaDisco, respostaMemoria, idEmpresa, periodo, componente) {
+function plotarGraficoPrincipal(respostaCpu, respostaDisco, respostaMemoria) {
     console.log(`Iniciando a plotagem do gráfico`);
 
     const labels = [];
-    const dados1 = [];
-    const dados2 = [];
-    const dados3 = [];
+    const dadosCpu = [];
+    const dadosMemoria = [];
+    const dadosDisco = [];
 
-    // Extrair horas únicas dos dados de CPU
     respostaCpu.forEach((item) => {
-        if (!labels.includes(`${item.hora}H`)) {
-            labels.push(`${item.hora}H`);
+        if (!labels.includes(`${item.hora}`)) {
+            labels.push(`${item.hora}`);
         }
-        dados1.push(item.media_valor);
+        dadosCpu.push(item.media_valor);
     });
 
-    // Extrair horas únicas dos dados de Disco
     respostaDisco.forEach((item) => {
-        if (!labels.includes(`${item.hora}H`)) {
-            labels.push(`${item.hora}H`);
+        if (!labels.includes(`${item.hora}`)) {
+            labels.push(`${item.hora}`);
         }
-        dados3.push(item.media_valor);
+        dadosDisco.push(item.media_valor);
     });
 
-    // Extrair horas únicas dos dados de Memória
     respostaMemoria.forEach((item) => {
-        if (!labels.includes(`${item.hora}H`)) {
-            labels.push(`${item.hora}H`);
+        if (!labels.includes(`${item.hora}`)) {
+            labels.push(`${item.hora}`);
         }
-        dados2.push(item.media_valor);
+        dadosMemoria.push(item.media_valor);
     });
 
     const grafico = document.getElementById("reportsChart4");
@@ -168,7 +177,7 @@ function plotarGrafico(respostaCpu, respostaDisco, respostaMemoria, idEmpresa, p
         datasets: [
             {
                 label: 'CPU',
-                data: dados1,
+                data: dadosCpu,
                 borderWidth: 2,
                 borderColor: "#4154f1",
                 backgroundColor: "#4154f1",
@@ -176,7 +185,7 @@ function plotarGrafico(respostaCpu, respostaDisco, respostaMemoria, idEmpresa, p
             },
             {
                 label: 'Disco',
-                data: dados2,
+                data: dadosMemoria,
                 borderWidth: 2,
                 borderColor: "#2eca6a",
                 backgroundColor: "#2eca6a",
@@ -184,7 +193,7 @@ function plotarGrafico(respostaCpu, respostaDisco, respostaMemoria, idEmpresa, p
             },
             {
                 label: 'Memória',
-                data: dados3,
+                data: dadosDisco,
                 borderWidth: 2,
                 borderColor: "#ff771d",
                 backgroundColor: "#ff771d",
@@ -223,102 +232,164 @@ function plotarGrafico(respostaCpu, respostaDisco, respostaMemoria, idEmpresa, p
     });
 
     // setTimeout(() => atualizarGrafico(idEmpresa, periodo, componente, grafico, dados), 2000)
+}
+
+function plotarGraficoHorarioDePico(resposta) {
+    const labels = ["00","00","00","00","00","00","00","00","00","00","00","00",
+    "00","00","00","00","00","00","00","00","00","00","00","00"];
+
+    const graficoHorarioDePico = document.getElementById("graficoHorarioDePico");
+    let teste = [100, 80, 60, 13, 15, 55, 34, 54, 1, 54, 88, 66, 55, 44,
+    23, 12, 15, 67, 6, 100, 77, 44, 33, 22 ]
+
+    let dados = {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Horários de Pico',
+                data: teste,
+                borderWidth: 2,
+                borderColor: "#4154f1",
+                backgroundColor: "#4154f1",
+                tension: 0.3
+            }
+        ]
+    };
+
+    new Chart(graficoHorarioDePico, {
+        type: 'bar',
+        data: dados,
+        options: {
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        usePointStyle: true,
+                    },
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    title: "",
+                    beginAtZero: true
+                },
+                x: {
+                    title: "",
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+
+    // setTimeout(() => atualizarGrafico(idEmpresa, periodo, componente, grafico, dados), 2000)
+}
+plotarGraficoHorarioDePico(1)
+
+async function plotarKpisCorrelação(idEmpresa, periodo){
+    let resposta = await(fetch(`/dashGerente/kpicorrelacao/${idEmpresa}/${periodo}`));
+    let kpisCorrelacao = await resposta.json();
+    console.log(kpisCorrelacao)
 
 
 }
+plotarKpisCorrelação(2,"day")
 
 
-function atualizarGrafico(idEmpresa, periodo, componente, grafico, dados) {
-    console.log(dados)
-    componente = 1;
-    fetch(`/dashGerente/tempo-real/${idEmpresa}/${periodo}/${componente}`, { cache: 'no-store' }).then(function (response) {
-        if (response.ok) {
-            response.json().then(function (novoRegistroCpu) {
-                console.log(`Dados recebidos: ${JSON.stringify(novoRegistroCpu)}`)
-                console.log(`Dados atuais do grafico:`)
-                console.log(dados)
+// function atualizarGrafico(idEmpresa, periodo, componente, grafico, dados) {
+//     console.log(dados)
+//     componente = 1;
+//     fetch(`/dashGerente/tempo-real/${idEmpresa}/${periodo}/${componente}`, { cache: 'no-store' }).then(function (response) {
+//         if (response.ok) {
+//             response.json().then(function (novoRegistroCpu) {
+//                 console.log(`Dados recebidos: ${JSON.stringify(novoRegistroCpu)}`)
+//                 console.log(`Dados atuais do grafico:`)
+//                 console.log(dados)
 
-                data.labels[0].shift()
-                data.labels.push(novoRegistroCpu.hora)
+//                 data.labels[0].shift()
+//                 data.labels.push(novoRegistroCpu.hora)
 
 
-                data.datasets[0].data.shift();
-                data.datasets[0].data.push(novoRegistroCpu.media_valor)
+//                 data.datasets[0].data.shift();
+//                 data.datasets[0].data.push(novoRegistroCpu.media_valor)
 
                 
-                componente = 2
-                fetch(`/dashGerente/tempo-real/${idEmpresa}/${periodo}/${componente}`, { cache: 'no-store' }).then(function (response) {
-                    if (response.ok) {
-                        response.json().then(function (novoRegistroDisco) {
-                            console.log(`Dados recebidos: ${JSON.stringify(novoRegistroDisco)}`)
-                            console.log(`Dados atuais do grafico:`)
-                            console.log(dados)
+//                 componente = 2
+//                 fetch(`/dashGerente/tempo-real/${idEmpresa}/${periodo}/${componente}`, { cache: 'no-store' }).then(function (response) {
+//                     if (response.ok) {
+//                         response.json().then(function (novoRegistroDisco) {
+//                             console.log(`Dados recebidos: ${JSON.stringify(novoRegistroDisco)}`)
+//                             console.log(`Dados atuais do grafico:`)
+//                             console.log(dados)
 
-                            data.labels[0].shift()
-                            data.labels.push(novoRegistroCpu.hora)
+//                             data.labels[0].shift()
+//                             data.labels.push(novoRegistroCpu.hora)
             
             
-                            data.datasets[1].data.shift();
-                            data.datasets[1].data.push(novoRegistroCpu.media_valor)
+//                             data.datasets[1].data.shift();
+//                             data.datasets[1].data.push(novoRegistroCpu.media_valor)
 
-                            componente = 3
+//                             componente = 3
 
-                            fetch(`/dashGerente/tempo-real/${idEmpresa}/${periodo}/${componente}`, { cache: 'no-store' }).then(function (response) {
-                                if (response.ok) {
-                                    response.json().then(function (novoRegistroMemoria) {
-                                        console.log(`Dados recebidos: ${JSON.stringify(novoRegistroMemoria)}`)
-                                        console.log(`Dados atuais do grafico:`)
-                                        console.log(dados)
+//                             fetch(`/dashGerente/tempo-real/${idEmpresa}/${periodo}/${componente}`, { cache: 'no-store' }).then(function (response) {
+//                                 if (response.ok) {
+//                                     response.json().then(function (novoRegistroMemoria) {
+//                                         console.log(`Dados recebidos: ${JSON.stringify(novoRegistroMemoria)}`)
+//                                         console.log(`Dados atuais do grafico:`)
+//                                         console.log(dados)
                                        
-                                        data.labels[0].shift()
-                                        data.labels.push(novoRegistroCpu.hora)
+//                                         data.labels[0].shift()
+//                                         data.labels.push(novoRegistroCpu.hora)
                         
                         
-                                        data.datasets[2].data.shift();
-                                        data.datasets[2].data.push(novoRegistroCpu.media_valor)
+//                                         data.datasets[2].data.shift();
+//                                         data.datasets[2].data.push(novoRegistroCpu.media_valor)
 
-                                        grafico.update();
-                                        setTimeout(() => atualizarGrafico(idEmpresa, periodo, componente, grafico, dados), 10000)
+//                                         grafico.update();
+//                                         setTimeout(() => atualizarGrafico(idEmpresa, periodo, componente, grafico, dados), 10000)
 
-                                    })
-                                } else {
-                                    console.error(`Nenhum dado encontrado ou erro na API`)
-                                }
-                            }).catch(function (error) {
-                                console.error(`Erro na obtencao de dados p/ grafico: ${error.message}`)
-                            })
-                        })
-                    } else {
-                        console.error(`Nenhum dado encontrado ou erro na API`)
-                    }
-                }).catch(function (error) {
-                    console.error(`Erro na obtencao de dados p/ grafico: ${error.message}`)
-                })
-            })
-        } else {
-            console.error(`Nenhum dado encontrado ou erro na API`)
-            setTimeout(() => atualizarGrafico(idEmpresa, periodo, componente, grafico, dados), 10000)
-        }
-    }).catch(function (error) {
-        console.error(`Erro na obtencao de dados p/ grafico: ${error.message}`)
-    })
+//                                     })
+//                                 } else {
+//                                     console.error(`Nenhum dado encontrado ou erro na API`)
+//                                 }
+//                             }).catch(function (error) {
+//                                 console.error(`Erro na obtencao de dados p/ grafico: ${error.message}`)
+//                             })
+//                         })
+//                     } else {
+//                         console.error(`Nenhum dado encontrado ou erro na API`)
+//                     }
+//                 }).catch(function (error) {
+//                     console.error(`Erro na obtencao de dados p/ grafico: ${error.message}`)
+//                 })
+//             })
+//         } else {
+//             console.error(`Nenhum dado encontrado ou erro na API`)
+//             setTimeout(() => atualizarGrafico(idEmpresa, periodo, componente, grafico, dados), 10000)
+//         }
+//     }).catch(function (error) {
+//         console.error(`Erro na obtencao de dados p/ grafico: ${error.message}`)
+//     })
 
-function alterarPeriodoVizualizacao(campoParaAlterar, periodo){
-    let periodos = {'1': "Hoje",
-                    '2':"Este Mês",
-                    '3':"Este Ano"}
-    console.log(periodos[periodo])
-    console.log(periodos.p1)
-    let periodoId = document.getElementById(campoParaAlterar + "_period_info")
-    if(campoParaAlterar == 'cpu'){
-        periodoId.innerHTML = periodos[periodo]
-    }else if(campoParaAlterar == 'ram'){
-        periodoId.innerHTML = periodos[periodo]
-    }else if(campoParaAlterar == 'hd'){
-        periodoId.innerHTML = periodos[periodo]
-    }else if(campoParaAlterar == 'graficoDonut'){
-        periodoId.innerHTML = periodos[periodo]
-    }
+// function alterarPeriodoVizualizacao(campoParaAlterar, periodo){
+//     let periodos = {'1': "Hoje",
+//                     '2':"Este Mês",
+//                     '3':"Este Ano"}
+//     console.log(periodos[periodo])
+//     console.log(periodos.p1)
+//     let periodoId = document.getElementById(campoParaAlterar + "_period_info")
+//     if(campoParaAlterar == 'cpu'){
+//         periodoId.innerHTML = periodos[periodo]
+//     }else if(campoParaAlterar == 'ram'){
+//         periodoId.innerHTML = periodos[periodo]
+//     }else if(campoParaAlterar == 'hd'){
+//         periodoId.innerHTML = periodos[periodo]
+//     }else if(campoParaAlterar == 'graficoDonut'){
+//         periodoId.innerHTML = periodos[periodo]
+//     }
 
-    }
-}
+//     }
+// }
