@@ -300,7 +300,7 @@ SELECT * FROM maquina;
 -- JOIN agencia ON fkAgencia = idAgencia and idUsuario = 3;
 
 
-DROP PROCEDURE verificarNivel IF EXISTS;
+DROP PROCEDURE IF EXISTS verificarNivel;
 DELIMITER //
 CREATE PROCEDURE verificarNivel(IN 
     n_fkEmpresa int,
