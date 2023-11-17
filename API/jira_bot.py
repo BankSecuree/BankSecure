@@ -16,7 +16,7 @@ class issue_manipulation:
         self.url = "https://banksecure.atlassian.net/rest/api/3/"
         self.auth = HTTPBasicAuth(
             "suporte.banksecure@gmail.com",
-            "ATATT3xFfGF0npBFytU7RID76c8RWa5_r0f-k0fylHHwlPJdlpSSkl4TizynJLj0ADs-hA6MvYAU7qxaUXhj-R0wSa2HU-pD3DAN8DerGwckV69RsjkQep0pVZGK0ol3u6VBUorcL8ihiSLJAO6EGIvudv-lJsX8GRnaU1w0Zib5yK4HzhApwq4=35F55320",
+            "ATATT3xFfGF0pvKfx5G_GNvHurEn8sU7cZWpe-NyahA9sj8lqKQAI4wmrZvEXSMrzxsh5CghwZj_uuKStqELhCbwoE6UyZJ_TpasIcPVdx9vKsxU7pGPK9nMt-jTAj3axZz6c7OutDeD0cOGo1ehA_nyCbnviQiWZo_irZKW4HGdBnom1CuDeJE=EDFC2137",
         )
         self.__verify_issue()
 
