@@ -403,6 +403,22 @@
 
                   <h5 class="card-title">Registros <span id="periodoGrafico">/Hoje</span></h5>
 
+                  <div class="select-box">
+                    <div class="componente">
+                      <select id="componente" class="componente-select">
+                        <option value="cpu">CPU</option>
+                        <option value="disco">Disco</option>
+                        <option value="memoria">Memória</option>
+                      </select>
+                    </div>
+                    <div class="tipo-agencia-classe">
+                      <select id="tipo-agencia" class="tipo-agencia-select">
+                        <option value="todas">Todas as agências</option>
+                      </select>
+                    </div>
+
+                  </div>
+
                   <div id="graficoGeral">
                     <canvas id="reportsChart4"></canvas>
                   </div>
@@ -424,7 +440,7 @@
 
 
           </div>
-        </div>  
+        </div>
 
         <!-- Colunas da direita -->
         <div class="col-lg-4">
@@ -441,8 +457,8 @@
 
             <div class="card-body pb-0">
               <h5 class="card-title">Quantidade de problemas por agência<span>|CPU, Disco e Ram</span></h5>
-              	<div class="ranque card-title">
-                </div>
+              <div class="ranque card-title">
+              </div>
             </div>
 
             <div class="filter">
@@ -481,8 +497,4 @@
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/main.js"></script>
 <script>
-  function chamarFuncoes() {
-    obterKpiAgencia()
-  }
-
 </script>
