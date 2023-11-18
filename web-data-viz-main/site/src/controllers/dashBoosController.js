@@ -39,7 +39,30 @@ function buscarUltimasMedidas(req, res) {
     });
 }
 
+    function buscarMedidasEmTempoReal(req, res) {
+        var grafico = req.params.grafico
+        var dados = req.params.dados
+        var selectTipoAgencia = req.params.selectTipoAgencia
+
+        if(!grafico || !dados) {
+            return res.status(400).json({error: 'Parametros invalidos'})
+        }
+
+        dashBoosModel.buscarMedidasEmTempoReal(grafico, dados, selectTipoAgencia).then(function (resultado) {
+            if(resultado.length > 0) {
+                res.status(200).json(resultado)
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!")
+            }
+        }).catch(function (erro) {
+            console.log(erro)
+            console.log("Houve um erro ao buscar as medidas em tempo real", erro.sqlMessage)
+            res.status(500).json(erro.sqlMessage)
+        })
+    }
+
 module.exports = {
     obterKpiAgencia,
-    buscarUltimasMedidas
+    buscarUltimasMedidas,
+    buscarMedidasEmTempoReal
 };

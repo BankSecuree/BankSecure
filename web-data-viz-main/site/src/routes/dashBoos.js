@@ -13,4 +13,9 @@ router.get("/ultimas/:idGerente/:componente/:tipoAgencia/:selectTipoAgencia", fu
     dashBoosController.buscarUltimasMedidas(req, res)
 })
 
+router.get("/tempo-real/:grafico/:dados/:selectTipoAgencia", function (req, res) {
+    console.log("Estou na rota!")
+    dashBoosController.buscarMedidasEmTempoReal
+})
+
 module.exports = router;

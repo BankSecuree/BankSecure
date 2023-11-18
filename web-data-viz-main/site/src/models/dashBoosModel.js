@@ -62,28 +62,94 @@ function buscarUltimasMedidas(idGerente, componente, tipoAgencia, selectTipoAgen
         mediaValor DESC;`
     }
     else {
+        instrucao = `SELECT * FROM (
+            SELECT
+                ag.idAgencia,
+                ag.apelido AS nomeAgencia,
+                r.valor AS mediaValor,
+                DATE_FORMAT(r.dataHora, '%Y-%m-%d %H:%i:%s') AS dataHora
+            FROM
+                agencia ag
+            JOIN
+                funcionarioAgencia fa ON ag.idAgencia = fa.fkAgencia
+            JOIN
+                usuario u ON fa.fkUsuario = u.idUsuario
+            JOIN
+                registros r ON r.fkMaquina IN (SELECT idMaquina FROM maquina WHERE fkAgencia = ag.idAgencia) 
+                             AND r.fkComponente = ${componente}
+            WHERE
+                u.fkGerente = ${idGerente}
+                AND ag.idAgencia = ${tipoAgencia}
+            ORDER BY
+                r.dataHora DESC
+            LIMIT 10
+        ) AS subquery
+        ORDER BY
+            dataHora ASC;
+        
+    `
+    }
+
+    console.log("Executando a instrucao mysql: " + instrucao)
+    return database.executar(instrucao);
+}
+
+function buscarMedidasEmTempoReal(grafico, dados, selectTipoAgencia) {
+    instrucao = ""
+
+    if(selectTipoAgencia == "todas") {
         instrucao = `SELECT
         ag.idAgencia,
         ag.apelido AS nomeAgencia,
-        r.valor
+        AVG(r.valor) AS mediaValor
     FROM
         agencia ag
     JOIN
         funcionarioAgencia fa ON ag.idAgencia = fa.fkAgencia
     JOIN
         usuario u ON fa.fkUsuario = u.idUsuario
-    JOIN
-        registros r ON r.fkMaquina IN (SELECT idMaquina FROM maquina WHERE fkAgencia = ag.idAgencia) 
+    LEFT JOIN
+        registros r ON r.fkMaquina IN (SELECT idMaquina FROM maquina WHERE fkAgencia = ag.idAgencia)
                      AND r.fkComponente = ${componente}
+                     AND r.dataRegistro = (
+                        SELECT MAX(dataRegistro)
+                        FROM registros
+                        WHERE fkMaquina = r.fkMaquina
+                          AND fkComponente = r.fkComponente
+                     )
     WHERE
         u.fkGerente = ${idGerente}
-        AND ag.idAgencia = ${tipoAgencia}
+    GROUP BY
+        ag.idAgencia, ag.apelido
     ORDER BY
-        r.dataHora DESC;`
+        mediaValor DESC;
+    `
+    } else {
+        instrucao = `SELECT * FROM (
+            SELECT
+                ag.idAgencia,
+                ag.apelido AS nomeAgencia,
+                r.valor AS mediaValor,
+                DATE_FORMAT(r.dataHora, '%Y-%m-%d %H:%i:%s') AS dataHora
+            FROM
+                agencia ag
+            JOIN
+                funcionarioAgencia fa ON ag.idAgencia = fa.fkAgencia
+            JOIN
+                usuario u ON fa.fkUsuario = u.idUsuario
+            JOIN
+                registros r ON r.fkMaquina IN (SELECT idMaquina FROM maquina WHERE fkAgencia = ag.idAgencia) 
+                             AND r.fkComponente = ${componente}
+            WHERE
+                u.fkGerente = ${idGerente}
+                AND ag.idAgencia = ${tipoAgencia}
+            ORDER BY
+                r.dataHora DESC
+            LIMIT 1
+        ) AS subquery
+        ORDER BY
+            dataHora ASC;`
     }
-
-    console.log("Executando a instrucao mysql: " + instrucao)
-    return database.executar(instrucao);
 }
 
 module.exports = {

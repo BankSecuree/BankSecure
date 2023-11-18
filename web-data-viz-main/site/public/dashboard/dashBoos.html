@@ -10,7 +10,6 @@
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="assets/js/medidorDeProgresso.js"></script>
 
 
   <!-- Fonts -->
@@ -404,7 +403,7 @@
                   <h5 class="card-title">Registros <span id="periodoGrafico">/Hoje</span></h5>
 
                   <div class="select-box">
-                    <div class="componente">
+                    <div class="componente-class">
                       <select id="componente" class="componente-select">
                         <option value="cpu">CPU</option>
                         <option value="disco">Disco</option>
@@ -413,14 +412,14 @@
                     </div>
                     <div class="tipo-agencia-classe">
                       <select id="tipo-agencia" class="tipo-agencia-select">
-                        <option value="todas">Todas as agências</option>
+                        <option value="todas">Nem Todas as agências</option>
                       </select>
                     </div>
 
                   </div>
 
                   <div id="graficoGeral">
-                    <canvas id="reportsChart4"></canvas>
+                    <canvas id="chartGraficoLinha"></canvas>
                   </div>
 
                   <!-- Line Chart -->
