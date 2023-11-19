@@ -40,15 +40,16 @@ function buscarUltimasMedidas(req, res) {
 }
 
     function buscarMedidasEmTempoReal(req, res) {
-        var grafico = req.params.grafico
-        var dados = req.params.dados
+        var idGerente = req.params.idGerente
+        var componente = req.params.componente
+        var tipoAgencia = req.params.tipoAgencia
         var selectTipoAgencia = req.params.selectTipoAgencia
 
         if(!grafico || !dados) {
             return res.status(400).json({error: 'Parametros invalidos'})
         }
 
-        dashBoosModel.buscarMedidasEmTempoReal(grafico, dados, selectTipoAgencia).then(function (resultado) {
+        dashBoosModel.buscarMedidasEmTempoReal(idGerente,componente, tipoAgencia, selectTipoAgencia).then(function (resultado) {
             if(resultado.length > 0) {
                 res.status(200).json(resultado)
             } else {

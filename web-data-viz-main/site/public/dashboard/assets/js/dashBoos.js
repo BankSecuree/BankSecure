@@ -18,6 +18,7 @@ function obterKpiAgencia() {
             return resposta.json();
         })
         .then(function (dados) {
+            console.log(dados)
             dados.forEach(function (objeto) {
                 vt_id_agencia.push(objeto.idAgencia);
                 vt_nome_agencia.push(objeto.nomeAgencia);
@@ -49,7 +50,7 @@ function obterKpiAgencia() {
                 option.text = nomeAgencia;
                 select.appendChild(option);
 
-                
+
                 var elemento = document.querySelector(`[value="${idAgencia}"]`);
 
                 if (elemento) {
@@ -83,7 +84,7 @@ function obterKpiAgencia() {
                 var divAgencia = document.createElement('div');
                 divAgencia.innerHTML = `<h6 style="color: #899BBD">Nome da agência: <span style="font-size: 1em; color: #012970;">${vt_nome_agencia[i]}</span></h6>`;
                 var divProblemas = document.createElement('div');
-                divProblemas.innerHTML = `<h6 style="color:#8B0000;">Quantidade de problemas: <span style="font-size: 1em; color: red;">${vt_total_problemas[i]}</span></h6>`;
+                divProblemas.innerHTML = `<h6 style="color:#8B0000;">Quantidade de alertas: <span style="font-size: 1em; color: red;">${vt_total_problemas[i]}</span></h6>`;
 
                 ranqueContainer.appendChild(divAgencia);
                 ranqueContainer.appendChild(divProblemas);
@@ -91,6 +92,7 @@ function obterKpiAgencia() {
 
             // Chamar obterDadosGrafico ao final da função obterKpiAgencia
             obterDadosGrafico(1, select.value);
+            plotarGraficoFreq(dados);
         })
         .catch(function (erro) {
             console.error(erro);
@@ -98,7 +100,7 @@ function obterKpiAgencia() {
 }
 
 // Chamar a função inicialmente
-obterKpiAgencia();
+obterKpiAgencia()
 
 
 
@@ -113,7 +115,7 @@ function obterDadosGrafico(componente, tipoAgencia) {
             response.json().then(function (resposta) {
                 console.log("Dados recebidos: " + JSON.stringify(resposta))
 
-                plotarGrafico(resposta)
+                plotarGrafico(resposta, componente, tipoAgencia, selectTipoAgencia)
 
             })
         } else {
@@ -125,7 +127,7 @@ function obterDadosGrafico(componente, tipoAgencia) {
 }
 
 
-function plotarGrafico(resposta) {
+function plotarGrafico(resposta, componente, tipoAgencia, selectTipoAgencia) {
     // Verificar se resposta é uma array de objetos
     if (!Array.isArray(resposta) || resposta.length === 0 || typeof resposta[0] !== 'object') {
         console.error("A resposta não é um array válido de objetos.");
@@ -220,49 +222,84 @@ function plotarGrafico(resposta) {
             },
         },
     });
-    setTimeout(() => atualizarGrafico(grafico,dados, selectTipoAgencia), 2000)
 }
 
 
-function atualizarGrafico(grafico, dados, selectTipoAgencia) {
-    fetch(`/dashBoos/tempo-real/${grafico}/${dados}/${selectTipoAgencia}`, {cache: "no-store"}).then(function (response) {
-        if(response.ok) {
-            response.json().then(function (resposta) {
-                response.json().then(function (novoRegistro) {
-                    console.log("Dados recebidos:" + JSON.stringify(novoRegistro))
-                    console.log('Dados atuais do grafico:')
-                    console.log(dados)
+function atualizarGrafico(componente, tipoAgencia, selectTipoAgencia, grafico, dadosGrafico) {
+    console.log(dadosGrafico)
+    var idGerente = sessionStorage.GERENTE_USUARIO
+    fetch(`/dashBoos/tempo-real/${idGerente}/${componente}/${tipoAgencia}/${selectTipoAgencia}`, { cache: "no-store" }).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (novoRegistro) {
+                console.log("Dados recebidos:" + JSON.stringify(novoRegistro));
+                console.log('Dados atuais do gráfico:');
+                console.log(dadosGrafico);
 
-                    var selectTipoAgencia = document.getElementById("tipo-agencia")
-                    data.labels[0].shift()
-                    if(selectTipoAgencia == "todas") {
-                        data.push(novoRegistro.nomeAgencia)
-                    } else {
-                        data.push(novoRegistro.dataHora)                        
-                    }
+                var selectTipoAgencia = document.getElementById("tipo-agencia")
 
-                    data.datasets[0].data.shift()
-                    data.datasets[0].data.push(novoRegistro.mediaValor)
 
-                    setTimeout(() => atualizarGrafico(grafico, dados, selectTipoAgencia), 10000)
-                })
-            })
+                // Adicionar novo rótulo ao array de rótulos
+                if (selectTipoAgencia == "todas") {
+                    dadosGrafico.labels.push(novoRegistro.nomeAgencia)
+                    dadosGrafico.datasets.data.push(novoRegistro.mediaValor)
+                } else {
+                    dadosGrafico.labels[0].shift()
+                    dadosGrafico.labels.push(novoRegistro.dataHora)
+                    dadosGrafico.datasets[0].data.shift()
+                    dadosGrafico.datasets[0].data.push(novoRegistro.mediaValor)
+                }
+
+
+
+
+
+                // Agendar a próxima atualização após 10 segundos
+                console.log(dadosGrafico)
+            });
         } else {
-            console.error("Nenhum dado encontrado ou erro na API")
+            console.error("Nenhum dado encontrado ou erro na API");
         }
     }).catch(function (error) {
-        console.error(`Erro na obtencao de dados para o grafico ${error.message}`)
-    })
+        console.error(`Erro na obtencao de dados para o grafico ${error.message}`);
+    });
+}
+
+function plotarGraficoFreq(dados) {
+
+    
+
+    var palavras = dados.slice(0, 50).map(function (item) {
+        return { text: item.nomeAgencia, weight: item.totalProblemas };
+    });
+
+
+    var options = {
+        gridSize: 1,
+        weightFactor: 0.7,
+        fontFamily: 'Arial, sans-serif',
+        color: 'random-dark',
+        backgroundColor: '#000',
+        rotateRatio: 0,
+        shape: 'circle',
+        click: function (item) {
+            console.log(`Agencia: ${item.text}, Alertas:${item.weight} `)
+        }
+    };
+
+    var canvas = document.getElementById('wordcloud');
+    canvas.width = 800; // Largura desejada
+    canvas.height = 600; // Altura desejada
+
+    // Gera a nuvem de palavras no lado do cliente
+    WordCloud(canvas, { list: palavras, ...options });
 }
 
 
+var intervaloId;
+var selectComponente = document.getElementById("componente");
+var selectTipoAgencia = document.getElementById('tipo-agencia');
 
 function chamarFuncoes() {
-    
-    
-    var selectComponente = document.getElementById("componente");
-    var selectTipoAgencia = document.getElementById('tipo-agencia');
-
     // Remover ouvintes de eventos existentes
     selectComponente.removeEventListener('change', handleComponenteChange);
     selectTipoAgencia.removeEventListener('change', handleTipoAgenciaChange);
@@ -271,32 +308,73 @@ function chamarFuncoes() {
     selectComponente.addEventListener('change', handleComponenteChange);
     selectTipoAgencia.addEventListener('change', handleTipoAgenciaChange);
 
-    function handleComponenteChange(event) {
-        // Lógica para lidar com a mudança no componente
-        var novoValor = event.target.value;
-        obterDadosGrafico(getNumeroDoComponente(novoValor), selectTipoAgencia.value);
+    // Limpar intervalo existente se houver
+    if (intervaloId) {
+        clearInterval(intervaloId);
     }
 
-    function handleTipoAgenciaChange(event) {
-        // Lógica para lidar com a mudança no tipo de agência
-        var novoValor = event.target.value;
-        obterDadosGrafico(selectComponente.value === "cpu" ? 1 : (selectComponente.value === "disco" ? 2 : 3), novoValor);
+    // Iniciar novo intervalo com base na seleção atual
+    iniciarIntervalo();
+}
+
+function handleComponenteChange(event) {
+    // Lógica para lidar com a mudança no componente
+    var novoValor = event.target.value;
+    obterDadosGrafico(getNumeroDoComponente(novoValor), selectTipoAgencia.value);
+
+    // Limpar intervalo existente se houver
+    if (intervaloId) {
+        clearInterval(intervaloId);
     }
 
-    // Função auxiliar para obter o número do componente com base no valor da select box
-    function getNumeroDoComponente(valor) {
-        switch (valor) {
-            case "cpu":
-                return 1;
-            case "disco":
-                return 2;
-            case "memoria":
-                return 3;
-            default:
-                return 1;
-        }
+    // Iniciar novo intervalo com base na seleção atual
+    iniciarIntervalo();
+}
+
+function handleTipoAgenciaChange(event) {
+    // Lógica para lidar com a mudança no tipo de agência
+    var novoValor = event.target.value;
+    obterDadosGrafico(getNumeroDoComponente(selectComponente.value), novoValor);
+
+    // Limpar intervalo existente se houver
+    if (intervaloId) {
+        clearInterval(intervaloId);
+    }
+
+    // Iniciar novo intervalo com base na seleção atual
+    iniciarIntervalo();
+}
+
+function iniciarIntervalo() {
+    // Iniciar novo intervalo com base na seleção atual
+    intervaloId = setInterval(function () {
+        obterDadosGrafico(
+            getNumeroDoComponente(selectComponente.value),
+            selectTipoAgencia.value
+        );
+    }, 3000);
+}
+
+// Função auxiliar para obter o número do componente com base no valor da select box
+function getNumeroDoComponente(valor) {
+    switch (valor) {
+        case "cpu":
+            return 1;
+        case "disco":
+            return 2;
+        case "memoria":
+            return 3;
+        default:
+            return 1;
     }
 }
+
+
+
+
+
+
+
 
 
 

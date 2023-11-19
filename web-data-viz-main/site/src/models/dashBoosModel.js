@@ -18,9 +18,9 @@ JOIN
 LEFT JOIN
     registros r ON r.fkMaquina IN (SELECT idMaquina FROM maquina WHERE fkAgencia = ag.idAgencia) 
                  AND (
-                       (r.fkComponente = 1 AND (r.valor < 30 OR r.valor > 60)) OR
-                       (r.fkComponente = 2 AND (r.valor < 50 OR r.valor > 70)) OR
-                       (r.fkComponente = 3 AND (r.valor < 60 OR r.valor > 80))
+                       (r.fkComponente = 1 AND (r.valor < 10 OR r.valor > 75)) OR
+                       (r.fkComponente = 2 AND (r.valor < 20 OR r.valor > 90)) OR
+                       (r.fkComponente = 3 AND (r.valor < 20 OR r.valor > 95))
                      )
 WHERE
     u.fkGerente = ${idGerente}
@@ -94,7 +94,7 @@ function buscarUltimasMedidas(idGerente, componente, tipoAgencia, selectTipoAgen
     return database.executar(instrucao);
 }
 
-function buscarMedidasEmTempoReal(grafico, dados, selectTipoAgencia) {
+function buscarMedidasEmTempoReal(idGerente, componente, tipoAgencia, selectTipoAgencia) {
     instrucao = ""
 
     if(selectTipoAgencia == "todas") {
@@ -154,5 +154,6 @@ function buscarMedidasEmTempoReal(grafico, dados, selectTipoAgencia) {
 
 module.exports = {
     obterKpiAgencia,
-    buscarUltimasMedidas
+    buscarUltimasMedidas,
+    buscarMedidasEmTempoReal
 }
