@@ -10,12 +10,10 @@
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://d3js.org/d3.v5.min.js"></script>
-  <script src="https://unpkg.com/d3-cloud@1.2.5/build/d3.layout.cloud.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.min.js"></script>
-
-
-
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/d3-cloud@1.2.5/build/d3.layout.cloud.js"></script>
 
 
 
@@ -449,7 +447,6 @@
 
         <!-- Colunas da direita -->
         <div class="col-lg-4">
-
           <div class="card">
             <div class="filter">
               <a class="icon" href="#" data-bs-toggle="dropdown"></a>
@@ -459,7 +456,8 @@
                 </li>
               </ul>
             </div>
-            <div id="wordcloud" style="width: 600px; height: 400px;"></div>
+            <h5 class="card-title" style="height: 10px;text-align: center;">Gráfico de frequência por alerta das agencias</h5>
+            <div id="wordcloud" ></div>
           </div>
 
           <div class="card-body pb-0">

@@ -265,51 +265,108 @@ function atualizarGrafico(componente, tipoAgencia, selectTipoAgencia, grafico, d
 }
 
 function plotarGraficoFreq(dados) {
-    var canvas = document.createElement('canvas');
+    const largura = 440;
+    const altura = 400;
 
-    // Defina largura e altura do canvas
+    const canvas = document.createElement('canvas');
+    canvas.width = largura;
+    canvas.height = altura;
+    const context = canvas.getContext('2d');
+
+    // Defina o atributo willReadFrequently como true
+    context.imageSmoothingEnabled = true;
+    context.webkitImageSmoothingEnabled = true;
+    context.mozImageSmoothingEnabled = true;
+    context.msImageSmoothingEnabled = true;
+
+    // Adicione o atributo willReadFrequently
+    context.canvas.willReadFrequently = true;
+
+    const svg = d3.select('#wordcloud').append('svg')
+        .attr('width', largura)
+        .attr('height', altura);
 
 
-    // Obtenha o contexto 2D do canvas
-    var fctx = canvas.getContext('2d');
 
-    // Agora você pode usar fctx para operações de canvas, como getImageData
-    var imageData = fctx.getImageData(0, 0, 100, 300).data;
-
-
-    const dadosAjustados = dados.map(item => ({
-        ...item,
-        text: item.nomeAgencia,
-        totalProblemas: item.totalProblemas === 0 ? 1 : item.totalProblemas
-    }));
-
-    console.log(dadosAjustados)
-    
-    var configuracoesNuvem = {
-        shape: 'circle',
-        gridSize: 8,
-        fontWeight: 'bold',
-        rotateRatio: 0,
-        backgroundColor: '#000000',
-        color: function () {
-            // Gere cores aleatórias ou use uma paleta de cores específica
-            return '#' + Math.floor(Math.random() * 16777215).toString(16);
-        },
-        minSize: 10 // Adicione um tamanho mínimo de texto
+    const configuracoesNuvem = {
+        size: 0.7,
+        color: 'random-light',
+        backgroundColor: 'black',
+        rotateRatio: 0
     };
+
+    const tamanhoMaximoPercentual = 0.5; 
+    const tamanhoMinimoPercentual = 0.05; 
+    
+    // Obtém a largura da tela
+    const larguraTela = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    
+    // Calcula os tamanhos máximo e mínimo com base na largura da tela
+    const tamanhoMaximo = larguraTela * tamanhoMaximoPercentual;
+    const tamanhoMinimo = larguraTela * tamanhoMinimoPercentual;
+    
+    const layout = d3.layout.cloud()
+    .size([largura, altura])
+    .words(dados.map(item => ({
+        text: item.nomeAgencia,
+        size: (item.totalProblemas > tamanhoMaximo) ? tamanhoMaximo : item.totalProblemas
+    })))
+    .padding(10) // Ajuste o valor de padding conforme necessário
+    .rotate(() => 0) // Todas as palavras ficarão na vertical (ângulo de rotação = 0)
+    .fontSize(item => ((item.size - tamanhoMinimo) / (tamanhoMaximo - tamanhoMinimo)) * 30 + 5)
+    .on('end', desenharNuvem)
+    .random(() => 0.5)
+    .fontWeight('normal')
+    .text(item => item.text);
+
+
+
+layout.start();
+
+function desenharNuvem(palavras) {
+    // Encontrar o maior elemento
+    var maiorElemento = palavras.reduce((maior, atual) => (atual.size > maior.size) ? atual : maior, palavras[0]);
+
+    svg.selectAll('text')
+        .data(palavras)
+        .enter().append('text')
+        .style('font-size', item => item.size + 'px')
+        .style('fill', item => (configuracoesNuvem.color === 'random-light') ? randomColor() : configuracoesNuvem.color)
+        .style('background-color', configuracoesNuvem.backgroundColor)
+        .attr('transform', function (item) {
+            // Calcular a posição relativa em relação ao maior elemento
+            var x = (item === maiorElemento) ? 0 : item.x - maiorElemento.x;
+            var y = (item === maiorElemento) ? 0 : item.y - maiorElemento.y;
+            return `translate(${largura / 2 + x}, ${altura / 2 + y})rotate(${item.rotate})`;
+        })
+        .text(item => item.text)
+        .attr('text-anchor', 'middle')
+        .attr('alignment-baseline', 'middle');
+}
+
+    
+    
     
 
-    // Função para desenhar a nuvem de palavras
-    function desenharNuvem() {
-        WordCloud(document.getElementById('wordcloud'), {
-            list: dadosAjustados,
-            ...configuracoesNuvem
-        });
-    }
 
-    // Chame a função para desenhar a nuvem de palavras
-    desenharNuvem();
+    function randomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+
+        return color;
+    }
 }
+
+
+
+
+
+
+
 
 
 
