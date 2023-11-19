@@ -6,11 +6,19 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>BankSecure</title>
     <!-- Favicons -->
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link href="assets/img/favicon.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+
+
+
     <link rel="stylesheet" href="assets/css/dashTemperatura.css">
+
 
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -145,7 +153,8 @@
                             <div class="card info-card sales-card">
                                 <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
                                     <h5>Selecionar Agência</h5>
-                                    <select name="" id="listaAgencias" onchange="atualizarGrafico(), listaMaquinas()">
+                                    <select name="" id="listaAgencias"
+                                        onchange="atualizarGraficoTemperatura(sessionStorage.ID_EMPRESA,listaAgencias.value,listaMaquinas.value), listaMaquinas()">
 
                                     </select>
                                 </div>
@@ -157,62 +166,92 @@
                             <div class="card info-card sales-card">
                                 <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
                                     <h5>Selecionar Maquina</h5>
-                                    <select name="" id="listaMaquinas" onchange="atualizarGrafico()">
-
+                                    <select name="" id="listaMaquinas"
+                                        onchange="atualizarGraficoTemperatura(sessionStorage.ID_EMPRESA,listaAgencias.value,listaMaquinas.value)">
                                     </select>
                                 </div>
                             </div>
                         </div>
 
-                         <!-- KPI de uso e temperatura -->
+                        <!-- KPI de uso e temperatura -->
                         <div class="col-xxl-4 col-md-4">
                             <div class="card info-card sales-card" style="height: 89px;">
                                 <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
+
+                                    <div style="display: flex;justify-content: space-between;margin-top: 10px;">
+                                        <svg id="csvCPU" style="display: flex;"
+                                            xmlns="http://www.w3.org/2000/svg" height="3em"
+                                            viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                            <path
+                                                d="M176 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64c-35.3 0-64 28.7-64 64H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v56H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v56H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64c0 35.3 28.7 64 64 64v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h56v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h56v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448c35.3 0 64-28.7 64-64h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V280h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V176h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448c0-35.3-28.7-64-64-64V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H280V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H176V24zM160 128H352c17.7 0 32 14.3 32 32V352c0 17.7-14.3 32-32 32H160c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32zm192 32H160V352H352V160z" />
+                                        </svg>
+                                        <svg id="csvPorcentagem" style="display: none;"
+                                            xmlns="http://www.w3.org/2000/svg" height="3em"
+                                            viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                            <style>
+                                                svg {
+                                                    fill: #0074e0
+                                                }
+                                            </style>
+                                            <path
+                                                d="M374.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-320 320c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l320-320zM128 128A64 64 0 1 0 0 128a64 64 0 1 0 128 0zM384 384a64 64 0 1 0 -128 0 64 64 0 1 0 128 0z" />
+                                        </svg>
+                                        <svg id="csvTemp" style="display:none;" xmlns="http://www.w3.org/2000/svg"
+                                            height="3em"
+                                            viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                            <path
+                                                d="M160 64c-26.5 0-48 21.5-48 48V276.5c0 17.3-7.1 31.9-15.3 42.5C86.2 332.6 80 349.5 80 368c0 44.2 35.8 80 80 80s80-35.8 80-80c0-18.5-6.2-35.4-16.7-48.9c-8.2-10.6-15.3-25.2-15.3-42.5V112c0-26.5-21.5-48-48-48zM48 112C48 50.2 98.1 0 160 0s112 50.1 112 112V276.5c0 .1 .1 .3 .2 .6c.2 .6 .8 1.6 1.7 2.8c18.9 24.4 30.1 55 30.1 88.1c0 79.5-64.5 144-144 144S16 447.5 16 368c0-33.2 11.2-63.8 30.1-88.1c.9-1.2 1.5-2.2 1.7-2.8c.1-.3 .2-.5 .2-.6V112zM208 368c0 26.5-21.5 48-48 48s-48-21.5-48-48c0-20.9 13.4-38.7 32-45.3V144c0-8.8 7.2-16 16-16s16 7.2 16 16V322.7c18.6 6.6 32 24.4 32 45.3z" />
+                                        </svg>
+                                    </div>
+
+
                                     <div class="filter">
+
                                         <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                 class="bi bi-three-dots"></i></a>
+
                                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                             <li class="dropdown-header text-start">
                                                 <h6>Filter</h6>
                                             </li>
-    
-                                            <li><a class="dropdown-item" href="#">Temperatura | Agora </a></li>
-                                            <li><a class="dropdown-item" href="#">Uso de CPU | Agora</a></li>
+                                            <li><a class="dropdown-item" href="#"
+                                                    onclick="changeTitleAndContent('Temperatura | Agora',atualizarKPITemp(1))">Temperatura | Agora</a></li>
+                                            <li><a class="dropdown-item" href="#"
+                                                    onclick="changeTitleAndContent('Uso de CPU | Agora',atualizarKPIUso(1))">Uso de CPU | Agora</a></li>
                                         </ul>
                                     </div>
-                                    <h5>Selecionar Uso e Temperatura</h5>
-
+                                    <!-- <i class="fa-solid fa-percent"></i> -->
+                                    <h5 id="tituloH5" style="margin-left:60px; position: absolute; bottom:40px">
+                                        Selecionar Uso e Temperatura</h5>
+                                    <p id="conteudoOutro" style="margin-left:60px; position: absolute; bottom: 10px;">
+                                        Uso (%) e Temperatura (°C) atuais
+                                    </p>
+                                    <p id="conteudoP"
+                                        style="font-size: large; font-weight: bold; margin-left: 60px; position: absolute; bottom: 5px;">
+                                    </p>
+                                    <p id="conteudoP2"
+                                        style="font-size: large; font-weight: bold;margin-left: 60px; position: absolute; bottom: 5px;">
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- End Card Select -->
                         <div class="col-12 col-xxl-8 col-xl-20 col">
                             <div class="card" style="height:60vh;margin: 10px;">
 
-                                <div class="filter">
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                            class="bi bi-three-dots"></i></a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                        <li class="dropdown-header text-start">
-                                            <h6>Filter</h6>
-                                        </li>
-
-                                        <li><a class="dropdown-item" href="#">Today</a></li>
-                                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                                    </ul>
-                                </div>
 
                                 <div style="height: 50vh;margin: 13px;">
                                     <h5 class="card-title">Gráfico <span>/ Hoje</span></h5>
-                                    <canvas id="myChart" style="height: 500px; display: block; box-sizing: border-box; width: 1137px;" width="1137" height="500"></canvas>
+                                    <canvas id="myChart"
+                                        style="height: 500px; display: block; box-sizing: border-box; width: 1137px;"
+                                        width="1137" height="500"></canvas>
                                 </div>
 
                             </div>
 
-                              <!-- Gráfico Principal -->
-                       
+                            <!-- Gráfico Principal -->
+
                         </div><!-- End Reports -->
 
 
@@ -220,49 +259,55 @@
 
                             <div class="col-xxl-15 col-md-15">
                                 <div class="card info-card sales-card">
-                            <!-- Card Ram -->
-                            <div class="col-xxl-12 col-md-12">
-                                <div class="card info-card revenue-card">
+                                    <!-- Card Ram -->
+                                    <div class="col-xxl-12 col-md-12">
+                                        <div class="card info-card revenue-card">
 
-                                    <div class="filter">
-                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                class="bi bi-three-dots"></i></a>
-                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                            <li class="dropdown-header text-start">
-                                                <h6>Filter</h6>
-                                            </li>
-    
-                                            <li><a class="dropdown-item" href="#"> Download CSV </a></li>
-                                            <li><a class="dropdown-item" href="#"> Download PDF </a></li>
-                                        </ul>
-                                    </div>
+                                            <div class="filter">
+                                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                        class="bi bi-three-dots"></i></a>
+                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                    <li class="dropdown-header text-start">
+                                                        <h6>Filter</h6>
+                                                    </li>
 
-                                    <div class="card-body">
-                                        <h5 class="card-title">Relatório <span>| Últimas 24h </span></h5>
-
-                                        <div class="d-flex align-items-center">
-                                            <div class="ps-3">
-                                                <h6 id="h4-memoria">Temperatura limite:<br>
-                                                    Maior Temperatura:<br>
-                                                    Menor Temperatura:<br>
-                                                    Maior Uso: <br>
-                                                    Menor Uso: <br>
-                                                    Frequência de Excedência:<br>
-                                                    Média - Temperatura: <br>
-                                                    Média -  Uso: </h6>
+                                                    <li><a class="dropdown-item" href="#" onclick="downloadCSV()">
+                                                            Download CSV </a></li>
+                                                    <li><a class="dropdown-item" href="#" onclick="downloadPDF()">
+                                                            Download PDF </a></li>
+                                                </ul>
                                             </div>
-                                        </div>
-                                    </div>
 
+                                            <div class="card-body">
+
+                                                <h4 class="card-title"
+                                                    style="position: absolute;top: 0px;left: 20px;font-size: 27px;">
+                                                    Relatório <span id="nomeMaquina"> | Últimas 24h</span></h4>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="ps-3">
+                                                        <h6 id="h4-memoria"
+                                                            style="font-size: 17px; display: flex; flex-direction: column; position: absolute; top:60px">
+                                                            Temperatura limite: <p style="color: red;">90 à 100 °C</p>
+                                                            Maior Temperatura: <p id="maiorTemperatura"></p>
+                                                            Menor Temperatura: <p id="menorTemperatura"></p>
+                                                            Maior Uso:<p id="maiorUso"></p>
+                                                            Menor Uso: <p id="menorUso"></p>
+                                                            Média - Temperatura: <p id="mediaTemperatura"></p>
+                                                            Média - Uso: <p id="mediaUso"></p>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div><!-- End Card Ram -->
                                 </div>
-                            </div><!-- End Card Ram -->
+
+                            </div>
                         </div>
 
                     </div>
-                </div>
-
-            </div>
-            <!-- <button onclick="atualizarGrafico()">aaaaaaaa</button> -->
+                    <!-- <button onclick="atualizarGrafico()">aaaaaaaa</button> -->
         </section>
     </main>
 
@@ -293,74 +338,278 @@
     </a>
 
 </body>
+
 </html>
 
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/main.js"></script>
-<script src = "assets/js/dashAnalistaIndex.js"></script>
+<script src="assets/js/dashTemperatura.js"></script>
 
 <script>
     // Seu código JavaScript
-  
+
     let elemento = document.querySelector("#myChart");
-  
+
     let data = {
-      labels: ["10h", "11h", "12h", "13h", "14h"],
-      datasets: [
-        {
-          label: "Uso CPU",
-          data: [30, 45, 60, 55, 70],
-          borderColor: "#4CAF50", // Verde
-          backgroundColor: "rgba(76, 175, 80, 0.4)",
-          fill: true,
-        },
-        {
-          label: "Temperatura",
-          data: [25, 28, 30, 32, 27],
-          borderColor: "#FFC107", // Amarelo
-          backgroundColor: "rgba(255, 193, 7, 0.4)",
-          fill: true,
-        },
-      ],
+        labels: ["10h", "11h", "12h", "13h", "14h"],
+        datasets: [
+            {
+                label: "Uso CPU",
+                data: [30, 45, 60, 55, 70],
+                borderColor: "#4CAF50", // Verde
+                backgroundColor: "rgba(76, 175, 80, 0.4)",
+                fill: true,
+            },
+            {
+                label: "Temperatura",
+                data: [25, 28, 30, 32, 27],
+                borderColor: "#FFC107", // Amarelo
+                backgroundColor: "rgba(255, 193, 7, 0.4)",
+                fill: true,
+            },
+        ],
     };
-  
+
     let opcoes = {
-      scales: {
-        x: {
-          type: 'category',
-          title: {
-            display: true,
-            text: 'Tempo',
-          },
+        scales: {
+            x: {
+                type: 'category',
+                title: {
+                    display: true,
+                    text: 'Tempo',
+                },
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Valor',
+                },
+            },
         },
-        y: {
-          title: {
-            display: true,
-            text: 'Valor',
-          },
-        },
-      },
-      maintainAspectRatio: false, // Impede a manutenção automática da proporção (aspect ratio) do gráfico
-      responsive: true, // Permite que o gráfico seja responsivo
-      height: 100, // Defina a altura desejada em pixels
+        maintainAspectRatio: false, // Impede a manutenção automática da proporção (aspect ratio) do gráfico
+        responsive: true, // Permite que o gráfico seja responsivo
+        height: 100, // Defina a altura desejada em pixels
     };
-  
-    let grafico = new Chart(elemento, {
-      type: "line",
-      data: data,
-      options: opcoes,
+
+    var grafico = new Chart(elemento, {
+        type: "line",
+        data: data,
+        options: opcoes,
     });
 
+    idAgencia = listaAgencias.value
 
     grafico.render();
+    pegarNomeMaquina(1, 3);
     atualizarGrafico();
+    atualizarGraficoPorcentagem();
+    atualizarGraficoTemperatura();
+    atualizarMaiorTemp(1);
+    atualizarMaiorUso(1);
+    atualizarMenorUso(1);
+    atualizarMenorTemp(1);
+    atualizarMediaTemp(1);
+    atualizarMediaUso(1);
     exibirListaAgencias();
     exibirInfos();
     listaMaquinas();
     esconder()
-  
-  </script>
-  
+
+
+    function changeTitleAndContent(newTitle, newContent) {
+        document.getElementById('tituloH5').innerText = newTitle;
+        document.getElementById('conteudoP').innerText = newContent;
+    }
+
+
+
+    // Função para atualizar o conteúdo e a cor com base no valor
+    function atualizarCorUso(valor) {
+        var conteudoP = document.getElementById('conteudoP');
+
+        // Atualizar conteúdo
+        conteudoP.innerHTML = valor + "%";
+
+        // Definir cor com base no valor
+        if (valor >= 80) {
+            conteudoP.style.color = 'red';
+        } else if (valor >= 50) {
+            conteudoP.style.color = 'orange';
+        } else {
+            conteudoP.style.color = 'green';
+        }
+    }
+
+
+    function atualizarCorTemp(valor) {
+        var conteudoP2 = document.getElementById('conteudoP2');
+
+        conteudoP2.innerHTML = valor + "°C";
+
+        if (valor >= 80) {
+            conteudoP2.style.color = 'red';
+        } else if (valor >= 60) {
+            conteudoP2.style.color = 'orange';
+        } else {
+            conteudoP2.style.color = 'green';
+        }
+    }
+
+
+    function atualizarCorRelMediaTemp(valor) {
+        var mediaTemperatura = document.getElementById('mediaTemperatura');
+
+        mediaTemperatura.innerHTML = valor + "°C";
+
+        if (valor >= 80) {
+            mediaTemperatura.style.color = 'red';
+        } else if (valor >= 60) {
+            mediaTemperatura.style.color = 'orange';
+        } else {
+            mediaTemperatura.style.color = 'green';
+        }
+    }
+
+
+    function atualizarCorRelMaiorTemp(valor) {
+        var maiorTemperatura = document.getElementById('maiorTemperatura');
+        maiorTemperatura.innerHTML = valor + "°C";
+
+        if (valor >= 80) {
+            maiorTemperatura.style.color = 'red';
+        } else if (valor >= 60) {
+            maiorTemperatura.style.color = 'orange';
+        } else {
+            maiorTemperatura.style.color = 'green';
+        }
+    }
+
+
+
+
+    function atualizarCorRelMaiorUso(valor) {
+        var maiorUso = document.getElementById('maiorUso');
+        maiorUso.innerHTML = valor + "%";
+
+
+        if (valor >= 80) {
+            maiorUso.style.color = 'red';
+        } else if (valor >= 60) {
+            maiorUso.style.color = 'orange';
+        } else {
+            maiorUso.style.color = 'green';
+        }
+
+    }
+
+
+    function atualizarCorRelMenorUso(valor) {
+        var menorUso = document.getElementById('menorUso');
+        menorUso.innerHTML = valor + "%";
+
+        if (valor >= 80) {
+            menorUso.style.color = 'red';
+        } else if (valor >= 60) {
+            menorUso.style.color = 'orange';
+        } else {
+            menorUso.style.color = 'green';
+        }
+
+    }
+
+
+    function atualizarCorRelMediaUso(valor) {
+        var mediaUso = document.getElementById('mediaUso');
+
+        mediaUso.innerHTML = valor + "%";
+
+        if (valor >= 80) {
+            mediaUso.style.color = 'red';
+        } else if (valor >= 60) {
+            mediaUso.style.color = 'orange';
+        } else {
+            mediaUso.style.color = 'green';
+        }
+
+    }
+
+    function atualizarCorRelMenorTemp(valor) {
+        var menorTemperatura = document.getElementById('menorTemperatura');
+        menorTemperatura.innerHTML = valor + "°C";
+
+
+        if (valor >= 80) {
+            menorTemperatura.style.color = 'red';
+        } else if (valor >= 60) {
+            menorTemperatura.style.color = 'orange';
+        } else {
+            menorTemperatura.style.color = 'green';
+        }
+
+    }
+
+    function downloadCSV() {
+
+        const nomeMaquina = document.getElementById("nomeMaquina").innerText;
+        const maiorTemperatura = document.getElementById("maiorTemperatura").innerText;
+        const menorTemperatura = document.getElementById("menorTemperatura").innerText;
+        const maiorUso = document.getElementById("maiorUso").innerText;
+        const menorUso = document.getElementById("menorUso").innerText;
+        const mediaTemperatura = document.getElementById("mediaTemperatura").innerText;
+        const mediaUso = document.getElementById("mediaUso").innerText;
+
+
+        const data = [
+            ["MáquinaStatus", "Categoria", "Valor", "Unidade de Medida"],
+            [nomeMaquina, "Temperatura limite", "90 °C", "°C"],
+            [nomeMaquina, "Maior Temperatura", maiorTemperatura, "°C"],
+            [nomeMaquina, "Menor Temperatura", menorTemperatura, "°C"],
+            [nomeMaquina, "Maior Uso", maiorUso, "%"],
+            [nomeMaquina, "Menor Uso", menorUso, "%"],
+            [nomeMaquina, "Média - Temperatura", mediaTemperatura, "°C"],
+            [nomeMaquina, "Média - Uso", mediaUso, "%"]
+        ];
+
+
+        const csvContent = data.map(row => row.join(',')).join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'relatorio.csv';
+        link.click();
+    }
+
+
+
+    function downloadPDF() {
+        const contentCopy = document.getElementById('divKpi').cloneNode(true);
+        const spanElement = contentCopy.querySelector('span');
+        const filterElement = contentCopy.querySelector('.filter');
+
+        if (spanElement) {
+            spanElement.parentNode.removeChild(spanElement);
+        }
+
+        if (filterElement) {
+            filterElement.parentNode.removeChild(filterElement);
+        }
+
+        const options = {
+            margin: 10,
+            filename: 'relatorio.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            font: { size: 30 } // Tamanho da fonte maior
+        };
+
+        html2pdf(contentCopy, options);
+    }
+
+
+</script>
+
 
 <!-- CORES: '#2eca6a', '#ff771d' -->
