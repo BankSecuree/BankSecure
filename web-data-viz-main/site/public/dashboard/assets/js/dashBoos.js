@@ -265,34 +265,58 @@ function atualizarGrafico(componente, tipoAgencia, selectTipoAgencia, grafico, d
 }
 
 function plotarGraficoFreq(dados) {
+    var canvas = document.createElement('canvas');
 
+    // Defina largura e altura do canvas
+
+
+    // Obtenha o contexto 2D do canvas
+    var fctx = canvas.getContext('2d');
+
+    // Agora você pode usar fctx para operações de canvas, como getImageData
+    var imageData = fctx.getImageData(0, 0, 100, 300).data;
+
+
+    const dadosAjustados = dados.map(item => ({
+        ...item,
+        text: item.nomeAgencia,
+        totalProblemas: item.totalProblemas === 0 ? 1 : item.totalProblemas
+    }));
+
+    console.log(dadosAjustados)
+    
+    var configuracoesNuvem = {
+        shape: 'circle',
+        gridSize: 8,
+        fontWeight: 'bold',
+        rotateRatio: 0,
+        backgroundColor: '#000000',
+        color: function () {
+            // Gere cores aleatórias ou use uma paleta de cores específica
+            return '#' + Math.floor(Math.random() * 16777215).toString(16);
+        },
+        minSize: 10 // Adicione um tamanho mínimo de texto
+    };
     
 
-    var palavras = dados.slice(0, 50).map(function (item) {
-        return { text: item.nomeAgencia, weight: item.totalProblemas };
-    });
+    // Função para desenhar a nuvem de palavras
+    function desenharNuvem() {
+        WordCloud(document.getElementById('wordcloud'), {
+            list: dadosAjustados,
+            ...configuracoesNuvem
+        });
+    }
 
-
-    var options = {
-        gridSize: 1,
-        weightFactor: 0.7,
-        fontFamily: 'Arial, sans-serif',
-        color: 'random-dark',
-        backgroundColor: '#000',
-        rotateRatio: 0,
-        shape: 'circle',
-        click: function (item) {
-            console.log(`Agencia: ${item.text}, Alertas:${item.weight} `)
-        }
-    };
-
-    var canvas = document.getElementById('wordcloud');
-    canvas.width = 800; // Largura desejada
-    canvas.height = 600; // Altura desejada
-
-    // Gera a nuvem de palavras no lado do cliente
-    WordCloud(canvas, { list: palavras, ...options });
+    // Chame a função para desenhar a nuvem de palavras
+    desenharNuvem();
 }
+
+
+
+
+
+
+
 
 
 var intervaloId;
