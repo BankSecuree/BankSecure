@@ -9,13 +9,13 @@ router.post("/dadosAnalista", function (req, res) {
     dashAnalistaController.dadosAnalista(req, res);
 });
 
-router.get("/dadosTemperatura/:idEmpresa/:idAgencia/:fkMaquina",function(req,res){
+router.get("/dadosTemperatura/:idEmpresa/:fkMaquina",function(req,res){
     console.log("Cheguei na rota")
     dashAnalistaController.dadosTemperatura(req,res);
 });
 
 
-router.get("/dadosPorcentagem/:idEmpresa/:idAgencia/:fkMaquina",function(req,res){
+router.get("/dadosPorcentagem/:idEmpresa/:fkMaquina",function(req,res){
     console.log("Cheguei na rota")
     dashAnalistaController.dadosPorcentagem(req,res);
 });
@@ -44,7 +44,7 @@ router.get("/maiorUsoRel/:idEmpresa/:idAgencia",function(req,res){
     dashAnalistaController.maiorUsoRel(req,res);
 });
 
-router.get("/menorTemperaturaRel/:idEmpresa/:idAgencia",function(req,res){
+router.get("/menorTemperaturaRel/:idEmpresa/:fkMaquina",function(req,res){
     console.log("Cheguei na rota")
     dashAnalistaController.menorTemperaturaRel(req,res);
 });

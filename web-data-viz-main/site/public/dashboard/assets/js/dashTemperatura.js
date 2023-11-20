@@ -2,7 +2,7 @@ let arrayAgencias = []
 let arrayMaquinas = []
 let arrayNomeMaquinas = []
 var idAgencia = -2;
-function exibirListaAgencias() {
+function exibirListaAgencias(isTemperatura) {
   fetch(`/dashAgencias/exibirListaAgencias/${sessionStorage.ID_USUARIO}`)
     .then(function (resposta) {
       if (resposta.ok) {
@@ -36,9 +36,19 @@ function exibirListaAgencias() {
             lista.appendChild(opcao)
             // alert(arrayAgencias[i])
           }
-          pegarMaquinas();
+          pegarMaquinas(isTemperatura);
+
           atualizarGraficoTemperatura(idAgencia)
           atualizarGraficoPorcentagem(idAgencia)
+
+          if(isTemperatura == true){
+            atualizarMaiorTemp(resposta[0].idAgencia);
+            atualizarMenorTemp(resposta[0].idAgencia);
+            atualizarMaiorUso(resposta[0].idAgencia);
+            atualizarMenorUso(resposta[0].idAgencia);
+            atualizarMediaTemp(resposta[0].idAgencia);
+            atualizarMediaUso(resposta[0].idAgencia);
+          }
         });
       } else {
         throw "Houve um erro na API!";
@@ -150,7 +160,7 @@ function atualizarGrafico(idAgencia) {
 }
 
 
-function atualizarGraficoTemperatura(idEmpresa,idAgencia,fkMaquina) {
+function atualizarGraficoTemperatura(fkMaquina) {
   // alert("rpda")
   console.log("RODOU")
   let dados = []
@@ -161,11 +171,11 @@ function atualizarGraficoTemperatura(idEmpresa,idAgencia,fkMaquina) {
   // Chama a função de atualização imediatamente
 
   // Define um intervalo para chamar a função de atualização a cada 5 segundos (5000 milissegundos)    
+  
 
-  fetch(`/dashAnalista/dadosTemperatura/${sessionStorage.ID_EMPRESA}/${idAgencia}/${fkMaquina}`
+  fetch(`/dashAnalista/dadosTemperatura/${sessionStorage.ID_EMPRESA}/${fkMaquina}`
   ).then(function (resposta) {
     console.log("ESTOU NO THEN DO pegar dados de temperatura ()!")
-    //alert("opa, bao?")
     console.log("----------------------------------------------------------------------")
     console.log(resposta)
     if (resposta.ok) {
@@ -175,6 +185,7 @@ function atualizarGraficoTemperatura(idEmpresa,idAgencia,fkMaquina) {
         console.log(json);
         console.log(JSON.stringify(json));
         console.log("")
+        // alert("opa, bao?")
         console.log(json[0].dataHora)
         //alert(JSON.stringify(json))
         for (let i = 0; i < json.length; i++) {
@@ -182,7 +193,13 @@ function atualizarGraficoTemperatura(idEmpresa,idAgencia,fkMaquina) {
           textos.push(json[i].dataHora)
         }
 
-        addData(grafico, textos, dados)
+        // alert("dados " + dados)
+
+        setInterval(function () {
+          addData(grafico, textos, dados)
+          atualizarGraficoPorcentagem(fkMaquina);
+        }, 5000);
+
 
       });
 
@@ -196,7 +213,7 @@ function atualizarGraficoTemperatura(idEmpresa,idAgencia,fkMaquina) {
 
 }
 
-function atualizarGraficoPorcentagem(idEmpresa,idAgencia,fkMaquina) {
+function atualizarGraficoPorcentagem(fkMaquina) {
   // alert("rpda")
   console.log("RODOU")
   let dados = []
@@ -205,12 +222,10 @@ function atualizarGraficoPorcentagem(idEmpresa,idAgencia,fkMaquina) {
   //alert(sessionStorage.ID_EMPRESA)
 
 
-  fetch(`/dashAnalista/dadosPorcentagem/${sessionStorage.ID_EMPRESA}/${idAgencia}/${fkMaquina}`
+  fetch(`/dashAnalista/dadosPorcentagem/${sessionStorage.ID_EMPRESA}/${fkMaquina}`
 
   ).then(function (resposta) {
     console.log("ESTOU NO THEN DO pegar dados da porcentagem ()!")
-    //alert("opa, bao?")
-    alert(idAgencia);
     console.log("----------------------------------------------------------------------")
     console.log(resposta)
     if (resposta.ok) {
@@ -281,7 +296,7 @@ function atualizarKPITemp(idAgencia) {
           conteudoOutro.style.display = 'none';
 
           setInterval(function () {
-            atualizarKPITemp(1);
+            atualizarKPITemp(idAgencia);
           }, 5000);
         }
       
@@ -380,6 +395,10 @@ function atualizarMaiorTemp(idAgencia) {
         console.log("Maior temperatura: " + maiorTemperatura)
         document.getElementById('maiorTemperatura').innerHTML = json[0].maior_temperatura + ' °C';
 
+        setInterval(function () {
+          atualizarMaiorTemp(idAgencia);
+        }, 5000);
+
       })
     
     } else {
@@ -422,6 +441,11 @@ function atualizarMaiorUso(idAgencia) {
             document.getElementById('maiorUso').innerHTML = maiorUso + ' %';
 
 
+            setInterval(function () {
+              atualizarMaiorUso(idAgencia);
+            }, 5000);
+
+
       })
     
     } else {
@@ -461,6 +485,10 @@ function atualizarMenorUso(idAgencia) {
         atualizarCorRelMenorUso(json[0].menor_uso);
             var menorUso = json[0].menor_uso;
             document.getElementById('menorUso').innerHTML = menorUso + ' %';
+
+            setInterval(function () {
+              atualizarMenorUso(idAgencia);
+            }, 5000);
 
       })
     
@@ -505,6 +533,11 @@ function atualizarMediaTemp(idAgencia) {
             var mediaTemp = json[0].media_valores_temperatura;
             document.getElementById('mediaTemperatura').innerHTML = mediaTemp + ' °C';
 
+
+            setInterval(function () {
+              atualizarMediaTemp(idAgencia);
+            }, 5000);
+
       })
     
     } else {
@@ -532,7 +565,6 @@ function atualizarMediaUso(idAgencia) {
     if (resposta.ok) {
       console.log(resposta);
       resposta.json().then(json => {
-       alert(JSON.stringify(json))
 
         console.log(json);
         console.log(JSON.stringify(json));
@@ -543,6 +575,11 @@ function atualizarMediaUso(idAgencia) {
         atualizarCorRelMediaUso(json[0].media_valores_uso);
         var mediaUso = json[0].media_valores_uso;
         document.getElementById('mediaUso').innerHTML = mediaUso + ' %';
+
+
+        setInterval(function () {
+          atualizarMediaUso(idAgencia);
+        }, 5000);
 
       })
     
@@ -605,7 +642,7 @@ function atualizarCards() {
 
 }
 
-function pegarMaquinas() {
+function pegarMaquinas(isTemperatura) {
   arrayMaquinas = [];
   arrayNomeMaquinas = [];
 
@@ -645,13 +682,22 @@ function pegarMaquinas() {
 
       resposta.json().then(json => {
 
+        if(isTemperatura == true){
+          atualizarMenorTemp(json[0].idMaquina);
+          atualizarGraficoTemperatura(json[0].idMaquina);
+      }
+
         console.log(JSON.stringify(json));
         console.log(json);
 
         console.log(json[0])
+
+        
+
         for (let i = 0; i < json.length; i++) {
           arrayMaquinas.push(json[i].idMaquina);
           arrayNomeMaquinas.push(json[i].nome);
+          document.getElementById('nomeMaquina').innerHTML = arrayNomeMaquinas[0] + " | Últimas 24h";
         }
 
         atualizarGrafico();
@@ -693,12 +739,12 @@ function criarCard(nomeMaquina, nomeComponente, valor, nivel) {
 }
 
 
-function atualizarMenorTemp(idAgencia) {
+function atualizarMenorTemp(fkMaquina) {
   console.log("RODOU")
   let dados = []
   let textos = []
   
-  fetch(`/dashAnalista/menorTemperaturaRel/${sessionStorage.ID_EMPRESA}/${idAgencia}`
+  fetch(`/dashAnalista/menorTemperaturaRel/${sessionStorage.ID_EMPRESA}/${fkMaquina}`
 
   ).then(function (resposta) {
 
@@ -711,7 +757,7 @@ function atualizarMenorTemp(idAgencia) {
       console.log(resposta);
       resposta.json().then(json => {
         console.log(json);
-        console.log(JSON.stringify(json));
+        // alert("Menor temp" + JSON.stringify(json));
         console.log("")
         console.log(json[0].dataHora)
 
@@ -719,6 +765,10 @@ function atualizarMenorTemp(idAgencia) {
         var menorTemp = json[0].menor_temperatura;
         atualizarCorRelMenorTemp(json[0].menor_temperatura);
         document.getElementById('menorTemperatura').innerHTML = menorTemp + ' °C';
+
+        setInterval(function () {
+          atualizarMenorTemp(fkMaquina);
+        }, 5000);
 
       })
     
@@ -748,7 +798,7 @@ function pegarNomeMaquina(idAgencia,fkMaquina) {
       console.log(resposta);
       resposta.json().then(json => {
         console.log(json);
-        alert("O nome da máquina é" + JSON.stringify(json));
+        // alert("O nome da máquina é" + JSON.stringify(json));
         console.log("")
         var nomeMaquina = json[0].nomeMaquina;
         document.getElementById('nomeMaquina').innerHTML = nomeMaquina + " | Últimas 24h";
@@ -886,6 +936,10 @@ function pegarDadosGerais() {
   setTimeout(atualizarGrafico, 5000)
 }
 
+function automatizarGrafico() {
+  setInterval(atualizarGraficoTemperatura(document.getElementById('listaMaquinas').value),5000)
+}
+
 function esconder() {
   $('.divAlertas').hide();
   if (soma == 0) {
@@ -906,8 +960,8 @@ function addData(chart, dataHora, temperatura) {
 }
 
 
-function addDataPorcentagem(chart, dataHora, temperatura) {
-  grafico.data.datasets[0].data = temperatura;
+function addDataPorcentagem(chart, dataHora, porcentagem) {
+  grafico.data.datasets[0].data = porcentagem;
   grafico.update()
 }
 

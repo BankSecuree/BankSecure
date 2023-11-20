@@ -154,8 +154,7 @@
                                 <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
                                     <h5>Selecionar Agência</h5>
                                     <select name="" id="listaAgencias"
-                                        onchange="atualizarGraficoTemperatura(sessionStorage.ID_EMPRESA,listaAgencias.value,listaMaquinas.value), listaMaquinas()">
-
+                                        onchange="atualizarGraficoTemperatura(listaAgencias.value), listaMaquinas()">
                                     </select>
                                 </div>
                             </div>
@@ -167,7 +166,7 @@
                                 <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
                                     <h5>Selecionar Maquina</h5>
                                     <select name="" id="listaMaquinas"
-                                        onchange="atualizarGraficoTemperatura(sessionStorage.ID_EMPRESA,listaAgencias.value,listaMaquinas.value)">
+                                        onchange="atualizarGraficoTemperatura(listaAgencias.value,document.getElementById('listaMaquinas').value),automatizarGrafico()">
                                     </select>
                                 </div>
                             </div>
@@ -179,8 +178,8 @@
                                 <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
 
                                     <div style="display: flex;justify-content: space-between;margin-top: 10px;">
-                                        <svg id="csvCPU" style="display: flex;"
-                                            xmlns="http://www.w3.org/2000/svg" height="3em"
+                                        <svg id="csvCPU" style="display: flex;" xmlns="http://www.w3.org/2000/svg"
+                                            height="3em"
                                             viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                                             <path
                                                 d="M176 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64c-35.3 0-64 28.7-64 64H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v56H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v56H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64c0 35.3 28.7 64 64 64v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h56v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h56v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448c35.3 0 64-28.7 64-64h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V280h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V176h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448c0-35.3-28.7-64-64-64V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H280V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H176V24zM160 128H352c17.7 0 32 14.3 32 32V352c0 17.7-14.3 32-32 32H160c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32zm192 32H160V352H352V160z" />
@@ -215,9 +214,11 @@
                                                 <h6>Filter</h6>
                                             </li>
                                             <li><a class="dropdown-item" href="#"
-                                                    onclick="changeTitleAndContent('Temperatura | Agora',atualizarKPITemp(1))">Temperatura | Agora</a></li>
+                                                    onclick="changeTitleAndContent('Temperatura | Agora',atualizarKPITemp(1))">Temperatura
+                                                    | Agora</a></li>
                                             <li><a class="dropdown-item" href="#"
-                                                    onclick="changeTitleAndContent('Uso de CPU | Agora',atualizarKPIUso(1))">Uso de CPU | Agora</a></li>
+                                                    onclick="changeTitleAndContent('Uso de CPU | Agora',atualizarKPIUso(1))">Uso
+                                                    de CPU | Agora</a></li>
                                         </ul>
                                     </div>
                                     <!-- <i class="fa-solid fa-percent"></i> -->
@@ -398,29 +399,34 @@
         options: opcoes,
     });
 
-    idAgencia = listaAgencias.value
 
     grafico.render();
-    pegarNomeMaquina(1, 3);
-    atualizarGrafico();
-    atualizarGraficoPorcentagem();
-    atualizarGraficoTemperatura();
-    atualizarMaiorTemp(1);
-    atualizarMaiorUso(1);
-    atualizarMenorUso(1);
-    atualizarMenorTemp(1);
-    atualizarMediaTemp(1);
-    atualizarMediaUso(1);
-    exibirListaAgencias();
-    exibirInfos();
-    listaMaquinas();
-    esconder()
+    chamarFuncoes();
+    
+    async function chamarFuncoes() {
+
+        idAgencia = await listaAgencias.value
+        fkMaquina = await listaMaquinas.value
+
+        atualizarGrafico();
+        atualizarGraficoPorcentagem();
+        atualizarGraficoTemperatura(2, 1, 3);
+        atualizarMediaTemp(1);
+        atualizarMediaUso(1);
+        exibirListaAgencias(true);
+        exibirInfos();
+        listaMaquinas();
+        esconder()
+    }
 
 
     function changeTitleAndContent(newTitle, newContent) {
         document.getElementById('tituloH5').innerText = newTitle;
         document.getElementById('conteudoP').innerText = newContent;
     }
+
+
+    var GlobalDadosTemperatura = null;
 
 
 

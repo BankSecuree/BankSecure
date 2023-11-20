@@ -32,7 +32,6 @@ function dadosAnalista(req, res) {
 
   function dadosTemperatura(req,res){
     var idEmpresa = req.params.idEmpresa
-    var idAgencia = req.params.idAgencia
     var fkMaquina = req.params.fkMaquina
 
     console.log("Cheguei na controller")
@@ -40,10 +39,8 @@ function dadosAnalista(req, res) {
 
     if(idEmpresa==undefined){
       res.status(400).send("O id da empresa está undefined")
-    }else if(idAgencia == undefined){
-      res.status(400).send("O id da agencia está undefined")
-    }else{
-      dashAnalistaModel.dadosTemperatura(idEmpresa,idAgencia,fkMaquina)
+    } else{
+      dashAnalistaModel.dadosTemperatura(idEmpresa,fkMaquina)
       .then(
         function(resultado){
           res.json(resultado);
@@ -66,18 +63,16 @@ function dadosAnalista(req, res) {
 
   function dadosPorcentagem(req,res){
     var idEmpresa = req.params.idEmpresa
-    var idAgencia = req.params.idAgencia
-    var fkAgencia = req.params.fkAgencia
+    var fkMaquina = req.params.fkMaquina
 
     console.log("Cheguei na controller")
 
 
     if(idEmpresa==undefined){
       res.status(400).send("O id da empresa está undefined")
-    }else if(idAgencia == undefined){
-      res.status(400).send("O id da agencia está undefined")
-    }else{
-      dashAnalistaModel.dadosPorcentagem(idEmpresa,idAgencia,fkMaquina)
+    } else{
+      dashAnalistaModel.dadosPorcentagem(idEmpresa,fkMaquina)
+
       .then(
         function(resultado){
           res.json(resultado);
@@ -265,17 +260,17 @@ function dadosAnalista(req, res) {
 
   function menorTemperaturaRel(req,res){
     var idEmpresa = req.params.idEmpresa
-    var idAgencia = req.params.idAgencia
+    // var idAgencia = req.params.idAgencia
+    var fkMaquina = req.params.fkMaquina
 
     console.log("Cheguei na controller")
 
-
     if(idEmpresa==undefined){
       res.status(400).send("O id da empresa está undefined")
-    }else if(idAgencia == undefined){
-      res.status(400).send("O id da agencia está undefined")
+    }else if(fkMaquina == undefined){
+      res.status(400).send("O id da maquina está undefined")
     }else{
-      dashAnalistaModel.menorTemperaturaRel(idEmpresa,idAgencia)
+      dashAnalistaModel.menorTemperaturaRel(idEmpresa,fkMaquina)
       .then(
         function(resultado){
           res.json(resultado);
@@ -285,7 +280,7 @@ function dadosAnalista(req, res) {
           function (erro) {
             console.log(erro);
             console.log(
-              "\nHouve um erro ao pegar dados pra a maior temperatura! Erro: ",
+              "\nHouve um erro ao pegar dados pra a MENOR temperatura! Erro: AAAAAAAAAAA",
               erro.sqlMessage
             );
             res.status(500).json(erro.sqlMessage);
@@ -336,8 +331,6 @@ function dadosAnalista(req, res) {
   
     if (idEmpresa == undefined) {
       res.status(400).send("O id da empresa está undefined");
-    } else if (idAgencia == undefined) {
-      res.status(400).send("O id da agencia está undefined");
     } else if (fkMaquina == undefined) {
       res.status(400).send("O fk da maquina está undefined");
     } else {
