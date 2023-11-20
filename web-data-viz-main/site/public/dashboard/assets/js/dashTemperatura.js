@@ -697,7 +697,7 @@ function pegarMaquinas(isTemperatura) {
         for (let i = 0; i < json.length; i++) {
           arrayMaquinas.push(json[i].idMaquina);
           arrayNomeMaquinas.push(json[i].nome);
-          document.getElementById('nomeMaquina').innerHTML = arrayNomeMaquinas[0] + " | Últimas 24h";
+          document.getElementById('nomeMaquina').innerText = ` ${obterHorasAtuais()}`;
         }
 
         atualizarGrafico();
@@ -800,8 +800,9 @@ function pegarNomeMaquina(idAgencia,fkMaquina) {
         console.log(json);
         // alert("O nome da máquina é" + JSON.stringify(json));
         console.log("")
-        var nomeMaquina = json[0].nomeMaquina;
-        document.getElementById('nomeMaquina').innerHTML = nomeMaquina + " | Últimas 24h";
+        // var nomeMaquina = json[0].nomeMaquina;
+        // document.getElementById('nomeMaquina').innerHTML = nomeMaquina + " | Últimas 24h";
+        document.getElementById('nomeMaquina').innerText = ` ${obterHorasAtuais()}`;
 
       })
     
@@ -953,15 +954,29 @@ $('#btnAlerta').on('click', function () {
 
 
 function addData(chart, dataHora, temperatura) {
-  grafico.data.label = dataHora;
-  grafico.data.datasets[1].data = temperatura;
+  let horaAtual = obterHorasAtuais();
+  chart.data.labels.push(horaAtual);
+  chart.data.datasets[1].data.push(temperatura);
+  const limiteHistorico = 7;
+  if (grafico.data.labels.length > limiteHistorico) {
+      grafico.data.labels.shift(); // Remove o rótulo mais antigo
+      grafico.data.datasets[1].data.shift(); // Remove o dado mais antigo
+  }
   grafico.update()
 
 }
 
 
+
 function addDataPorcentagem(chart, dataHora, porcentagem) {
+
   grafico.data.datasets[0].data = porcentagem;
+
+  const limiteHistorico = 5;
+  if (grafico.data.datasets[0].data.length > limiteHistorico) {
+      grafico.data.datasets[0].data.shift(); // Remove o dado mais antigo
+  }
+
   grafico.update()
 }
 

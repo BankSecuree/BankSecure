@@ -351,6 +351,7 @@
     // Seu código JavaScript
 
     let elemento = document.querySelector("#myChart");
+    let horasAtuais = obterHorasAtuais();
 
     let data = {
         labels: ["10h", "11h", "12h", "13h", "14h"],
@@ -402,7 +403,7 @@
 
     grafico.render();
     chamarFuncoes();
-    
+
     async function chamarFuncoes() {
 
         idAgencia = await listaAgencias.value
@@ -418,6 +419,16 @@
         listaMaquinas();
         esconder()
     }
+
+
+    function obterHorasAtuais() {
+        let agora = new Date();
+        let horas = agora.getHours();
+        let minutos = agora.getMinutes();
+        let segundos = agora.getSeconds();
+        return `${horas}:${minutos}:${segundos}`;
+    }
+
 
 
     function changeTitleAndContent(newTitle, newContent) {
@@ -593,10 +604,6 @@
         const contentCopy = document.getElementById('divKpi').cloneNode(true);
         const spanElement = contentCopy.querySelector('span');
         const filterElement = contentCopy.querySelector('.filter');
-
-        if (spanElement) {
-            spanElement.parentNode.removeChild(spanElement);
-        }
 
         if (filterElement) {
             filterElement.parentNode.removeChild(filterElement);
