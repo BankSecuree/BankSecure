@@ -1550,3 +1550,9 @@ h6 {
 .btn-dashboard{
   width: 30%;
 }
+.kpi-correlacao{
+  display: block;
+  font-size: 20px;
+  font-weight:600;
+  /* color: #515151; */
+}

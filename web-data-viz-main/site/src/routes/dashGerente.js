@@ -24,5 +24,10 @@ router.get("/kpicorrelacao/:idEmpresa/:periodo", function(req, res){
     dashGerenteController.kpiCorrelacao(req, res)
 })
 
+router.get("/grafico-horario-de-pico/:idEmpresa", function(req, res){
+    console.log("Acessando model horario de pico")
+    dashGerenteController.horarioDePico(req,res)
+})
+
 
 module.exports = router;

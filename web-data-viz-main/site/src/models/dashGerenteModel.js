@@ -236,10 +236,24 @@ function kpiCorrelacao(idEmpresa,periodo){
 
 }
 
+function horarioDePico(idEmpresa){
+  instrucao = `
+  select hour(dataHora) as hora, sum(valor) as porcentagemUso from registros
+    join maquina on fkMaquina = idMaquina
+    join agencia on fkAgencia = idAgencia
+    join empresa on fkEmpresa = idEmpresa
+    where idEmpresa = ${idEmpresa} and fkComponente BETWEEN 1 and  2
+    group by hora order by hora;
+  `
+  console.log(`Executando a instrucao SQL \n` + instrucao);
+  return database.executar(instrucao)
+}
+
 
 module.exports = {
     dadosKpi,
     buscarUltimasMedidas,
     buscarMedidasTempoReal,
-    kpiCorrelacao
+    kpiCorrelacao,
+    horarioDePico
 }

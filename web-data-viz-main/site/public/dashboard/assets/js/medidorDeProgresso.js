@@ -13,7 +13,7 @@ function alterarPeriodoVizualizacao(campoParaAlterar, periodo) {
     let periodoId = document.getElementById(campoParaAlterar + "_period_info")
     let periodoGrafico = document.getElementById("periodoGrafico")
     if (campoParaAlterar == 'cpu') {
-        console.log(sessionStorage.ID_EMPRESA, periodo)
+        // console.log(sessionStorage.ID_EMPRESA, periodo)
         exibirKpiGerente(sessionStorage.ID_EMPRESA, periodo, 1)
         periodoL = periodo;
         periodoId.innerHTML = periodos[periodo]
@@ -39,17 +39,12 @@ function alterarPeriodoGraficos(periodo){
     alterarPeriodoVizualizacao('ram',periodo)
     alterarPeriodoVizualizacao('cpu',periodo)
     alterarPeriodoVizualizacao('hd',periodo)
-    alterarPeriodoVizualizacao('graficoPrincipal', )
     alterarPeriodoVizualizacao('graficoPrincipal', periodo)
-    alterarPeriodoVizualizacao('graficoPrincipal', periodo)
-}
-
-function correlacaoEntreMetricas(periodo){
-
+    buscarKpisCorrelacao(sessionStorage.ID_EMPRESA, periodo)
 }
 
 function exibirKpiGerente(idEmpresa, periodo, componente) {
-    console.log(periodo)
+    // console.log(periodo)
     fetch(`/dashGerente/dadosKpi/${idEmpresa}/${periodo}/${componente}`)
         .then(function (resposta) {
             if (resposta.ok) {
@@ -59,7 +54,7 @@ function exibirKpiGerente(idEmpresa, periodo, componente) {
                 }
 
                 resposta.json().then(function (resposta) {
-                    console.log(resposta[0].media)
+                    // console.log(resposta[0].media)
 
 
                     valor = resposta[0].media;
@@ -86,7 +81,7 @@ function obterDadosGrafico(idEmpresa, periodo, componente) {
     fetch(`/dashGerente/ultimas/${idEmpresa}/${periodo}/${componente}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
             response.json().then(function (respostaCpu) {
-                console.log(`Dados recebidos: ${JSON.stringify(respostaCpu)}`);
+                // console.log(`Dados recebidos: ${JSON.stringify(respostaCpu)}`);
                 respostaCpu.reverse();
 
                 // plotarGraficoPrincipal(respostaCpu, idEmpresa, periodo, componente)
@@ -94,7 +89,7 @@ function obterDadosGrafico(idEmpresa, periodo, componente) {
                 fetch(`/dashGerente/ultimas/${idEmpresa}/${periodo}/${componente}`, { cache: 'no-store' }).then(function (response) {
                     if (response.ok) {
                         response.json().then(function (respostaDisco) {
-                            console.log(`Dados recebidos: ${JSON.stringify(respostaDisco)}`);
+                            // console.log(`Dados recebidos: ${JSON.stringify(respostaDisco)}`);
                             respostaDisco.reverse();
 
                             // plotarGraficoPrincipal(respostaCpu, idEmpresa, periodo, componente)
@@ -102,7 +97,7 @@ function obterDadosGrafico(idEmpresa, periodo, componente) {
                             fetch(`/dashGerente/ultimas/${idEmpresa}/${periodo}/${componente}`, { cache: 'no-store' }).then(function (response) {
                                 if (response.ok) {
                                     response.json().then(function (respostaMemoria) {
-                                        console.log(`Dados recebidos: ${JSON.stringify(respostaMemoria)}`);
+                                        // console.log(`Dados recebidos: ${JSON.stringify(respostaMemoria)}`);
                                         respostaMemoria.reverse();
 
                                         plotarGraficoPrincipal(respostaCpu, respostaDisco, respostaMemoria, idEmpresa, periodo, componente)
@@ -138,7 +133,7 @@ function obterDadosGrafico(idEmpresa, periodo, componente) {
 }
 
 function plotarGraficoPrincipal(respostaCpu, respostaDisco, respostaMemoria) {
-    console.log(`Iniciando a plotagem do gráfico`);
+    // console.log(`Iniciando a plotagem do gráfico`);
 
     const labels = [];
     const dadosCpu = [];
@@ -233,25 +228,40 @@ function plotarGraficoPrincipal(respostaCpu, respostaDisco, respostaMemoria) {
 
     // setTimeout(() => atualizarGrafico(idEmpresa, periodo, componente, grafico, dados), 2000)
 }
+async function dadosHorarioDePico(idEmpresa){
+    let resposta = await(fetch(`/dashGerente/grafico-horario-de-pico/${idEmpresa}`));
+    let horarioDePico = await resposta.json();
+    let totalUso = 0;
+    for(let i = 0; i < horarioDePico.length; i++){
+        totalUso += horarioDePico[i]["porcentagemUso"]
+    }
+    for(let i = 0; i < horarioDePico.length; i++){
+        horarioDePico[i]["porcentagemUso"] = (horarioDePico[i]["porcentagemUso"] / totalUso) * 100
+    }
 
-function plotarGraficoHorarioDePico(resposta) {
-    const labels = ["00","00","00","00","00","00","00","00","00","00","00","00",
-    "00","00","00","00","00","00","00","00","00","00","00","00"];
+    // console.log(horarioDePico)
+    let labels = [];
+    let horariosDePico = []
+    for(let i = 0; i < horarioDePico.length; i++){
+        labels.push(horarioDePico[i]["hora"] + "h")
+        horariosDePico.push(Number((horarioDePico[i]["porcentagemUso"]).toFixed(2)))
+    }
 
-    const graficoHorarioDePico = document.getElementById("graficoHorarioDePico");
-    let teste = [100, 80, 60, 13, 15, 55, 34, 54, 1, 54, 88, 66, 55, 44,
-    23, 12, 15, 67, 6, 100, 77, 44, 33, 22 ]
+    let graficoHorarioDePico = document.getElementById("graficoHorarioDePico");
+
 
     let dados = {
         labels: labels,
         datasets: [
             {
-                label: 'Horários de Pico',
-                data: teste,
-                borderWidth: 2,
+                label: 'Porcentagem de uso no dia',
+                data: horariosDePico,
+                borderWidth: 0,
+                barThickness: 10,
                 borderColor: "#4154f1",
                 backgroundColor: "#4154f1",
-                tension: 0.3
+                tension: 0.3,
+                width: 2
             }
         ]
     };
@@ -272,6 +282,7 @@ function plotarGraficoHorarioDePico(resposta) {
             maintainAspectRatio: false,
             scales: {
                 y: {
+                    display:"none",
                     title: "",
                     beginAtZero: true
                 },
@@ -284,112 +295,125 @@ function plotarGraficoHorarioDePico(resposta) {
             }
         }
     });
-
-    // setTimeout(() => atualizarGrafico(idEmpresa, periodo, componente, grafico, dados), 2000)
 }
-plotarGraficoHorarioDePico(1)
 
-async function plotarKpisCorrelação(idEmpresa, periodo){
+
+
+
+async function buscarKpisCorrelacao(idEmpresa, periodo){
+    const discoCpu = document.getElementById("correlacao-disco-cpu")
+    const discoMemoria = document.getElementById("correlacao-disco-memoria")
+    const memoriaCpu = document.getElementById("correlacao-memoria-cpu")
+    const discoMemoriaCpu = document.getElementById("correlacao-disco-memoria-cpu")
+
     let resposta = await(fetch(`/dashGerente/kpicorrelacao/${idEmpresa}/${periodo}`));
     let kpisCorrelacao = await resposta.json();
-    console.log(kpisCorrelacao)
+    kpisCorrelacao = kpisCorrelacao["0"]
+    // console.log(kpisCorrelacao)
+
+    discoCpu.innerHTML = (kpisCorrelacao.correlacao_disco_cpu * 100).toFixed(2) + "%" 
+    discoMemoria.innerHTML = (kpisCorrelacao.correlacao_disco_memoria * 100).toFixed(2) + "%" 
+    memoriaCpu.innerHTML = (kpisCorrelacao.correlacao_memoria_cpu * 100).toFixed(2) + "%" 
+    discoMemoriaCpu.innerHTML = (kpisCorrelacao.correlacao_disco_memoria_cpu * 100).toFixed(2) + "%"
+
+    if(Math.abs(kpisCorrelacao.correlacao_disco_cpu * 100) < 50){
+        discoCpu.id
+        discoCpu.classList.remove("text-success")
+        discoCpu.classList.remove("text-warning")
+        discoCpu.classList.add("text-danger")
+    }else if(Math.abs(kpisCorrelacao.correlacao_disco_cpu * 100) >= 50 && Math.abs(kpisCorrelacao.correlacao_disco_cpu * 100) < 70){
+        discoCpu.classList.remove("text-success")
+        discoCpu.classList.add("text-warning")
+        discoCpu.classList.remove("text-danger")
+    }else{
+        discoCpu.classList.add("text-success")
+        discoCpu.classList.remove("text-warning")
+        discoCpu.classList.remove("text-danger")
+    }
+
+    if(Math.abs(kpisCorrelacao.correlacao_disco_memoria * 100) < 50){
+        discoMemoria.classList.remove("text-success")
+        discoMemoria.classList.remove("text-warning")
+        discoMemoria.classList.add("text-danger")
+    }else if(Math.abs(kpisCorrelacao.correlacao_disco_memoria * 100) >= 50 && Math.abs(kpisCorrelacao.correlacao_disco_memoria * 100) < 70){
+        discoMemoria.classList.remove("text-success")
+        discoMemoria.classList.add("text-warning")
+        discoMemoria.classList.remove("text-danger")
+    }else{
+        discoMemoria.classList.add("text-success")
+        discoMemoria.classList.remove("text-warning")
+        discoMemoria.classList.remove("text-danger")
+    }
+
+    if(Math.abs(kpisCorrelacao.correlacao_memoria_cpu * 100) < 50){
+        memoriaCpu.classList.remove("text-success")
+        memoriaCpu.classList.remove("text-warning")
+        memoriaCpu.classList.add("text-danger")
+    }else if(Math.abs(kpisCorrelacao.correlacao_memoria_cpu * 100) >= 50 && Math.abs(kpisCorrelacao.correlacao_memoria_cpu * 100) < 70){
+        memoriaCpu.classList.remove("text-success")
+        memoriaCpu.classList.add("text-warning")
+        memoriaCpu.classList.remove("text-danger")
+    }else{
+        memoriaCpu.classList.add("text-success")
+        memoriaCpu.classList.remove("text-warning")
+        memoriaCpu.classList.remove("text-danger")
+    }
+
+    if(Math.abs(kpisCorrelacao.correlacao_disco_memoria_cpu * 100) < 50){
+        discoMemoriaCpu.classList.remove("text-success")
+        discoMemoriaCpu.classList.remove("text-warning")
+        discoMemoriaCpu.classList.add("text-danger")
+    }else if(Math.abs(kpisCorrelacao.correlacao_disco_memoria_cpu * 100) >= 50 && Math.abs(kpisCorrelacao.correlacao_disco_memoria_cpu * 100) < 70){
+        discoMemoriaCpu.classList.remove("text-success")
+        discoMemoriaCpu.classList.add("text-warning")
+        discoMemoriaCpu.classList.remove("text-danger")
+    }else{
+        discoMemoriaCpu.classList.add("text-success")
+        discoMemoriaCpu.classList.remove("text-warning")
+        discoMemoriaCpu.classList.remove("text-danger")
+    }
 
 
 }
-plotarKpisCorrelação(2,"day")
+
+async function listarAgencias(idUsuario){
+    let resposta = await(fetch(`/usuarios/listarAgenciasVinculadas/${idUsuario}`))
+    let agencias = await(resposta.json())
+    // console.log(agencias)
+    let dropdown_agencias = document.getElementById("dropdown_agencias")
+    for(let i = 0; i < agencias.length; i++){
+        dropdown_agencias.innerHTML += `<li>
+        <div class="form-check">
+        <label class="form-check-label" for="check${agencias[i]["idAgencia"]}">
+        ${agencias[i]["apelido"]}
+        </label>
+        <input class="checkbox style-2 pull-right opcao_agencia" type="checkbox" value="agencia${agencias[i]["idAgencia"]}" id="check${agencias[i]["idAgencia"]}">
+      </div>
+    </li>`
+    }
+
+}
+
+function selecionarTodasAgencias(){
+    let todasAgencias = document.getElementsByClassName("opcao_agencia")
+    let agenciaChecada = document.getElementById("checkTodas").checked
+
+    for(let i = 0; i < todasAgencias.length; i++){
+        todasAgencias[i].checked = agenciaChecada
+    }
+}
+
+function filtroPorAgencia(){
+    let todasAgencias = document.getElementsByClassName("opcao_agencia");
+    idAgenciasSelecionadas = []
+    for(let i = 1; i < todasAgencias.length; i++){
+        if(todasAgencias[i].checked == true){
+            idAgenciasSelecionadas.push((todasAgencias[i].id).replace("check", ""))
+        }
+    }
+    return idAgenciasSelecionadas
+}
 
 
-// function atualizarGrafico(idEmpresa, periodo, componente, grafico, dados) {
-//     console.log(dados)
-//     componente = 1;
-//     fetch(`/dashGerente/tempo-real/${idEmpresa}/${periodo}/${componente}`, { cache: 'no-store' }).then(function (response) {
-//         if (response.ok) {
-//             response.json().then(function (novoRegistroCpu) {
-//                 console.log(`Dados recebidos: ${JSON.stringify(novoRegistroCpu)}`)
-//                 console.log(`Dados atuais do grafico:`)
-//                 console.log(dados)
-
-//                 data.labels[0].shift()
-//                 data.labels.push(novoRegistroCpu.hora)
-
-
-//                 data.datasets[0].data.shift();
-//                 data.datasets[0].data.push(novoRegistroCpu.media_valor)
-
-                
-//                 componente = 2
-//                 fetch(`/dashGerente/tempo-real/${idEmpresa}/${periodo}/${componente}`, { cache: 'no-store' }).then(function (response) {
-//                     if (response.ok) {
-//                         response.json().then(function (novoRegistroDisco) {
-//                             console.log(`Dados recebidos: ${JSON.stringify(novoRegistroDisco)}`)
-//                             console.log(`Dados atuais do grafico:`)
-//                             console.log(dados)
-
-//                             data.labels[0].shift()
-//                             data.labels.push(novoRegistroCpu.hora)
-            
-            
-//                             data.datasets[1].data.shift();
-//                             data.datasets[1].data.push(novoRegistroCpu.media_valor)
-
-//                             componente = 3
-
-//                             fetch(`/dashGerente/tempo-real/${idEmpresa}/${periodo}/${componente}`, { cache: 'no-store' }).then(function (response) {
-//                                 if (response.ok) {
-//                                     response.json().then(function (novoRegistroMemoria) {
-//                                         console.log(`Dados recebidos: ${JSON.stringify(novoRegistroMemoria)}`)
-//                                         console.log(`Dados atuais do grafico:`)
-//                                         console.log(dados)
-                                       
-//                                         data.labels[0].shift()
-//                                         data.labels.push(novoRegistroCpu.hora)
-                        
-                        
-//                                         data.datasets[2].data.shift();
-//                                         data.datasets[2].data.push(novoRegistroCpu.media_valor)
-
-//                                         grafico.update();
-//                                         setTimeout(() => atualizarGrafico(idEmpresa, periodo, componente, grafico, dados), 10000)
-
-//                                     })
-//                                 } else {
-//                                     console.error(`Nenhum dado encontrado ou erro na API`)
-//                                 }
-//                             }).catch(function (error) {
-//                                 console.error(`Erro na obtencao de dados p/ grafico: ${error.message}`)
-//                             })
-//                         })
-//                     } else {
-//                         console.error(`Nenhum dado encontrado ou erro na API`)
-//                     }
-//                 }).catch(function (error) {
-//                     console.error(`Erro na obtencao de dados p/ grafico: ${error.message}`)
-//                 })
-//             })
-//         } else {
-//             console.error(`Nenhum dado encontrado ou erro na API`)
-//             setTimeout(() => atualizarGrafico(idEmpresa, periodo, componente, grafico, dados), 10000)
-//         }
-//     }).catch(function (error) {
-//         console.error(`Erro na obtencao de dados p/ grafico: ${error.message}`)
-//     })
-
-// function alterarPeriodoVizualizacao(campoParaAlterar, periodo){
-//     let periodos = {'1': "Hoje",
-//                     '2':"Este Mês",
-//                     '3':"Este Ano"}
-//     console.log(periodos[periodo])
-//     console.log(periodos.p1)
-//     let periodoId = document.getElementById(campoParaAlterar + "_period_info")
-//     if(campoParaAlterar == 'cpu'){
-//         periodoId.innerHTML = periodos[periodo]
-//     }else if(campoParaAlterar == 'ram'){
-//         periodoId.innerHTML = periodos[periodo]
-//     }else if(campoParaAlterar == 'hd'){
-//         periodoId.innerHTML = periodos[periodo]
-//     }else if(campoParaAlterar == 'graficoDonut'){
-//         periodoId.innerHTML = periodos[periodo]
-//     }
-
-//     }
-// }
+dadosHorarioDePico(sessionStorage.ID_EMPRESA)
+listarAgencias(sessionStorage.ID_USUARIO)

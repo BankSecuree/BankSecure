@@ -77,12 +77,29 @@ function kpiCorrelacao(req, res) {
         res.status(500).json(erro.sqlMessage);
     });
 }
+function horarioDePico(req, res) {
+    var idEmpresa = req.params.idEmpresa
 
+    console.log("Recuperando dados de horario de pico")
+    dashGerenteModel.horarioDePico(idEmpresa).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.json(resultado);
+        } else {
+            res.status(200).json(resultado);
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os dados de horario de pico.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
 
 module.exports = {
     dadosKpi,
     buscarUltimasMedidas,
     buscarMedidasTempoReal,
-    kpiCorrelacao
+    kpiCorrelacao,
+    horarioDePico
 
 };
