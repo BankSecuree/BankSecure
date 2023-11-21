@@ -2,7 +2,7 @@ function alterarComponente(componente) {
     var textoDefinicao = document.getElementById("textoDefinicao")
     if(componente === "cpu") {
         textoDefinicao.innerHTML = `<h2 style= "color: #002F5C">CPU:</h2> <br> 
-        <span style = "color:#097BF4">Alerta: Quando o valor do registro do componente está acima ou abaixo do ideal</span> <br> 
+        <span  style = "color:#097BF4">Alerta: Quando o valor do registro do componente está acima ou abaixo do ideal</span> <br> 
         <span style = "color:#097BF4 ">Máximo aceitável: 75%</span> <br> 
         <span style = "color:#097BF4 ">Uso ideal: 45% </span><br>
         <span style = "color:#097BF4 ">Mínimo aceitável: 10%</span>`
