@@ -1,4 +1,25 @@
-
+function alterarComponente(componente) {
+    var textoDefinicao = document.getElementById("textoDefinicao")
+    if(componente === "cpu") {
+        textoDefinicao.innerHTML = `<h2 style= "color: #002F5C">CPU:</h2> <br> 
+        <span style = "color:#097BF4">Alerta: Quando o valor do registro do componente está acima ou abaixo do ideal</span> <br> 
+        <span style = "color:#097BF4 ">Máximo aceitável: 75%</span> <br> 
+        <span style = "color:#097BF4 ">Uso ideal: 45% </span><br>
+        <span style = "color:#097BF4 ">Mínimo aceitável: 10%</span>`
+    } else if(componente === "disco") {
+        textoDefinicao.innerHTML = `<h2 style = "color: #117701">Disco:</h2> <br>
+        <span style = "color:#02E12E ">Alerta: Quando o valor do registro do componente está acima ou abaixo do ideal</span> <br> 
+        <span style = "color:#02E12E ">Máximo aceitável: 95%</span> <br> 
+        <span style = "color:#02E12E ">Uso ideal: 70% </span><br>
+        <span style = "color:#02E12E ">Mínimo aceitável: 20%</span>`
+    } else if(componente === 'memoria') {
+        textoDefinicao.innerHTML = `<h2 style = "color:#D75413 ">Memória:</h2> <br> 
+        <span style = "color:#E57C49 ">Alerta: Quando o valor do registro do componente está acima ou abaixo do ideal</span> <br> 
+        <span style = "color:#E57C49 ">Máximo aceitável: 90%</span> <br> 
+        <span style = "color:#E57C49 ">Uso ideal: 60% </span><br>
+        <span style = "color:#E57C49 ">Mínimo aceitável: 20%</span>`
+    }
+}
 
 function obterKpiAgencia() {
     var idGerente = sessionStorage.GERENTE_USUARIO;
@@ -265,7 +286,7 @@ function atualizarGrafico(componente, tipoAgencia, selectTipoAgencia, grafico, d
 }
 
 function plotarGraficoFreq(dados) {
-    const largura = 440;
+    const largura = 400;
     const altura = 400;
 
     const canvas = document.createElement('canvas');
@@ -288,6 +309,7 @@ function plotarGraficoFreq(dados) {
 
 
 
+
     const configuracoesNuvem = {
         size: 0.7,
         color: 'random-light',
@@ -296,7 +318,9 @@ function plotarGraficoFreq(dados) {
     };
 
     const tamanhoMaximoPercentual = 0.5; 
-    const tamanhoMinimoPercentual = 0.05; 
+    const tamanhoMinimoPercentual = 0.1; 
+    const tamanhoMinimoAbsoluto = 10;
+    const aumentoSignificativo = 2;
     
     // Obtém a largura da tela
     const larguraTela = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -307,20 +331,24 @@ function plotarGraficoFreq(dados) {
     
     const layout = d3.layout.cloud()
     .size([largura, altura])
-    .words(dados.map(item => ({
-        text: item.nomeAgencia,
-        size: (item.totalProblemas > tamanhoMaximo) ? tamanhoMaximo : item.totalProblemas
-    })))
-    .padding(10) // Ajuste o valor de padding conforme necessário
-    .rotate(() => 0) // Todas as palavras ficarão na vertical (ângulo de rotação = 0)
-    .fontSize(item => ((item.size - tamanhoMinimo) / (tamanhoMaximo - tamanhoMinimo)) * 30 + 5)
+    .words(dados
+        .filter(item => item.totalProblemas > 0) // Somente incluir itens com totalProblemas maior que 0
+        .map(item => ({
+            text: item.nomeAgencia,
+            size: item.totalProblemas
+        }))
+    )
+    
+    
+    .padding(10)
+    .rotate(() => 0)
+    .fontSize(item => (item.size > 0) ? Math.max(item.size * aumentoSignificativo, tamanhoMinimoAbsoluto) : tamanhoMinimoAbsoluto)
     .on('end', desenharNuvem)
     .random(() => 0.5)
     .fontWeight('normal')
     .text(item => item.text);
 
-
-
+console.log(dados)
 layout.start();
 
 function desenharNuvem(palavras) {
@@ -381,6 +409,9 @@ var selectComponente = document.getElementById("componente");
 var selectTipoAgencia = document.getElementById('tipo-agencia');
 
 function chamarFuncoes() {
+    alterarComponente('cpu')
+
+
     // Remover ouvintes de eventos existentes
     selectComponente.removeEventListener('change', handleComponenteChange);
     selectTipoAgencia.removeEventListener('change', handleTipoAgenciaChange);

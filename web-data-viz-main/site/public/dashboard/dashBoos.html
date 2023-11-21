@@ -285,26 +285,30 @@
                     <li class="dropdown-header text-start">
                       <h6>Filtro</h6>
                     </li>
-
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('cpu', 'day')">Hoje</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('cpu', 'month')">Este Mês</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('cpu', 'year')">Este Ano</a></li>
-
+                   
                   </ul>
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">CPU <span>| </span><span id="cpu_period_info">Hoje</span></h5>
 
                   <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-cpu"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6 id="cpu_info">0</h6>
-
-                    </div>
+                    <div class="card-title">Definição de Alertas<span>| Significado</span></div>
                   </div>
+                </div>
+                <div  id="textoDefinicao" class="card-title" style="color: #012970; padding-left: 20px; padding-bottom: 20px;text-align: justify; width: 120%;"></div>
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filtro</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" onclick="alterarComponente('cpu')">CPU</a></li>
+                    <li><a class="dropdown-item" onclick="alterarComponente('disco')">Disco</a></li>
+                    <li><a class="dropdown-item" onclick="alterarComponente('memoria')">Memória</a></li>
+
+                  </ul>
                 </div>
 
               </div>
@@ -322,25 +326,15 @@
                     </li>
 
 
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('hd', 'day')">Hoje</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('hd', 'month')">Este Mês</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('hd', 'year')">Este Ano</a></li>
+              
 
                   </ul>
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Disco Rígido <span>| </span><span id="hd_period_info">Este Mês</span></h5>
 
                   <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-device-hdd"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6 id="hd_info">0</h6>
 
-
-                    </div>
                   </div>
                 </div>
 
@@ -358,25 +352,14 @@
                     <li class="dropdown-header text-start">
                       <h6>Filtro</h6>
                     </li>
-
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('ram', 'day')">Hoje</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('ram', 'month')">Este Mês</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('ram', 'year')">Este Ano</a></li>
                   </ul>
                 </div>
 
 
                 <div class="card-body">
-                  <h5 class="card-title">Memória RAM <span>| </span><span id="ram_period_info">Este Ano</span></h5>
 
                   <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-memory"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6 id="ram_info">0</h6>
 
-                    </div>
                   </div>
 
                 </div>
@@ -407,21 +390,23 @@
                 <br>
                 <div class="card-body">
 
-                  <h5 class="card-title">Registros <span id="periodoGrafico">/Hoje</span></h5>
+                  <h5 class="card-title">Análise de Uso de Componentes por Agência<span>/ Visão Geral e Detalhes</span></h5>
 
                   <div class="select-box">
-                    <div class="componente-class">
+                    <div class="juncao">
+                    <div class="componente-classe">
                       <select id="componente" class="componente-select">
-                        <option value="cpu">CPU</option>
-                        <option value="disco">Disco</option>
-                        <option value="memoria">Memória</option>
+                        <option value="cpu" class="option">CPU</option>
+                        <option value="disco" class="option">Disco</option>
+                        <option value="memoria" class="option">Memória</option>
                       </select>
                     </div>
                     <div class="tipo-agencia-classe">
                       <select id="tipo-agencia" class="tipo-agencia-select">
-                        <option value="todas">Nem Todas as agências</option>
+                        <option value="todas" class="option">Nenhuma agência</option>
                       </select>
                     </div>
+                  </div>
 
                   </div>
 
@@ -456,8 +441,8 @@
                 </li>
               </ul>
             </div>
-            <h5 class="card-title" style="height: 10px;text-align: center;">Gráfico de frequência por alerta das agencias</h5>
-            <div id="wordcloud" ></div>
+            <h5 class="card-title" style="height: 10px;text-align: start; padding-left: 5px;">Gráfico de frequência por alerta das agências</h5>
+            <div id="wordcloud"></div>
           </div>
 
           <div class="card-body pb-0">
