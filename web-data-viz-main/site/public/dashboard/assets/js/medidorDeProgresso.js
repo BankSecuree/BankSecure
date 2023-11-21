@@ -1,10 +1,6 @@
-
-//const { default: Config } = require("chart.js/dist/core/core.config");
-
-
-
 var valor = 0;
-function alterarPeriodoVizualizacao(campoParaAlterar, periodo) {
+
+function alterarPeriodoVizualizacao(campoParaAlterar, periodo, agencias) {
     let periodos = {
         'day': "Hoje",
         'month': "Este Mês",
@@ -14,38 +10,39 @@ function alterarPeriodoVizualizacao(campoParaAlterar, periodo) {
     let periodoGrafico = document.getElementById("periodoGrafico")
     if (campoParaAlterar == 'cpu') {
         // console.log(sessionStorage.ID_EMPRESA, periodo)
-        exibirKpiGerente(sessionStorage.ID_EMPRESA, periodo, 1)
+        exibirKpiGerente(sessionStorage.ID_EMPRESA, periodo, 1, agencias)
         periodoL = periodo;
         periodoId.innerHTML = periodos[periodo]
     } else if (campoParaAlterar == 'ram') {
-        exibirKpiGerente(sessionStorage.ID_EMPRESA, periodo, 2)
+        exibirKpiGerente(sessionStorage.ID_EMPRESA, periodo, 2, agencias)
         periodoL = periodo;
         periodoId.innerHTML = periodos[periodo]
     } else if (campoParaAlterar == 'hd') {
-        exibirKpiGerente(sessionStorage.ID_EMPRESA, periodo, 3)
+        exibirKpiGerente(sessionStorage.ID_EMPRESA, periodo, 3, agencias)
         periodoL = periodo;
         periodoId.innerHTML = periodos[periodo]
     } else if (campoParaAlterar == 'graficoDonut') {
         periodoId.innerHTML = periodos[periodo]
     } else if (campoParaAlterar == 'graficoPrincipal') {
-        obterDadosGrafico(sessionStorage.ID_EMPRESA, periodo, 1)
+        obterDadosGrafico(sessionStorage.ID_EMPRESA, periodo, 1, agencias)
         periodoL = periodo;
         periodoGrafico.innerHTML = periodos[periodo]
     }
 
 
 }
-function alterarPeriodoGraficos(periodo){
-    alterarPeriodoVizualizacao('ram',periodo)
-    alterarPeriodoVizualizacao('cpu',periodo)
-    alterarPeriodoVizualizacao('hd',periodo)
-    alterarPeriodoVizualizacao('graficoPrincipal', periodo)
-    buscarKpisCorrelacao(sessionStorage.ID_EMPRESA, periodo)
+function alterarPeriodoGraficos(periodo, agencias) {
+    periodoSelecionado = periodo;
+    alterarPeriodoVizualizacao('ram', periodo, agencias)
+    alterarPeriodoVizualizacao('cpu', periodo, agencias)
+    alterarPeriodoVizualizacao('hd', periodo, agencias)
+    alterarPeriodoVizualizacao('graficoPrincipal', periodo, agencias)
+    buscarKpisCorrelacao(sessionStorage.ID_EMPRESA, periodo, agencias)
 }
 
-function exibirKpiGerente(idEmpresa, periodo, componente) {
+function exibirKpiGerente(idEmpresa, periodo, componente, agencias) {
     // console.log(periodo)
-    fetch(`/dashGerente/dadosKpi/${idEmpresa}/${periodo}/${componente}`)
+    fetch(`/dashGerente/dadosKpi/${idEmpresa}/${periodo}/${componente}/${agencias}`)
         .then(function (resposta) {
             if (resposta.ok) {
 
@@ -75,10 +72,10 @@ function exibirKpiGerente(idEmpresa, periodo, componente) {
         })
 }
 
-function obterDadosGrafico(idEmpresa, periodo, componente) {
+function obterDadosGrafico(idEmpresa, periodo, componente, agencias) {
 
 
-    fetch(`/dashGerente/ultimas/${idEmpresa}/${periodo}/${componente}`, { cache: 'no-store' }).then(function (response) {
+    fetch(`/dashGerente/ultimas/${idEmpresa}/${periodo}/${componente}/${agencias}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
             response.json().then(function (respostaCpu) {
                 // console.log(`Dados recebidos: ${JSON.stringify(respostaCpu)}`);
@@ -86,7 +83,7 @@ function obterDadosGrafico(idEmpresa, periodo, componente) {
 
                 // plotarGraficoPrincipal(respostaCpu, idEmpresa, periodo, componente)
                 componente = 2
-                fetch(`/dashGerente/ultimas/${idEmpresa}/${periodo}/${componente}`, { cache: 'no-store' }).then(function (response) {
+                fetch(`/dashGerente/ultimas/${idEmpresa}/${periodo}/${componente}/${agencias}`, { cache: 'no-store' }).then(function (response) {
                     if (response.ok) {
                         response.json().then(function (respostaDisco) {
                             // console.log(`Dados recebidos: ${JSON.stringify(respostaDisco)}`);
@@ -94,15 +91,13 @@ function obterDadosGrafico(idEmpresa, periodo, componente) {
 
                             // plotarGraficoPrincipal(respostaCpu, idEmpresa, periodo, componente)
                             componente = 3
-                            fetch(`/dashGerente/ultimas/${idEmpresa}/${periodo}/${componente}`, { cache: 'no-store' }).then(function (response) {
+                            fetch(`/dashGerente/ultimas/${idEmpresa}/${periodo}/${componente}/${agencias}`, { cache: 'no-store' }).then(function (response) {
                                 if (response.ok) {
                                     response.json().then(function (respostaMemoria) {
                                         // console.log(`Dados recebidos: ${JSON.stringify(respostaMemoria)}`);
                                         respostaMemoria.reverse();
 
                                         plotarGraficoPrincipal(respostaCpu, respostaDisco, respostaMemoria, idEmpresa, periodo, componente)
-
-
                                     });
                                 } else {
                                     console.error('Nenhum dado encontrado ou erro na api');
@@ -228,21 +223,21 @@ function plotarGraficoPrincipal(respostaCpu, respostaDisco, respostaMemoria) {
 
     // setTimeout(() => atualizarGrafico(idEmpresa, periodo, componente, grafico, dados), 2000)
 }
-async function dadosHorarioDePico(idEmpresa){
-    let resposta = await(fetch(`/dashGerente/grafico-horario-de-pico/${idEmpresa}`));
+async function dadosHorarioDePico(idEmpresa) {
+    let resposta = await (fetch(`/dashGerente/grafico-horario-de-pico/${idEmpresa}`));
     let horarioDePico = await resposta.json();
     let totalUso = 0;
-    for(let i = 0; i < horarioDePico.length; i++){
+    for (let i = 0; i < horarioDePico.length; i++) {
         totalUso += horarioDePico[i]["porcentagemUso"]
     }
-    for(let i = 0; i < horarioDePico.length; i++){
+    for (let i = 0; i < horarioDePico.length; i++) {
         horarioDePico[i]["porcentagemUso"] = (horarioDePico[i]["porcentagemUso"] / totalUso) * 100
     }
 
     // console.log(horarioDePico)
     let labels = [];
     let horariosDePico = []
-    for(let i = 0; i < horarioDePico.length; i++){
+    for (let i = 0; i < horarioDePico.length; i++) {
         labels.push(horarioDePico[i]["hora"] + "h")
         horariosDePico.push(Number((horarioDePico[i]["porcentagemUso"]).toFixed(2)))
     }
@@ -282,7 +277,7 @@ async function dadosHorarioDePico(idEmpresa){
             maintainAspectRatio: false,
             scales: {
                 y: {
-                    display:"none",
+                    display: "none",
                     title: "",
                     beginAtZero: true
                 },
@@ -300,74 +295,74 @@ async function dadosHorarioDePico(idEmpresa){
 
 
 
-async function buscarKpisCorrelacao(idEmpresa, periodo){
+async function buscarKpisCorrelacao(idEmpresa, periodo, agencias) {
     const discoCpu = document.getElementById("correlacao-disco-cpu")
     const discoMemoria = document.getElementById("correlacao-disco-memoria")
     const memoriaCpu = document.getElementById("correlacao-memoria-cpu")
     const discoMemoriaCpu = document.getElementById("correlacao-disco-memoria-cpu")
 
-    let resposta = await(fetch(`/dashGerente/kpicorrelacao/${idEmpresa}/${periodo}`));
+    let resposta = await (fetch(`/dashGerente/kpicorrelacao/${idEmpresa}/${periodo}/${agencias}`));
     let kpisCorrelacao = await resposta.json();
     kpisCorrelacao = kpisCorrelacao["0"]
     // console.log(kpisCorrelacao)
 
-    discoCpu.innerHTML = (kpisCorrelacao.correlacao_disco_cpu * 100).toFixed(2) + "%" 
-    discoMemoria.innerHTML = (kpisCorrelacao.correlacao_disco_memoria * 100).toFixed(2) + "%" 
-    memoriaCpu.innerHTML = (kpisCorrelacao.correlacao_memoria_cpu * 100).toFixed(2) + "%" 
+    discoCpu.innerHTML = (kpisCorrelacao.correlacao_disco_cpu * 100).toFixed(2) + "%"
+    discoMemoria.innerHTML = (kpisCorrelacao.correlacao_disco_memoria * 100).toFixed(2) + "%"
+    memoriaCpu.innerHTML = (kpisCorrelacao.correlacao_memoria_cpu * 100).toFixed(2) + "%"
     discoMemoriaCpu.innerHTML = (kpisCorrelacao.correlacao_disco_memoria_cpu * 100).toFixed(2) + "%"
 
-    if(Math.abs(kpisCorrelacao.correlacao_disco_cpu * 100) < 50){
+    if (Math.abs(kpisCorrelacao.correlacao_disco_cpu * 100) < 50) {
         discoCpu.id
         discoCpu.classList.remove("text-success")
         discoCpu.classList.remove("text-warning")
         discoCpu.classList.add("text-danger")
-    }else if(Math.abs(kpisCorrelacao.correlacao_disco_cpu * 100) >= 50 && Math.abs(kpisCorrelacao.correlacao_disco_cpu * 100) < 70){
+    } else if (Math.abs(kpisCorrelacao.correlacao_disco_cpu * 100) >= 50 && Math.abs(kpisCorrelacao.correlacao_disco_cpu * 100) < 70) {
         discoCpu.classList.remove("text-success")
         discoCpu.classList.add("text-warning")
         discoCpu.classList.remove("text-danger")
-    }else{
+    } else {
         discoCpu.classList.add("text-success")
         discoCpu.classList.remove("text-warning")
         discoCpu.classList.remove("text-danger")
     }
 
-    if(Math.abs(kpisCorrelacao.correlacao_disco_memoria * 100) < 50){
+    if (Math.abs(kpisCorrelacao.correlacao_disco_memoria * 100) < 50) {
         discoMemoria.classList.remove("text-success")
         discoMemoria.classList.remove("text-warning")
         discoMemoria.classList.add("text-danger")
-    }else if(Math.abs(kpisCorrelacao.correlacao_disco_memoria * 100) >= 50 && Math.abs(kpisCorrelacao.correlacao_disco_memoria * 100) < 70){
+    } else if (Math.abs(kpisCorrelacao.correlacao_disco_memoria * 100) >= 50 && Math.abs(kpisCorrelacao.correlacao_disco_memoria * 100) < 70) {
         discoMemoria.classList.remove("text-success")
         discoMemoria.classList.add("text-warning")
         discoMemoria.classList.remove("text-danger")
-    }else{
+    } else {
         discoMemoria.classList.add("text-success")
         discoMemoria.classList.remove("text-warning")
         discoMemoria.classList.remove("text-danger")
     }
 
-    if(Math.abs(kpisCorrelacao.correlacao_memoria_cpu * 100) < 50){
+    if (Math.abs(kpisCorrelacao.correlacao_memoria_cpu * 100) < 50) {
         memoriaCpu.classList.remove("text-success")
         memoriaCpu.classList.remove("text-warning")
         memoriaCpu.classList.add("text-danger")
-    }else if(Math.abs(kpisCorrelacao.correlacao_memoria_cpu * 100) >= 50 && Math.abs(kpisCorrelacao.correlacao_memoria_cpu * 100) < 70){
+    } else if (Math.abs(kpisCorrelacao.correlacao_memoria_cpu * 100) >= 50 && Math.abs(kpisCorrelacao.correlacao_memoria_cpu * 100) < 70) {
         memoriaCpu.classList.remove("text-success")
         memoriaCpu.classList.add("text-warning")
         memoriaCpu.classList.remove("text-danger")
-    }else{
+    } else {
         memoriaCpu.classList.add("text-success")
         memoriaCpu.classList.remove("text-warning")
         memoriaCpu.classList.remove("text-danger")
     }
 
-    if(Math.abs(kpisCorrelacao.correlacao_disco_memoria_cpu * 100) < 50){
+    if (Math.abs(kpisCorrelacao.correlacao_disco_memoria_cpu * 100) < 50) {
         discoMemoriaCpu.classList.remove("text-success")
         discoMemoriaCpu.classList.remove("text-warning")
         discoMemoriaCpu.classList.add("text-danger")
-    }else if(Math.abs(kpisCorrelacao.correlacao_disco_memoria_cpu * 100) >= 50 && Math.abs(kpisCorrelacao.correlacao_disco_memoria_cpu * 100) < 70){
+    } else if (Math.abs(kpisCorrelacao.correlacao_disco_memoria_cpu * 100) >= 50 && Math.abs(kpisCorrelacao.correlacao_disco_memoria_cpu * 100) < 70) {
         discoMemoriaCpu.classList.remove("text-success")
         discoMemoriaCpu.classList.add("text-warning")
         discoMemoriaCpu.classList.remove("text-danger")
-    }else{
+    } else {
         discoMemoriaCpu.classList.add("text-success")
         discoMemoriaCpu.classList.remove("text-warning")
         discoMemoriaCpu.classList.remove("text-danger")
@@ -375,45 +370,76 @@ async function buscarKpisCorrelacao(idEmpresa, periodo){
 
 
 }
+let agenciasSelecionadas = []
+let idsAgencias = []
+let periodoSelecionado = "year"
 
-async function listarAgencias(idUsuario){
-    let resposta = await(fetch(`/usuarios/listarAgenciasVinculadas/${idUsuario}`))
-    let agencias = await(resposta.json())
+async function listarAgencias(idUsuario) {
+    let resposta = await (fetch(`/usuarios/listarAgenciasVinculadas/${idUsuario}`))
+    let agencias = await (resposta.json())
     // console.log(agencias)
     let dropdown_agencias = document.getElementById("dropdown_agencias")
-    for(let i = 0; i < agencias.length; i++){
+    for (let i = 0; i < agencias.length; i++) {
         dropdown_agencias.innerHTML += `<li>
-        <div class="form-check">
-        <label class="form-check-label" for="check${agencias[i]["idAgencia"]}">
-        ${agencias[i]["apelido"]}
-        </label>
-        <input class="checkbox style-2 pull-right opcao_agencia" type="checkbox" value="agencia${agencias[i]["idAgencia"]}" id="check${agencias[i]["idAgencia"]}">
-      </div>
-    </li>`
+            <div class="form-check">
+            <label class="form-check-label" for="check${agencias[i]["idAgencia"]}">
+            ${agencias[i]["apelido"]}
+            </label>
+            <input class="checkbox style-2 pull-right opcao_agencia" type="checkbox" value="agencia${agencias[i]["idAgencia"]}" id="check${agencias[i]["idAgencia"]}" checked>
+        </div>
+        </li>`;
+        idsAgencias.push(document.getElementById(`check${agencias[i]["idAgencia"]}`))
     }
 
 }
 
-function selecionarTodasAgencias(){
+function selecionarTodasAgencias() {
     let todasAgencias = document.getElementsByClassName("opcao_agencia")
     let agenciaChecada = document.getElementById("checkTodas").checked
 
-    for(let i = 0; i < todasAgencias.length; i++){
+    for (let i = 0; i < todasAgencias.length; i++) {
         todasAgencias[i].checked = agenciaChecada
     }
 }
 
-function filtroPorAgencia(){
+function filtroPorAgencia() {
     let todasAgencias = document.getElementsByClassName("opcao_agencia");
     idAgenciasSelecionadas = []
-    for(let i = 1; i < todasAgencias.length; i++){
-        if(todasAgencias[i].checked == true){
+    for (let i = 1; i < todasAgencias.length; i++) {
+        if (todasAgencias[i].checked == true) {
             idAgenciasSelecionadas.push((todasAgencias[i].id).replace("check", ""))
         }
     }
     return idAgenciasSelecionadas
 }
+function buscarAgenciasSelecionadas(periodo) {
+    agenciasSelecionadas = [];
+    console.log("AQUI")
+
+    for (let i = 0; i < idsAgencias.length; i++) {
+        console.log(idsAgencias[i].checked)
+        if (idsAgencias[i].checked) {
+            agenciasSelecionadas.push((idsAgencias[i].id).replace("check", ""))
+            console.log("a")
+            console.log(idsAgencias[i])
+
+        } else {
+            console.log("V")
+            console.log(idsAgencias[i])
+
+        }
+
+
+    }
+    alterarPeriodoGraficos(periodoSelecionado, agenciasSelecionadas)
+}
 
 
 dadosHorarioDePico(sessionStorage.ID_EMPRESA)
 listarAgencias(sessionStorage.ID_USUARIO)
+setTimeout(
+    () => {
+        buscarAgenciasSelecionadas()
+        alterarPeriodoGraficos("year", agenciasSelecionadas)
+    }
+    , 200)

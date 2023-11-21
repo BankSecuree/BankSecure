@@ -27,7 +27,7 @@
   <link href="assets/css/style.css" rel="stylesheet">
 </head>
 
-<body onload="alterarPeriodoGraficos('day')">
+<body>
 
   <!-- Header -->
   <header id="header" class="header fixed-top d-flex align-items-center">
@@ -44,7 +44,7 @@
   </header>
 
   <!-- Sidebar -->
-  <aside id="sidebar" class="sidebar">
+  <aside id="sidebar" class="sidebar" style="display: none;">
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
@@ -94,41 +94,46 @@
         
 
         <!-- Colunas da esquerda -->
-        <div class="dropdown d-grid gap-2 col-6 ">
-          <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" >
-            Filtrar por agências
-          </button>
-         
-          <ul class="dropdown-menu col-6" id="dropdown_agencias" aria-labelledby="dropdownMenuButton1" style="padding-right: 20px;">
-            <li>
-              <div class="form-check">
-              <label class="form-check-label " for="checkTodas" >
-                Selecionar todas
-                
-              </label>
-                <input class="checkbox style-2 pull-right opcao_agencia" type="checkbox" value="todasAgencias" id="checkTodas" onclick="selecionarTodasAgencias()" >
-            </div>
-          </li>
+        <div class="dropdown d-grid gap-2 col-6">
+          <span>
+            <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" >
+              Filtrar por agências
+            </button>
+            <button type="button" class="btn btn-dark" onclick="buscarAgenciasSelecionadas(periodoSelecionado)"> <i class="bi bi-search"></i> Buscar</button>
 
-          </ul>
+            <ul class="dropdown-menu col-6" id="dropdown_agencias" aria-labelledby="dropdownMenuButton1" style="padding-right: 20px;">
+              <li>
+                <div class="form-check">
+                <label class="form-check-label " for="checkTodas" >
+                  Selecionar todas
+                  
+                </label>
+                  <input class="checkbox style-2 pull-right opcao_agencia" type="checkbox" value="todasAgencias" id="checkTodas" onclick="selecionarTodasAgencias()" checked >
+              </div>
+            </li>
+  
+            </ul>
+          </span>
+
+         
         </div>
         
         <div class="col-lg-8">
           <div class="row">
             <div class="btn-group-dashboard">
               <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-              <label class="btn btn-outline-secondary btn-dashboard" for="btnradio1" onclick="alterarPeriodoGraficos('year')">Este Ano</label>
+              <label class="btn btn-outline-secondary btn-dashboard" for="btnradio1" onclick="alterarPeriodoGraficos('year', agenciasSelecionadas)">Este Ano</label>
             
               <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-              <label class="btn btn-outline-secondary btn-dashboard" for="btnradio2" onclick="alterarPeriodoGraficos('month')">Este Mês</label>
+              <label class="btn btn-outline-secondary btn-dashboard" for="btnradio2" onclick="alterarPeriodoGraficos('month', agenciasSelecionadas)">Este Mês</label>
             
               <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-              <label class="btn btn-outline-secondary btn-dashboard" for="btnradio3" onclick="alterarPeriodoGraficos('day')">Hoje</label>
+              <label class="btn btn-outline-secondary btn-dashboard" for="btnradio3" onclick="alterarPeriodoGraficos('day', agenciasSelecionadas)">Hoje</label>
             </div>
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card sales-card">
                 <div class="card-body">
-                  <h5 class="card-title">CPU <span>| </span><span id="cpu_period_info">Hoje</span></h5>
+                  <h5 class="card-title">CPU <span>| </span><span id="cpu_period_info"></span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -149,7 +154,7 @@
               <div class="card info-card revenue-card">
 
                 <div class="card-body">
-                  <h5 class="card-title">Disco Rígido <span>| </span><span id="hd_period_info">Hoje</span></h5>
+                  <h5 class="card-title">Disco Rígido <span>| </span><span id="hd_period_info"></span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -173,7 +178,7 @@
               <div class="card info-card customers-card">
 
                 <div class="card-body">
-                  <h5 class="card-title">Memória RAM <span>| </span><span id="ram_period_info">Hoje</span></h5>
+                  <h5 class="card-title">Memória RAM <span>| </span><span id="ram_period_info"></span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -196,22 +201,11 @@
             <div class="col-12">
               <div class="card">
 
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filtro</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('graficoPrincipal', 'day')">Hoje</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('graficoPrincipal', 'month')">Este Mês</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('graficoPrincipal', 'year')">Este Ano</a></li>
-                  </ul>
-                </div>
+                
                 <br>
                 <div class="card-body">
 
-                  <h5 class="card-title">Registros <span id="periodoGrafico">/Hoje</span></h5>
+                  <h5 class="card-title">Registros <span id="periodoGrafico">/</span></h5>
 
                   <div id="graficoGeral">
                     <canvas id="reportsChart4"></canvas>
@@ -329,20 +323,7 @@
 <script src="assets/js/main.js"></script>
 <script src="assets/js/dashDonut.js"></script>
 <script>
-  //exibirKpiGerente(2, 'day', 1)
-  //exibirKpiGerente(2,'day', 2)
-  //exibirKpiGerente(2, 'day', 3)
-  //obterDadosGrafico(2, 'day', 1)  
-  periodoL = "day";
 
-  exibirKpiGerente(2, periodoL, 1)
-  exibirKpiGerente(2, periodoL, 2)
-  exibirKpiGerente(2, periodoL, 3)
-  obterDadosGrafico(2, periodoL, 1)
-  function chamarFuncoes() {
-    // exibirListaAgencias()
-    // exibirGraficoDonut(1)
-  }
 
 </script>
 <style>

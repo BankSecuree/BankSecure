@@ -4,10 +4,12 @@ function dadosKpi(req, res) {
     var idEmpresa = req.params.idEmpresa;
     var periodo = req.params.periodo;
     var componente = req.params.componente;
+    var agencias = req.params.agencias;
+
 
     console.log("Cheguei ao controller")
 
-    dashGerenteModel.dadosKpi(idEmpresa, periodo, componente)
+    dashGerenteModel.dadosKpi(idEmpresa, periodo, componente, agencias)
         .then(function (resultado) {
             res.json(resultado);
         }).catch(
@@ -26,8 +28,9 @@ function buscarUltimasMedidas(req, res) {
     var idEmpresa = req.params.idEmpresa;
     var periodo = req.params.periodo;
     var componente = req.params.componente;
+    var agencias = req.params.agencias
 
-    dashGerenteModel.buscarUltimasMedidas(idEmpresa, periodo, componente).then(function (resultado) {
+    dashGerenteModel.buscarUltimasMedidas(idEmpresa, periodo, componente, agencias).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -62,9 +65,10 @@ function buscarMedidasTempoReal(req, res) {
 function kpiCorrelacao(req, res) {
     var idEmpresa = req.params.idEmpresa
     var periodo = req.params.periodo
+    var agencias = req.params.agencias
 
     console.log("Recuperando dados de correlação")
-    dashGerenteModel.kpiCorrelacao(idEmpresa, periodo).then(function (resultado) {
+    dashGerenteModel.kpiCorrelacao(idEmpresa, periodo, agencias).then(function (resultado) {
         if (resultado.length > 0) {
             res.json(resultado);
         } else {
