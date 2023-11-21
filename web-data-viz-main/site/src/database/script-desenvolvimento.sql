@@ -1,4 +1,3 @@
--- Active: 1692322487627@@127.0.0.1@3306@bankSecure
 DROP DATABASE IF EXISTS bankSecure;
 CREATE DATABASE bankSecure;
 USE bankSecure;
@@ -54,11 +53,13 @@ CREATE TABLE tipoMaquina(
 	idTipoMaquina INT PRIMARY KEY AUTO_INCREMENT,
 	nomeTipo  VARCHAR(45)
 );
-
+SELECT * FROM tipoMaquina;
 CREATE TABLE maquina(
 	idMaquina INT PRIMARY KEY AUTO_INCREMENT,
 	fkAgencia INT,
     fkTipoMaquina INT,
+    macAddress VARCHAR(100) unique,
+    localizacao VARCHAR(200),
     nome VARCHAR(45) UNIQUE, 
 	FOREIGN KEY (fkAgencia) REFERENCES agencia(idAgencia) ON DELETE CASCADE,
 	FOREIGN KEY (fkTipoMaquina) REFERENCES tipoMaquina(idTipoMaquina) ON DELETE CASCADE
@@ -79,6 +80,16 @@ CREATE TABLE componente (
     nome VARCHAR(45),  
     unidadeMedida VARCHAR(10)
 );
+
+create table alertas (
+	id int primary key auto_increment,
+	nivel int,
+    fkEmpresa int, 
+    fkComponente int,
+    fkMaquina int,
+    dtHora datetime
+);
+
 
 CREATE TABLE maquinaComponente (
 	fkMaquina INT,
@@ -283,7 +294,91 @@ SELECT (SELECT count(id) as critico FROM (SELECT id, avg(cpuu) as media FROM vw_
 DROP VIEW IF EXISTS vw_servidor1;
 CREATE OR REPLACE VIEW vw_servidor1 AS SELECT * FROM vw_registrosEstruturados WHERE id = 4;
 
+SELECT * FROM maquina;
+
 -- SELECT * FROM usuario LEFT JOIN funcionarioAgencia ON fkUsuario = idUsuario WHERE fkAgencia IS NULL AND fkUsuario IS NOT NULL;
 -- JOIN agencia ON fkAgencia = idAgencia and idUsuario = 3;
 
 
+DROP PROCEDURE IF EXISTS verificarNivel;
+DELIMITER //
+CREATE PROCEDURE verificarNivel(IN 
+    n_fkEmpresa int,
+    n_fkMaquina int,
+    n_nivel int,
+    n_fkComponente int
+)
+BEGIN
+	INSERT INTO alertas VALUES (null, n_nivel, n_fkEmpresa, n_fkComponente, n_fkMaquina, now());
+END//
+DELIMITER ;    
+
+
+-- insert into registros values (null,1, 1, ROUND(RAND() * 5 + 5, 2), CURRENT_TIMESTAMP), 
+-- (null,1, 2, ROUND(RAND() * 10 + 50, 2), CURRENT_TIMESTAMP),
+-- (null,1, 3, ROUND(RAND() * 10 + 20, 2), CURRENT_TIMESTAMP);
+
+-- --------------------------- GERAR DIVERSOS DADOS EM UM DETERMINADO PERIODO DE TEMPO --------------------------- --
+SET @StartDate = '2023-03-01 01:00:00';
+SET @EndDate = '2023-10-30 23:00:00';
+
+-- Simulação componente 1
+INSERT INTO registros (idRegistro, fkMaquina, fkComponente, valor, dataHora)
+SELECT
+    null,4, 1, ROUND(RAND() * 5 + 5, 2), @StartDate + INTERVAL a.a HOUR
+FROM
+    (SELECT
+        t.a + b.a * 10 + c.a * 100 + d.a * 1000 as a
+     FROM
+        (SELECT 0 as a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) t
+        CROSS JOIN
+        (SELECT 0 as a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) b
+        CROSS JOIN
+        (SELECT 0 as a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) c
+        CROSS JOIN
+        (SELECT 0 as a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) d
+     WHERE
+        @StartDate + INTERVAL (t.a + b.a * 10 + c.a * 100 + d.a * 1000) HOUR <= @EndDate) a
+WHERE
+    @StartDate + INTERVAL a.a HOUR <= @EndDate;
+
+-- Simulação componente 2
+INSERT INTO registros (idRegistro, fkMaquina, fkComponente, valor, dataHora)
+SELECT
+    null,4, 2, ROUND(RAND() * 10 + 50, 2), @StartDate + INTERVAL a.a HOUR
+FROM
+    (SELECT
+        t.a + b.a * 10 + c.a * 100 + d.a * 1000 as a
+     FROM
+        (SELECT 0 as a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) t
+        CROSS JOIN
+        (SELECT 0 as a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) b
+        CROSS JOIN
+        (SELECT 0 as a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) c
+        CROSS JOIN
+        (SELECT 0 as a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) d
+     WHERE
+        @StartDate + INTERVAL (t.a + b.a * 10 + c.a * 100 + d.a * 1000) HOUR <= @EndDate) a
+WHERE
+    @StartDate + INTERVAL a.a HOUR <= @EndDate;
+    
+    
+-- Simulação componente 3    
+INSERT INTO registros (idRegistro, fkMaquina, fkComponente, valor, dataHora)
+SELECT
+    null,4, 3, ROUND(RAND() * 10 + 20, 2), @StartDate + INTERVAL a.a HOUR
+FROM
+    (SELECT
+        t.a + b.a * 10 + c.a * 100 + d.a * 1000 as a
+     FROM
+        (SELECT 0 as a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) t
+        CROSS JOIN
+        (SELECT 0 as a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) b
+        CROSS JOIN
+        (SELECT 0 as a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) c
+        CROSS JOIN
+        (SELECT 0 as a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) d
+     WHERE
+        @StartDate + INTERVAL (t.a + b.a * 10 + c.a * 100 + d.a * 1000) HOUR <= @EndDate) a
+WHERE
+    @StartDate + INTERVAL a.a HOUR <= @EndDate;
