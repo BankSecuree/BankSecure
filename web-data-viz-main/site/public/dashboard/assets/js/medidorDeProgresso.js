@@ -388,7 +388,6 @@ async function listarAgencias(idUsuario) {
             <input class="checkbox style-2 pull-right opcao_agencia" type="checkbox" value="agencia${agencias[i]["idAgencia"]}" id="check${agencias[i]["idAgencia"]}" checked>
         </div>
         </li>`;
-        idsAgencias.push(document.getElementById(`check${agencias[i]["idAgencia"]}`))
     }
 
 }
@@ -402,34 +401,15 @@ function selecionarTodasAgencias() {
     }
 }
 
-function filtroPorAgencia() {
-    let todasAgencias = document.getElementsByClassName("opcao_agencia");
-    idAgenciasSelecionadas = []
-    for (let i = 1; i < todasAgencias.length; i++) {
-        if (todasAgencias[i].checked == true) {
-            idAgenciasSelecionadas.push((todasAgencias[i].id).replace("check", ""))
-        }
-    }
-    return idAgenciasSelecionadas
-}
+
 function buscarAgenciasSelecionadas(periodo) {
     agenciasSelecionadas = [];
-    console.log("AQUI")
+    idsAgencias = document.getElementsByClassName("opcao_agencia")
 
     for (let i = 0; i < idsAgencias.length; i++) {
-        console.log(idsAgencias[i].checked)
         if (idsAgencias[i].checked) {
             agenciasSelecionadas.push((idsAgencias[i].id).replace("check", ""))
-            console.log("a")
-            console.log(idsAgencias[i])
-
-        } else {
-            console.log("V")
-            console.log(idsAgencias[i])
-
         }
-
-
     }
     alterarPeriodoGraficos(periodoSelecionado, agenciasSelecionadas)
 }
