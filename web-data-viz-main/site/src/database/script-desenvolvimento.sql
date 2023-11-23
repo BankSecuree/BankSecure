@@ -60,7 +60,7 @@ CREATE TABLE maquina(
 	fkAgencia INT,
     fkTipoMaquina INT,
     nome VARCHAR(45) UNIQUE, 
-    so VARCHAR(60),
+    so VARCHAR(100),
 	FOREIGN KEY (fkAgencia) REFERENCES agencia(idAgencia) ON DELETE CASCADE,
 	FOREIGN KEY (fkTipoMaquina) REFERENCES tipoMaquina(idTipoMaquina) ON DELETE CASCADE
 );
@@ -83,33 +83,15 @@ CREATE TABLE processo(
     FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina) ON DELETE CASCADE
 );
 
-SELECT valor as processoAtivo, so FROM processo JOIN maquina ON fkMaquina = idMaquina WHERE statusProcesso = 'Ativo' ORDER BY processo.dataHora DESC LIMIT 1 ;
-
-SELECT CONCAT(CASE WHEN statusProcesso = 'Ativo' THEN
-		(SELECT valor as processoAtivo FROM processo JOIN maquina 
-			ON fkMaquina = idMaquina WHERE statusProcesso = 'Ativo' ORDER BY processo.dataHora DESC LIMIT 1) 
-		END) as processoAtivo,
-            CONCAT(CASE WHEN statusProcesso = 'Inativo' THEN
-				(SELECT valor as processoinativo FROM processo JOIN maquina 
-					ON fkMaquina = idMaquina WHERE statusProcesso = 'Inativo' ORDER BY processo.dataHora DESC LIMIT 1) 
-			END) as processoInativo
-FROM processo GROUP BY statusProcesso;
-
-select * from processo;
-
-SELECT p1.valor AS processoAtivo, p2.valor AS processoInativo FROM processo p1, processo p2 
-		WHERE p1.statusProcesso = 'Ativo' AND p2.statusProcesso = 'Inativo' ORDER BY p1.dataHora AND p2.dataHora DESC LIMIT 1; 
-        
 SELECT p1.valor AS processoAtivo, p2.valor AS processoInativo, so FROM processo p1
 	INNER JOIN processo p2 ON p1.dataHora = p2.dataHora
 		INNER JOIN maquina ON p1.fkMaquina = idMaquina
 		WHERE p1.statusProcesso = 'Ativo' AND p2.statusProcesso = 'Inativo' AND p1.fkMaquina = 1 AND p2.fkMaquina = 1
-			ORDER BY p1.dataHora DESC LIMIT 1; -- CERTOOOOOOOOOOOOOOO
+			ORDER BY p1.dataHora DESC LIMIT 1; -- CERTOOOOOOOOOOOOOOO 
+            use banksecure;
+            select * from processo;
+            select * from maquina;
 
-SELECT 
-	    CONCAT(CASE WHEN statusProcesso = 'Ativo' THEN (SELECT valor FROM processo WHERE statusProcesso = 'Ativo' order by dataHora limit 1) END) As proAtv,
-        CONCAT(CASE WHEN statusProcesso = 'Inativo' THEN (SELECT valor FROM processo WHERE statusProcesso = 'Inativo' order by dataHora limit 1) END) As proIntv
-    FROM processo WHERE fkMaquina = 1;
 
 CREATE TABLE componente (
 	idComponente INT PRIMARY KEY AUTO_INCREMENT,

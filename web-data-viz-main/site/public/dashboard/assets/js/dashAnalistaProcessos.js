@@ -215,13 +215,21 @@ function atualizarCards() {
         let proAtv = json[0].processoAtivo
         let proIntv = json[0].processoInativo
 
-        dadoSO.innerHTML = so
+        if(dadoSO.value == so){
+
+        }
+        else{
+          dadoSO.innerHTML = so
+          alertaSO.innerHTML = "Atualizado"
+          alertaSO.style.color = "rgb(25, 135, 84)"
+        }
+
+        
         dadoProAtv.innerHTML = proAtv
         dadoProIntv.innerHTML = proIntv
 
         // if (cpu < 60) {
-          alertaSO.innerHTML = "Atualizado"
-          alertaSO.style.color = "rgb(25, 135, 84)"
+          
         // } else if (cpu <= 70) {
           // alertaCpu.innerHTML = "Atenção"
           // alertaCpu.style.color = "rgb(255, 193, 7)"
@@ -231,7 +239,7 @@ function atualizarCards() {
         // }
 
         // if (memoria < 60) {
-          alertaProAtv.innerHTML = "Estável"
+          alertaProAtv.innerHTML = "Na média"
           alertaProAtv.style.color = "rgb(25, 135, 84)"
         // } else if (memoria <= 70) {
           // alertaMemoria.innerHTML = "Atenção"
@@ -242,7 +250,7 @@ function atualizarCards() {
         // }
 
         // if (disco < 60) {
-          alertaProIntv.innerHTML = "Estável"
+          alertaProIntv.innerHTML = "Na média"
           alertaProIntv.style.color = "rgb(25, 135, 84)"
         // } else if (disco <= 70) {
           // alertaDisco.innerHTML = "Atenção"
