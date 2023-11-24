@@ -41,7 +41,7 @@ function exibirListaAgencias(isTemperatura) {
           pegarMaquinas(isTemperatura);
 
 
-          if(isTemperatura == true){
+          if (isTemperatura == true) {
             atualizarMaiorTemp(resposta[0].idAgencia);
             atualizarMenorTemp(resposta[0].idAgencia);
             atualizarMaiorUso(resposta[0].idAgencia);
@@ -144,7 +144,7 @@ function atualizarGrafico(idAgencia) {
     headers: {
       "Content-Type": "application/json"
     },
-    
+
     body: JSON.stringify({
       agenciaServer: agencia,
       componenteServer: componente
@@ -190,7 +190,7 @@ function atualizarGraficoTemperatura(fkMaquina) {
   // Chama a função de atualização imediatamente
 
   // Define um intervalo para chamar a função de atualização a cada 5 segundos (5000 milissegundos)    
-  
+
 
   fetch(`/dashAnalista/dadosTemperatura/${sessionStorage.ID_EMPRESA}/${fkMaquina}`
   ).then(function (resposta) {
@@ -221,7 +221,7 @@ function atualizarGraficoTemperatura(fkMaquina) {
         //  // atualizarGraficoTemperatura(fkMaquina)
         // }, 5000);
 
-        atualizarGraficoPorcentagem(fkMaquina,dados, textos);
+        atualizarGraficoPorcentagem(fkMaquina, dados, textos);
 
       });
 
@@ -235,7 +235,7 @@ function atualizarGraficoTemperatura(fkMaquina) {
 
 }
 
-function atualizarGraficoPorcentagem(fkMaquina,dadosTemperatura,textosTemperatura) {
+function atualizarGraficoPorcentagem(fkMaquina, dadosTemperatura, textosTemperatura) {
   // alert("rpda")
   console.log("RODOU")
   let dados = []
@@ -263,7 +263,7 @@ function atualizarGraficoPorcentagem(fkMaquina,dadosTemperatura,textosTemperatur
           textos.push(json[i].dataHora)
         }
 
-        addDataPorcentagem(grafico, textos, dados,dadosTemperatura,textosTemperatura)
+        addDataPorcentagem(grafico, textos, dados, dadosTemperatura, textosTemperatura)
       });
 
     } else {
@@ -288,7 +288,7 @@ function atualizarKPITemp(idAgencia) {
 
   fetch(`/dashAnalista/kpiDadosTemperatura/${sessionStorage.ID_EMPRESA}/${idAgencia}`
 
-  
+
   ).then(function (resposta) {
     console.log("ESTOU NO THEN DO pegar da KPI dados da temperatura ()!")
     console.log("----------------------------------------------------------------------")
@@ -297,30 +297,30 @@ function atualizarKPITemp(idAgencia) {
       console.log(resposta);
       if (document.getElementById('tituloH5').innerText === 'Temperatura | Agora') {
         resposta.json().then(json => {
-        console.log(json);
-        console.log(JSON.stringify(json));
-        console.log("")
-        console.log(json[0].dataHora)
-        for (let i = 0; i < json.length; i++) {
-          dados.push(json[i].valor)
-          textos.push(json[i].dataHora)
+          console.log(json);
+          console.log(JSON.stringify(json));
+          console.log("")
+          console.log(json[0].dataHora)
+          for (let i = 0; i < json.length; i++) {
+            dados.push(json[i].valor)
+            textos.push(json[i].dataHora)
 
-           csvCPU.style.display='none'
+            csvCPU.style.display = 'none'
 
-          csvPorcentagem.style.display = 'none';
-          csvTemp.style.display='flex'
+            csvPorcentagem.style.display = 'none';
+            csvTemp.style.display = 'flex'
 
-          atualizarCorTemp(json[0].valor);
-          conteudoP2.style.display = 'block';
-          
-          conteudoP2.innerHTML = json[0].valor + "°C";
-          conteudoP.style.display = 'none';
-          conteudoOutro.style.display = 'none';
+            atualizarCorTemp(json[0].valor);
+            conteudoP2.style.display = 'block';
 
-        }
-      
-      });
-    }
+            conteudoP2.innerHTML = json[0].valor + "°C";
+            conteudoP.style.display = 'none';
+            conteudoOutro.style.display = 'none';
+
+          }
+
+        });
+      }
 
     } else {
       console.log("Houve um erro ao tentar pegar os dados!");
@@ -339,7 +339,7 @@ function atualizarKPIUso(idAgencia) {
   let textos = []
   //alert(idAgencia)
   //alert(sessionStorage.ID_EMPRESA)
-  
+
   fetch(`/dashAnalista/kpiDadosUso/${sessionStorage.ID_EMPRESA}/${idAgencia}`
 
   ).then(function (resposta) {
@@ -348,31 +348,31 @@ function atualizarKPIUso(idAgencia) {
     console.log("----------------------------------------------------------------------")
     console.log(resposta)
     if (resposta.ok) {
-      if (document.getElementById('tituloH5').innerText === 'Uso de CPU | Agora'){
-      console.log(resposta);
-      resposta.json().then(json => {
-        // alert(JSON.stringify(json))
-        console.log(json);
-        console.log(JSON.stringify(json));
-        console.log("")
-        console.log(json[0].dataHora)
+      if (document.getElementById('tituloH5').innerText === 'Uso de CPU | Agora') {
+        console.log(resposta);
+        resposta.json().then(json => {
+          // alert(JSON.stringify(json))
+          console.log(json);
+          console.log(JSON.stringify(json));
+          console.log("")
+          console.log(json[0].dataHora)
 
 
-        csvCPU.style.display='none'
-        csvPorcentagem.style.display = 'flex';
-        csvTemp.style.display='none'
+          csvCPU.style.display = 'none'
+          csvPorcentagem.style.display = 'flex';
+          csvTemp.style.display = 'none'
 
-        atualizarCorUso(json[0].valor);
+          atualizarCorUso(json[0].valor);
 
-        maiorTemp = json[0].valor;
-        conteudoP.style.display = 'block';
-        csvPorcentagem.style.display = 'flex';        
-        conteudoP.innerHTML = maiorTemp + "%"
-        conteudoP2.style.display = 'none';
-        conteudoOutro.style.display = 'none'
+          maiorTemp = json[0].valor;
+          conteudoP.style.display = 'block';
+          csvPorcentagem.style.display = 'flex';
+          conteudoP.innerHTML = maiorTemp + "%"
+          conteudoP2.style.display = 'none';
+          conteudoOutro.style.display = 'none'
 
-      })
-    }
+        })
+      }
     } else {
       console.log("Houve um erro ao tentar pegar os dados!");
     }
@@ -388,7 +388,7 @@ function atualizarMaiorTemp(idAgencia) {
   console.log("RODOU")
   let dados = []
   let textos = []
-  
+
   fetch(`/dashAnalista/maiorTemperaturaRel/${sessionStorage.ID_EMPRESA}/${idAgencia}`
 
 
@@ -412,7 +412,7 @@ function atualizarMaiorTemp(idAgencia) {
         document.getElementById('maiorTemperatura').innerHTML = json[0].maior_temperatura + ' °C';
 
       })
-    
+
     } else {
       console.log("Houve um erro ao tentar pegar os dados!");
     }
@@ -428,7 +428,7 @@ function atualizarMaiorUso(idAgencia) {
   console.log("RODOU")
   let dados = []
   let textos = []
-  
+
   fetch(`/dashAnalista/maiorUsoRel/${sessionStorage.ID_EMPRESA}/${idAgencia}`
 
   ).then(function (resposta) {
@@ -440,7 +440,7 @@ function atualizarMaiorUso(idAgencia) {
     if (resposta.ok) {
       console.log(resposta);
       resposta.json().then(json => {
-       // alert(JSON.stringify(json))
+        // alert(JSON.stringify(json))
 
         console.log(json);
         console.log(JSON.stringify(json));
@@ -449,12 +449,12 @@ function atualizarMaiorUso(idAgencia) {
 
         atualizarCorRelMaiorUso(json[0].maior_uso);
         console.log(json[0].maior_uso);
-            var maiorUso = json[0].maior_uso;
-            document.getElementById('maiorUso').innerHTML = maiorUso + ' %';
+        var maiorUso = json[0].maior_uso;
+        document.getElementById('maiorUso').innerHTML = maiorUso + ' %';
 
 
       })
-    
+
     } else {
       console.log("Houve um erro ao tentar pegar os dados!");
     }
@@ -469,7 +469,7 @@ function atualizarMenorUso(idAgencia) {
   console.log("RODOU")
   let dados = []
   let textos = []
-  
+
   fetch(`/dashAnalista/menorUsoRel/${sessionStorage.ID_EMPRESA}/${idAgencia}`
 
   ).then(function (resposta) {
@@ -481,7 +481,7 @@ function atualizarMenorUso(idAgencia) {
     if (resposta.ok) {
       console.log(resposta);
       resposta.json().then(json => {
-       // alert(JSON.stringify(json))
+        // alert(JSON.stringify(json))
 
         console.log(json);
         console.log(JSON.stringify(json));
@@ -490,11 +490,11 @@ function atualizarMenorUso(idAgencia) {
 
         console.log(json[0].menor_uso);
         atualizarCorRelMenorUso(json[0].menor_uso);
-            var menorUso = json[0].menor_uso;
-            document.getElementById('menorUso').innerHTML = menorUso + ' %';
+        var menorUso = json[0].menor_uso;
+        document.getElementById('menorUso').innerHTML = menorUso + ' %';
 
       })
-    
+
     } else {
       console.log("Houve um erro ao tentar pegar os dados!");
     }
@@ -511,7 +511,7 @@ function atualizarMediaTemp(idAgencia) {
   console.log("RODOU")
   let dados = []
   let textos = []
-  
+
   fetch(`/dashAnalista/mediaTemperaturaRel/${sessionStorage.ID_EMPRESA}/${idAgencia}`
 
   ).then(function (resposta) {
@@ -531,12 +531,12 @@ function atualizarMediaTemp(idAgencia) {
         console.log(json[0].dataHora)
 
         console.log(json[0].media_valores_temperatura);
- 
+
         atualizarCorRelMediaTemp(json[0].media_valores_temperatura);
-            var mediaTemp = json[0].media_valores_temperatura;
-            document.getElementById('mediaTemperatura').innerHTML = mediaTemp + ' °C';
+        var mediaTemp = json[0].media_valores_temperatura;
+        document.getElementById('mediaTemperatura').innerHTML = mediaTemp + ' °C';
       })
-    
+
     } else {
       console.log("Houve um erro ao tentar pegar os dados!");
     }
@@ -550,7 +550,7 @@ function atualizarMediaTemp(idAgencia) {
 
 function atualizarMediaUso(idAgencia) {
   console.log("RODOU")
-  
+
   fetch(`/dashAnalista/mediaUsoRel/${sessionStorage.ID_EMPRESA}/${idAgencia}`
 
   ).then(function (resposta) {
@@ -568,12 +568,12 @@ function atualizarMediaUso(idAgencia) {
         console.log("")
 
         console.log(json[0].media_valores_uso);
-        
+
         atualizarCorRelMediaUso(json[0].media_valores_uso);
         var mediaUso = json[0].media_valores_uso;
         document.getElementById('mediaUso').innerHTML = mediaUso + ' %';
       })
-    
+
     } else {
       console.log("Houve um erro ao tentar pegar os dados!");
     }
@@ -673,20 +673,20 @@ function pegarMaquinas(isTemperatura) {
 
       resposta.json().then(json => {
 
-        if(isTemperatura == true){
+        if (isTemperatura == true) {
           atualizarMenorTemp(json[0].idMaquina);
           atualizarGraficoTemperatura(json[0].idMaquina);
-      }
+        }
 
-      fkMaquina = json[0].idMaquina;
+        fkMaquina = json[0].idMaquina;
 
-      
+
         console.log(JSON.stringify(json));
         console.log(json);
 
         console.log(json[0])
 
-        
+
 
         for (let i = 0; i < json.length; i++) {
           arrayMaquinas.push(json[i].idMaquina);
@@ -737,7 +737,7 @@ function atualizarMenorTemp(fkMaquina) {
   console.log("RODOU")
   let dados = []
   let textos = []
-  
+
   fetch(`/dashAnalista/menorTemperaturaRel/${sessionStorage.ID_EMPRESA}/${fkMaquina}`
 
   ).then(function (resposta) {
@@ -761,7 +761,7 @@ function atualizarMenorTemp(fkMaquina) {
         document.getElementById('menorTemperatura').innerHTML = menorTemp + ' °C';
 
       })
-    
+
     } else {
       console.log("Houve um erro ao tentar pegar os dados!");
     }
@@ -772,11 +772,11 @@ function atualizarMenorTemp(fkMaquina) {
 
 }
 
-function pegarNomeMaquina(idAgencia,fkMaquina) {
+function pegarNomeMaquina(idAgencia, fkMaquina) {
   console.log("RODOU")
 
   let maquina = document.getElementById("listaMaquinas").value
-  
+
   fetch(`/dashAnalista/pegarNomeMaquina/${sessionStorage.ID_EMPRESA}/${idAgencia}/${fkMaquina}`
 
   ).then(function (resposta) {
@@ -795,7 +795,7 @@ function pegarNomeMaquina(idAgencia,fkMaquina) {
         document.getElementById('nomeMaquina').innerText = ` ${obterHorasAtuais()}`;
 
       })
-    
+
     } else {
       console.log("Houve um erro ao tentar pegar os dados!");
     }
@@ -928,7 +928,7 @@ function pegarDadosGerais() {
 }
 
 function automatizarGrafico() {
-  setInterval(atualizarGraficoTemperatura(document.getElementById('listaMaquinas').value),5000)
+  setInterval(atualizarGraficoTemperatura(document.getElementById('listaMaquinas').value), 5000)
 }
 
 function esconder() {
@@ -955,15 +955,14 @@ function addData(chart, dataHora, temperatura) {
   // alert(temperatura)
   const limiteHistorico = 7;
 
-
   if (grafico.data.labels.length > limiteHistorico) {
-      grafico.data.labels.shift(); // Remove o rótulo mais antigo
-      grafico.data.datasets[1].data.shift(); // Remove o dado mais antigo
+    grafico.data.labels.shift(); // Remove o rótulo mais antigo
+    grafico.data.datasets[1].data.shift(); // Remove o dado mais antigo
   }
 }
 
 
-function addDataPorcentagem(chart, dataHora, porcentagem,dadosTemperatura,textosTemperatura) {
+function addDataPorcentagem(chart, dataHora, porcentagem, dadosTemperatura, textosTemperatura) {
 
   let horaAtual = obterHorasAtuais();
   grafico.data.labels.push(horaAtual);
@@ -977,18 +976,19 @@ function addDataPorcentagem(chart, dataHora, porcentagem,dadosTemperatura,textos
 
   // grafico.data.datasets[0].data.push(porcentagem);
 
+
   const limiteHistorico = 7;
 
-  if(grafico.data.labels.length > limiteHistorico){
+  if (grafico.data.labels.length > limiteHistorico) {
     grafico.data.labels.shift();
   }
 
   if (grafico.data.datasets[0].data.length > limiteHistorico) {
     // alert("Dentro do if")
-      grafico.data.labels.shift();
-      grafico.data.datasets[0].data.shift(); 
-      grafico.data.datasets[1].data.shift();
-      updateGrafico();
+    grafico.data.labels.shift();
+    grafico.data.datasets[0].data.shift();
+    grafico.data.datasets[1].data.shift();
+    updateGrafico();
   }
 
 }
@@ -1004,8 +1004,8 @@ function updateGrafico() {
 function alterarMaquina() {
   fkMaquina = document.getElementById("listaMaquinas").value;
   // alert(fkMaquina)
-  grafico.data.labels=[];
-  grafico.data.datasets[0].data = []; 
+  grafico.data.labels = [];
+  grafico.data.datasets[0].data = [];
   grafico.data.datasets[1].data = [];
 
   updateGrafico();
