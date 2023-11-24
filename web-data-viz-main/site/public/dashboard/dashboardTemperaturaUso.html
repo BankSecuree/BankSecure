@@ -94,7 +94,7 @@
 
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="teste.html">
+                <a class="nav-link collapsed" href="dashboardTemperaturaUso.html">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard Temperatura</span>
                 </a>
@@ -166,7 +166,7 @@
                                 <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
                                     <h5>Selecionar Maquina</h5>
                                     <select name="" id="listaMaquinas"
-                                        onchange="atualizarGraficoTemperatura(listaAgencias.value,document.getElementById('listaMaquinas').value),automatizarGrafico()">
+                                        onchange="alterarMaquina(),automatizarGrafico()">
                                     </select>
                                 </div>
                             </div>
@@ -354,18 +354,18 @@
     let horasAtuais = obterHorasAtuais();
 
     let data = {
-        labels: ["10h", "11h", "12h", "13h", "14h"],
+        labels: [],
         datasets: [
             {
                 label: "Uso CPU",
-                data: [30, 45, 60, 55, 70],
+                data: [],
                 borderColor: "#4CAF50", // Verde
                 backgroundColor: "rgba(76, 175, 80, 0.4)",
                 fill: true,
             },
             {
                 label: "Temperatura",
-                data: [25, 28, 30, 32, 27],
+                data: [],
                 borderColor: "#FFC107", // Amarelo
                 backgroundColor: "rgba(255, 193, 7, 0.4)",
                 fill: true,
@@ -403,6 +403,7 @@
 
     grafico.render();
     chamarFuncoes();
+    exibirListaAgencias(true);
 
     async function chamarFuncoes() {
 

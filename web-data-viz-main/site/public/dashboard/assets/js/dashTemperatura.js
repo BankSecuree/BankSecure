@@ -2,6 +2,8 @@ let arrayAgencias = []
 let arrayMaquinas = []
 let arrayNomeMaquinas = []
 var idAgencia = -2;
+var fkMaquina = -1;
+
 function exibirListaAgencias(isTemperatura) {
   fetch(`/dashAgencias/exibirListaAgencias/${sessionStorage.ID_USUARIO}`)
     .then(function (resposta) {
@@ -38,8 +40,6 @@ function exibirListaAgencias(isTemperatura) {
           }
           pegarMaquinas(isTemperatura);
 
-          atualizarGraficoTemperatura(idAgencia)
-          atualizarGraficoPorcentagem(idAgencia)
 
           if(isTemperatura == true){
             atualizarMaiorTemp(resposta[0].idAgencia);
@@ -48,6 +48,25 @@ function exibirListaAgencias(isTemperatura) {
             atualizarMenorUso(resposta[0].idAgencia);
             atualizarMediaTemp(resposta[0].idAgencia);
             atualizarMediaUso(resposta[0].idAgencia);
+
+            clearInterval(chamarFuncao)
+
+            var chamarFuncao = setInterval(function () {
+              atualizarMaiorTemp(resposta[0].idAgencia);
+              atualizarMenorTemp(resposta[0].idAgencia);
+              atualizarMaiorUso(resposta[0].idAgencia);
+              atualizarMenorUso(resposta[0].idAgencia);
+              atualizarMediaTemp(resposta[0].idAgencia);
+              atualizarMediaUso(resposta[0].idAgencia);
+              // atualizarGraficoTemperatura(resposta[0].idAgencia);
+              // atualizarGraficoPorcentagem(resposta[0].idAgencia);
+              atualizarKPITemp(resposta[0].idAgencia);
+              atualizarKPIUso(resposta[0].idAgencia);
+            }, 5000);
+
+            chamarFuncao;
+
+
           }
         });
       } else {
@@ -187,19 +206,22 @@ function atualizarGraficoTemperatura(fkMaquina) {
         console.log("")
         // alert("opa, bao?")
         console.log(json[0].dataHora)
-        //alert(JSON.stringify(json))
+        // alert(JSON.stringify(json))
+
         for (let i = 0; i < json.length; i++) {
           dados.push(json[i].valor)
           textos.push(json[i].dataHora)
         }
 
         // alert("dados " + dados)
+        // addData(grafico, textos, dados)
 
-        setInterval(function () {
-          addData(grafico, textos, dados)
-          atualizarGraficoPorcentagem(fkMaquina);
-        }, 5000);
+        // setInterval(function () {
+        //   // atualizarGraficoPorcentagem(fkMaquina);
+        //  // atualizarGraficoTemperatura(fkMaquina)
+        // }, 5000);
 
+        atualizarGraficoPorcentagem(fkMaquina,dados, textos);
 
       });
 
@@ -213,7 +235,7 @@ function atualizarGraficoTemperatura(fkMaquina) {
 
 }
 
-function atualizarGraficoPorcentagem(fkMaquina) {
+function atualizarGraficoPorcentagem(fkMaquina,dadosTemperatura,textosTemperatura) {
   // alert("rpda")
   console.log("RODOU")
   let dados = []
@@ -241,7 +263,7 @@ function atualizarGraficoPorcentagem(fkMaquina) {
           textos.push(json[i].dataHora)
         }
 
-        addDataPorcentagem(grafico, textos, dados)
+        addDataPorcentagem(grafico, textos, dados,dadosTemperatura,textosTemperatura)
       });
 
     } else {
@@ -295,9 +317,6 @@ function atualizarKPITemp(idAgencia) {
           conteudoP.style.display = 'none';
           conteudoOutro.style.display = 'none';
 
-          setInterval(function () {
-            atualizarKPITemp(idAgencia);
-          }, 5000);
         }
       
       });
@@ -352,9 +371,6 @@ function atualizarKPIUso(idAgencia) {
         conteudoP2.style.display = 'none';
         conteudoOutro.style.display = 'none'
 
-        setInterval(function () {
-          atualizarKPIUso(1);
-        }, 5000);
       })
     }
     } else {
@@ -394,10 +410,6 @@ function atualizarMaiorTemp(idAgencia) {
         var maiorTemperatura = json[0].maior_temperatura;
         console.log("Maior temperatura: " + maiorTemperatura)
         document.getElementById('maiorTemperatura').innerHTML = json[0].maior_temperatura + ' °C';
-
-        setInterval(function () {
-          atualizarMaiorTemp(idAgencia);
-        }, 5000);
 
       })
     
@@ -441,11 +453,6 @@ function atualizarMaiorUso(idAgencia) {
             document.getElementById('maiorUso').innerHTML = maiorUso + ' %';
 
 
-            setInterval(function () {
-              atualizarMaiorUso(idAgencia);
-            }, 5000);
-
-
       })
     
     } else {
@@ -485,10 +492,6 @@ function atualizarMenorUso(idAgencia) {
         atualizarCorRelMenorUso(json[0].menor_uso);
             var menorUso = json[0].menor_uso;
             document.getElementById('menorUso').innerHTML = menorUso + ' %';
-
-            setInterval(function () {
-              atualizarMenorUso(idAgencia);
-            }, 5000);
 
       })
     
@@ -532,12 +535,6 @@ function atualizarMediaTemp(idAgencia) {
         atualizarCorRelMediaTemp(json[0].media_valores_temperatura);
             var mediaTemp = json[0].media_valores_temperatura;
             document.getElementById('mediaTemperatura').innerHTML = mediaTemp + ' °C';
-
-
-            setInterval(function () {
-              atualizarMediaTemp(idAgencia);
-            }, 5000);
-
       })
     
     } else {
@@ -575,12 +572,6 @@ function atualizarMediaUso(idAgencia) {
         atualizarCorRelMediaUso(json[0].media_valores_uso);
         var mediaUso = json[0].media_valores_uso;
         document.getElementById('mediaUso').innerHTML = mediaUso + ' %';
-
-
-        setInterval(function () {
-          atualizarMediaUso(idAgencia);
-        }, 5000);
-
       })
     
     } else {
@@ -687,6 +678,9 @@ function pegarMaquinas(isTemperatura) {
           atualizarGraficoTemperatura(json[0].idMaquina);
       }
 
+      fkMaquina = json[0].idMaquina;
+
+      
         console.log(JSON.stringify(json));
         console.log(json);
 
@@ -765,10 +759,6 @@ function atualizarMenorTemp(fkMaquina) {
         var menorTemp = json[0].menor_temperatura;
         atualizarCorRelMenorTemp(json[0].menor_temperatura);
         document.getElementById('menorTemperatura').innerHTML = menorTemp + ' °C';
-
-        setInterval(function () {
-          atualizarMenorTemp(fkMaquina);
-        }, 5000);
 
       })
     
@@ -954,30 +944,71 @@ $('#btnAlerta').on('click', function () {
 
 
 function addData(chart, dataHora, temperatura) {
+
+
   let horaAtual = obterHorasAtuais();
-  chart.data.labels.push(horaAtual);
-  chart.data.datasets[1].data.push(temperatura);
+
+  grafico.data.labels.push(horaAtual);
+
+  // grafico.data.datasets[1].data.push(temperatura);
+  grafico.data.datasets[1].data = temperatura;
+  // alert(temperatura)
   const limiteHistorico = 7;
+
+
   if (grafico.data.labels.length > limiteHistorico) {
       grafico.data.labels.shift(); // Remove o rótulo mais antigo
       grafico.data.datasets[1].data.shift(); // Remove o dado mais antigo
   }
-  grafico.update()
-
 }
 
 
+function addDataPorcentagem(chart, dataHora, porcentagem,dadosTemperatura,textosTemperatura) {
 
-function addDataPorcentagem(chart, dataHora, porcentagem) {
+  let horaAtual = obterHorasAtuais();
+  grafico.data.labels.push(horaAtual);
+  grafico.data.datasets[1].data = dadosTemperatura;
+
+  // alert(dadosTemperatura)
 
   grafico.data.datasets[0].data = porcentagem;
 
-  const limiteHistorico = 5;
-  if (grafico.data.datasets[0].data.length > limiteHistorico) {
-      grafico.data.datasets[0].data.shift(); // Remove o dado mais antigo
+  // alert(porcentagem)
+
+  // grafico.data.datasets[0].data.push(porcentagem);
+
+  const limiteHistorico = 7;
+
+  if(grafico.data.labels.length > limiteHistorico){
+    grafico.data.labels.shift();
   }
 
+  if (grafico.data.datasets[0].data.length > limiteHistorico) {
+    // alert("Dentro do if")
+      grafico.data.labels.shift();
+      grafico.data.datasets[0].data.shift(); 
+      grafico.data.datasets[1].data.shift();
+      updateGrafico();
+  }
+
+}
+
+setInterval(updateGrafico, 5000)
+
+function updateGrafico() {
+  atualizarGraficoTemperatura(fkMaquina)
+  // alert("Grafico")
   grafico.update()
+}
+
+function alterarMaquina() {
+  fkMaquina = document.getElementById("listaMaquinas").value;
+  // alert(fkMaquina)
+  grafico.data.labels=[];
+  grafico.data.datasets[0].data = []; 
+  grafico.data.datasets[1].data = [];
+
+  updateGrafico();
 }
 
 
