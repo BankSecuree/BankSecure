@@ -1,25 +1,20 @@
-function alterarComponente(componente) {
-    var textoDefinicao = document.getElementById("textoDefinicao")
-    if(componente === "cpu") {
-        textoDefinicao.innerHTML = `<h2 style= "color: #002F5C">CPU:</h2> <br> 
-        <span  style = "color:#097BF4">Alerta: Quando o valor do registro do componente está acima ou abaixo do ideal</span> <br> 
-        <span style = "color:#097BF4 ">Máximo aceitável: 75%</span> <br> 
-        <span style = "color:#097BF4 ">Uso ideal: 45% </span><br>
-        <span style = "color:#097BF4 ">Mínimo aceitável: 10%</span>`
-    } else if(componente === "disco") {
-        textoDefinicao.innerHTML = `<h2 style = "color: #117701">Disco:</h2> <br>
-        <span style = "color:#02E12E ">Alerta: Quando o valor do registro do componente está acima ou abaixo do ideal</span> <br> 
-        <span style = "color:#02E12E ">Máximo aceitável: 95%</span> <br> 
-        <span style = "color:#02E12E ">Uso ideal: 70% </span><br>
-        <span style = "color:#02E12E ">Mínimo aceitável: 20%</span>`
-    } else if(componente === 'memoria') {
-        textoDefinicao.innerHTML = `<h2 style = "color:#D75413 ">Memória:</h2> <br> 
-        <span style = "color:#E57C49 ">Alerta: Quando o valor do registro do componente está acima ou abaixo do ideal</span> <br> 
-        <span style = "color:#E57C49 ">Máximo aceitável: 90%</span> <br> 
-        <span style = "color:#E57C49 ">Uso ideal: 60% </span><br>
-        <span style = "color:#E57C49 ">Mínimo aceitável: 20%</span>`
+function alterarComponente() {
+        textoDefinicaoCpu.innerHTML = `<h1 class="card-title">CPU:</h1>
+        <span style = "color:#000000">Máximo aceitável: <span style= "color: red">75%</span></span> <br> 
+        <span style = "color:#000000 ">Uso ideal: <span style = "color: green">45%</span> </span><br>
+        <span style = "color:#000000 ">Mínimo aceitável: <span style = "color:blue">10%</span></span>`
+    
+        textoDefinicaoDisco.innerHTML = `<h1 class="card-title">Disco:</h1>
+        <span style = "color:#000000 ">Máximo aceitável: <span style="color:red">95%</span></span> <br> 
+        <span style = "color:#000000 ">Uso ideal: <span style="color: green">70%</span> </span><br>
+        <span style = "color:#000000 ">Mínimo aceitável: <span style= "color: blue">20%</span></span>`
+    
+        textoDefinicaoMemoria.innerHTML = `<h1 class="card-title">Memória:</h1>
+        <span style = "color:#000000 ">Máximo aceitável: <span style = "color: red">90%</span></span> <br> 
+        <span style = "color:#000000 ">Uso ideal: <span style = "color: green">60%</span> </span><br>
+        <span style = "color:#000000 ">Mínimo aceitável: <span style="color: blue">20%</span></span>`
     }
-}
+
 
 function obterKpiAgencia() {
     var idGerente = sessionStorage.GERENTE_USUARIO;
@@ -286,108 +281,24 @@ function atualizarGrafico(componente, tipoAgencia, selectTipoAgencia, grafico, d
 }
 
 function plotarGraficoFreq(dados) {
-    const largura = 400;
-    const altura = 400;
-
-    const canvas = document.createElement('canvas');
-    canvas.width = largura;
-    canvas.height = altura;
-    const context = canvas.getContext('2d');
-
-    // Defina o atributo willReadFrequently como true
-    context.imageSmoothingEnabled = true;
-    context.webkitImageSmoothingEnabled = true;
-    context.mozImageSmoothingEnabled = true;
-    context.msImageSmoothingEnabled = true;
-
-    // Adicione o atributo willReadFrequently
-    context.canvas.willReadFrequently = true;
-
-    const svg = d3.select('#wordcloud').append('svg')
-        .attr('width', largura)
-        .attr('height', altura);
-
-
-
-
-    const configuracoesNuvem = {
-        size: 0.7,
-        color: 'random-light',
-        backgroundColor: 'black',
-        rotateRatio: 0
-    };
-
-    const tamanhoMaximoPercentual = 0.5; 
-    const tamanhoMinimoPercentual = 0.1; 
-    const tamanhoMinimoAbsoluto = 10;
-    const aumentoSignificativo = 2;
-    
-    // Obtém a largura da tela
-    const larguraTela = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-    
-    // Calcula os tamanhos máximo e mínimo com base na largura da tela
-    const tamanhoMaximo = larguraTela * tamanhoMaximoPercentual;
-    const tamanhoMinimo = larguraTela * tamanhoMinimoPercentual;
-    
-    const layout = d3.layout.cloud()
-    .size([largura, altura])
-    .words(dados
-        .filter(item => item.totalProblemas > 0) // Somente incluir itens com totalProblemas maior que 0
-        .map(item => ({
-            text: item.nomeAgencia,
-            size: item.totalProblemas
-        }))
-    )
-    
-    
-    .padding(10)
-    .rotate(() => 0)
-    .fontSize(item => (item.size > 0) ? Math.max(item.size * aumentoSignificativo, tamanhoMinimoAbsoluto) : tamanhoMinimoAbsoluto)
-    .on('end', desenharNuvem)
-    .random(() => 0.5)
-    .fontWeight('normal')
-    .text(item => item.text);
-
-console.log(dados)
-layout.start();
-
-function desenharNuvem(palavras) {
-    // Encontrar o maior elemento
-    var maiorElemento = palavras.reduce((maior, atual) => (atual.size > maior.size) ? atual : maior, palavras[0]);
-
-    svg.selectAll('text')
-        .data(palavras)
-        .enter().append('text')
-        .style('font-size', item => item.size + 'px')
-        .style('fill', item => (configuracoesNuvem.color === 'random-light') ? randomColor() : configuracoesNuvem.color)
-        .style('background-color', configuracoesNuvem.backgroundColor)
-        .attr('transform', function (item) {
-            // Calcular a posição relativa em relação ao maior elemento
-            var x = (item === maiorElemento) ? 0 : item.x - maiorElemento.x;
-            var y = (item === maiorElemento) ? 0 : item.y - maiorElemento.y;
-            return `translate(${largura / 2 + x}, ${altura / 2 + y})rotate(${item.rotate})`;
+    var data = dados
+        .filter(function (item) {
+            return item.totalProblemas !== 0;
         })
-        .text(item => item.text)
-        .attr('text-anchor', 'middle')
-        .attr('alignment-baseline', 'middle');
+        .map(function (item) {
+            return { x: item.nomeAgencia, value: item.totalProblemas };
+        });
+
+
+    chart = anychart.tagCloud(data)
+        .mode('ortho') 
+        .angles([0])    
+        .container("wordcloud")
+        .draw()
+        .responsive(true);
 }
 
-    
-    
-    
 
-
-    function randomColor() {
-        const letters = '0123456789ABCDEF';
-        let color = '#';
-
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-
-        return color;
-    }
-}
 
 
 
