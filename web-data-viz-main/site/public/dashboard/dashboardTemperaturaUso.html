@@ -165,8 +165,7 @@
                             <div class="card info-card sales-card">
                                 <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
                                     <h5>Selecionar Maquina</h5>
-                                    <select name="" id="listaMaquinas"
-                                        onchange="alterarMaquina(),automatizarGrafico()">
+                                    <select name="" id="listaMaquinas" onchange="alterarMaquina(),automatizarGrafico()">
                                     </select>
                                 </div>
                             </div>
@@ -359,7 +358,7 @@
             {
                 label: "Uso CPU",
                 data: [],
-                borderColor:"#00BCD4", // Verde
+                borderColor: "#00BCD4", // Verde
                 backgroundColor: "rgba(0, 188, 212, 0.4)",
                 fill: true,
             },
@@ -404,6 +403,7 @@
     grafico.render();
     chamarFuncoes();
     exibirListaAgencias(true);
+    atualizarDia();
 
     async function chamarFuncoes() {
 
@@ -419,15 +419,6 @@
         exibirInfos();
         listaMaquinas();
         esconder()
-    }
-
-
-    function obterHorasAtuais() {
-        let agora = new Date();
-        let horas = agora.getHours();
-        let minutos = agora.getMinutes();
-        let segundos = agora.getSeconds();
-        return `${horas}:${minutos}:${segundos}`;
     }
 
 
@@ -597,6 +588,35 @@
         link.href = window.URL.createObjectURL(blob);
         link.download = 'relatorio.csv';
         link.click();
+    }
+
+
+    function obterDiaAtual() {
+        const agora = new Date();
+        const dia = agora.getDate().toString().padStart(2, '0');
+        const mes = (agora.getMonth() + 1).toString().padStart(2, '0');
+        const ano = agora.getFullYear();
+        // alert(`${dia}/${mes}/${ano}`)
+
+        var diaAgora = `${dia}/${mes}/${ano}`
+        return diaAgora;
+        
+    }
+
+
+
+    function obterHorasAtuais() {
+        let agora = new Date();
+        let horas = agora.getHours();
+        let minutos = agora.getMinutes();
+        let segundos = agora.getSeconds();
+    
+        return `${horas}:${minutos}:${segundos}`;
+    }
+
+
+    function atualizarDia() {
+        document.getElementById('nomeMaquina').innerText = ` ${obterDiaAtual()}`;
     }
 
 

@@ -62,6 +62,7 @@ function exibirListaAgencias(isTemperatura) {
               // atualizarGraficoPorcentagem(resposta[0].idAgencia);
               atualizarKPITemp(resposta[0].idAgencia);
               atualizarKPIUso(resposta[0].idAgencia);
+              
             }, 5000);
 
             chamarFuncao;
@@ -691,7 +692,8 @@ function pegarMaquinas(isTemperatura) {
         for (let i = 0; i < json.length; i++) {
           arrayMaquinas.push(json[i].idMaquina);
           arrayNomeMaquinas.push(json[i].nome);
-          document.getElementById('nomeMaquina').innerText = ` ${obterHorasAtuais()}`;
+          document.getElementById('nomeMaquina').innerText = ` ${atualizarHorario()}`;
+
         }
 
         atualizarGrafico();
@@ -792,7 +794,7 @@ function pegarNomeMaquina(idAgencia, fkMaquina) {
         console.log("")
         // var nomeMaquina = json[0].nomeMaquina;
         // document.getElementById('nomeMaquina').innerHTML = nomeMaquina + " | Últimas 24h";
-        document.getElementById('nomeMaquina').innerText = ` ${obterHorasAtuais()}`;
+        // document.getElementById('nomeMaquina').innerText = ` ${obterDiaAtual()}`;
 
       })
 
