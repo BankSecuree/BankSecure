@@ -231,9 +231,10 @@ function pegarDadosGerais(option) {
           console.log(JSON.stringify(json));
           console.log(json);
 
-          let cpu = json[0].cpuu;
+          let cpu = json[0].UsoCpu;
           let memoria = json[0].memoria
           let disco = json[0].disco
+          let temperatura = json[0].temperatura
 
           console.log(`----- Maquina ${arrayNomeMaquinas[i]} -----`)
           console.log(`Memoria: ${memoria}`)
@@ -292,6 +293,12 @@ function pegarDadosGerais(option) {
 
           }
 
+
+          if(temperatura >= 80){
+            verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 3, 4)
+          }
+      
+          
           // criarCard(cpu,memoria,disco,arrayNomeMaquinas[i])
           if(vez1 == 0){
             vez1 = 2
