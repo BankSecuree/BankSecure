@@ -131,7 +131,18 @@ public class Main {
             Integer segundo = dataHoraAtual.getSecond();
 
             //Variaveis para pegar os Serviços - Mateus
-            Sistema sistemaAtual = looca.getSistema();
+            String sistemaAtual = looca.getSistema().toString();
+
+            String frase = sistemaAtual;
+            String array[] = new String[1];
+
+            array = frase.split(":");
+            frase = array[1];
+            array = frase.split("F");
+            System.out.println("=".repeat(15));
+            System.out.println(array[0]);
+
+
             Integer servicoAtivo = looca.getGrupoDeServicos().getTotalServicosAtivos();
             Integer servicoInativo = looca.getGrupoDeServicos().getTotalServicosInativos();
             //Fim - Mateus
@@ -157,9 +168,9 @@ public class Main {
                 String processosMI1Inativo = "INSERT INTO processo (fkMaquina, valor, dataHora, statusProcesso) VALUES (1, " + servicoInativo + ", '" + dataAtualInterpolado + "', 'Inativo')";
                 st2.executeUpdate(processosMI1Inativo);
 
-                System.out.println("ESSA MERDA: " + sistemaAtual);
-//                String soMI2 = "UPDATE maquina SET so = '" + sistemaAtual + "' WHERE idMaquina = 2";
-//                st2.executeUpdate(soMI2);
+//                System.out.println("ESSA MERDA: " + sistemaAtual);
+                String soMI2 = "UPDATE maquina SET so = '" + array[0] + "' WHERE idMaquina = 1";
+                st2.executeUpdate(soMI2);
 
                 String processosMI2Ativo = "INSERT INTO processo (fkMaquina, valor, dataHora, statusProcesso) VALUES (2, " + (servicoAtivo + 50) + ", '" + dataAtualInterpolado + "', 'Ativo')";
                 st2.executeUpdate(processosMI2Ativo);
