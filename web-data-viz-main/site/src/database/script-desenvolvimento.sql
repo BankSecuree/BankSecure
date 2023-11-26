@@ -78,8 +78,11 @@ FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina) ON DELETE CASCADE
 CREATE TABLE componente (
 	idComponente INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45),  
-    unidadeMedida VARCHAR(10)
+    unidadeMedida VARCHAR(60),
+    usoCPU DOUBLE,
+    temperatura DOUBLE
 );
+
 
 create table alertas (
 	id int primary key auto_increment,
