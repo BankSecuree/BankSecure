@@ -241,7 +241,7 @@ INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina) VALUES ('SI-1', 1, 1);
 -- COMPONENTE
 INSERT INTO componente (nome, unidadeMedida) VALUES
 -- ('CPU', 'GHZ'), ('Memória', 'GB'), ('Disco', 'KB'),
-('CPU', '%'), ('Memória', '%'), ('Disco', '%');
+('CPU', '%'), ('Memória', '%'), ('Disco', '%'),('Temperatura de CPU',"°C");
 
 -- MAQUINA COMPONENTE
 INSERT INTO maquinaComponente (fkMaquina, fkComponente) VALUES (1, 1), (2, 2);
