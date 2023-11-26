@@ -2,7 +2,7 @@ let arrayAgencias = []
 let arrayMaquinas = []
 let arrayNomeMaquinas = []
 
-function exibirListaAgencias() {
+function exibirListaAgencias(isTemperatura) {
   fetch(`/dashAgencias/exibirListaAgencias/${sessionStorage.ID_USUARIO}`)
     .then(function (resposta) {
       if (resposta.ok) {
@@ -34,7 +34,14 @@ function exibirListaAgencias() {
             lista.appendChild(opcao)
             // alert(arrayAgencias[i])
           }
-          pegarMaquinas();
+          pegarMaquinas(isTemperatura);
+
+          if(isTemperatura == true){
+            atualizarMaiorTemp(resposta[0].idAgencia);
+            atualizarMaiorUso(resposta[0].idAgencia);
+            atualizarMenorUso(resposta[0].idAgencia);
+          }
+         
         });
       } else {
         throw "Houve um erro na API!";
@@ -265,7 +272,7 @@ function atualizarCards() {
 
 }
 
-function pegarMaquinas() {
+function pegarMaquinas(isTemperatura) {
   arrayMaquinas = [];
   arrayNomeMaquinas = [];
 
@@ -299,11 +306,16 @@ function pegarMaquinas() {
     console.log("ESTOU NO THEN DO pegar dados das maquinas()!")
 
     if (resposta.ok) {
+    
       console.log("================================")
       console.log(resposta);
       console.log("================================")
 
       resposta.json().then(json => {
+        if(isTemperatura == true){
+          atualizarMenorTemp(json[0].idMaquina);
+          pegarNomeMaquina(null,json[0].idMaquina);
+      }
 
         console.log(JSON.stringify(json));
         console.log(json);

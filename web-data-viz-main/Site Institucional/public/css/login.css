@@ -1,0 +1,67 @@
+:root {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  background-image: url(../assets/img/fundo-city.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+a {
+  color: #1E94CB;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #06b19a;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Nunito", sans-serif;
+}
+
+.form-control, .input-group-text{
+  background-color: transparent;
+  border: 2px solid #69D1C5;
+  border-radius: 0%;
+  color: white;
+}
+
+.form-label{
+  color: white;
+}
+
+.text-small{
+  color: white;
+  text-align: center;
+}
+
+.form-check-label, .small{
+  color: white;
+}
+
+.btn-primary {
+  background-color: transparent;
+  color: #ffffff;
+  border-color: #E8F0FF;
+  border: 5%;
+}
+
+.btn-primary:hover {
+  background-color: #E8F0FF;
+  color: #1E94CB;
+  border-color: #1e2532;
+  font-weight: bold;
+}
+
+.card{
+  background-color: #171627f8;
+}
