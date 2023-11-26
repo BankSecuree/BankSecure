@@ -223,12 +223,18 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-<script src="assets/js/dashAnalistaIndex.js"></script>
+<!-- <script src="assets/js/dashAnalistaIndex.js"></script> -->
 <script>
   exibirInfos();
   //graficoAgencia();
   exibirListaAgencias();
   esconder()
+  function esconder() {
+  $('.divAlertas').hide();
   
+    $('.bell').attr('valor-alerta', 2);
+  
+}
+$('.bell').attr('valor-alerta', 2);
 
 </script>

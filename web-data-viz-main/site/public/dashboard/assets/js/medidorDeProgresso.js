@@ -135,24 +135,24 @@ function plotarGrafico(respostaCpu, respostaDisco, respostaMemoria, idEmpresa, p
 
     // Extrair horas únicas dos dados de CPU
     respostaCpu.forEach((item) => {
-        if (!labels.includes(`${item.hora}H`)) {
-            labels.push(`${item.hora}H`);
+        if (!labels.includes(item.hora)) {
+            labels.push(item.hora);
         }
         dados1.push(item.media_valor);
     });
 
     // Extrair horas únicas dos dados de Disco
     respostaDisco.forEach((item) => {
-        if (!labels.includes(`${item.hora}H`)) {
-            labels.push(`${item.hora}H`);
+        if (!labels.includes(item.hora)) {
+            labels.push(item.hora);
         }
         dados3.push(item.media_valor);
     });
 
     // Extrair horas únicas dos dados de Memória
     respostaMemoria.forEach((item) => {
-        if (!labels.includes(`${item.hora}H`)) {
-            labels.push(`${item.hora}H`);
+        if (!labels.includes(item.hora)) {
+            labels.push(item.hora);
         }
         dados2.push(item.media_valor);
     });
