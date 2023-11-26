@@ -1538,6 +1538,49 @@ h6 {
   width: 95%;
 }
 
+--DASH BOOS
+
+.ranque {
+  text-align: start;
+}
+
+/* CSS */
+.ranque div {
+  margin-bottom: 40px; 
+}
+
+.ranque div:nth-child(odd) {
+  margin-bottom: 0; 
+}
+
+.juncao {
+  display: flex;
+  justify-content: start;
+}
+
+.componente-classe {
+  padding-right: 20px;
+}
+
+.componente-select {
+  color: white;
+  background-color: #002F5C;
+  border-radius: 2px;
+  border: #012970 solid 2px;
+
+}
+
+.tipo-agencia-select {
+  color: white;
+  background-color: #002F5C;
+  border-radius: 2px;
+  border: #012970 solid 2px;
+}
+
+.tipo-agencia-select:hover {
+  border: #018ace 3px solid;
+}
+ 
 .btn-group-dashboard{
   display: flex;
   width: 98%;
