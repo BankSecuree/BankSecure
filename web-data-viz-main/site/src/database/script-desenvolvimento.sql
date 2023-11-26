@@ -89,7 +89,7 @@ SELECT p1.valor AS processoAtivo, p2.valor AS processoInativo, so FROM processo 
 		INNER JOIN maquina ON p1.fkMaquina = idMaquina
 		WHERE p1.statusProcesso = 'Ativo' AND p2.statusProcesso = 'Inativo' AND p1.fkMaquina = 1 AND p2.fkMaquina = 1
 			ORDER BY p1.dataHora DESC LIMIT 1; -- CERTOOOOOOOOOOOOOOO 
-            use banksecure;
+
             select * from processo;
             select * from maquina;
 
@@ -205,26 +205,6 @@ BEGIN
 END//
 DELIMITER ;
 
--- CONTA BANK SECURE 
-DROP USER IF EXISTS 'user_bankSecure'@'localhost';
-CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'Urubu_100';
-GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';
-GRANT EXECUTE ON PROCEDURE cadastrar_empresaGerente to 'user_bankSecure'@'localhost';
-GRANT EXECUTE ON PROCEDURE cadastrarAgencia to 'user_bankSecure'@'localhost';
-GRANT EXECUTE ON PROCEDURE cadastrar_maquinaComponente to 'user_bankSecure'@'localhost';
-GRANT EXECUTE ON  PROCEDURE cadastrar_tipoMaquina to 'user_bankSecure'@'localhost';
-FLUSH PRIVILEGES;
-
--- CONTA ITAU
-DROP USER IF EXISTS 'bs_itau'@'localhost';
-CREATE USER 'bs_itau'@'localhost' IDENTIFIED BY 'Itau_100';
-GRANT INSERT, SELECT ON bankSecure.registros TO 'bs_itau'@'localhost';
-GRANT INSERT, SELECT ON bankSecure.maquinaComponente TO 'bs_itau'@'localhost';
-GRANT INSERT, SELECT ON bankSecure.maquina TO 'bs_itau'@'localhost';
-GRANT EXECUTE ON PROCEDURE inserirDadosMaquina to 'bs_itau'@'localhost';
-FLUSH PRIVILEGES;
-
-
 
 -- ADMIN
 INSERT INTO empresa (razaoSocial, cnpjEmpresa, idEmpresa) VALUES ('Bank Secure', 12345678901234, 1);
@@ -252,10 +232,10 @@ INSERT INTO funcionarioAgencia VALUES (2,2);
 INSERT INTO tipoMaquina VALUES (1,"Servidor"), (2,"Caixa Eletrônico");
 
 -- MAQUINA
-INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina) VALUES ('MI-1', 1, 2);
-INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina) VALUES ('MI-2', 1, 2);
-INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina) VALUES ('MI-3', 1, 2);
-INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina) VALUES ('SI-1', 1, 1);
+INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina,macAddress,localizacao,so) VALUES ('MI-1', 1, 2,"A2-2M-3D-3F-6C","69918-130","Ubuntu 20.04");
+INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina,macAddress,localizacao,so) VALUES ('MI-2', 1, 2,"C6-9N-5A-1A-7B","69918-130","Ubuntu 20.04");
+INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina,macAddress,localizacao,so) VALUES ('MI-3', 1, 2,"5C-V3-9D-7A-8B","69918-130","Ubuntu 20.04");
+INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina,macAddress,localizacao,so) VALUES ('SI-1', 1, 1,"9B-2A-4R-3A-9K","69918-130","Ubuntu 20.04");
 
 -- SERVIDOR
 -- INSERT INTO servidor (nome, fkMaquina) VALUES ('SV-1', 1);
@@ -414,3 +394,23 @@ FROM
         @StartDate + INTERVAL (t.a + b.a * 10 + c.a * 100 + d.a * 1000) HOUR <= @EndDate) a
 WHERE
     @StartDate + INTERVAL a.a HOUR <= @EndDate;
+
+
+-- CONTA BANK SECURE 
+DROP USER IF EXISTS 'user_bankSecure'@'localhost';
+CREATE USER 'user_bankSecure'@'localhost' IDENTIFIED BY 'Urubu_100';
+GRANT ALL ON bankSecure.* TO 'user_bankSecure'@'localhost';
+GRANT EXECUTE ON PROCEDURE cadastrar_empresaGerente to 'user_bankSecure'@'localhost';
+GRANT EXECUTE ON PROCEDURE cadastrarAgencia to 'user_bankSecure'@'localhost';
+GRANT EXECUTE ON PROCEDURE cadastrar_maquinaComponente to 'user_bankSecure'@'localhost';
+GRANT EXECUTE ON  PROCEDURE cadastrar_tipoMaquina to 'user_bankSecure'@'localhost';
+FLUSH PRIVILEGES;
+
+-- CONTA ITAU
+DROP USER IF EXISTS 'bs_itau'@'localhost';
+CREATE USER 'bs_itau'@'localhost' IDENTIFIED BY 'Itau_100';
+GRANT INSERT, SELECT ON bankSecure.registros TO 'bs_itau'@'localhost';
+GRANT INSERT, SELECT ON bankSecure.maquinaComponente TO 'bs_itau'@'localhost';
+GRANT INSERT, SELECT ON bankSecure.maquina TO 'bs_itau'@'localhost';
+GRANT EXECUTE ON PROCEDURE inserirDadosMaquina to 'bs_itau'@'localhost';
+FLUSH PRIVILEGES;
