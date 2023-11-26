@@ -352,6 +352,7 @@ function handleComponenteChange(event) {
 
     // Iniciar novo intervalo com base na seleção atual
     iniciarIntervalo();
+    
 }
 
 function handleTipoAgenciaChange(event) {
@@ -370,12 +371,7 @@ function handleTipoAgenciaChange(event) {
 
 function iniciarIntervalo() {
     // Iniciar novo intervalo com base na seleção atual
-    intervaloId = setInterval(function () {
-        obterDadosGrafico(
-            getNumeroDoComponente(selectComponente.value),
-            selectTipoAgencia.value
-        );
-    }, 3000);
+
 }
 
 // Função auxiliar para obter o número do componente com base no valor da select box
