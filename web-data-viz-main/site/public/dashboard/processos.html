@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>BankSecure</title>
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+    <!-- CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+    <!-- Main CSS File -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="assets/css/style.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+
+        <!-- Logo -->
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="index.html" class="logo d-flex align-items-center">
+                <img src="assets/img/logo.png" alt="">
+                <span class="d-none d-lg-block">BankSecure</span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+        </div>
+
+
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+
+                <!-- <button id="btnAlerta" class="btnAlertas">
+                    <i class="fa fa-bell bell"></i>
+                </button> -->
+
+                <div class="divAlertas col-lg-4 col-md-5">
+
+                </div>
+
+                <br>
+
+
+                <li class="nav-item dropdown pe-3">
+                    <!-- Foto e Nome -->
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <img id="foto-usuario" class="rounded-circle">
+                        <span class="d-none d-md-block" id="nome-usuario"></span>
+                    </a>
+
+                </li>
+
+            </ul>
+        </nav><!-- End Icons Navigation -->
+    </header>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <!-- Dashboard Nav -->
+            <li class="nav-item">
+                <a id="aDash" class="nav-link collapsed" href="">
+                    <i class="bi bi-grid"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="dashboardTemperaturaUso.html">
+                    <i class="bi bi-thermometer-half"></i>
+                    <span>Dashboard Temperatura</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="processos.html">
+                    <i class="bi bi-layout-text-window-reverse"></i>
+                    <span>Dashboard de Processos</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="agencias.html">
+                    <i class="bi bi-layout-text-window-reverse"></i>
+                    <span>Agências</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="faq.html">
+                    <i class="bi bi-question-circle"></i>
+                    <span>F.A.Q</span>
+                </a>
+            </li>
+
+            <li class="nav-heading">CONTA</li>
+
+            <!-- Perfil Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="conta_perfil.html">
+                    <i class="bi bi-person"></i>
+                    <span>Perfil</span>
+                </a>
+            </li>
+
+        </ul>
+    </aside>
+
+    <main id="main" class="main">
+
+        <!-- <div id="divAlertas" style="width: 200px;height: 200px;background-color: rgba(93, 179, 240, 0.403);"></div> -->
+
+        <div class="pagetitle">
+            <h1>Dashboard</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="indexAnalista.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="indexAnalista.html">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Processos</li>
+                </ol>
+            </nav>
+        </div>
+
+        <section class="section dashboard">
+            <div class="row">
+
+                <!-- Colunas do Select e CPU | RAM | Disco -->
+                <div class="col-lg-12">
+                    <div class="row">
+
+                        <div class="col-xxl-4 col-md-4">
+                            <div class="card info-card sales-card">
+                                <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
+                                    <h5>Selecionar Agência</h5>
+                                    <select name="" id="listaAgencias" onchange="atualizarGrafico(), listaMaquinas()">
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-4 col-md-4">
+                            <div class="card info-card sales-card">
+                                <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
+                                    <h5>Selecionar Maquina</h5>
+                                    <select name="" id="listaMaquinas" onchange="atualizarGrafico()">
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-4 col-md-4">
+                            <div class="card info-card sales-card">
+                                <div style="margin: 10px;display: flex;justify-content: center;flex-direction: column;">
+                                    <h5>Selecionar Processo</h5>
+                                    <!-- <br> -->
+                                    <select name="" id="selectProcesso" onchange="atualizarGrafico()">
+                                        <option value="Ativo">Ativos</option>
+                                        <option value="Inativo">Inativos</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div><!-- End Card Select -->
+
+                        <!-- Gráfico Principal -->
+                        <div class="col-12 col-xxl-8 col-xl-8 col">
+                            <div class="card">
+
+                                <div class="filter">
+                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                            class="bi bi-three-dots"></i></a>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                        <li class="dropdown-header text-start">
+                                            <h6>Filter</h6>
+                                        </li>
+
+                                        <li><a class="dropdown-item" href="#">Today</a></li>
+                                        <li><a class="dropdown-item" href="#">This Month</a></li>
+                                        <li><a class="dropdown-item" href="#">This Year</a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="card-body">
+                                    <h5 class="card-title">Gráfico <span>/ Hoje</span></h5>
+
+                                    <!-- Line Chart -->
+                                    <div id="reportsChart"></div>
+                                    <!-- End Line Chart -->
+
+                                </div>
+
+                            </div>
+                        </div><!-- End Reports -->
+
+                        <div id="divKpi" class="col-lg-4">
+
+                            <div class="col-xxl-12 col-md-12">
+                                <div class="card info-card sales-card">
+
+                                    <div class="card-body">
+                                        <h5 class="card-title">Sistema Operacional</h5>
+
+                                        <div class="d-flex align-items-center">
+                                            <div
+                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <!-- <i class="bi bi-cpu"></i> -->
+                                                <img src="assets/img/sistema-operacional.png" style="width: 28px;height:28px">
+                                            </div>
+                                            <div class="ps-3">
+                                                <h6 id="h4-so">%</h6>
+                                                <span id="msg-so" class="small pt-1 fw-bold">...</span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div><!-- End Card CPU -->
+
+                            <!-- Card Ram -->
+                            <div class="col-xxl-12 col-md-12">
+                                <div class="card info-card revenue-card">
+
+                                    <div class="card-body">
+                                        <h5 class="card-title">Processos ativos <span>| Agora</span></h5>
+
+                                        <div class="d-flex align-items-center">
+                                            <div
+                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <!-- <i class="bi bi-sd-card"></i> -->
+                                                <img src="assets/img/configuracao.png" style="width: 28px;height:28px">
+                                            </div>
+                                            <div class="ps-3">
+                                                <h6 id="h4-proatv">%</h6>
+                                                <span id="msg-proatv" class="small pt-1 fw-bold">...</span> <img src="../assets/img/sinal-de-interrogacao.png" style="height: 15px;">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div><!-- End Card Ram -->
+
+                            <!-- Card Disk -->
+                            <div class="col-xxl-12 col-md-12">
+
+                                <div class="card info-card customers-card">
+
+                                    <div class="card-body">
+                                        <h5 class="card-title">Processos inativos <span>| Agora</span></h5>
+
+                                        <div class="d-flex align-items-center">
+                                            <div
+                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+
+                                                <!-- Icon -->
+                                                <img src="assets/img/configuracao.png" style="width: 28px;height:28px">
+                                                <!-- <svg xmlns="http://www.w3.org/2000/svg" style="width: 28px;height:28px"
+                                                    width="16" height="16" fill="currentColor" class="bi bi-floppy"
+                                                    viewBox="0 0 16 16">
+                                                    <path d="M11 2H9v3h2V2Z" />
+                                                    <path
+                                                        d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0ZM1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5Zm3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4v4.5ZM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5V15Z" />
+                                                </svg> -->
+
+                                            </div>
+                                            <div class="ps-3">
+                                                <h6 id="h4-proIntv">%</h6>
+                                                <span id="msg-proIntv" class="small pt-1 fw-bold">...</span> <img src="../assets/img/sinal-de-interrogacao.png" style="height: 15px;">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div><!-- End Card Disk -->
+
+                        </div>
+
+
+
+                        
+
+                    </div>
+                </div>
+
+            </div>
+            <!-- <button onclick="atualizarGrafico()">aaaaaaaa</button> -->
+        </section>
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="copyright">
+            &copy; Copyright <strong><span>BankSecure</span></strong>. All Rights Reserved
+        </div>
+    </footer>
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+        <i class="bi bi-arrow-up-short"></i>
+    </a>
+
+</body>
+
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/dashAnalistaProcessos.js"></script>
+<script>
+
+    let elemento = document.querySelector("#reportsChart");
+
+    let opcao = {
+        series: [{
+            name: 'Usando em %',
+        }],
+        xaxis: {
+            type: 'datetime',
+        },
+        chart: {
+            height: 350,
+            type: 'area',
+            toolbar: {
+                show: false
+            },
+        },
+        markers: {
+            size: 5
+        },
+        colors: ['#4154f1'],
+        fill: {
+            type: "gradient",
+            gradient: {
+                shadeIntensity: 1,
+                opacityFrom: 0.3,
+                opacityTo: 0.4,
+                stops: [0, 90, 100]
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'smooth',
+            width: 2
+        },
+        tooltip: {
+            x: {
+                format: 'dd/MM/yy HH:mm'
+            },
+        }
+    }
+
+    let grafico = new ApexCharts(elemento, opcao)
+    grafico.render();
+
+    atualizarGrafico();
+    exibirListaAgencias();
+    exibirInfos();
+    listaMaquinas();
+    esconder()
+</script>
+<!-- CORES: '#2eca6a', '#ff771d' -->

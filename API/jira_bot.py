@@ -87,6 +87,7 @@ class create_issue  :
         headers = {"Accept": "application/json"}
         response = requests.request("GET", url, headers=headers, auth=self.auth)
         chamados = []
+        print(response.text)
         for i in response.json()["issues"]:
             status_alerta = i["fields"]["status"]["name"]
             maquina_em_alerta = str.replace(
@@ -102,5 +103,5 @@ class create_issue  :
                 prioridade_alerta = int(i["fields"]["priority"]["id"])
                 if prioridade_alerta > int(self.prioridade):
                     self.__update_issue(id)
-                    status_alerta = i["fields"]["status"]["name"]
                     break
+create_issue("", "", "", "")
