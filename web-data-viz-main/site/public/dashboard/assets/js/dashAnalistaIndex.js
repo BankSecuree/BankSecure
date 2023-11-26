@@ -343,22 +343,33 @@ function pegarMaquinas(isTemperatura) {
 
 let soma = 0;
 
-function criarCard(nomeMaquina, nomeComponente, valor,nivel) {
+function criarCard(nomeMaquina, nomeComponente, valor, nivel, unidadeMedida) {
   soma++;
   $('.bell').attr('valor-alerta', soma);
 
   var div = document.querySelector(".divAlertas")
   var tela = document.createElement("div");
-  
+
   tela.classList.add("divAlerta")
 
-  if(nivel == 2){
+  if (nivel == 2) {
     tela.classList.add("divAtencao")
-    tela.innerHTML = `ATENÇÃO | ${nomeComponente} em: ${valor}% | Máquina: ${nomeMaquina}`;
-    
-  }else{
+    tela.innerHTML = `
+    <div class="alert alert-warning" role="alert">
+                        <svg class='botaoAlertaAmarelo' xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com/ License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>.botaoAlertaAmarelo{fill:#e5c706}</style><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/></svg>
+                        ATENÇÃO | ${nomeComponente} em: ${valor}${unidadeMedida} | Máquina: ${nomeMaquina}
+                    </div>
+    `;
+
+  } else {
     tela.classList.add("divProblema")
-    tela.innerHTML = `PROBLEMA | ${nomeComponente} em: ${valor}% | Máquina: ${nomeMaquina}`;
+    tela.innerHTML = `
+    <div class="alert alert-danger" role="alert">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="botaoAlertaVermelho" height="2em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>.botaoAlertaVermelho{fill:#ae0a0a}</style><path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/></svg>
+                        PROBLEMA | ${nomeComponente} em: ${valor}${unidadeMedida} | Máquina: ${nomeMaquina}
+    </div>
+   `;
+
 
   }
   div.appendChild(tela)
@@ -417,9 +428,10 @@ function pegarDadosGerais() {
           console.log(JSON.stringify(json));
           console.log(json);
 
-          let cpu = json[0].cpuu;
+          let cpu = json[0].UsoCpu;
           let memoria = json[0].memoria
           let disco = json[0].disco
+          let temperatura = json[0].temperatura
 
           console.log(`----- Maquina ${arrayNomeMaquinas[i]} -----`)
           console.log(`Memoria: ${memoria}`)
@@ -429,13 +441,13 @@ function pegarDadosGerais() {
           //atenção
           if (memoria > 60 && memoria < 70) {
 
-            criarCard(arrayNomeMaquinas[i], 'Memoria', memoria,2)
+            criarCard(arrayNomeMaquinas[i], 'Memoria', memoria, 2, "%")
             verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 2, 2)
             atencaoMemoria += 1;
 
           } else if (memoria >= 70) {
 
-            criarCard(arrayNomeMaquinas[i], 'Memoria', memoria,3)
+            criarCard(arrayNomeMaquinas[i], 'Memoria', memoria, 3, "%")
             verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 3, 2)
             problemaMemoria += 1;
 
@@ -448,13 +460,13 @@ function pegarDadosGerais() {
 
           if (cpu > 60 && cpu < 70) {
 
-            criarCard(arrayNomeMaquinas[i], 'CPU', cpu,2)
+            criarCard(arrayNomeMaquinas[i], 'CPU', cpu, 2, "%")
             verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 2, 1)
             atencaoCpu += 1;
 
           } else if (cpu >= 70) {
 
-            criarCard(arrayNomeMaquinas[i], 'CPU', cpu,3)
+            criarCard(arrayNomeMaquinas[i], 'CPU', cpu, 3, "%")
             verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 3, 1)
             problemaCpu += 1;
 
@@ -467,13 +479,13 @@ function pegarDadosGerais() {
 
           if (disco > 60 && disco < 70) {
 
-            criarCard(arrayNomeMaquinas[i], 'Disco', disco,2)
+            criarCard(arrayNomeMaquinas[i], 'Disco', disco, 2, "%")
             verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 2, 3)
             atencaoMemoria += 1;
 
           } else if (disco >= 70) {
 
-            criarCard(arrayNomeMaquinas[i], 'Disco', disco,3)
+            criarCard(arrayNomeMaquinas[i], 'Disco', disco, 3, "%")
             verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 3, 3)
             problemaMemoria += 1;
 
@@ -482,6 +494,16 @@ function pegarDadosGerais() {
             verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 1, 3)
             okMemoria += 1;
 
+          }
+
+          if(temperatura >= 80){
+            criarCard(arrayNomeMaquinas[i], 'Temperatura', temperatura, 3, "ºC")
+            verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 3, 4)
+          } else if (temperatura >= 60){
+            criarCard(arrayNomeMaquinas[i], 'Temperatura', temperatura, 3, "ºC")
+            verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 3, 4)
+          } else{
+            verificarNivel(arrayMaquinas[i], sessionStorage.ID_EMPRESA, 1, 4)
           }
 
           // criarCard(cpu,memoria,disco,arrayNomeMaquinas[i])
@@ -516,7 +538,7 @@ $('#btnAlerta').on('click', function () {
 
 
 function exibirGraficoDonut(option) {
-  
+
   span = document.getElementById("optionSelecionada")
   var critico = 0;
   var alerta = 0;
@@ -528,77 +550,77 @@ function exibirGraficoDonut(option) {
   var atencaoCpu = 0;
   var problemaCpu = 0;
   var okCpu = 0;
-  
+
   var atencaoDisco = 0;
   var problemaDisco = 0;
   var okDisco = 0;
 
-  
-      if (option == 1) {
-        span.innerHTML = '| CPU'
-        critico = problemaCpu
-        alerta = atencaoCpu
-        ideal = okCpu
-      } else if (option == 2) {
-        span.innerHTML = '| Memória'
-        critico = problemaMemoria
-        alerta = atencaoMemoria
-        ideal = okMemoria
-      } else if (option == 3) {
-        span.innerHTML = '| Disco'
-        critico = problemaDisco
-        alerta = atencaoDisco
-        ideal = okDisco
-      }
 
-      var grafico = echarts.init(document.querySelector("#graficoDonut")).setOption({
-        tooltip: {
-          trigger: 'item'
-        },
-        legend: {
-          top: '5%',
-          left: 'center'
-        },
-        series: [{
-          name: 'Quantidade',
-          type: 'pie',
-          radius: ['40%', '70%'],
-          avoidLabelOverlap: false,
-          itemStyle: {
-            borderRadius: 10,
-            borderColor: '#fff',
-            borderWidth: 2
-          },
-          label: {
-            show: false,
-            position: 'center'
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: '18',
-              fontWeight: 'bold'
-            }
-          },
-          labelLine: {
-            show: false
-          },
-          data: [{
-            value: critico,
-            name: 'Crítico',
-            itemStyle: { color: '#FF7070' }
-          },
-          {
-            value: alerta,
-            name: 'Alerta',
-            itemStyle: { color: '#FEDB5F' }
-          },
-          {
-            value: ideal,
-            name: 'Ideal',
-            itemStyle: { color: '#91CC75' }
-          }
-          ],
-        }]
-      });
+  if (option == 1) {
+    span.innerHTML = '| CPU'
+    critico = problemaCpu
+    alerta = atencaoCpu
+    ideal = okCpu
+  } else if (option == 2) {
+    span.innerHTML = '| Memória'
+    critico = problemaMemoria
+    alerta = atencaoMemoria
+    ideal = okMemoria
+  } else if (option == 3) {
+    span.innerHTML = '| Disco'
+    critico = problemaDisco
+    alerta = atencaoDisco
+    ideal = okDisco
+  }
+
+  var grafico = echarts.init(document.querySelector("#graficoDonut")).setOption({
+    tooltip: {
+      trigger: 'item'
+    },
+    legend: {
+      top: '5%',
+      left: 'center'
+    },
+    series: [{
+      name: 'Quantidade',
+      type: 'pie',
+      radius: ['40%', '70%'],
+      avoidLabelOverlap: false,
+      itemStyle: {
+        borderRadius: 10,
+        borderColor: '#fff',
+        borderWidth: 2
+      },
+      label: {
+        show: false,
+        position: 'center'
+      },
+      emphasis: {
+        label: {
+          show: true,
+          fontSize: '18',
+          fontWeight: 'bold'
+        }
+      },
+      labelLine: {
+        show: false
+      },
+      data: [{
+        value: critico,
+        name: 'Crítico',
+        itemStyle: { color: '#FF7070' }
+      },
+      {
+        value: alerta,
+        name: 'Alerta',
+        itemStyle: { color: '#FEDB5F' }
+      },
+      {
+        value: ideal,
+        name: 'Ideal',
+        itemStyle: { color: '#91CC75' }
+      }
+      ],
+    }]
+  });
 }
