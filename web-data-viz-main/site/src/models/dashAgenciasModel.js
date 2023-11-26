@@ -107,21 +107,20 @@ FROM (
 
 function pegarDadosGerais(idMaquina) {
     console.log("ACESSEI O pegarDadosGerais \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function exibirDonut()");
-
     var instrucao = `
     select sum(valorM) as memoria, sum(valorC) as UsoCpu, sum(valorD) as disco, sum(valort) as temperatura
 from (
-    (select valor, dataHora, 'M' as tipo, valor as valorM, 0 AS valorC, 0 as valorD, valor as valort
-    from registros where fkComponente = 2 and fkMaquina = ${idMaquina} order by dataHora desc limit 1)
+    (select TOP 1 valor, dataHora, 'M' as tipo, valor as valorM, 0 AS valorC, 0 as valorD, valor as valort
+    from registros where fkComponente = 2 and fkMaquina = ${idMaquina} order by dataHora desc)
 union
-    (select valor, dataHora, 'C' as tipo, 0 as valorM, valor AS valorC, 0 as valorD, valor as valort
-    from registros where fkComponente = 1 and fkMaquina = ${idMaquina} order by dataHora desc limit 1)
+    (select TOP 1 valor, dataHora, 'C' as tipo, 0 as valorM, valor AS valorC, 0 as valorD, valor as valort
+    from registros where fkComponente = 1 and fkMaquina = ${idMaquina} order by dataHora desc)
 union
-    (select valor, dataHora, 'D' as tipo, 0 as valorM, 0 AS valorC, valor as valorD, valor as valort
-    from registros where fkComponente = 3 and fkMaquina = ${idMaquina} order by dataHora desc limit 1)
+    (select TOP 1  valor, dataHora, 'D' as tipo, 0 as valorM, 0 AS valorC, valor as valorD, valor as valort
+    from registros where fkComponente = 3 and fkMaquina = ${idMaquina} order by dataHora desc)
 union
-    (select valor, dataHora, 'T' as tipo, 0 as valorM, 0 AS valorC, valor as valorD, valor as valort
-    from registros where fkComponente = 4 and fkMaquina = ${idMaquina} order by dataHora desc limit 1)
+    (select TOP 1 valor, dataHora, 'T' as tipo, 0 as valorM, 0 AS valorC, valor as valorD, valor as valort
+    from registros where fkComponente = 4 and fkMaquina = ${idMaquina} order by dataHora desc)
 ) as retorno;`;
 
     console.log("Executando a instrução SQL: \n" + instrucao);
