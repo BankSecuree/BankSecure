@@ -20,10 +20,10 @@ function dadosTemperatura(idEmpresa, fkMaquina){
     if (idEmpresa === undefined) {
         return Promise.reject("idEmpresa ou idAgencia é undefined");
     }else{
-        var instrucao = `select valor, unidadeMedida, dataHora, fkAgencia, fkEmpresa, fkMaquina from registros join componente on idComponente = fkComponente 
+        var instrucao = `select top 7 valor, unidadeMedida, dataHora, fkAgencia, fkEmpresa, fkMaquina from registros join componente on idComponente = fkComponente 
         join maquina on idMaquina = fkMaquina
         join agencia on idAgencia = fkAgencia
-        join empresa on idEmpresa = fkEmpresa where idEmpresa = ${idEmpresa} and fkMaquina = ${fkMaquina} and fkComponente = 4 ORDER BY dataHora DESC LIMIT 7;`;
+        join empresa on idEmpresa = fkEmpresa where idEmpresa = ${idEmpresa} and fkMaquina = ${fkMaquina} and fkComponente = 4 ORDER BY dataHora DESC;`;
         return database.executar(instrucao);
     } 
 }
@@ -31,10 +31,10 @@ function dadosTemperatura(idEmpresa, fkMaquina){
 function dadosPorcentagem(idEmpresa, fkMaquina){
     console.log("Acessei a dadosPorcentagem model")
     console.log("#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    var instrucao = `select valor, unidadeMedida, dataHora, fkAgencia, fkEmpresa from registros join componente on idComponente = fkComponente 
+    var instrucao = `select top 7 valor, unidadeMedida, dataHora, fkAgencia, fkEmpresa from registros join componente on idComponente = fkComponente 
     join maquina on idMaquina = fkMaquina
     join agencia on idAgencia = fkAgencia
-    join empresa on idEmpresa = fkEmpresa where idEmpresa = ${idEmpresa} and fkMaquina = ${fkMaquina} and fkComponente = 1 ORDER BY dataHora DESC LIMIT 7;`
+    join empresa on idEmpresa = fkEmpresa where idEmpresa = ${idEmpresa} and fkMaquina = ${fkMaquina} and fkComponente = 1 ORDER BY dataHora DESC;`
     return database.executar(instrucao);
 }
 
@@ -42,10 +42,10 @@ function dadosPorcentagem(idEmpresa, fkMaquina){
 function kpiDadosTemperatura(idEmpresa,idAgencia){
     console.log("Acessei a kpiDadosTemperatura model")
     console.log("#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    var instrucao = `select valor, unidadeMedida, dataHora, fkAgencia, fkEmpresa from registros join componente on idComponente = fkComponente 
+    var instrucao = `select top 1 valor, unidadeMedida, dataHora, fkAgencia, fkEmpresa from registros join componente on idComponente = fkComponente 
     join maquina on idMaquina = fkMaquina
     join agencia on idAgencia = fkAgencia
-    join empresa on idEmpresa = fkEmpresa where idEmpresa = ${idEmpresa} and idAgencia = ${idAgencia} and fkComponente =4 ORDER BY dataHora DESC LIMIT 1;`
+    join empresa on idEmpresa = fkEmpresa where idEmpresa = ${idEmpresa} and idAgencia = ${idAgencia} and fkComponente =4 ORDER BY dataHora DESC;`
     return database.executar(instrucao);
 }
 
@@ -53,10 +53,10 @@ function kpiDadosTemperatura(idEmpresa,idAgencia){
 function kpiDadosUso(idEmpresa,idAgencia){
     console.log("Acessei a kpiDadosUso model")
     console.log("#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    var instrucao = `select valor, unidadeMedida, dataHora, fkAgencia, fkEmpresa from registros join componente on idComponente = fkComponente 
+    var instrucao = `select top 1 valor, unidadeMedida, dataHora, fkAgencia, fkEmpresa from registros join componente on idComponente = fkComponente 
     join maquina on idMaquina = fkMaquina
     join agencia on idAgencia = fkAgencia
-    join empresa on idEmpresa = fkEmpresa where idEmpresa = ${idEmpresa} and idAgencia = ${idAgencia} and unidadeMedida = "%" ORDER BY dataHora DESC LIMIT 1;`
+    join empresa on idEmpresa = fkEmpresa where idEmpresa = ${idEmpresa} and idAgencia = ${idAgencia} and unidadeMedida = "%" ORDER BY dataHora DESC;`
     return database.executar(instrucao);
 }
 
@@ -65,7 +65,7 @@ function maiorTemperaturaRel(idEmpresa, idAgencia) {
     var instrucao = `
     SELECT ROUND(MAX(valor), 2) AS maior_temperatura
     FROM (
-        SELECT valor
+        SELECT TOP 7 valor
         FROM registros
         JOIN componente ON idComponente = fkComponente
         JOIN maquina ON idMaquina = fkMaquina
@@ -73,7 +73,6 @@ function maiorTemperaturaRel(idEmpresa, idAgencia) {
         JOIN empresa ON idEmpresa = fkEmpresa
         WHERE idEmpresa = 2 AND idAgencia = 1 AND unidadeMedida = "°C"
         ORDER BY dataHora DESC
-        LIMIT 7
     ) AS ultimos_registros;`
     return database.executar(instrucao);
 }
@@ -84,7 +83,7 @@ function maiorUsoRel(idEmpresa,idAgencia){
 
     var instrucao = `SELECT ROUND(MAX(valor), 2) AS maior_uso
     FROM (
-        SELECT valor
+        SELECT TOP 7 valor
         FROM registros
         JOIN componente ON idComponente = fkComponente
         JOIN maquina ON idMaquina = fkMaquina
@@ -92,7 +91,6 @@ function maiorUsoRel(idEmpresa,idAgencia){
         JOIN empresa ON idEmpresa = fkEmpresa
         WHERE idEmpresa = ${idEmpresa} AND idAgencia = ${idAgencia} AND unidadeMedida = "%"
         ORDER BY dataHora DESC
-        LIMIT 7
     ) AS ultimos_registros;`
 
     return database.executar(instrucao);
@@ -104,7 +102,7 @@ function menorTemperaturaRel(idEmpresa,fkMaquina){
 
     var instrucao = `SELECT ROUND(MIN(valor), 2) AS menor_temperatura
     FROM (
-        SELECT valor
+        SELECT TOP 7 valor
         FROM registros
         JOIN componente ON idComponente = fkComponente
         JOIN maquina ON idMaquina = fkMaquina
@@ -112,7 +110,6 @@ function menorTemperaturaRel(idEmpresa,fkMaquina){
         JOIN empresa ON idEmpresa = fkEmpresa
         WHERE idEmpresa = ${idEmpresa} AND fkMaquina = ${fkMaquina} AND fkComponente = 4
         ORDER BY dataHora DESC
-        LIMIT 7
     ) AS ultimos_registros;`
 
     return database.executar(instrucao);
@@ -125,7 +122,7 @@ function menorUsoRel(idEmpresa,idAgencia){
 
     var instrucao = `SELECT ROUND(MIN(valor), 2) AS menor_uso
     FROM (
-        SELECT valor
+        SELECT TOP 7 valor
         FROM registros
         JOIN componente ON idComponente = fkComponente
         JOIN maquina ON idMaquina = fkMaquina
@@ -133,7 +130,6 @@ function menorUsoRel(idEmpresa,idAgencia){
         JOIN empresa ON idEmpresa = fkEmpresa
         WHERE idEmpresa = ${idEmpresa} AND idAgencia = ${idAgencia} AND unidadeMedida = "%"
         ORDER BY dataHora DESC
-        LIMIT 7
     ) AS ultimos_registros;`
 
     return database.executar(instrucao);
@@ -144,7 +140,7 @@ function mediaTemperaturaRel(idEmpresa,idAgencia){
 
     var instrucao = `SELECT ROUND(AVG(valor), 2) AS media_valores_temperatura
     FROM (
-        SELECT valor
+        SELECT TOP 7 valor
         FROM registros
         JOIN componente ON idComponente = fkComponente
         JOIN maquina ON idMaquina = fkMaquina
@@ -152,7 +148,6 @@ function mediaTemperaturaRel(idEmpresa,idAgencia){
         JOIN empresa ON idEmpresa = fkEmpresa
         WHERE idEmpresa = ${idEmpresa} AND idAgencia = ${idAgencia} AND fkComponente = 4
         ORDER BY dataHora DESC
-        LIMIT 7
     ) AS ultimos_registros;`
 
     return database.executar(instrucao);
@@ -164,7 +159,7 @@ function mediaUsoRel(idEmpresa,idAgencia){
 
     var instrucao = `SELECT ROUND(AVG(valor), 2) AS media_valores_uso
     FROM (
-        SELECT valor
+        SELECT TOP 7 valor
         FROM registros
         JOIN componente ON idComponente = fkComponente
         JOIN maquina ON idMaquina = fkMaquina
@@ -172,7 +167,6 @@ function mediaUsoRel(idEmpresa,idAgencia){
         JOIN empresa ON idEmpresa = fkEmpresa
         WHERE idEmpresa = ${idEmpresa} AND idAgencia = ${idAgencia} AND unidadeMedida = "%"
         ORDER BY dataHora DESC
-        LIMIT 7
     ) AS ultimos_registros;`
 
     return database.executar(instrucao);
@@ -181,7 +175,7 @@ function mediaUsoRel(idEmpresa,idAgencia){
 
 function pegarNomeMaquina(idEmpresa,idAgencia,fkMaquina) {
     console.log("Acessei a pegarNomeMaquina model");
-    var instrucao = `select
+    var instrucao = `select top 1
     maquina.nome as nomeMaquina
     from registros
     join componente on idComponente = fkComponente
@@ -189,8 +183,7 @@ function pegarNomeMaquina(idEmpresa,idAgencia,fkMaquina) {
     join agencia on idAgencia = fkAgencia
     join empresa on idEmpresa = fkEmpresa
     where idEmpresa = ${idEmpresa} and idAgencia = ${idAgencia} and fkMaquina = ${fkMaquina}
-    ORDER BY dataHora DESC
-    LIMIT 1;
+    ORDER BY dataHora DESC;
     `
     return database.executar(instrucao);
 }

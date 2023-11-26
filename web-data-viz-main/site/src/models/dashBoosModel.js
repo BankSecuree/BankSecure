@@ -64,6 +64,7 @@ function buscarUltimasMedidas(idGerente, componente, tipoAgencia, selectTipoAgen
     else {
         instrucao = `SELECT * FROM (
             SELECT
+                TOP 10
                 ag.idAgencia,
                 ag.apelido AS nomeAgencia,
                 r.valor AS mediaValor,
@@ -82,7 +83,6 @@ function buscarUltimasMedidas(idGerente, componente, tipoAgencia, selectTipoAgen
                 AND ag.idAgencia = ${tipoAgencia}
             ORDER BY
                 r.dataHora DESC
-            LIMIT 10
         ) AS subquery
         ORDER BY
             dataHora ASC;
@@ -127,6 +127,7 @@ function buscarMedidasEmTempoReal(idGerente, componente, tipoAgencia, selectTipo
     } else {
         instrucao = `SELECT * FROM (
             SELECT
+                TOP 1
                 ag.idAgencia,
                 ag.apelido AS nomeAgencia,
                 r.valor AS mediaValor,
@@ -145,7 +146,6 @@ function buscarMedidasEmTempoReal(idGerente, componente, tipoAgencia, selectTipo
                 AND ag.idAgencia = ${tipoAgencia}
             ORDER BY
                 r.dataHora DESC
-            LIMIT 1
         ) AS subquery
         ORDER BY
             dataHora ASC;`

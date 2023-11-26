@@ -21,7 +21,7 @@ function exibirListaMaquinas(idMaquina) {
 function exibirView(idUsuario, idMaquina) {
     console.log("ACESSEI O AGENCIAS  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function exibirListaAgencias()");
     var instrucao = `
-    SELECT * FROM registros JOIN componente ON idComponente = fkComponente WHERE fkMaquina = ${idMaquina} ORDER BY idRegistro DESC LIMIT 10;
+    SELECT TOP 10 * FROM registros JOIN componente ON idComponente = fkComponente WHERE fkMaquina = ${idMaquina} ORDER BY idRegistro DESC;
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
@@ -40,7 +40,7 @@ function dadosAnalista(agencia, componente) {
     console.log("ACESSEI O dashAnalistaModel \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function exibirDonut()");
 
     var instrucao = `
-    SELECT * FROM registros WHERE fkComponente = ${componente} AND fkMaquina = ${agencia} ORDER BY dataHora DESC LIMIT 7;
+    SELECT TOP 7* FROM registros WHERE fkComponente = ${componente} AND fkMaquina = ${agencia} ORDER BY dataHora DESC;
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);

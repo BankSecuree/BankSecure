@@ -41,6 +41,7 @@ function buscarUltimasMedidas(idEmpresa, periodo, componente, agencias) {
     //Instrucao para dia
     if (periodo == 'day') {
         instrucao = `SELECT
+        TOP 24
         HOUR(dataHora) AS hora,
         AVG(valor) AS media_valor, MAX(idRegistro) as id
         FROM registros JOIN maquina on fkMaquina = idMaquina
@@ -49,10 +50,11 @@ function buscarUltimasMedidas(idEmpresa, periodo, componente, agencias) {
         and dataHora >= NOW() - INTERVAL 1 DAY
         WHERE ${filtroPorAgencia}
         GROUP BY HOUR(dataHora)
-        ORDER BY id DESC LIMIT 24;
+        ORDER BY id DESC;
 `
     } else if (periodo == "month") {
         instrucao = `SELECT
+        TOP 30
         DAY(dataHora) AS hora,
         AVG(valor) AS media_valor
     FROM registros
@@ -65,12 +67,13 @@ function buscarUltimasMedidas(idEmpresa, periodo, componente, agencias) {
         (${filtroPorAgencia})
 
     GROUP BY hora
-    ORDER BY hora DESC LIMIT 30;
+    ORDER BY hora DESC;
     
     ;
         `
     } else if (periodo == "year") {
         instrucao = `SELECT
+        TOP 12
         DATE_FORMAT(dataHora, '%Y-%m') AS hora,
         AVG(valor) AS media_valor
         FROM registros
@@ -83,7 +86,7 @@ function buscarUltimasMedidas(idEmpresa, periodo, componente, agencias) {
         AND
         (${filtroPorAgencia})
         GROUP BY hora
-        ORDER BY hora DESC LIMIT 12;`
+        ORDER BY hora DESC;`
     }
 
     // console.log(`Executando a instrucao SQL \n` + instrucao);
@@ -98,6 +101,7 @@ function buscarMedidasTempoReal(idEmpresa, periodo, componente) {
 
     if (periodo == 'day') {
         instrucao = `SELECT
+            TOP 1
             HOUR(dataHora) AS hora,
             AVG(valor) AS media_valor
             FROM registros JOIN maquina on fkMaquina = idMaquina
@@ -105,10 +109,11 @@ function buscarMedidasTempoReal(idEmpresa, periodo, componente) {
             JOIN empresa on fkEmpresa = idEmpresa and fkEmpresa = ${idEmpresa} and fkComponente = ${componente}
             and dataHora >= NOW() - INTERVAL 1 DAY
             GROUP BY HOUR(dataHora)
-            ORDER BY hora DESC LIMIT 1;
+            ORDER BY hora DESC;
     `
     } else if (periodo == "month") {
         instrucao = `SELECT
+            TOP 1
             DATE_FORMAT(dataHora, '%Y-%m-%d') AS hora,
             AVG(valor) AS media_valor
             FROM registros JOIN maquina on fkMaquina = idMaquina
@@ -116,9 +121,10 @@ function buscarMedidasTempoReal(idEmpresa, periodo, componente) {
             JOIN empresa on fkEmpresa = idEmpresa and fkEmpresa = ${idEmpresa} and fkComponente = ${componente}
             and dataHora >= NOW() - INTERVAL 1 DAY
             GROUP BY DATE_FORMAT(dataHora, '%Y-%m-%d')
-            ORDER BY hora DESC LIMIT 1;`
+            ORDER BY hora DESC;`
     } else if (periodo == "year") {
         instrucao = `SELECT
+            TOP 1
             DATE_FORMAT(dataHora, '%Y-%m') AS hora,
             AVG(valor) AS media_valor
             FROM registros
@@ -129,7 +135,7 @@ function buscarMedidasTempoReal(idEmpresa, periodo, componente) {
             AND fkComponente = ${componente}
             AND dataHora >= NOW() - INTERVAL 1 YEAR
             GROUP BY hora
-            ORDER BY hora DESC LIMIT 1;`
+            ORDER BY hora DESC;`
     }
 
     // console.log(`Executando a instrucao SQL \n` + instrucao);
