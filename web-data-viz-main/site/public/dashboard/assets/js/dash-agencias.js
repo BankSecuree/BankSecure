@@ -319,7 +319,7 @@ function consultarTempo(idMaquina){
 
   fetch(`/dashAgencias/consultarPeloTempo/${idMaquina}/${inicio}/${fim}`).then((resposta) =>{
     resposta.json().then((valores) => {
-      alert(JSON.stringify(valores))
+      // alert(JSON.stringify(valores))
       valores.reverse()
       vt_cpu = []
       vt_memoria = []

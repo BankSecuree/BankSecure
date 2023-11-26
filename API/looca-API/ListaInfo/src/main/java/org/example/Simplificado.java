@@ -30,5 +30,11 @@ public class Simplificado {
         System.out.println(" - INFORMAÇÕES BÁSICAS DE MEMÓRIA: ");
         System.out.println(memoria);
 
+        System.out.println("MATEUS");
+        String processoAtivo = luquinhas.getGrupoDeServicos().getTotalServicosAtivos().toString();
+        System.out.println(processoAtivo);
+        String processoInativo = luquinhas.getGrupoDeServicos().getTotalServicosInativos().toString();
+        System.out.println(processoInativo);
+
     }
 }

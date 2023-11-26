@@ -18,6 +18,7 @@ class create_issue  :
         self.url = "https://banksecure.atlassian.net/rest/api/3"
         self.auth = HTTPBasicAuth(
             "suporte.banksecure@gmail.com",
+            "ATATT3xFfGF0pvKfx5G_GNvHurEn8sU7cZWpe-NyahA9sj8lqKQAI4wmrZvEXSMrzxsh5CghwZj_uuKStqELhCbwoE6UyZJ_TpasIcPVdx9vKsxU7pGPK9nMt-jTAj3axZz6c7OutDeD0cOGo1ehA_nyCbnviQiWZo_irZKW4HGdBnom1CuDeJE=EDFC2137",
             jira_api_token
         )
         self.__verify_issue()
@@ -86,6 +87,7 @@ class create_issue  :
         headers = {"Accept": "application/json"}
         response = requests.request("GET", url, headers=headers, auth=self.auth)
         chamados = []
+        print(response.text)
         for i in response.json()["issues"]:
             status_alerta = i["fields"]["status"]["name"]
             maquina_em_alerta = str.replace(
@@ -101,5 +103,5 @@ class create_issue  :
                 prioridade_alerta = int(i["fields"]["priority"]["id"])
                 if prioridade_alerta > int(self.prioridade):
                     self.__update_issue(id)
-                    status_alerta = i["fields"]["status"]["name"]
                     break
+create_issue("", "", "", "")

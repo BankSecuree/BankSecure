@@ -65,10 +65,10 @@ def rudge_ramos():
         disco_m3 = disco_m1 * 0.95
         disco_m3 = 0 if disco_m3 <= 0 else disco_m3
 
-        if(problema >= 5):
-            cpu_m1 += random.uniform(40, 70)
-            ram_m1 += random.uniform(10, 20)
-            disco_m1 += random.uniform(30, 40)
+        # if(problema >= 5):
+        #     cpu_m1 += random.uniform(40, 70)
+        #     ram_m1 += random.uniform(10, 20)
+        #     disco_m1 += random.uniform(30, 40)
 
 
         cursor.execute(f"CALL inserirDadosMaquina ('MI-1', 'Memória', {ram_m1:.1f}, 'CPU', {cpu_m1:.1f}, 'Disco', {disco_m1:.1f}, NOW());")
