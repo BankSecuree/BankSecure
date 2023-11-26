@@ -18,6 +18,7 @@ class create_issue  :
         self.url = "https://banksecure.atlassian.net/rest/api/3"
         self.auth = HTTPBasicAuth(
             "suporte.banksecure@gmail.com",
+            "ATATT3xFfGF0pvKfx5G_GNvHurEn8sU7cZWpe-NyahA9sj8lqKQAI4wmrZvEXSMrzxsh5CghwZj_uuKStqELhCbwoE6UyZJ_TpasIcPVdx9vKsxU7pGPK9nMt-jTAj3axZz6c7OutDeD0cOGo1ehA_nyCbnviQiWZo_irZKW4HGdBnom1CuDeJE=EDFC2137",
             jira_api_token
         )
         self.__verify_issue()
