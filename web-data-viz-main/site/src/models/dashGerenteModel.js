@@ -41,7 +41,6 @@ function buscarUltimasMedidas(idEmpresa, periodo, componente, agencias) {
     //Instrucao para dia
     if (periodo == 'day') {
         instrucao = `SELECT
-        TOP 24
         HOUR(dataHora) AS hora,
         AVG(valor) AS media_valor, MAX(idRegistro) as id
         FROM registros JOIN maquina on fkMaquina = idMaquina
@@ -54,7 +53,6 @@ function buscarUltimasMedidas(idEmpresa, periodo, componente, agencias) {
 `
     } else if (periodo == "month") {
         instrucao = `SELECT
-        TOP 30
         DAY(dataHora) AS hora,
         AVG(valor) AS media_valor
     FROM registros
@@ -73,7 +71,6 @@ function buscarUltimasMedidas(idEmpresa, periodo, componente, agencias) {
         `
     } else if (periodo == "year") {
         instrucao = `SELECT
-        TOP 12
         DATE_FORMAT(dataHora, '%Y-%m') AS hora,
         AVG(valor) AS media_valor
         FROM registros
@@ -94,189 +91,7 @@ function buscarUltimasMedidas(idEmpresa, periodo, componente, agencias) {
 }
 
 
-function buscarMedidasTempoReal(idEmpresa, periodo, componente) {
-    let instrucao = ``
 
-    // console.log("Estou no medida model")
-
-    if (periodo == 'day') {
-        instrucao = `SELECT
-            TOP 1
-            HOUR(dataHora) AS hora,
-            AVG(valor) AS media_valor
-            FROM registros JOIN maquina on fkMaquina = idMaquina
-            JOIN agencia on fkAgencia = idAgencia
-            JOIN empresa on fkEmpresa = idEmpresa and fkEmpresa = ${idEmpresa} and fkComponente = ${componente}
-            and dataHora >= NOW() - INTERVAL 1 DAY
-            GROUP BY HOUR(dataHora)
-            ORDER BY hora DESC;
-    `
-    } else if (periodo == "month") {
-        instrucao = `SELECT
-            TOP 1
-            DATE_FORMAT(dataHora, '%Y-%m-%d') AS hora,
-            AVG(valor) AS media_valor
-            FROM registros JOIN maquina on fkMaquina = idMaquina
-            JOIN agencia on fkAgencia = idAgencia
-            JOIN empresa on fkEmpresa = idEmpresa and fkEmpresa = ${idEmpresa} and fkComponente = ${componente}
-            and dataHora >= NOW() - INTERVAL 1 DAY
-            GROUP BY DATE_FORMAT(dataHora, '%Y-%m-%d')
-            ORDER BY hora DESC;`
-    } else if (periodo == "year") {
-        instrucao = `SELECT
-            TOP 1
-            DATE_FORMAT(dataHora, '%Y-%m') AS hora,
-            AVG(valor) AS media_valor
-            FROM registros
-            JOIN maquina ON fkMaquina = idMaquina
-            JOIN agencia ON fkAgencia = idAgencia
-            JOIN empresa ON fkEmpresa = idEmpresa
-            WHERE fkEmpresa = ${idEmpresa}
-            AND fkComponente = ${componente}
-            AND dataHora >= NOW() - INTERVAL 1 YEAR
-            GROUP BY hora
-            ORDER BY hora DESC;`
-    }
-
-    // console.log(`Executando a instrucao SQL \n` + instrucao);
-    return database.executar(instrucao);
-
-}
-
-function kpiCorrelacao(idEmpresa, periodo, agencias){
-  agencias = agencias.split(",")
-  let filtroPorAgencia = " ";
-
-  for(let i = 0; i < agencias.length; i++){
-      filtroPorAgencia += `idAgencia = ${agencias[i]} OR `
-      console.log(agencias[i] + "  " + i)
-  }
-  filtroPorAgencia = filtroPorAgencia.slice(0, -3)
-  let instrucao = '';
-    if(periodo == 'day'){
-        instrucao = `SELECT
-        (SUM((disco - medias.media_disco) * (memoria - medias.media_memoria) * (cpuu - medias.media_cpu)) / COUNT(*))
-        / (SQRT(SUM(POW(disco - medias.media_disco, 2)) / COUNT(*)) * SQRT(SUM(POW(memoria - medias.media_memoria, 2)) / COUNT(*)) * SQRT(SUM(POW(cpuu - medias.media_cpu, 2))
-        / COUNT(*))) AS correlacao_disco_memoria_cpu,
-        (
-          SUM((disco - medias.media_disco) * (memoria - medias.media_memoria)) / COUNT(*)
-        ) / (SQRT(SUM(POW(disco - medias.media_disco, 2)) / COUNT(*)) * SQRT(SUM(POW(memoria - medias.media_memoria, 2)) / COUNT(*))) AS correlacao_disco_memoria,
-        
-        (
-          SUM((disco - medias.media_disco) * (cpuu - medias.media_cpu)) / COUNT(*)
-        ) / (SQRT(SUM(POW(disco - medias.media_disco, 2)) / COUNT(*)) * SQRT(SUM(POW(cpuu - medias.media_cpu, 2)) / COUNT(*))) AS correlacao_disco_cpu,
-        
-        (
-          SUM((memoria - medias.media_memoria) * (cpuu - medias.media_cpu)) / COUNT(*)
-        ) / (SQRT(SUM(POW(memoria - medias.media_memoria, 2)) / COUNT(*)) * SQRT(SUM(POW(cpuu - medias.media_cpu, 2)) / COUNT(*))) AS correlacao_memoria_cpu
-      FROM
-        vw_registrosEstruturados JOIN
-        (SELECT AVG(disco) AS media_disco, AVG(memoria) AS media_memoria, AVG(cpuu) AS media_cpu
-        FROM vw_registrosEstruturados
-                    JOIN maquina ON id = idMaquina
-            JOIN agencia ON fkAgencia = idAgencia
-            JOIN empresa ON fkEmpresa = idEmpresa
-          WHERE 
-          fkEmpresa = ${idEmpresa} AND DATE(Data) = CURDATE() AND
-          (${filtroPorAgencia})
-        ) AS medias
-                    JOIN maquina ON id = idMaquina
-            JOIN agencia ON fkAgencia = idAgencia
-            JOIN empresa ON fkEmpresa = idEmpresa
-          WHERE 
-          fkEmpresa = ${idEmpresa} AND
-        DATE(vw_registrosEstruturados.Data) = CURDATE() AND
-        (${filtroPorAgencia});`
-    }else if(periodo == 'month'){
-        instrucao = `SELECT
-        (
-          SUM((disco - medias.media_disco) * (memoria - medias.media_memoria) * (cpuu - medias.media_cpu)) / COUNT(*)
-        ) / (SQRT(SUM(POW(disco - medias.media_disco, 2)) / COUNT(*)) * SQRT(SUM(POW(memoria - medias.media_memoria, 2)) / COUNT(*)) * SQRT(SUM(POW(cpuu - medias.media_cpu, 2)) / COUNT(*))) AS correlacao_disco_memoria_cpu,
-        
-        (
-          SUM((disco - medias.media_disco) * (memoria - medias.media_memoria)) / COUNT(*)
-        ) / (SQRT(SUM(POW(disco - medias.media_disco, 2)) / COUNT(*)) * SQRT(SUM(POW(memoria - medias.media_memoria, 2)) / COUNT(*))) AS correlacao_disco_memoria,
-        
-        (
-          SUM((disco - medias.media_disco) * (cpuu - medias.media_cpu)) / COUNT(*)
-        ) / (SQRT(SUM(POW(disco - medias.media_disco, 2)) / COUNT(*)) * SQRT(SUM(POW(cpuu - medias.media_cpu, 2)) / COUNT(*))) AS correlacao_disco_cpu,
-        
-        (
-          SUM((memoria - medias.media_memoria) * (cpuu - medias.media_cpu)) / COUNT(*)
-        ) / (SQRT(SUM(POW(memoria - medias.media_memoria, 2)) / COUNT(*)) * SQRT(SUM(POW(cpuu - medias.media_cpu, 2)) / COUNT(*))) AS correlacao_memoria_cpu
-      FROM
-        vw_registrosEstruturados JOIN
-        (
-          SELECT 
-            AVG(disco) AS media_disco, 
-            AVG(memoria) AS media_memoria, 
-            AVG(cpuu) AS media_cpu 
-          FROM 
-            vw_registrosEstruturados
-            JOIN maquina ON id = idMaquina
-            JOIN agencia ON fkAgencia = idAgencia
-            JOIN empresa ON fkEmpresa = idEmpresa
-          WHERE 
-          fkEmpresa = ${idEmpresa} AND
-            MONTH(Data) = MONTH(CURDATE()) AND YEAR(Data) = YEAR(CURDATE()) AND
-            (${filtroPorAgencia})
-        ) AS medias
-        JOIN maquina ON id = idMaquina
-        JOIN agencia ON fkAgencia = idAgencia
-        JOIN empresa ON fkEmpresa = idEmpresa
-          WHERE 
-          fkEmpresa = ${idEmpresa} AND
-        MONTH(Data) = MONTH(CURDATE()) AND YEAR(Data) = YEAR(CURDATE()) AND
-        (${filtroPorAgencia});
-      `
-    }else if(periodo == 'year'){
-        instrucao = `SELECT
-        (
-          SUM((disco - medias.media_disco) * (memoria - medias.media_memoria) * (cpuu - medias.media_cpu)) / COUNT(*)
-        ) / (SQRT(SUM(POW(disco - medias.media_disco, 2)) / COUNT(*)) * SQRT(SUM(POW(memoria - medias.media_memoria, 2)) / COUNT(*)) * SQRT(SUM(POW(cpuu - medias.media_cpu, 2))
-        / COUNT(*))) AS correlacao_disco_memoria_cpu,
-        
-        (
-          SUM((disco - medias.media_disco) * (memoria - medias.media_memoria)) / COUNT(*)
-        ) / (SQRT(SUM(POW(disco - medias.media_disco, 2)) / COUNT(*)) * SQRT(SUM(POW(memoria - medias.media_memoria, 2)) / COUNT(*))) AS correlacao_disco_memoria,
-        
-        (
-          SUM((disco - medias.media_disco) * (cpuu - medias.media_cpu)) / COUNT(*)
-        ) / (SQRT(SUM(POW(disco - medias.media_disco, 2)) / COUNT(*)) * SQRT(SUM(POW(cpuu - medias.media_cpu, 2)) / COUNT(*))) AS correlacao_disco_cpu,
-        
-        (
-          SUM((memoria - medias.media_memoria) * (cpuu - medias.media_cpu)) / COUNT(*)
-        ) / (SQRT(SUM(POW(memoria - medias.media_memoria, 2)) / COUNT(*)) * SQRT(SUM(POW(cpuu - medias.media_cpu, 2)) / COUNT(*))) AS correlacao_memoria_cpu
-      FROM
-        vw_registrosEstruturados
-        JOIN (
-          SELECT 
-            AVG(disco) AS media_disco, 
-            AVG(memoria) AS media_memoria, 
-            AVG(cpuu) AS media_cpu 
-          FROM 
-            vw_registrosEstruturados
-            JOIN maquina ON id = idMaquina
-            JOIN agencia ON fkAgencia = idAgencia
-            JOIN empresa ON fkEmpresa = idEmpresa
-          WHERE 
-          fkEmpresa = ${idEmpresa} AND
-            Data >= CURDATE() - INTERVAL 1 YEAR AND
-            (${filtroPorAgencia})
-        ) AS medias
-        JOIN maquina ON id = idMaquina
-            JOIN agencia ON fkAgencia = idAgencia
-            JOIN empresa ON fkEmpresa = idEmpresa
-          WHERE 
-          fkEmpresa = ${idEmpresa} AND
-          Data >= CURDATE() - INTERVAL 1 YEAR AND
-          (${filtroPorAgencia});
-        `
-    }
-    // console.log(`Executando a instrucao SQL \n` + instrucao);
-    return database.executar(instrucao);
-
-}
 
 function horarioDePico(idEmpresa){
   instrucao = `
@@ -295,7 +110,5 @@ function horarioDePico(idEmpresa){
 module.exports = {
     dadosKpi,
     buscarUltimasMedidas,
-    buscarMedidasTempoReal,
-    kpiCorrelacao,
     horarioDePico
 }

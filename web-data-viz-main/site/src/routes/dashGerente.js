@@ -14,15 +14,6 @@ router.get("/ultimas/:idEmpresa/:periodo/:componente/:agencias", function (req, 
     dashGerenteController.buscarUltimasMedidas(req, res);
 });
 
-router.get("/tempo-real/:idEmpresa/:periodo/:componente", function (req, res) {
-    console.log("Estou na rota")
-    dashGerenteController.buscarMedidasTempoReal(req, res)
-})
-
-router.get("/kpicorrelacao/:idEmpresa/:periodo/:agencias", function(req, res){
-    console.log("Acessando a model gerente Kpi correlacao")
-    dashGerenteController.kpiCorrelacao(req, res)
-})
 
 router.get("/grafico-horario-de-pico/:idEmpresa", function(req, res){
     console.log("Acessando model horario de pico")
