@@ -1,5 +1,3 @@
-yourUsername.value = "gerenteitau@bs.com";
-yourPassword.value = "12345";
 function entrar() {
     // aguardar();
     
