@@ -37,7 +37,6 @@ function alterarPeriodoGraficos(periodo, agencias) {
     alterarPeriodoVizualizacao('cpu', periodo, agencias)
     alterarPeriodoVizualizacao('hd', periodo, agencias)
     alterarPeriodoVizualizacao('graficoPrincipal', periodo, agencias)
-    buscarKpisCorrelacao(sessionStorage.ID_EMPRESA, periodo, agencias)
 }
 
 function exibirKpiGerente(idEmpresa, periodo, componente, agencias) {
@@ -47,21 +46,28 @@ function exibirKpiGerente(idEmpresa, periodo, componente, agencias) {
             if (resposta.ok) {
 
                 if (resposta.status == 204) {
-                    throw "Nenhum resultado encontrado "
+                    throw "Nenhum resultado encontrado"
                 }
 
                 resposta.json().then(function (resposta) {
                     // console.log(resposta[0].media)
-
-
-                    valor = resposta[0].media;
+                    valor = resposta[0]["media"];
                     if (componente == 1) {
-                        cpu_info.innerHTML = `${valor.toFixed(2)}%`
+                        cpu_info_media.innerHTML = `${valor.toFixed(2)}%`
+                        // cpu_info_mediana.innerHTML = `${valor.toFixed(2)}%`
+                        // cpu_info_max.innerHTML = `${valor.toFixed(2)}%`
+                        // cpu_info_min.innerHTML = `${valor.toFixed(2)}%`
                     } else if (componente == 2) {
-                        ram_info.innerHTML = `${valor.toFixed(2)}%`
+                        ram_info_media.innerHTML = `${valor.toFixed(2)}%`
+                        // ram_info_mediana.innerHTML = `${valor.toFixed(2)}%`
+                        // ram_info_max.innerHTML = `${valor.toFixed(2)}%`
+                        // ram_info_min.innerHTML = `${valor.toFixed(2)}%`
                     }
                     else if (componente == 3) {
-                        hd_info.innerHTML = `${valor.toFixed(2)}%`
+                        hd_info_media.innerHTML = `${valor.toFixed(2)}%`
+                        // hd_info_mediana.innerHTML = `${valor.toFixed(2)}%`
+                        // hd_info_max.innerHTML = `${valor.toFixed(2)}%`
+                        // hd_info_min.innerHTML = `${valor.toFixed(2)}%`
                     }
 
 
@@ -126,6 +132,50 @@ function obterDadosGrafico(idEmpresa, periodo, componente, agencias) {
             console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`)
         })
 }
+
+function calcularCorrelacao(dados1, dados2) {
+    const mediaDados1 = dados1.reduce((total, valorAtual) => total + valorAtual, 0) / dados1.length;
+    const mediaDados2 = dados2.reduce((total, valorAtual) => total + valorAtual, 0) / dados2.length;
+
+    let numerador = 0;
+    let denominador1 = 0;
+    let denominador2 = 0;
+
+    for (let i = 0; i < dados1.length; i++) {
+        numerador += (dados1[i] - mediaDados1) * (dados2[i] - mediaDados2);
+        denominador1 += Math.pow(dados1[i] - mediaDados1, 2);
+        denominador2 += Math.pow(dados2[i] - mediaDados2, 2);
+    }
+
+    const correlacao = numerador / Math.sqrt(denominador1 * denominador2);
+
+    return correlacao;
+}
+
+function calcularKpisAnaliticas(dados) {
+    let kpisAnaliticas = {
+        mediana: 0,
+        minima: 0,
+        maxima: 0
+    
+    };
+
+    dados = dados.sort((a, b) => a - b);
+
+    if (dados.length % 2 !== 0) {
+        kpisAnaliticas.mediana = dados[Math.floor(dados.length / 2)];
+    } else {
+        let meio1 = dados[dados.length / 2 - 1];
+        let meio2 = dados[dados.length / 2];
+        kpisAnaliticas.mediana = Number ((meio1 + meio2) / 2).toFixed(2);
+    }
+    kpisAnaliticas.maxima = Number (dados[dados.length - 1]).toFixed(2)
+    kpisAnaliticas.minima = Number (dados[0]).toFixed(2)
+    return kpisAnaliticas;
+
+
+}
+
 
 function plotarGraficoPrincipal(respostaCpu, respostaDisco, respostaMemoria) {
     // console.log(`Iniciando a plotagem do gráfico`);
@@ -209,7 +259,7 @@ function plotarGraficoPrincipal(respostaCpu, respostaDisco, respostaMemoria) {
             scales: {
                 y: {
                     title: "",
-                    beginAtZero: true
+                    beginAtZero: false
                 },
                 x: {
                     title: "",
@@ -220,6 +270,25 @@ function plotarGraficoPrincipal(respostaCpu, respostaDisco, respostaMemoria) {
             }
         }
     });
+    kpisAnaliticasDisco = calcularKpisAnaliticas(dadosDisco)
+    kpisAnaliticasCpu = calcularKpisAnaliticas(dadosCpu)
+    kpisAnaliticasMemoria = calcularKpisAnaliticas(dadosMemoria)
+
+    hd_info_min.innerHTML = kpisAnaliticasDisco.minima + "%"
+    hd_info_max.innerHTML = kpisAnaliticasDisco.maxima + "%"
+    hd_info_mediana.innerHTML = kpisAnaliticasDisco.mediana + "%"
+    
+    ram_info_min.innerHTML = kpisAnaliticasMemoria.minima + "%"
+    ram_info_max.innerHTML = kpisAnaliticasMemoria.maxima + "%"
+    ram_info_mediana.innerHTML = kpisAnaliticasMemoria.mediana + "%"
+
+    cpu_info_min.innerHTML = kpisAnaliticasCpu.minima + "%"
+    cpu_info_max.innerHTML = kpisAnaliticasCpu.maxima + "%"
+    cpu_info_mediana.innerHTML = kpisAnaliticasCpu.mediana + "%"
+
+
+    exibirKpiCorrelacao(dadosCpu, dadosMemoria, dadosDisco);
+
 
     // setTimeout(() => atualizarGrafico(idEmpresa, periodo, componente, grafico, dados), 2000)
 }
@@ -295,28 +364,25 @@ async function dadosHorarioDePico(idEmpresa) {
 
 
 
-async function buscarKpisCorrelacao(idEmpresa, periodo, agencias) {
+function exibirKpiCorrelacao(dadosCpu, dadosMemoria, dadosDisco) {
     const discoCpu = document.getElementById("correlacao-disco-cpu")
     const discoMemoria = document.getElementById("correlacao-disco-memoria")
     const memoriaCpu = document.getElementById("correlacao-memoria-cpu")
-    const discoMemoriaCpu = document.getElementById("correlacao-disco-memoria-cpu")
+    
+    let correlacao_disco_cpu = calcularCorrelacao(dadosDisco, dadosCpu)
+    let correlacao_disco_memoria = calcularCorrelacao(dadosDisco, dadosMemoria)
+    let correlacao_memoria_cpu = calcularCorrelacao(dadosMemoria, dadosCpu)    
 
-    let resposta = await (fetch(`/dashGerente/kpicorrelacao/${idEmpresa}/${periodo}/${agencias}`));
-    let kpisCorrelacao = await resposta.json();
-    kpisCorrelacao = kpisCorrelacao["0"]
-    // console.log(kpisCorrelacao)
+    discoCpu.innerHTML = (correlacao_disco_cpu * 100).toFixed(2) + "%"
+    discoMemoria.innerHTML = (correlacao_disco_memoria * 100).toFixed(2) + "%"
+    memoriaCpu.innerHTML = (correlacao_memoria_cpu * 100).toFixed(2) + "%"
 
-    discoCpu.innerHTML = (kpisCorrelacao.correlacao_disco_cpu * 100).toFixed(2) + "%"
-    discoMemoria.innerHTML = (kpisCorrelacao.correlacao_disco_memoria * 100).toFixed(2) + "%"
-    memoriaCpu.innerHTML = (kpisCorrelacao.correlacao_memoria_cpu * 100).toFixed(2) + "%"
-    discoMemoriaCpu.innerHTML = (kpisCorrelacao.correlacao_disco_memoria_cpu * 100).toFixed(2) + "%"
-
-    if (Math.abs(kpisCorrelacao.correlacao_disco_cpu * 100) < 50) {
+    if (Math.abs(correlacao_disco_cpu * 100) < 30) {
         discoCpu.id
         discoCpu.classList.remove("text-success")
         discoCpu.classList.remove("text-warning")
         discoCpu.classList.add("text-danger")
-    } else if (Math.abs(kpisCorrelacao.correlacao_disco_cpu * 100) >= 50 && Math.abs(kpisCorrelacao.correlacao_disco_cpu * 100) < 70) {
+    } else if (Math.abs(correlacao_disco_cpu * 100) >= 30 && Math.abs(correlacao_disco_cpu * 100) < 50) {
         discoCpu.classList.remove("text-success")
         discoCpu.classList.add("text-warning")
         discoCpu.classList.remove("text-danger")
@@ -326,11 +392,11 @@ async function buscarKpisCorrelacao(idEmpresa, periodo, agencias) {
         discoCpu.classList.remove("text-danger")
     }
 
-    if (Math.abs(kpisCorrelacao.correlacao_disco_memoria * 100) < 50) {
+    if (Math.abs(correlacao_disco_memoria * 100) < 30) {
         discoMemoria.classList.remove("text-success")
         discoMemoria.classList.remove("text-warning")
         discoMemoria.classList.add("text-danger")
-    } else if (Math.abs(kpisCorrelacao.correlacao_disco_memoria * 100) >= 50 && Math.abs(kpisCorrelacao.correlacao_disco_memoria * 100) < 70) {
+    } else if (Math.abs(correlacao_disco_memoria * 100) >= 30 && Math.abs(correlacao_disco_memoria * 100) < 50) {
         discoMemoria.classList.remove("text-success")
         discoMemoria.classList.add("text-warning")
         discoMemoria.classList.remove("text-danger")
@@ -340,11 +406,11 @@ async function buscarKpisCorrelacao(idEmpresa, periodo, agencias) {
         discoMemoria.classList.remove("text-danger")
     }
 
-    if (Math.abs(kpisCorrelacao.correlacao_memoria_cpu * 100) < 50) {
+    if (Math.abs(correlacao_memoria_cpu * 100) < 30) {
         memoriaCpu.classList.remove("text-success")
         memoriaCpu.classList.remove("text-warning")
         memoriaCpu.classList.add("text-danger")
-    } else if (Math.abs(kpisCorrelacao.correlacao_memoria_cpu * 100) >= 50 && Math.abs(kpisCorrelacao.correlacao_memoria_cpu * 100) < 70) {
+    } else if (Math.abs(correlacao_memoria_cpu * 100) >= 30 && Math.abs(correlacao_memoria_cpu * 100) < 50) {
         memoriaCpu.classList.remove("text-success")
         memoriaCpu.classList.add("text-warning")
         memoriaCpu.classList.remove("text-danger")
@@ -354,22 +420,8 @@ async function buscarKpisCorrelacao(idEmpresa, periodo, agencias) {
         memoriaCpu.classList.remove("text-danger")
     }
 
-    if (Math.abs(kpisCorrelacao.correlacao_disco_memoria_cpu * 100) < 50) {
-        discoMemoriaCpu.classList.remove("text-success")
-        discoMemoriaCpu.classList.remove("text-warning")
-        discoMemoriaCpu.classList.add("text-danger")
-    } else if (Math.abs(kpisCorrelacao.correlacao_disco_memoria_cpu * 100) >= 50 && Math.abs(kpisCorrelacao.correlacao_disco_memoria_cpu * 100) < 70) {
-        discoMemoriaCpu.classList.remove("text-success")
-        discoMemoriaCpu.classList.add("text-warning")
-        discoMemoriaCpu.classList.remove("text-danger")
-    } else {
-        discoMemoriaCpu.classList.add("text-success")
-        discoMemoriaCpu.classList.remove("text-warning")
-        discoMemoriaCpu.classList.remove("text-danger")
-    }
-
-
 }
+
 let agenciasSelecionadas = []
 let idsAgencias = []
 let periodoSelecionado = "year"
