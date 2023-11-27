@@ -13,7 +13,7 @@ import com.github.britooo.looca.api.group.processador.Processador;
 import com.github.britooo.looca.api.group.processos.Processo;
 import com.github.britooo.looca.api.group.rede.Rede;
 import com.github.britooo.looca.api.group.sistema.Sistema;
-import com.mysql.cj.jdbc.StatementImpl;
+
 
 import javax.swing.plaf.nimbus.State;
 import java.sql.SQLException;
