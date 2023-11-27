@@ -60,7 +60,7 @@ function consultarPeloTempo(idMaquina, inicio, fim) {
     console.log("ACESSEI O consultarPeloTempo \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function consultarPeloTempo()");
 
     var comando = `
-    SELECT * FROM registros JOIN componente ON idComponente = fkComponente WHERE fkMaquina = ${idMaquina} AND dataHora > "${inicio}" AND dataHora < "${fim}";
+    SELECT * FROM registros JOIN componente ON idComponente = fkComponente WHERE fkMaquina = ${idMaquina} AND dataHora > '${inicio}' AND dataHora < '${fim}';
     `
     console.log("Executando a instrução SQL: \n" + comando);
     return database.executar(comando);
