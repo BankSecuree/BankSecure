@@ -14,12 +14,15 @@ function dadosKpi(idEmpresa, periodo, componente, agencias) {
     // console.log("Estamos no dashGerenteModel")
 
     instrucao = `
-    select avg(valor) as media from registros join maquina on fkMaquina = idMaquina 
-    join agencia on fkAgencia = idAgencia 
-    join empresa on fkEmpresa = idEmpresa and fkEmpresa = ${idEmpresa} and fkComponente = ${componente}
-    and ${periodo}(dataHora) = ${periodo}(getdate())
+    SELECT AVG(valor) AS media
+    FROM registros
+    JOIN maquina ON fkMaquina = idMaquina
+    JOIN agencia ON fkAgencia = idAgencia
+    JOIN empresa ON fkEmpresa = idEmpresa AND fkEmpresa = ${idEmpresa} AND fkComponente = ${componente}
     WHERE
-    ${filtroPorAgencia};`;
+        ${filtroPorAgencia}
+        AND ${periodo}(dataHora) = ${periodo}(GETDATE());
+    `;
 
     console.log("Executando a instrução MySql:" + instrucao)
     return database.executar(instrucao);
@@ -40,30 +43,25 @@ function buscarUltimasMedidas(idEmpresa, periodo, componente, agencias) {
 
     //Instrucao para dia
     if (periodo == 'day') {
-        instrucao = `SELECT
-    DATEPART(HOUR, dataHora) AS hora,
-    AVG(valor) AS media_valor,
-    MAX(idRegistro) as id
-FROM
-    registros
-JOIN
-    maquina ON fkMaquina = idMaquina
-JOIN
-    agencia ON fkAgencia = idAgencia
-JOIN
-    empresa ON fkEmpresa = idEmpresa
-WHERE
-    fkEmpresa = ${idEmpresa}
-    AND fkComponente = ${componente}
-    AND dataHora >= DATEADD(DAY, -1, GETDATE())
-    AND ${filtroPorAgencia}
-GROUP BY
-    DATEPART(HOUR, dataHora)
-ORDER BY
-    id DESC;
+        instrucao = `
+        SELECT
+            DATEPART(HOUR, dataHora) AS hora,
+            AVG(valor) AS media_valor,
+            MAX(idRegistro) as id
+        FROM registros
+        JOIN maquina on fkMaquina = idMaquina
+        JOIN agencia on fkAgencia = idAgencia
+        JOIN empresa on fkEmpresa = idEmpresa and fkEmpresa = ${idEmpresa} and fkComponente = ${componente}
+        WHERE dataHora >= DATEADD(DAY, -1, GETDATE()) 
+            AND (${filtroPorAgencia})
+        GROUP BY DATEPART(HOUR, dataHora)
+        ORDER BY id DESC;
+
 `
     } else if (periodo == "month") {
-        instrucao = `SELECT
+        instrucao = `
+        
+        SELECT
         DAY(dataHora) AS hora,
         AVG(valor) AS media_valor
     FROM registros
@@ -72,29 +70,28 @@ ORDER BY
     JOIN empresa ON fkEmpresa = idEmpresa
     WHERE fkEmpresa = ${idEmpresa}
         AND fkComponente = ${componente}
-        AND DATE_FORMAT(dataHora, '%Y-%m') = DATE_FORMAT(getdate(), '%Y-%m') AND
-        (${filtroPorAgencia})
-
-    GROUP BY hora
-    ORDER BY hora DESC;
+        AND CONVERT(VARCHAR(7), dataHora, 120) = CONVERT(VARCHAR(7), GETDATE(), 120)
+        AND (${filtroPorAgencia})
     
-    ;
+    GROUP BY DAY(dataHora)
+    ORDER BY hora DESC;
         `
     } else if (periodo == "year") {
-        instrucao = `SELECT
-        DATE_FORMAT(dataHora, '%Y-%m') AS hora,
-        AVG(valor) AS media_valor
+        instrucao = `
+        SELECT
+            CONVERT(VARCHAR(7), dataHora, 120) AS hora,
+            AVG(valor) AS media_valor
         FROM registros
         JOIN maquina ON fkMaquina = idMaquina
         JOIN agencia ON fkAgencia = idAgencia
         JOIN empresa ON fkEmpresa = idEmpresa
         WHERE fkEmpresa = ${idEmpresa}
-        AND fkComponente = ${componente}
-        AND dataHora >= getdate() - INTERVAL 1 YEAR
-        AND
-        (${filtroPorAgencia})
-        GROUP BY hora
-        ORDER BY hora DESC;`
+            AND fkComponente = ${componente}
+            AND dataHora >= DATEADD(YEAR, -1, GETDATE())
+            AND (${filtroPorAgencia})
+        GROUP BY CONVERT(VARCHAR(7), dataHora, 120)
+        ORDER BY hora DESC;
+`
     }
 
     // console.log(`Executando a instrucao SQL \n` + instrucao);
@@ -106,12 +103,16 @@ ORDER BY
 
 function horarioDePico(idEmpresa){
   instrucao = `
-  select hour(dataHora) as hora, sum(valor) as porcentagemUso from registros
-    join maquina on fkMaquina = idMaquina
-    join agencia on fkAgencia = idAgencia
-    join empresa on fkEmpresa = idEmpresa
-    where idEmpresa = ${idEmpresa} and fkComponente BETWEEN 1 and  2
-    group by hora order by hora;
+      SELECT
+      DATEPART(HOUR, dataHora) AS hora,
+      SUM(valor) AS porcentagemUso
+    FROM registros
+    JOIN maquina ON fkMaquina = idMaquina
+    JOIN agencia ON fkAgencia = idAgencia
+    JOIN empresa ON fkEmpresa = idEmpresa
+    WHERE idEmpresa = ${idEmpresa} AND fkComponente BETWEEN 1 AND 2
+    GROUP BY DATEPART(HOUR, dataHora)
+    ORDER BY hora;
   `
   // console.log(`Executando a instrucao SQL \n` + instrucao);
   return database.executar(instrucao)
