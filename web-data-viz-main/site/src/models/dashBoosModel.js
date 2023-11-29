@@ -5,7 +5,7 @@ function obterKpiAgencia(idGerente) {
 
     console.log('Estamos no dashBoosModel')
 
-    instrucao = `    SELECT
+    instrucao = `SELECT
     ag.idAgencia,
     ag.apelido as nomeAgencia,
     COUNT(r.idRegistro) AS totalProblemas
@@ -25,9 +25,11 @@ LEFT JOIN
 WHERE
     u.fkGerente = ${idGerente}
 GROUP BY
-    ag.idAgencia
+    ag.idAgencia,
+    ag.apelido
 ORDER BY
-    totalProblemas DESC;`
+    totalProblemas DESC;
+`
 
     console.log("Executando a instrucao mysql: " + instrucao)
     return database.executar(instrucao);

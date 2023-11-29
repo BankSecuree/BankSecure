@@ -41,15 +41,26 @@ function buscarUltimasMedidas(idEmpresa, periodo, componente, agencias) {
     //Instrucao para dia
     if (periodo == 'day') {
         instrucao = `SELECT
-        HOUR(dataHora) AS hora,
-        AVG(valor) AS media_valor, MAX(idRegistro) as id
-        FROM registros JOIN maquina on fkMaquina = idMaquina
-        JOIN agencia on fkAgencia = idAgencia
-        JOIN empresa on fkEmpresa = idEmpresa and fkEmpresa = ${idEmpresa} and fkComponente = ${componente}
-        and dataHora >= getdate() - INTERVAL 1 DAY
-        WHERE ${filtroPorAgencia}
-        GROUP BY HOUR(dataHora)
-        ORDER BY id DESC;
+    DATEPART(HOUR, dataHora) AS hora,
+    AVG(valor) AS media_valor,
+    MAX(idRegistro) as id
+FROM
+    registros
+JOIN
+    maquina ON fkMaquina = idMaquina
+JOIN
+    agencia ON fkAgencia = idAgencia
+JOIN
+    empresa ON fkEmpresa = idEmpresa
+WHERE
+    fkEmpresa = ${idEmpresa}
+    AND fkComponente = ${componente}
+    AND dataHora >= DATEADD(DAY, -1, GETDATE())
+    AND ${filtroPorAgencia}
+GROUP BY
+    DATEPART(HOUR, dataHora)
+ORDER BY
+    id DESC;
 `
     } else if (periodo == "month") {
         instrucao = `SELECT

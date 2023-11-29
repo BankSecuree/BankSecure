@@ -2,7 +2,7 @@ var express = require("express")
 var router = express.Router();
 
 
-var dashGerenteController = require('../controllers/dashGerenteController')
+var dashGerenteController = require("../controllers/dashGerenteController")
 
 router.get("/dadosKpi/:idEmpresa/:periodo/:componente/:agencias", function (req, res) {
     console.log("Estou na rota")
