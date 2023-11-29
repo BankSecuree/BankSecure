@@ -53,10 +53,7 @@ function kpiDadosTemperatura(idEmpresa,idAgencia,idMaquina){
 function kpiDadosUso(idEmpresa,idAgencia,idMaquina){
     console.log("Acessei a kpiDadosUso model")
     console.log("#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    var instrucao = `select top 1 valor, unidadeMedida, dataHora, fkAgencia, fkEmpresa from registros join componente on idComponente = fkComponente 
-    join maquina on idMaquina = fkMaquina
-    join agencia on idAgencia = fkAgencia
-    join empresa on idEmpresa = fkEmpresa where idEmpresa = ${idEmpresa} and idAgencia = ${idAgencia} and unidadeMedida = '%' AND fkMaquina = ${idMaquina} ORDER BY dataHora DESC;`
+    var instrucao = `select top 1 * from registros where fkMaquina = ${idMaquina} AND fkComponente = 1 order by dataHora desc;`
     return database.executar(instrucao);
 }
 
@@ -71,7 +68,7 @@ function maiorTemperaturaRel(idEmpresa, idAgencia) {
         JOIN maquina ON idMaquina = fkMaquina
         JOIN agencia ON idAgencia = fkAgencia
         JOIN empresa ON idEmpresa = fkEmpresa
-        WHERE idEmpresa = 2 AND idAgencia = 1 AND unidadeMedida = '°C'
+        WHERE idEmpresa = ${idEmpresa} AND fkMaquina = ${idAgencia} AND unidadeMedida = '°C'
         ORDER BY dataHora DESC
     ) AS ultimos_registros;`
     return database.executar(instrucao);
@@ -89,7 +86,7 @@ function maiorUsoRel(idEmpresa,idAgencia){
         JOIN maquina ON idMaquina = fkMaquina
         JOIN agencia ON idAgencia = fkAgencia
         JOIN empresa ON idEmpresa = fkEmpresa
-        WHERE idEmpresa = ${idEmpresa} AND idAgencia = ${idAgencia} AND unidadeMedida = '%'
+        WHERE idEmpresa = ${idEmpresa} AND fkMaquina = ${idAgencia} AND fkComponente = 1
         ORDER BY dataHora DESC
     ) AS ultimos_registros;`
 
@@ -128,7 +125,7 @@ function menorUsoRel(idEmpresa,idAgencia){
         JOIN maquina ON idMaquina = fkMaquina
         JOIN agencia ON idAgencia = fkAgencia
         JOIN empresa ON idEmpresa = fkEmpresa
-        WHERE idEmpresa = ${idEmpresa} AND idAgencia = ${idAgencia} AND unidadeMedida = "%"
+        WHERE idEmpresa = ${idEmpresa} AND fkMaquina = ${idAgencia} AND fkComponente = 1
         ORDER BY dataHora DESC
     ) AS ultimos_registros;`
 
@@ -146,7 +143,7 @@ function mediaTemperaturaRel(idEmpresa,idAgencia){
         JOIN maquina ON idMaquina = fkMaquina
         JOIN agencia ON idAgencia = fkAgencia
         JOIN empresa ON idEmpresa = fkEmpresa
-        WHERE idEmpresa = ${idEmpresa} AND idAgencia = ${idAgencia} AND fkComponente = 4
+        WHERE idEmpresa = ${idEmpresa} AND fkMaquina = ${idAgencia} AND fkComponente = 4
         ORDER BY dataHora DESC
     ) AS ultimos_registros;`
 
@@ -165,7 +162,7 @@ function mediaUsoRel(idEmpresa,idAgencia){
         JOIN maquina ON idMaquina = fkMaquina
         JOIN agencia ON idAgencia = fkAgencia
         JOIN empresa ON idEmpresa = fkEmpresa
-        WHERE idEmpresa = ${idEmpresa} AND idAgencia = ${idAgencia} AND unidadeMedida = "%"
+        WHERE idEmpresa = ${idEmpresa} AND fkMaquina = ${idAgencia} AND fkComponente = 1
         ORDER BY dataHora DESC
     ) AS ultimos_registros;`
 

@@ -208,11 +208,14 @@ function atualizarGraficoTemperatura(fkMaquina) {
         // alert("opa, bao?")
         console.log(json[0].dataHora)
         // alert(JSON.stringify(json))
-
+        
         for (let i = 0; i < json.length; i++) {
           dados.push(json[i].valor)
           textos.push(json[i].dataHora)
         }
+
+        dados.reverse()
+        textos.reverse()
 
         // alert("dados " + dados)
         // addData(grafico, textos, dados)
@@ -263,6 +266,8 @@ function atualizarGraficoPorcentagem(fkMaquina, dadosTemperatura, textosTemperat
           dados.push(json[i].valor)
           textos.push(json[i].dataHora)
         }
+        dados.reverse()
+        textos.reverse()
 
         addDataPorcentagem(grafico, textos, dados, dadosTemperatura, textosTemperatura)
       });
@@ -395,8 +400,9 @@ function atualizarMaiorTemp(idAgencia) {
   console.log("RODOU")
   let dados = []
   let textos = []
+  let fkMaquinae = document.getElementById("listaMaquinas").value
 
-  fetch(`/dashAnalista/maiorTemperaturaRel/${sessionStorage.ID_EMPRESA}/${idAgencia}`
+  fetch(`/dashAnalista/maiorTemperaturaRel/${sessionStorage.ID_EMPRESA}/${fkMaquinae}`
 
 
   ).then(function (resposta) {
@@ -435,8 +441,9 @@ function atualizarMaiorUso(idAgencia) {
   console.log("RODOU")
   let dados = []
   let textos = []
+  let fkMaquinae = document.getElementById("listaMaquinas").value
 
-  fetch(`/dashAnalista/maiorUsoRel/${sessionStorage.ID_EMPRESA}/${idAgencia}`
+  fetch(`/dashAnalista/maiorUsoRel/${sessionStorage.ID_EMPRESA}/${fkMaquinae}`
 
   ).then(function (resposta) {
 
@@ -476,8 +483,9 @@ function atualizarMenorUso(idAgencia) {
   console.log("RODOU")
   let dados = []
   let textos = []
+  let fkMaquinae = document.getElementById("listaMaquinas").value
 
-  fetch(`/dashAnalista/menorUsoRel/${sessionStorage.ID_EMPRESA}/${idAgencia}`
+  fetch(`/dashAnalista/menorUsoRel/${sessionStorage.ID_EMPRESA}/${fkMaquinae}`
 
   ).then(function (resposta) {
 
@@ -518,8 +526,8 @@ function atualizarMediaTemp(idAgencia) {
   console.log("RODOU")
   let dados = []
   let textos = []
-
-  fetch(`/dashAnalista/mediaTemperaturaRel/${sessionStorage.ID_EMPRESA}/${idAgencia}`
+  let fkMaquinae = document.getElementById("listaMaquinas").value
+  fetch(`/dashAnalista/mediaTemperaturaRel/${sessionStorage.ID_EMPRESA}/${fkMaquinae}`
 
   ).then(function (resposta) {
 
@@ -558,7 +566,8 @@ function atualizarMediaTemp(idAgencia) {
 function atualizarMediaUso(idAgencia) {
   console.log("RODOU")
 
-  fetch(`/dashAnalista/mediaUsoRel/${sessionStorage.ID_EMPRESA}/${idAgencia}`
+  let fkMaquinae = document.getElementById("listaMaquinas").value
+  fetch(`/dashAnalista/mediaUsoRel/${sessionStorage.ID_EMPRESA}/${fkMaquinae}`
 
   ).then(function (resposta) {
 
@@ -745,8 +754,9 @@ function atualizarMenorTemp(fkMaquina) {
   console.log("RODOU")
   let dados = []
   let textos = []
+  let fkMaquinae = document.getElementById("listaMaquinas").value
 
-  fetch(`/dashAnalista/menorTemperaturaRel/${sessionStorage.ID_EMPRESA}/${fkMaquina}`
+  fetch(`/dashAnalista/menorTemperaturaRel/${sessionStorage.ID_EMPRESA}/${fkMaquinae}`
 
   ).then(function (resposta) {
 
@@ -762,8 +772,7 @@ function atualizarMenorTemp(fkMaquina) {
         // alert("Menor temp" + JSON.stringify(json));
         console.log("")
         console.log(json[0].dataHora)
-
-
+        
         var menorTemp = json[0].menor_temperatura;
         atualizarCorRelMenorTemp(json[0].menor_temperatura);
         document.getElementById('menorTemperatura').innerHTML = menorTemp + ' °C';
