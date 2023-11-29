@@ -58,11 +58,15 @@
 
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
+
                 <button id="btnAlerta" class="btnAlertas">
                     <i class="fa fa-bell bell"></i>
                 </button>
-                <div class="divAlertas col-lg-4 col-md-5">
+                
+                <div class="divAlertas">
+                    
                 </div>
+
                 <br>
 
 
@@ -352,17 +356,12 @@
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="assets/js/dashTemperatura.js"></script>
+<script src="assets/js/dashAnalistaIndex.js"></script>
 
 <script>
+    esconder()
     let uma = 0;
-    let valor = 0;
-    function rodar(){
-        if(uma == 0){
-            valor = 6;
-        }else{
-            valor = document.getElementById('listaMaquinas').value;
-        }
-    }
+    
     // Seu código JavaScript
 
     let elemento = document.querySelector("#myChart");
