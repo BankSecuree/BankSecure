@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>BankSecure</title>
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/d3-cloud@1.2.5/build/d3.layout.cloud.js"></script>
+  <script src="https://cdn.anychart.com/releases/8.11.1/js/anychart-core.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/8.11.1/js/anychart-tag-cloud.min.js"></script>
+
+
+  <!-- Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+  <!-- CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <!-- Main CSS File -->
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+
+<body onload="chamarFuncoes()">
+
+  <!-- Header -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <!-- Logo -->
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="">
+        <span class="d-none d-lg-block">BankSecure</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div>
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <!-- Notification Nav -->
+        <!-- <li class="nav-item dropdown"> -->
+
+        <!-- Notification Icon -->
+        <!-- <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+            <span class="badge bg-primary badge-number">4</span>
+          </a> -->
+        <!-- End Notification Icon -->
+
+        á!-- Notification Dropdown Items -->
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+          <li class="dropdown-header">
+            You have 4 new notifications
+            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li class="notification-item">
+            <i class="bi bi-exclamation-circle text-warning"></i>
+            <div>
+              <h4>Lorem Ipsum</h4>
+              <p>Quae dolorem earum veritatis oditseno</p>
+              <p>30 min. ago</p>
+            </div>
+          </li>
+
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li class="notification-item">
+            <i class="bi bi-x-circle text-danger"></i>
+            <div>
+              <h4>Atque rerum nesciunt</h4>
+              <p>Quae dolorem earum veritatis oditseno</p>
+              <p>1 hr. ago</p>
+            </div>
+          </li>
+
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li class="notification-item">
+            <i class="bi bi-check-circle text-success"></i>
+            <div>
+              <h4>Sit rerum fuga</h4>
+              <p>Quae dolorem earum veritatis oditseno</p>
+              <p>2 hrs. ago</p>
+            </div>
+          </li>
+
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li class="notification-item">
+            <i class="bi bi-info-circle text-primary"></i>
+            <div>
+              <h4>Dicta reprehenderit</h4>
+              <p>Quae dolorem earum veritatis oditseno</p>
+              <p>4 hrs. ago</p>
+            </div>
+          </li>
+
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li class="dropdown-footer">
+            <a href="#">Show all notifications</a>
+          </li>
+
+        </ul><!-- End Notification Dropdown Items -->
+
+        </li>
+
+        <!-- Messages Nav -->
+        <li class="nav-item dropdown">
+
+          <!-- Messages Icon -->
+          <!-- <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="badge bg-success badge-number">3</span>
+          </a> -->
+
+          <!-- Messages Dropdown Items -->
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+            <li class="dropdown-header">
+              You have 3 new messages
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Maria Hudson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>4 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Anna Nelson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>6 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>David Muldon</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>8 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="dropdown-footer">
+              <a href="#">Show all messages</a>
+            </li>
+
+          </ul>
+
+        </li>
+
+        <!-- Profile Nav -->
+        <li class="nav-item dropdown pe-3">
+
+          <!-- Foto e Nome -->
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img id="foto-usuario" class="rounded-circle">
+            <span class="d-none d-md-block" id="nome-usuario"></span>
+          </a>
+
+        </li>
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <!-- Dashboard Nav -->
+      <li class="nav-item">
+        <a id="aDash" class="nav-link" href="indexGerente.html">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a id="aDash" class="nav-link" href="dashBoos.html">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard Boos</span>
+        </a>
+      </li>
+
+      
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="faq.html">
+          <i class="bi bi-question-circle"></i>
+          <span>F.A.Q</span>
+        </a>
+      </li>
+
+      <li class="nav-heading">CONTA</li>
+
+      <!-- Perfil Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="conta_perfil.html">
+          <i class="bi bi-person"></i>
+          <span>Perfil</span>
+        </a>
+      </li>
+
+    </ul>
+  </aside>
+
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Dashboard Vitor Boos</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard </li>
+        </ol>
+      </nav>
+    </div>
+
+    <section class="section dashboard">
+      <div class="row">
+
+        <!-- Colunas da esquerda -->
+        <div class="col-lg-8">
+          <div class="row">
+
+            <div class="col-xxl-4 col-md-6" style="width: 100%;">
+              <div class="card info-card sales-card">
+                <div class="card-body">
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-title">Definição de Alertas<span>| Significado</span></div>
+                  </div>
+                </div>
+                <div class="juncaotexto" style="display: flex; justify-content: space-around; padding-bottom: 30px;">
+                  <div id="textoDefinicaoCpu"
+                    style="box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2); padding: 0 30px 10px 30px;"></div>
+                  <div id="textoDefinicaoDisco"
+                    style="box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2); padding: 0 30px 10px 30px;"></div>
+                  <div id="textoDefinicaoMemoria"
+                    style="box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2); padding: 0 30px 10px 30px;"></div>
+                </div>
+                <div class="filter">
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filtro</h6>
+                    </li>
+
+
+
+                  </ul>
+                </div>
+
+              </div>
+            </div><!-- End Sales Card -->
+
+            <!-- Revenue Card -->
+            <div class="col-xxl-4 col-md-6" style="width: 100%;">
+              <div class="card info-card revenue-card" style="display: none;">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filtro</h6>
+                    </li>
+
+
+
+
+                  </ul>
+                </div>
+
+                <div class="card-body">
+
+                  <div class="d-flex align-items-center">
+
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Revenue Card -->
+
+            <!-- Customers Card -->
+            <div class="col-xxl-4 col-xl-12">
+
+              <div class="card info-card customers-card" style="display: none;">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filtro</h6>
+                    </li>
+                  </ul>
+                </div>
+
+
+                <div class="card-body">
+
+                  <div class="d-flex align-items-center">
+
+                  </div>
+
+                </div>
+              </div>
+
+            </div><!-- End Customers Card -->
+
+            <!-- Reports -->
+            <div class="col-12">
+              <div class="card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filtro</h6>
+                    </li>
+
+                    <li><a class="dropdown-item"
+                        onclick="alterarPeriodoVizualizacao('graficoPrincipal', 'day')">Hoje</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('graficoPrincipal', 'month')">Este
+                        Mês</a></li>
+                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('graficoPrincipal', 'year')">Este
+                        Ano</a></li>
+
+                  </ul>
+                </div>
+                <br>
+                <div class="card-body">
+
+                  <h5 class="card-title">Análise de Uso de Componentes por Agência<span>/ Visão Geral e Detalhes</span>
+                  </h5>
+
+                  <div class="select-box">
+                    <div class="juncao">
+                      <div class="componente-classe">
+                        <select id="componente" class="componente-select">
+                          <option value="cpu" class="option">CPU</option>
+                          <option value="disco" class="option">Disco</option>
+                          <option value="memoria" class="option">Memória</option>
+                        </select>
+                      </div>
+                      <div class="tipo-agencia-classe">
+                        <select id="tipo-agencia" class="tipo-agencia-select">
+                          <option value="todas" class="option">Nenhuma agência</option>
+                        </select>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div id="graficoGeral">
+                    <canvas id="chartGraficoLinha"></canvas>
+                  </div>
+
+
+                  <script>
+
+                  </script>
+                  <!-- End Line Chart -->
+                </div>
+
+              </div>
+            </div><!-- End Reports -->
+
+            <!-- Recent Sales -->
+
+
+          </div>
+        </div>
+
+        <!-- Colunas da direita -->
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="filter">
+              <a class="icon" href="#" data-bs-toggle="dropdown"></a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <li class="dropdown-header text-start">
+                  <h6>Filtro</h6>
+                </li>
+              </ul>
+            </div>
+            <h5 class="card-title" style="height: 10px;text-align: start; padding-left: 10px;">Gráfico de frequência por
+              alerta das agências</h5>
+            <div id="wordcloud" style="width: 100%; height: 400px; background-color: lightgray;"></div>
+          </div>
+          <div class="card">
+            <div class="card-body pb-0">
+              <h5 class="card-title">Quantidade de alertas por agência<span>|CPU, Disco e Ram</span></h5>
+              <div class="ranque card-title">
+              </div>
+            </div>
+          </div>
+          <div class="filter">
+            <a class="icon" href="#" data-bs-toggle="dropdown"></a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+              </li>
+
+              <li><a class="dropdown-item" onclick="mediaDadosComps(1)">CPU</a></li>
+              <li><a class="dropdown-item" onclick="mediaDadosComps(2)">Memória</a></li>
+              <li><a class="dropdown-item" onclick="mediaDadosComps(3)">Disco</a></li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>BankSecure</span></strong>. All Rights Reserved
+    </div>
+  </footer>
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
+
+</body>
+
+</html>
+<script src="assets/js/dashBoos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+</script>

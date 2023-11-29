@@ -13,7 +13,7 @@ function cadastrarNomeMaquina(nomeMaquina, fkAgencia, tipoMaquina){
 function criarViewMaquina(nomeMaquina){
     console.log("ACESSEI O HARDWARE MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarHardware()");
     var instrucao = `
-    CREATE VIEW vw_maquina_${nomeMaquina} AS SELECT * FROM vw_registrosEstruturados WHERE id = (SELECT idMaquina FROM maquina ORDER BY idMaquina DESC limit 1);
+    CREATE VIEW vw_maquina_${nomeMaquina} AS SELECT * FROM vw_registrosEstruturados WHERE id = (SELECT TOP 1 idMaquina FROM maquina ORDER BY idMaquina DESC);
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);

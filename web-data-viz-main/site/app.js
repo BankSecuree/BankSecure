@@ -1,5 +1,5 @@
-//process.env.AMBIENTE_PROCESSO = "desenvolvimento";
- process.env.AMBIENTE_PROCESSO = "producao";
+// process.env.AMBIENTE_PROCESSO = "desenvolvimento";
+process.env.AMBIENTE_PROCESSO = "producao";
 
 var express = require("express");
 var cors = require("cors");
@@ -16,6 +16,10 @@ var dashDonutRouter = require("./src/routes/dashDonut");
 var perfilRouter = require("./src/routes/perfil");
 var hardwareRouter = require("./src/routes/hardware");
 var dashGerenteRouter = require("./src/routes/dashGerente");
+var dashBoosRouter = require("./src/routes/dashBoos")
+var dashAnalistaProcesso = require("./src/routes/dashAnalistaProcesso");
+var dashAnalistaRouter = require("./src/routes/dashAnalista");
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -30,7 +34,11 @@ app.use("/dashAgencias", dashAgenciasRouter);
 app.use("/dashDonut", dashDonutRouter);
 app.use("/perfil", perfilRouter);
 app.use("/hardware", hardwareRouter);
+app.use("/dashGerente", dashGerenteRouter);
+app.use("/dashAnalistaProcesso", dashAnalistaProcesso)
 app.use("/dashGerente", dashGerenteRouter)
+app.use("/dashBoos", dashBoosRouter)
+app.use("/dashAnalista", dashAnalistaRouter)
 
 app.listen(PORTA, function () {
     console.log(`Servidor do seu site já está rodando! Acesse o caminho a seguir para visualizar: http://localhost:${PORTA} \n

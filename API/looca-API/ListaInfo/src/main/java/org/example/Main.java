@@ -10,6 +10,7 @@ import com.github.britooo.looca.api.group.discos.DiscoGrupo;
 import com.github.britooo.looca.api.group.discos.Volume;
 import com.github.britooo.looca.api.group.memoria.Memoria;
 import com.github.britooo.looca.api.group.processador.Processador;
+import com.github.britooo.looca.api.group.processos.Processo;
 import com.github.britooo.looca.api.group.rede.Rede;
 import com.github.britooo.looca.api.group.sistema.Sistema;
 import com.mysql.cj.jdbc.StatementImpl;
@@ -126,6 +127,26 @@ public class Main {
             Integer mes = dataHoraAtual.getMonthValue();
             Integer ano = dataHoraAtual.getYear();
             Integer hora = dataHoraAtual.getHour();
+            Integer minuto = dataHoraAtual.getMinute();
+            Integer segundo = dataHoraAtual.getSecond();
+
+            //Variaveis para pegar os Serviços - Mateus
+            String sistemaAtual = looca.getSistema().toString();
+
+            String frase = sistemaAtual;
+            String array[] = new String[1];
+
+            array = frase.split(":");
+            frase = array[1];
+            array = frase.split("F");
+            System.out.println("=".repeat(15));
+            System.out.println(array[0]);
+
+
+            Integer servicoAtivo = looca.getGrupoDeServicos().getTotalServicosAtivos();
+            Integer servicoInativo = looca.getGrupoDeServicos().getTotalServicosInativos();
+            //Fim - Mateus
+
 
             //Inserindo os dados no banco
             try {
@@ -133,8 +154,30 @@ public class Main {
                 Statement st2 = con2.conexao.createStatement();
 
                 //Criando variavel de string para a data atual
-                String dataAtualInterpolado = ano + "-" + mes + "-" + dia + " " + hora + ":00:00";
+                String dataAtualInterpolado = ano + "-" + mes + "-" + dia + " " + hora + ":" + minuto + ":" + segundo;
 
+                //Serviços - Mateus
+//                String select = "SELECT COUNT(idMaquina) FROM maquina";
+//                st2.execute(select);
+
+//                System.out.println("Esse é o select: " + st2.executeUpdate(select));
+
+                String processosMI1Ativo = "INSERT INTO processo (fkMaquina, valor, dataHora, statusProcesso) VALUES (1, " + servicoAtivo + ", '" + dataAtualInterpolado + "', 'Ativo')";
+                st2.executeUpdate(processosMI1Ativo);
+
+                String processosMI1Inativo = "INSERT INTO processo (fkMaquina, valor, dataHora, statusProcesso) VALUES (1, " + servicoInativo + ", '" + dataAtualInterpolado + "', 'Inativo')";
+                st2.executeUpdate(processosMI1Inativo);
+
+//                System.out.println("ESSA MERDA: " + sistemaAtual);
+                String soMI2 = "UPDATE maquina SET so = '" + array[0] + "' WHERE idMaquina = 1";
+                st2.executeUpdate(soMI2);
+
+                String processosMI2Ativo = "INSERT INTO processo (fkMaquina, valor, dataHora, statusProcesso) VALUES (2, " + (servicoAtivo + 50) + ", '" + dataAtualInterpolado + "', 'Ativo')";
+                st2.executeUpdate(processosMI2Ativo);
+
+                String processosMI2Inativo = "INSERT INTO processo (fkMaquina, valor, dataHora, statusProcesso) VALUES (2, " + (servicoInativo + 50) + ", '" + dataAtualInterpolado + "', 'Inativo')";
+                st2.executeUpdate(processosMI2Inativo);
+                //Fim - Mateus
 
                 //Insert uso de CPU
                 String queryUsoCpu = "INSERT INTO registros (fkMaquina, fkComponente, valor, dataHora) VALUES (1, 1, " + usoCpu + ", '" + dataAtualInterpolado + "')";
@@ -159,7 +202,7 @@ public class Main {
                 System.out.println("Erro ao tentar conexao com MySQL: " + e);
             }
 
-            Thread.sleep(1000);
+            Thread.sleep(5000);
 
         }
     }

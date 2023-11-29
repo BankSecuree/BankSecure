@@ -6,11 +6,11 @@ import java.sql.SQLException;
 
 public class Conexao {
     //Inserindo informacoes da conexao mysql
-    String serverName = "banksecure";
-    String mydb = "banksecure";
+    String serverName = "localhost:3306";
+    String mydb = "bankSecure";
     String url = "jdbc:mysql://" + serverName + "/" + mydb;
-    String username = "banksecure";
-    String password = "";
+    String username = "root";
+    String password = "root";
     Connection conexao;
 
     Conexao() throws SQLException {

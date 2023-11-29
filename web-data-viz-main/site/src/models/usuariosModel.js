@@ -32,7 +32,7 @@ function cadastrarFuncionario(nomeCompleto, cpf, celular, nascimento, email, sen
 
 function listarUltimoIdEmpresa(){
     var instrucao = ` 
-    select idEmpresa from empresa order by idEmpresa desc LIMIT 1;
+    select TOP 1 idEmpresa from empresa order by idEmpresa desc;
     `
     return database.executar(instrucao);
 }

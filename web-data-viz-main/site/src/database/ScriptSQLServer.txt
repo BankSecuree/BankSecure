@@ -1,0 +1,405 @@
+CREATE DATABASE bankSecure;
+USE bankSecure;
+CREATE TABLE empresa (
+    idEmpresa INT PRIMARY KEY IDENTITY(1,1),
+    cnpjEmpresa CHAR(14),
+    razaoSocial VARCHAR(100),
+    cep CHAR(8),
+    logradouro VARCHAR(150),
+    numero INT,
+    telefoneEmpresa VARCHAR(14)
+);
+
+CREATE TABLE agencia (
+    idAgencia INT PRIMARY KEY IDENTITY(1,1),
+    cnpjAgencia CHAR(14),
+    apelido VARCHAR(45),
+    logradouro VARCHAR(150),
+    numero INT,
+    CEP CHAR(8),
+    telefoneAgencia VARCHAR(14),
+    fkEmpresa INT,
+    FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
+);
+
+CREATE TABLE usuario (
+    idUsuario INT PRIMARY KEY IDENTITY(1,1),
+    email VARCHAR(50),
+    senha VARCHAR(16),
+    nome VARCHAR(50),
+    cpf CHAR(11),
+    telefone CHAR(14),
+    dataNascimento DATE,
+    foto VARCHAR(255),
+    dataInicio DATE,
+    cargo VARCHAR(25),
+    fkGerente INT,
+    fkEmpresa INT,
+    FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa),
+    FOREIGN KEY (fkGerente) REFERENCES usuario(idUsuario)
+);
+
+CREATE TABLE funcionarioAgencia (
+    fkUsuario INT,
+    fkAgencia INT,
+    PRIMARY KEY (fkUsuario, fkAgencia),
+    FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario),
+    FOREIGN KEY (fkAgencia) REFERENCES agencia(idAgencia)
+);
+
+CREATE TABLE tipoMaquina (
+    idTipoMaquina INT PRIMARY KEY IDENTITY(1,1),
+    nomeTipo VARCHAR(45)
+);
+
+SELECT * FROM tipoMaquina;
+
+CREATE TABLE maquina (
+    idMaquina INT PRIMARY KEY IDENTITY(1,1),
+    fkAgencia INT,
+    fkTipoMaquina INT,
+    macAddress VARCHAR(100),
+    localizacao VARCHAR(200),
+    nome VARCHAR(45) UNIQUE,
+    FOREIGN KEY (fkAgencia) REFERENCES agencia(idAgencia) ON DELETE CASCADE,
+    FOREIGN KEY (fkTipoMaquina) REFERENCES tipoMaquina(idTipoMaquina) ON DELETE CASCADE
+);
+
+CREATE TABLE registros (
+    idRegistro INT PRIMARY KEY IDENTITY(1,1),
+    fkMaquina INT,
+    fkComponente INT,
+    valor DECIMAL(10,2),
+    dataHora DATETIME,
+    FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina) ON DELETE CASCADE
+);
+
+CREATE TABLE componente (
+    idComponente INT PRIMARY KEY IDENTITY(1,1),
+    nome VARCHAR(45),
+    unidadeMedida VARCHAR(10)
+);
+
+CREATE TABLE alertas (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    nivel INT,
+    fkEmpresa INT,
+    fkComponente INT,
+    fkMaquina INT,
+    dtHora DATETIME
+);
+
+CREATE TABLE maquinaComponente (
+    fkMaquina INT,
+    fkComponente INT,
+    PRIMARY KEY (fkMaquina, fkComponente),
+    FOREIGN KEY (fkMaquina) REFERENCES maquina(idMaquina) ON DELETE CASCADE,
+    FOREIGN KEY (fkComponente) REFERENCES componente(idComponente) ON DELETE CASCADE
+);
+--============================== Fim criaçao de tabelas ==============================--
+
+
+
+--================================= INSERTS =======================================--
+INSERT INTO empresa (razaoSocial, cnpjEmpresa, cep, logradouro, numero, telefoneEmpresa) VALUES ('BANKSECURE', 88892098000570, '09560600', 'Avenida KENNEDY', 95, '(11) 1234-4828');
+INSERT INTO usuario (email, senha, nome, fkEmpresa, cargo, dataInicio) VALUES ('banksecure@contato.com', '12345', 'Admin Bank Secure', 1, 'Admin', '2023-08-01');
+
+-- GERENTES
+INSERT INTO empresa (razaoSocial, cnpjEmpresa, cep, logradouro, numero, telefoneEmpresa) VALUES ('BANCO ITAUCARD S.A.', 17192451000170, '04344902', 'PRACA ALFREDO EGYDIO DE SOUZA ARANHA 100', 100, '(11) 4004-4828');
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente,cpf, telefone, cargo, dataInicio) VALUES ('gerenteitau@bs.com', '12345', 'Fernando Brandão', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 1,12312312300, '(11)90000-1111', 'Gerente de TI', '2023-08-01');
+
+-- ANALISTAS
+INSERT INTO usuario (email, senha, nome, cpf, telefone, cargo, dataNascimento, fkEmpresa, fkGerente, dataInicio) VALUES ('analista1itau@bs.com', '12345', 'Cecilia Castro', '54779854112', '11985698741', 'Analista', '2000-10-24', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 2, '2023-08-01');
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente, dataInicio) VALUES ('analista1itau2@bs.com', '12345', 'Celso Fernandes', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 2, '2023-08-01');
+INSERT INTO usuario (email, senha, nome, fkEmpresa, fkGerente, dataInicio) VALUES ('analista1itau3@bs.com', '12345', 'Carolina Barros', (SELECT idEmpresa FROM empresa WHERE cnpjEmpresa = 17192451000170), 2, '2023-08-01');
+
+-- AGENCIA
+INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefoneAgencia, fkEmpresa) VALUES ('60701190031328', 'Itau Rudge Ramos', 'Rua Rudge Ramos', 80, '09772040', '1130034828', 2);
+INSERT INTO agencia (cnpjAgencia, apelido, logradouro, numero, CEP, telefoneAgencia, fkEmpresa) VALUES ('12658742036578', 'Itau Cidade Dutra', 'Av. Sen. Teotônio Vilela', 1192, '04801000', '1140028922', 2);
+
+-- FUNCIONARIOAGENCIA
+INSERT INTO funcionarioAgencia VALUES (3,1);
+INSERT INTO funcionarioAgencia VALUES (2,1);
+INSERT INTO funcionarioAgencia VALUES (2,2);
+
+-- TIPOMAQUINA
+select * from tipoMaquina;
+select * from empresa;
+select * from usuario;
+INSERT INTO tipoMaquina VALUES ('Servidor'), ('Caixa Eletrônico');
+
+-- MAQUINA
+select * from maquina;
+INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina) VALUES ('MI-1', 1, 2);
+INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina) VALUES ('MI-2', 1, 2);
+INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina) VALUES ('MI-3', 1, 2);
+INSERT INTO maquina (nome, fkAgencia, fkTipoMaquina) VALUES ('SI-1', 1, 1);
+
+-- COMPONENTE
+INSERT INTO componente (nome, unidadeMedida) VALUES
+('CPU', '%'), ('Memória', '%'), ('Disco', '%');
+
+-- MAQUINA COMPONENTE
+select * from maquinaComponente;
+INSERT INTO maquinaComponente (fkMaquina, fkComponente) VALUES (1, 1),(1,2),(1,3),(2,1), (2, 2),(2,3);
+INSERT INTO maquinaComponente (fkMaquina, fkComponente) VALUES (3,1),(3,2),(3,3);
+--======================================== fim dos inserts ============================================--
+
+
+--======================================== VIEWS ===========================================--
+---- VIEW 1 ----
+-- DROP VIEW
+IF OBJECT_ID('vw_maquina', 'V') IS NOT NULL
+    DROP VIEW vw_maquina;
+GO
+
+-- CREATE VIEW
+CREATE VIEW vw_maquina AS 
+SELECT * FROM maquina;
+GO
+
+
+---- VIEW 2 ----
+-- DROP VIEW
+IF OBJECT_ID('vw_componente', 'V') IS NOT NULL
+    DROP VIEW vw_componente;
+GO
+
+-- CREATE VIEW
+CREATE VIEW vw_componente AS 
+SELECT * FROM componente;
+GO
+
+
+---- VIEW 3 ----
+
+-- DROP VIEW
+IF OBJECT_ID('vw_registrosEstruturados', 'V') IS NOT NULL
+    DROP VIEW vw_registrosEstruturados;
+GO
+
+-- CREATE VIEW
+CREATE VIEW vw_registrosEstruturados AS 
+WITH RankedRecords AS (
+    SELECT 
+        registros.fkMaquina AS [ID], 
+        maquina.nome AS [Nome], 
+        registros.dataHora AS [Data],
+        MAX(CASE WHEN registros.fkComponente = 1 THEN registros.valor END) AS cpuu,
+        MAX(CASE WHEN registros.fkComponente = 2 THEN registros.valor END) AS memoria,
+        MAX(CASE WHEN registros.fkComponente = 3 THEN registros.valor END) AS disco,
+        ROW_NUMBER() OVER (PARTITION BY registros.fkMaquina ORDER BY registros.dataHora DESC) AS RowNum
+    FROM registros 
+    JOIN maquina ON fkMaquina = idMaquina
+    GROUP BY registros.fkMaquina, maquina.nome, registros.dataHora
+)
+SELECT [ID], [Nome], [Data], cpuu, memoria, disco
+FROM RankedRecords
+WHERE RowNum = 1;
+GO
+
+
+---- VIEW 4 ----
+-- DROP VIEW
+IF OBJECT_ID('vw_donut_servidor', 'V') IS NOT NULL
+    DROP VIEW vw_donut_servidor;
+GO
+
+-- CREATE VIEW
+CREATE VIEW vw_donut_servidor AS 
+SELECT 
+    ISNULL(SUM(CASE WHEN m.media >= 90 THEN 1 ELSE 0 END), 0) as s_cpu_critico,
+    ISNULL(SUM(CASE WHEN m.media >= 70 AND m.media < 90 THEN 1 ELSE 0 END), 0) as s_cpu_alerta,
+    ISNULL(SUM(CASE WHEN m.media >= 0 AND m.media < 70 THEN 1 ELSE 0 END), 0) as s_cpu_ideal,
+    ISNULL(SUM(CASE WHEN m.media >= 90 THEN 1 ELSE 0 END), 0) as s_mem_critico,
+    ISNULL(SUM(CASE WHEN m.media >= 70 AND m.media < 90 THEN 1 ELSE 0 END), 0) as s_mem_alerta,
+    ISNULL(SUM(CASE WHEN m.media >= 0 AND m.media < 70 THEN 1 ELSE 0 END), 0) as s_mem_ideal,
+    ISNULL(SUM(CASE WHEN m.media >= 90 THEN 1 ELSE 0 END), 0) as s_disco_critico,
+    ISNULL(SUM(CASE WHEN m.media >= 70 AND m.media < 90 THEN 1 ELSE 0 END), 0) as s_disco_alerta,
+    ISNULL(SUM(CASE WHEN m.media >= 0 AND m.media < 70 THEN 1 ELSE 0 END), 0) as s_disco_ideal
+FROM (
+    SELECT id, AVG(cpuu) as media
+    FROM vw_registrosEstruturados
+    JOIN vw_maquina ON id = idMaquina AND fkTipoMaquina = 1
+    GROUP BY id
+
+    UNION ALL
+
+    SELECT id, AVG(memoria) as media
+    FROM vw_registrosEstruturados
+    JOIN vw_maquina ON id = idMaquina AND fkTipoMaquina = 1
+    GROUP BY id
+
+    UNION ALL
+
+    SELECT id, AVG(disco) as media
+    FROM vw_registrosEstruturados
+    JOIN vw_maquina ON id = idMaquina AND fkTipoMaquina = 1
+    GROUP BY id
+) as m;
+GO
+
+
+---- VIEW 5 ----
+-- DROP VIEW
+IF OBJECT_ID('vw_donut_maquina', 'V') IS NOT NULL
+    DROP VIEW vw_donut_maquina;
+GO
+
+-- CREATE VIEW
+CREATE VIEW vw_donut_maquina AS 
+SELECT 
+    ISNULL(SUM(CASE WHEN m.media >= 90 THEN 1 ELSE 0 END), 0) as s_cpu_critico,
+    ISNULL(SUM(CASE WHEN m.media >= 70 AND m.media < 90 THEN 1 ELSE 0 END), 0) as s_cpu_alerta,
+    ISNULL(SUM(CASE WHEN m.media >= 0 AND m.media < 70 THEN 1 ELSE 0 END), 0) as s_cpu_ideal,
+    ISNULL(SUM(CASE WHEN m.media >= 90 THEN 1 ELSE 0 END), 0) as s_mem_critico,
+    ISNULL(SUM(CASE WHEN m.media >= 70 AND m.media < 90 THEN 1 ELSE 0 END), 0) as s_mem_alerta,
+    ISNULL(SUM(CASE WHEN m.media >= 0 AND m.media < 70 THEN 1 ELSE 0 END), 0) as s_mem_ideal,
+    ISNULL(SUM(CASE WHEN m.media >= 90 THEN 1 ELSE 0 END), 0) as s_disco_critico,
+    ISNULL(SUM(CASE WHEN m.media >= 70 AND m.media < 90 THEN 1 ELSE 0 END), 0) as s_disco_alerta,
+    ISNULL(SUM(CASE WHEN m.media >= 0 AND m.media < 70 THEN 1 ELSE 0 END), 0) as s_disco_ideal
+FROM (
+    SELECT id, AVG(cpuu) as media
+    FROM vw_registrosEstruturados
+    JOIN vw_maquina ON id = idMaquina AND fkTipoMaquina = 2
+    GROUP BY id
+
+    UNION ALL
+
+    SELECT id, AVG(memoria) as media
+    FROM vw_registrosEstruturados
+    JOIN vw_maquina ON id = idMaquina AND fkTipoMaquina = 2
+    GROUP BY id
+
+    UNION ALL
+
+    SELECT id, AVG(disco) as media
+    FROM vw_registrosEstruturados
+    JOIN vw_maquina ON id = idMaquina AND fkTipoMaquina = 2
+    GROUP BY id
+) as m;
+GO
+--============================== fim das views ==============================--
+
+
+
+--============================== PROCEDURES ==============================--
+
+------------------- PROCEDURA DO NIVEL DE ALERTAS --------------------------
+-- DROP PROCEDURE
+IF OBJECT_ID('verificarNivel', 'P') IS NOT NULL
+    DROP PROCEDURE verificarNivel;
+GO
+
+-- CREATE PROCEDURE
+CREATE PROCEDURE verificarNivel
+    @n_fkEmpresa INT,
+    @n_fkMaquina INT,
+    @n_nivel INT,
+    @n_fkComponente INT
+AS
+BEGIN
+
+    INSERT INTO alertas (nivel, fkEmpresa, fkComponente, fkMaquina, dtHora)
+    VALUES (@n_nivel, @n_fkEmpresa, @n_fkComponente, @n_fkMaquina, GETDATE());
+
+    SET IDENTITY_INSERT alertas OFF; -- Desabilita a inserção de valores na coluna de identidade
+END;
+GO
+
+
+-------------------- PROCEDURE CADASTRAR EMPRESA GERENTE --------------------------
+CREATE PROCEDURE cadastrar_empresaGerente
+    @emp_cnpjEmpresa CHAR(14),
+    @emp_razaoSocial VARCHAR(100),
+    @emp_logradouro VARCHAR(150),
+    @emp_numero INT,
+    @emp_CEP CHAR(8),
+    @emp_telefone VARCHAR(14),
+    @us_email VARCHAR(50),
+    @us_senha VARCHAR(16),
+    @us_nome VARCHAR(50),
+    @us_cpf CHAR(11),
+    @us_telefone VARCHAR(14),
+    @us_dataNascimento DATE,
+    @us_cargo VARCHAR(25),
+    @us_fkGerente INT,
+    @us_dataInicio DATE
+AS
+BEGIN
+    DECLARE @fkEmpresa INT;
+
+    -- Inserir dados na tabela empresa
+    INSERT INTO empresa (cnpjEmpresa, razaoSocial, logradouro, numero, CEP, telefoneEmpresa)
+    VALUES (@emp_cnpjEmpresa, @emp_razaoSocial, @emp_logradouro, @emp_numero, @emp_CEP, @emp_telefone);
+
+    -- Obter o ID da empresa recém-inserida
+    SET @fkEmpresa = SCOPE_IDENTITY();
+
+    -- Inserir dados na tabela usuario
+    INSERT INTO usuario (email, senha, nome, cpf, telefone, dataNascimento, fkEmpresa, cargo, fkGerente, dataInicio)
+    VALUES (@us_email, @us_senha, @us_nome, @us_cpf, @us_telefone, @us_dataNascimento, @fkEmpresa, @us_cargo, @us_fkGerente, @us_dataInicio);
+END;
+GO
+
+------------------------- CADASTRAR TIPO DE MAQUINA PROCEDURE ----------------------------------
+CREATE PROCEDURE cadastrar_tipoMaquina
+    @maqn_fkTipoMaquina INT
+AS
+BEGIN
+    INSERT INTO maquina (fkTipoMaquina)
+    VALUES (@maqn_fkTipoMaquina);
+END;
+
+----------------------- CADASTRAR MAQUINA COMPONENTE PROCEDURE -----------------------------------
+GO
+CREATE PROCEDURE cadastrar_maquinaComponente
+    @maco_fkComponente INT
+AS
+BEGIN
+    DECLARE @maxIdMaquina INT;
+
+    SELECT @maxIdMaquina = MAX(idMaquina) FROM maquina;
+
+    INSERT INTO maquinaComponente (fkMaquina, fkComponente)
+    VALUES (@maxIdMaquina, @maco_fkComponente);
+END;
+
+---------------------------- PROCEDURE PARA CADASTRAR AGENCIAS --------------------------
+GO
+CREATE PROCEDURE cadastrarAgencia
+    @agencia_apelido VARCHAR(45),
+    @agencia_CNPJ CHAR(14),
+    @agencia_CEP CHAR(8),
+    @agencia_logradouro VARCHAR(150),
+    @agencia_numero VARCHAR(20),
+    @agencia_telefone VARCHAR(11),
+    @agencia_fkEmpresa INT
+AS
+BEGIN
+    INSERT INTO agencia (apelido, cnpjAgencia, CEP, logradouro, numero, telefoneAgencia, fkEmpresa) 
+    VALUES (@agencia_apelido, @agencia_CNPJ, @agencia_cep, @agencia_logradouro, @agencia_numero, @agencia_telefone, @agencia_fkEmpresa);
+END;
+
+-------------------------------- PROCEDURE PARA INSERIR DADOS ---------------------------
+GO
+CREATE PROCEDURE inserirDadosMaquina
+    @ma_user VARCHAR(45),
+    @co1_nome VARCHAR(45),
+    @re1_valor FLOAT,
+    @co2_nome VARCHAR(45),
+    @re2_valor FLOAT,
+    @co3_nome VARCHAR(45),
+    @re3_valor FLOAT,
+    @re_data DATETIME
+AS
+BEGIN
+    INSERT INTO registros (fkMaquina, fkComponente, valor, dataHora) VALUES 
+    ((SELECT idMaquina FROM vw_maquina WHERE nome = @ma_user), (SELECT idComponente FROM componente WHERE nome = @co1_nome), @re1_valor, @re_data);
+    
+    INSERT INTO registros (fkMaquina, fkComponente, valor, dataHora) VALUES 
+    ((SELECT idMaquina FROM vw_maquina WHERE nome = @ma_user), (SELECT idComponente FROM componente WHERE nome = @co2_nome), @re2_valor, @re_data);
+    
+    INSERT INTO registros (fkMaquina, fkComponente, valor, dataHora) VALUES 
+    ((SELECT idMaquina FROM vw_maquina WHERE nome = @ma_user), (SELECT idComponente FROM componente WHERE nome = @co3_nome), @re3_valor, @re_data);
+END;

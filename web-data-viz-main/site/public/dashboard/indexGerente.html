@@ -10,8 +10,6 @@
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="assets/js/medidorDeProgresso.js"></script>
-
 
   <!-- Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -29,7 +27,7 @@
   <link href="assets/css/style.css" rel="stylesheet">
 </head>
 
-<body onload="chamarFuncoes()">
+<body>
 
   <!-- Header -->
   <header id="header" class="header fixed-top d-flex align-items-center">
@@ -43,171 +41,6 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div>
 
-    <nav class="header-nav ms-auto">
-      <ul class="d-flex align-items-center">
-
-        <!-- Notification Nav -->
-        <!-- <li class="nav-item dropdown"> -->
-
-        <!-- Notification Icon -->
-        <!-- <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number">4</span>
-          </a> -->
-        <!-- End Notification Icon -->
-
-        <!-- Notification Dropdown Items -->
-        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-          <li class="dropdown-header">
-            You have 4 new notifications
-            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-          </li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-
-          <li class="notification-item">
-            <i class="bi bi-exclamation-circle text-warning"></i>
-            <div>
-              <h4>Lorem Ipsum</h4>
-              <p>Quae dolorem earum veritatis oditseno</p>
-              <p>30 min. ago</p>
-            </div>
-          </li>
-
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-
-          <li class="notification-item">
-            <i class="bi bi-x-circle text-danger"></i>
-            <div>
-              <h4>Atque rerum nesciunt</h4>
-              <p>Quae dolorem earum veritatis oditseno</p>
-              <p>1 hr. ago</p>
-            </div>
-          </li>
-
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-
-          <li class="notification-item">
-            <i class="bi bi-check-circle text-success"></i>
-            <div>
-              <h4>Sit rerum fuga</h4>
-              <p>Quae dolorem earum veritatis oditseno</p>
-              <p>2 hrs. ago</p>
-            </div>
-          </li>
-
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-
-          <li class="notification-item">
-            <i class="bi bi-info-circle text-primary"></i>
-            <div>
-              <h4>Dicta reprehenderit</h4>
-              <p>Quae dolorem earum veritatis oditseno</p>
-              <p>4 hrs. ago</p>
-            </div>
-          </li>
-
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          <li class="dropdown-footer">
-            <a href="#">Show all notifications</a>
-          </li>
-
-        </ul><!-- End Notification Dropdown Items -->
-
-        </li>
-
-        <!-- Messages Nav -->
-        <li class="nav-item dropdown">
-
-          <!-- Messages Icon -->
-          <!-- <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-chat-left-text"></i>
-            <span class="badge bg-success badge-number">3</span>
-          </a> -->
-
-          <!-- Messages Dropdown Items -->
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-            <li class="dropdown-header">
-              You have 3 new messages
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>Maria Hudson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>4 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>Anna Nelson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>6 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>David Muldon</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>8 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="dropdown-footer">
-              <a href="#">Show all messages</a>
-            </li>
-
-          </ul>
-
-        </li>
-
-        <!-- Profile Nav -->
-        <li class="nav-item dropdown pe-3">
-
-          <!-- Foto e Nome -->
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img id="foto-usuario" class="rounded-circle">
-            <span class="d-none d-md-block" id="nome-usuario"></span>
-          </a>
-
-        </li>
-
-      </ul>
-    </nav><!-- End Icons Navigation -->
-
   </header>
 
   <!-- Sidebar -->
@@ -219,7 +52,7 @@
       <li class="nav-item">
         <a id="aDash" class="nav-link" href="">
           <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
+          <span>Dashboard Correlação</span>
         </a>
       </li>
 
@@ -259,145 +92,217 @@
     <section class="section dashboard">
       <div class="row">
 
+
         <!-- Colunas da esquerda -->
+        <div class="dropdown d-grid gap-2 col-6">
+          <span>
+            <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1"
+              data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+              Filtrar por agências
+            </button>
+            <button type="button" class="btn btn-dark" onclick="buscarAgenciasSelecionadas(periodoSelecionado)"> <i
+                class="bi bi-search"></i> Buscar</button>
+
+            <ul class="dropdown-menu col-6" id="dropdown_agencias" aria-labelledby="dropdownMenuButton1"
+              style="padding-right: 20px;">
+              <li>
+                <div class="form-check">
+                  <label class="form-check-label " for="checkTodas">
+                    Selecionar todas
+
+                  </label>
+                  <input class="checkbox style-2 pull-right" type="checkbox" value="todasAgencias" id="checkTodas"
+                    onclick="selecionarTodasAgencias()" checked>
+                </div>
+              </li>
+
+            </ul>
+          </span>
+
+
+        </div>
+
         <div class="col-lg-8">
           <div class="row">
+            <div class="btn-group-dashboard">
+              <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+              <label class="btn btn-outline-secondary btn-dashboard" for="btnradio1"
+                onclick="alterarPeriodoGraficos('year', agenciasSelecionadas)">Este Ano</label>
 
+              <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+              <label class="btn btn-outline-secondary btn-dashboard" for="btnradio2"
+                onclick="alterarPeriodoGraficos('month', agenciasSelecionadas)">Este Mês</label>
+
+              <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+              <label class="btn btn-outline-secondary btn-dashboard" for="btnradio3"
+                onclick="alterarPeriodoGraficos('day', agenciasSelecionadas)">Hoje</label>
+            </div>
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card sales-card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filtro</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('cpu', 'day')">Hoje</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('cpu', 'month')">Este Mês</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('cpu', 'year')">Este Ano</a></li>
-
-                  </ul>
-                </div>
-
                 <div class="card-body">
-                  <h5 class="card-title">CPU <span>| </span><span id="cpu_period_info">Hoje</span></h5>
+                  <h5 class="card-title">CPU <span>| </span><span id="cpu_period_info"></span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-cpu"></i>
                     </div>
-                    <div class="ps-3">
-                      <h6 id="cpu_info">0</h6>
+                    <div class="container">
+                      <div class="row">
+                        <div class="col">
+                          <div class="ps-3">
+                            <span class="kpis-gerente">Mínima<h6
+                                id="cpu_info_min">0</h6>
+                              </span>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="ps-3">
+                            <span class="kpis-gerente">Média<h6
+                                id="cpu_info_media">0</h6>
+                              </span>
+                          </div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col">
+                          <div class="ps-3">
+                            <span class="kpis-gerente">Máxima<h6
+                              id="cpu_info_max">0</h6>
+                            </span>
 
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="ps-3">
+                            <span class="kpis-gerente">Mediana<h6
+                              id="cpu_info_mediana">0</h6>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
 
               </div>
-            </div><!-- End Sales Card -->
+            </div>
 
             <!-- Revenue Card -->
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card revenue-card">
 
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filtro</h6>
-                    </li>
-
-
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('hd', 'day')">Hoje</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('hd', 'month')">Este Mês</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('hd', 'year')">Este Ano</a></li>
-
-                  </ul>
-                </div>
-
                 <div class="card-body">
-                  <h5 class="card-title">Disco Rígido <span>| </span><span id="hd_period_info">Este Mês</span></h5>
+                  <h5 class="card-title">Disco Rígido <span>| </span><span id="hd_period_info"></span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-device-hdd"></i>
                     </div>
-                    <div class="ps-3">
-                      <h6 id="hd_info">0</h6>
+                    <div class="container">
+                      <div class="row">
+                        <div class="col">
+                          <div class="ps-3">
+                            <span class="kpis-gerente">Mínima<h6
+                                id="hd_info_min">0</h6>
+                              </span>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="ps-3">
+                            <span class="kpis-gerente">Média<h6
+                                id="hd_info_media">0</h6>
+                              </span>
+                          </div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col">
+                          <div class="ps-3">
+                            <span class="kpis-gerente">Máxima<h6
+                              id="hd_info_max">0</h6>
+                            </span>
 
-
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="ps-3">
+                            <span class="kpis-gerente">Mediana<h6
+                              id="hd_info_mediana">0</h6>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
 
               </div>
-            </div><!-- End Revenue Card -->
+            </div>
+            <!-- End Revenue Card -->
 
             <!-- Customers Card -->
-            <div class="col-xxl-4 col-xl-12">
+            <div class="col-xxl-4 col-md-6">
 
               <div class="card info-card customers-card">
 
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filtro</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('ram', 'day')">Hoje</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('ram', 'month')">Este Mês</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('ram', 'year')">Este Ano</a></li>
-                  </ul>
-                </div>
-
-
                 <div class="card-body">
-                  <h5 class="card-title">Memória RAM <span>| </span><span id="ram_period_info">Este Ano</span></h5>
+                  <h5 class="card-title">Memória RAM <span>| </span><span id="ram_period_info"></span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-memory"></i>
                     </div>
-                    <div class="ps-3">
-                      <h6 id="ram_info">0</h6>
 
+                    <div class="container">
+                      <div class="row ">
+                        <div class="col">
+                            <span class="kpis-gerente">Mínima<h6
+                                id="ram_info_min">0</h6>
+                              </span>
+                        </div>
+                        <div class="col">
+                            <span class="kpis-gerente">Média<h6
+                                id="ram_info_media">0</h6>
+                              </span>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col">
+                            <span class="kpis-gerente">Máxima<h6
+                                id="ram_info_max">0</h6>
+                              </span>
+                        </div>
+                        <div class="col">
+                            <span class="kpis-gerente">Mediana<h6
+                                id="ram_info_mediana">0</h6>
+                              </span>
+                        </div>
+                      </div>
                     </div>
+
+                    <!-- <h6 id="ram_info_min">0</h6>
+                      <h6 id="ram_info_max">0</h6> -->
                   </div>
 
                 </div>
               </div>
 
-            </div><!-- End Customers Card -->
+            </div>
+            <!-- End Customers Card -->
 
             <!-- Reports -->
             <div class="col-12">
               <div class="card">
 
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filtro</h6>
-                    </li>
 
-                    <li><a class="dropdown-item"
-                        onclick="alterarPeriodoVizualizacao('graficoPrincipal', 'day')">Hoje</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('graficoPrincipal', 'month')">Este
-                        Mês</a></li>
-                    <li><a class="dropdown-item" onclick="alterarPeriodoVizualizacao('graficoPrincipal', 'year')">Este
-                        Ano</a></li>
-
-                  </ul>
-                </div>
                 <br>
                 <div class="card-body">
 
-                  <h5 class="card-title">Registros <span id="periodoGrafico">/Hoje</span></h5>
+                  <h5 class="card-title">Registros <span id="periodoGrafico">/</span></h5>
 
                   <div id="graficoGeral">
                     <canvas id="reportsChart4"></canvas>
+                  </div>
+                  <div>
+                    <canvas id="graficoHorarioDePico"></canvas>
+
                   </div>
 
                   <!-- Line Chart -->
@@ -438,26 +343,34 @@
             </div>
 
             <div class="card-body pb-0">
-              <h5 class="card-title">Servidores Gerais <span id="optionSelecionada">| CPU</span></h5>
-              <div id="graficoDonut" style="min-height: 400px;" class="echart"></div>
+              <h5 class="card-title">Correlação entre componentes</h5>
+              <span class="kpi-correlacao" id="correlacao-disco-cpu">0</span>
+              <h6 class="card-subtitle mb-2 text-body-secondary">Correlação entre Disco e CPU </h6>
+              <span class="kpi-correlacao" id="correlacao-disco-memoria">0</span>
+              <h6 class="card-subtitle mb-2 text-body-secondary">Correlação entre Disco e Memória</h6>
+              <span class="kpi-correlacao" id="correlacao-memoria-cpu">0</span>
+              <h6 class="card-subtitle mb-2 text-body-secondary">Correlação entre Memória e CPU</h6>
+
+
+              <!-- <div id="graficoDonut" style="min-height: 400px;" class="echart"></div> -->
             </div>
           </div>
           <div class='card' style="height: 30%;">
-            <div class="card-body pb-0" >
+            <div class="card-body pb-0">
               <div class="filter">
                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                   <li class="dropdown-header text-start">
                     <h6>Filtro</h6>
                   </li>
-  
+
                   <li><a class="dropdown-item" onclick="mediaDadosComps(1)">CPU</a></li>
                   <li><a class="dropdown-item" onclick="mediaDadosComps(2)">Memória</a></li>
                   <li><a class="dropdown-item" onclick="mediaDadosComps(3)">Disco</a></li>
-  
+
                 </ul>
               </div>
-  
+
               <h5 class="card-title">Media Componentes ideais <span id="optionSelecionadaMedia">| CPU</span></h5>
               <div id="dadosMediaGeral" style="min-height: 400px;" class="echart">
                 <div class="card" style="width: 85%; height: 60%">
@@ -471,6 +384,7 @@
               </div>
             </div>
           </div>
+
 
         </div>
 
@@ -498,30 +412,9 @@
 <script src="assets/js/main.js"></script>
 <script src="assets/js/dashDonut.js"></script>
 <script>
-  //exibirKpiGerente(2, 'day', 1)
-  //exibirKpiGerente(2,'day', 2)
-  //exibirKpiGerente(2, 'day', 3)
-  //obterDadosGrafico(2, 'day', 1)  
-  periodoL = "day";
 
-  exibirKpiGerente(2, periodoL, 1)
-      exibirKpiGerente(2, periodoL, 2)
-      exibirKpiGerente(2, periodoL, 3)
-      obterDadosGrafico(2, periodoL, 1)
-  function chamarFuncoes() {
-    setInterval(() => {
-      
-      exibirKpiGerente(2, periodoL, 1)
-      exibirKpiGerente(2, periodoL, 2)
-      exibirKpiGerente(2, periodoL, 3)
-      obterDadosGrafico(2, periodoL, 1)
-          
-    }, 3000)
-
-
-
-    exibirListaAgencias()
-    exibirGraficoDonut(1)
-  }
 
 </script>
+<style>
+  .card-body {}
+</style>
