@@ -110,18 +110,19 @@ function pegarDadosGerais(idMaquina) {
     var instrucao = `
     select sum(valorM) as memoria, sum(valorC) as UsoCpu, sum(valorD) as disco, sum(valort) as temperatura
 from (
-    (select TOP 1 valor, dataHora, 'M' as tipo, valor as valorM, 0 AS valorC, 0 as valorD, valor as valort
+    (select TOP 1 valor, dataHora, 'M' as tipo, valor as valorM, 0 AS valorC, 0 as valorD, 0 as valort
     from registros where fkComponente = 2 and fkMaquina = ${idMaquina} order by dataHora desc)
 union
-    (select TOP 1 valor, dataHora, 'C' as tipo, 0 as valorM, valor AS valorC, 0 as valorD, valor as valort
+    (select TOP 1 valor, dataHora, 'C' as tipo, 0 as valorM, valor AS valorC, 0 as valorD, 0 as valort
     from registros where fkComponente = 1 and fkMaquina = ${idMaquina} order by dataHora desc)
 union
-    (select TOP 1  valor, dataHora, 'D' as tipo, 0 as valorM, 0 AS valorC, valor as valorD, valor as valort
+    (select TOP 1 valor, dataHora, 'D' as tipo, 0 as valorM, 0 AS valorC, valor as valorD, 0 as valort
     from registros where fkComponente = 3 and fkMaquina = ${idMaquina} order by dataHora desc)
 union
-    (select TOP 1 valor, dataHora, 'T' as tipo, 0 as valorM, 0 AS valorC, valor as valorD, valor as valort
+    (select TOP 1 valor, dataHora, 'T' as tipo, 0 as valorM, 0 AS valorC, 0 as valorD, valor as valort
     from registros where fkComponente = 4 and fkMaquina = ${idMaquina} order by dataHora desc)
-) as retorno;`;
+) as retorno;
+`;
 
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
