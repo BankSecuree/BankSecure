@@ -4,7 +4,7 @@ function dadosAnalista(agencia,componente) {
     console.log("ACESSEI O dashAnalistaModel \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function exibirDonut()");
 
     var instrucao = `
-    SELECT * FROM registros WHERE fkComponente = ${componente} AND fkMaquina = ${agencia} ORDER BY dataHora DESC LIMIT 7;
+    SELECT TOP 7 * FROM registros WHERE fkComponente = ${componente} AND fkMaquina = ${agencia} ORDER BY dataHora DESC;
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
@@ -56,7 +56,7 @@ function kpiDadosUso(idEmpresa,idAgencia){
     var instrucao = `select top 1 valor, unidadeMedida, dataHora, fkAgencia, fkEmpresa from registros join componente on idComponente = fkComponente 
     join maquina on idMaquina = fkMaquina
     join agencia on idAgencia = fkAgencia
-    join empresa on idEmpresa = fkEmpresa where idEmpresa = ${idEmpresa} and idAgencia = ${idAgencia} and unidadeMedida = "%" ORDER BY dataHora DESC;`
+    join empresa on idEmpresa = fkEmpresa where idEmpresa = ${idEmpresa} and idAgencia = ${idAgencia} and unidadeMedida = '%' ORDER BY dataHora DESC;`
     return database.executar(instrucao);
 }
 
@@ -71,7 +71,7 @@ function maiorTemperaturaRel(idEmpresa, idAgencia) {
         JOIN maquina ON idMaquina = fkMaquina
         JOIN agencia ON idAgencia = fkAgencia
         JOIN empresa ON idEmpresa = fkEmpresa
-        WHERE idEmpresa = 2 AND idAgencia = 1 AND unidadeMedida = "°C"
+        WHERE idEmpresa = 2 AND idAgencia = 1 AND unidadeMedida = '°C'
         ORDER BY dataHora DESC
     ) AS ultimos_registros;`
     return database.executar(instrucao);
@@ -89,7 +89,7 @@ function maiorUsoRel(idEmpresa,idAgencia){
         JOIN maquina ON idMaquina = fkMaquina
         JOIN agencia ON idAgencia = fkAgencia
         JOIN empresa ON idEmpresa = fkEmpresa
-        WHERE idEmpresa = ${idEmpresa} AND idAgencia = ${idAgencia} AND unidadeMedida = "%"
+        WHERE idEmpresa = ${idEmpresa} AND idAgencia = ${idAgencia} AND unidadeMedida = '%'
         ORDER BY dataHora DESC
     ) AS ultimos_registros;`
 
