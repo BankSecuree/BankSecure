@@ -17,7 +17,7 @@ function dadosKpi(idEmpresa, periodo, componente, agencias) {
     select avg(valor) as media from registros join maquina on fkMaquina = idMaquina 
     join agencia on fkAgencia = idAgencia 
     join empresa on fkEmpresa = idEmpresa and fkEmpresa = ${idEmpresa} and fkComponente = ${componente}
-    and ${periodo}(dataHora) = ${periodo}(now())
+    and ${periodo}(dataHora) = ${periodo}(getdate())
     WHERE
     ${filtroPorAgencia};`;
 
@@ -46,7 +46,7 @@ function buscarUltimasMedidas(idEmpresa, periodo, componente, agencias) {
         FROM registros JOIN maquina on fkMaquina = idMaquina
         JOIN agencia on fkAgencia = idAgencia
         JOIN empresa on fkEmpresa = idEmpresa and fkEmpresa = ${idEmpresa} and fkComponente = ${componente}
-        and dataHora >= NOW() - INTERVAL 1 DAY
+        and dataHora >= getdate() - INTERVAL 1 DAY
         WHERE ${filtroPorAgencia}
         GROUP BY HOUR(dataHora)
         ORDER BY id DESC;
@@ -61,7 +61,7 @@ function buscarUltimasMedidas(idEmpresa, periodo, componente, agencias) {
     JOIN empresa ON fkEmpresa = idEmpresa
     WHERE fkEmpresa = ${idEmpresa}
         AND fkComponente = ${componente}
-        AND DATE_FORMAT(dataHora, '%Y-%m') = DATE_FORMAT(NOW(), '%Y-%m') AND
+        AND DATE_FORMAT(dataHora, '%Y-%m') = DATE_FORMAT(getdate(), '%Y-%m') AND
         (${filtroPorAgencia})
 
     GROUP BY hora
@@ -79,7 +79,7 @@ function buscarUltimasMedidas(idEmpresa, periodo, componente, agencias) {
         JOIN empresa ON fkEmpresa = idEmpresa
         WHERE fkEmpresa = ${idEmpresa}
         AND fkComponente = ${componente}
-        AND dataHora >= NOW() - INTERVAL 1 YEAR
+        AND dataHora >= getdate() - INTERVAL 1 YEAR
         AND
         (${filtroPorAgencia})
         GROUP BY hora

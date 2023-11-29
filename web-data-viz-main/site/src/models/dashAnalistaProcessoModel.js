@@ -15,7 +15,7 @@ function dadosCards(maquina) {
 
     var instrucao = `
     SELECT top 1 p1.valor AS processoAtivo, p2.valor AS processoInativo, so FROM processo p1
-	INNER JOIN processo p2 ON p1.dataHora = p2.dataHora
+	INNER JOIN processo p2 ON Cast(p1.dataHora as smalldatetime) = Cast(p2.dataHora as smalldatetime)
 		INNER JOIN maquina ON p1.fkMaquina = ${maquina}
 		WHERE p1.statusProcesso = 'Ativo' AND p2.statusProcesso = 'Inativo' AND p1.fkMaquina = ${maquina} AND p2.fkMaquina = ${maquina}
 			ORDER BY p1.dataHora DESC;   
