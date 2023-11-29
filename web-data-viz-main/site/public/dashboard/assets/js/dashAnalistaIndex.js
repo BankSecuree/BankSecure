@@ -437,6 +437,8 @@ function pegarDadosGerais() {
           console.log(`Memoria: ${memoria}`)
           console.log(`Disco: ${disco}`)
           console.log(`Cpu: ${cpu}`)
+          
+          //alert(temperatura, cpu)
 
           //atenção
           if (memoria > 60 && memoria < 70) {
