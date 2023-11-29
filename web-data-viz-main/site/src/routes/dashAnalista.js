@@ -21,13 +21,13 @@ router.get("/dadosPorcentagem/:idEmpresa/:fkMaquina",function(req,res){
 });
 
 
-router.get("/kpiDadosTemperatura/:idEmpresa/:idAgencia",function(req,res){
+router.get("/kpiDadosTemperatura/:idEmpresa/:idAgencia/:idMaquina",function(req,res){
     console.log("Cheguei na rota")
     dashAnalistaController.kpiDadosTemperatura(req,res);
 });
 
 
-router.get("/kpiDadosUso/:idEmpresa/:idAgencia",function(req,res){
+router.get("/kpiDadosUso/:idEmpresa/:idAgencia/:idMaquina",function(req,res){
     console.log("Cheguei na rota")
     dashAnalistaController.kpiDadosUso(req,res);
 });

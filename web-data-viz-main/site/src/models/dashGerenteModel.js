@@ -20,7 +20,7 @@ function dadosKpi(idEmpresa, periodo, componente, agencias) {
     JOIN agencia ON fkAgencia = idAgencia
     JOIN empresa ON fkEmpresa = idEmpresa AND fkEmpresa = ${idEmpresa} AND fkComponente = ${componente}
     WHERE
-        ${filtroPorAgencia}
+	${filtroPorAgencia}
         AND ${periodo}(dataHora) = ${periodo}(GETDATE());
     `;
 
@@ -53,7 +53,7 @@ function buscarUltimasMedidas(idEmpresa, periodo, componente, agencias) {
         JOIN agencia on fkAgencia = idAgencia
         JOIN empresa on fkEmpresa = idEmpresa and fkEmpresa = ${idEmpresa} and fkComponente = ${componente}
         WHERE dataHora >= DATEADD(DAY, -1, GETDATE()) 
-            AND (${filtroPorAgencia})
+        AND (${filtroPorAgencia})  
         GROUP BY DATEPART(HOUR, dataHora)
         ORDER BY id DESC;
 

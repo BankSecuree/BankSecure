@@ -39,24 +39,24 @@ function dadosPorcentagem(idEmpresa, fkMaquina){
 }
 
 
-function kpiDadosTemperatura(idEmpresa,idAgencia){
+function kpiDadosTemperatura(idEmpresa,idAgencia,idMaquina){
     console.log("Acessei a kpiDadosTemperatura model")
     console.log("#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
     var instrucao = `select top 1 valor, unidadeMedida, dataHora, fkAgencia, fkEmpresa from registros join componente on idComponente = fkComponente 
     join maquina on idMaquina = fkMaquina
     join agencia on idAgencia = fkAgencia
-    join empresa on idEmpresa = fkEmpresa where idEmpresa = ${idEmpresa} and idAgencia = ${idAgencia} and fkComponente =4 ORDER BY dataHora DESC;`
+    join empresa on idEmpresa = fkEmpresa where idEmpresa = ${idEmpresa} and idAgencia = ${idAgencia} and fkComponente =4 AND fkMaquina = ${idMaquina} ORDER BY dataHora DESC;`
     return database.executar(instrucao);
 }
 
 
-function kpiDadosUso(idEmpresa,idAgencia){
+function kpiDadosUso(idEmpresa,idAgencia,idMaquina){
     console.log("Acessei a kpiDadosUso model")
     console.log("#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
     var instrucao = `select top 1 valor, unidadeMedida, dataHora, fkAgencia, fkEmpresa from registros join componente on idComponente = fkComponente 
     join maquina on idMaquina = fkMaquina
     join agencia on idAgencia = fkAgencia
-    join empresa on idEmpresa = fkEmpresa where idEmpresa = ${idEmpresa} and idAgencia = ${idAgencia} and unidadeMedida = '%' ORDER BY dataHora DESC;`
+    join empresa on idEmpresa = fkEmpresa where idEmpresa = ${idEmpresa} and idAgencia = ${idAgencia} and unidadeMedida = '%' AND fkMaquina = ${idMaquina} ORDER BY dataHora DESC;`
     return database.executar(instrucao);
 }
 

@@ -173,9 +173,10 @@ function graficoAgencia(idAgencia, maquinas) {
   var vt_cpu = [0];
   var vt_memoria = [0];
   var vt_data = [0];
-  fetch(`/dashAgencias/exibirView/${sessionStorage.ID_USUARIO}/${idAgencia}`).then(function (
+  fetch(`/dashAgencias/exibirView/${sessionStorage.ID_EMPRESA}/${maquinas}`).then(function (
     resposta
   ) {
+	console.log(resposta)
     resposta.json().then(function (resposta) {
       for (let i = 0; i < resposta.length; i++) {
         var publi = resposta[i];

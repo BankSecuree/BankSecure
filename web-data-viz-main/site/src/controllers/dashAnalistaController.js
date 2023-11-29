@@ -95,8 +95,9 @@ function dadosAnalista(req, res) {
 
 
   function kpiDadosTemperatura(req,res){
-    var idEmpresa = req.params.idEmpresa
-    var idAgencia = req.params.idAgencia
+    var idEmpresa = req.params.idEmpresa;
+    var idAgencia = req.params.idAgencia;
+    var idMaquina = req.params.idMaquina;
 
     console.log("Cheguei na controller")
 
@@ -105,8 +106,11 @@ function dadosAnalista(req, res) {
       res.status(400).send("O id da empresa está undefined")
     }else if(idAgencia == undefined){
       res.status(400).send("O id da agencia está undefined")
+    }else if(idMaquina == undefined){
+      res.status(400).send("  $$$$$$$$$$$$$$$$$$$$$$$$$ essa porra de maquina ta indefinida")
+  
     }else{
-      dashAnalistaModel.kpiDadosTemperatura(idEmpresa,idAgencia)
+      dashAnalistaModel.kpiDadosTemperatura(idEmpresa,idAgencia,idMaquina)
       .then(
         function(resultado){
           res.json(resultado);
@@ -130,6 +134,7 @@ function dadosAnalista(req, res) {
   function kpiDadosUso(req,res){
     var idEmpresa = req.params.idEmpresa
     var idAgencia = req.params.idAgencia
+    var idMaquina = req.params.idMaquina;
 
     console.log("Cheguei na controller")
 
@@ -139,7 +144,7 @@ function dadosAnalista(req, res) {
     }else if(idAgencia == undefined){
       res.status(400).send("O id da agencia está undefined")
     }else{
-      dashAnalistaModel.kpiDadosUso(idEmpresa,idAgencia)
+      dashAnalistaModel.kpiDadosUso(idEmpresa,idAgencia,idMaquina)
       .then(
         function(resultado){
           res.json(resultado);

@@ -36,7 +36,6 @@ app.use("/perfil", perfilRouter);
 app.use("/hardware", hardwareRouter);
 app.use("/dashGerente", dashGerenteRouter);
 app.use("/dashAnalistaProcesso", dashAnalistaProcesso)
-app.use("/dashGerente", dashGerenteRouter)
 app.use("/dashBoos", dashBoosRouter)
 app.use("/dashAnalista", dashAnalistaRouter)
 

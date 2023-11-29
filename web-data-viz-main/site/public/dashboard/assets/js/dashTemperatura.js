@@ -284,10 +284,13 @@ function atualizarKPITemp(idAgencia) {
   let textos = []
   //alert(idAgencia)
   //alert(sessionStorage.ID_E
+  let idMaquina = document.getElementById("listaMaquinas").value;
+  
+  
 
 
 
-  fetch(`/dashAnalista/kpiDadosTemperatura/${sessionStorage.ID_EMPRESA}/${idAgencia}`
+  fetch(`/dashAnalista/kpiDadosTemperatura/${sessionStorage.ID_EMPRESA}/${idAgencia}/${idMaquina}`
 
 
   ).then(function (resposta) {
@@ -338,16 +341,19 @@ function atualizarKPIUso(idAgencia) {
   console.log("RODOU")
   let dados = []
   let textos = []
+  let idMaquina = document.getElementById("listaMaquinas").value;
+  // alert(fkMaquina)
   //alert(idAgencia)
   //alert(sessionStorage.ID_EMPRESA)
 
-  fetch(`/dashAnalista/kpiDadosUso/${sessionStorage.ID_EMPRESA}/${idAgencia}`
+  fetch(`/dashAnalista/kpiDadosUso/${sessionStorage.ID_EMPRESA}/${idAgencia}/${idMaquina}`
 
   ).then(function (resposta) {
 
     console.log("ESTOU NO THEN DO pegar dados para a KPI  porcentagem ()!")
     console.log("----------------------------------------------------------------------")
     console.log(resposta)
+    console.log("----------------------------------------------------------------------")
     if (resposta.ok) {
       if (document.getElementById('tituloH5').innerText === 'Uso de CPU | Agora') {
         console.log(resposta);
