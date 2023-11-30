@@ -163,7 +163,7 @@ function calcularKpisAnaliticas(dados) {
     dados = dados.sort((a, b) => a - b);
 
     if (dados.length % 2 !== 0) {
-        kpisAnaliticas.mediana = dados[Math.floor(dados.length / 2)];
+        kpisAnaliticas.mediana = Number ((dados[Math.floor(dados.length / 2)]).toFixed(2));
     } else {
         let meio1 = dados[dados.length / 2 - 1];
         let meio2 = dados[dados.length / 2];
