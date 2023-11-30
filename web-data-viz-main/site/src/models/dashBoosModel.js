@@ -70,7 +70,7 @@ function buscarUltimasMedidas(idGerente, componente, tipoAgencia, selectTipoAgen
                 ag.idAgencia,
                 ag.apelido AS nomeAgencia,
                 r.valor AS mediaValor,
-                DATE_FORMAT(r.dataHora, '%Y-%m-%d %H:%i:%s') AS dataHora
+                FORMAT(r.dataHora, '%y-%m-%d %H:%m:%s') AS dataHora
             FROM
                 agencia ag
             JOIN

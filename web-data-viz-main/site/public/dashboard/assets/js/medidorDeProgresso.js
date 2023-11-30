@@ -474,4 +474,4 @@ setTimeout(
         buscarAgenciasSelecionadas()
         alterarPeriodoGraficos("year", agenciasSelecionadas)
     }
-    , 200)
+    , 1000)
